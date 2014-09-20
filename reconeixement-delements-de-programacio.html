@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Reconeixement d'elements de programació</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Reconeixement d'elements de programació             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./primers-exercicis-en-java.html">
+        Primers exercicis en Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./encapsulacio.html">
+        Encapsulació
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Reconeixement d'elements de programació</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document serveix d'orientació a l'estudiant del llenguatge de
+programació Java per endinsar-se en la seva sintaxi tot seguint els
+<a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html">tutorials</a>
+d'ajuda proporcionats pels propis dissenyadors del llenguatge.</p>
+<p>Està format per tres exercicis que requereixen la lectura de diferents
+documents per a poder respondre a una sèrie de qüestions.</p>
+<p>Els documents referenciats apareixen en anglès. Es pressuposa que
+l'estudiant disposa del coneixement suficient d'aquesta llengua per
+realitzar els exercicis. Altrament, es recorda l'existència de
+traductors automàtics. És d'esperar que aquestes eines, no sent ni de
+lluny perfectes, esperonin l'estudiant a obtenir el necessari domini
+de la <em>lingua franca</em> entre els desenvolupadors d'aplicacions.
+<a class="footnote-reference" href="#aprenangles" id="id1">[1]</a></p>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-tipus-primitius-del-java">
+<h3>Exercici 1. Tipus primitius del Java</h3>
+<p>Llegeix les pàgines:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://download.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">Primitive Data Types</a></li>
+<li><a class="reference external" href="http://download.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html">Arrays</a></li>
+</ul>
+<p>A continuació, contesta les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">Fes una taula que relacioni els tipus primitius de que disposa el
+Java. Inclou una petita descripció, el rang de valors i el valor
+per defecte. Indica, si existeix, el corresponent amb el del
+llenguatge C.</p>
+</li>
+<li><p class="first">descriu amb les teves paraules el significat de literal. Inclou
+exemples teus.</p>
+</li>
+<li><p class="first">descriu amb les teves paraules com es declaren i s'accedeixen els
+arrays. Compara'ls amb el que coneixies de C. A la teva comparació
+inclou avantatges/inconvenients que trobes.</p>
+</li>
+<li><p class="first">De les següents declaracions, indica si són vàlides i si són
+recomanables, i en cas que no, el perquè</p>
+<div class="highlight"><pre><span class="kt">int</span><span class="o">[]</span> <span class="n">notes</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">notes</span><span class="o">[];</span>
+<span class="kt">int</span> <span class="n">notes</span><span class="o">[</span><span class="mi">100</span><span class="o">];</span>
+<span class="kt">int</span><span class="o">[</span><span class="mi">10</span><span class="o">]</span> <span class="n">notes</span><span class="o">;</span>
+</pre></div>
+</li>
+<li><p class="first">Quina diferència hi ha entre declarar una variable de tipus array i crear un array? Com anava això en C?</p>
+</li>
+<li><p class="first">Per a què serveix arraycopy()? Indica almenys dues raons per les quals és preferible fer servir aquesta funció en comptes de fer la còpia amb un for()</p>
+</li>
+<li><p class="first">Fes un programa que:</p>
+<ol class="loweralpha simple">
+<li>crei un vector amb els primers cinc anys a partir del del teu naixement</li>
+<li>fent servir arraycopy() copii del segon al quart any en un altre vector</li>
+<li>mostri els anys del segon vector en ordre invers.</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-2-operadors-del-java">
+<h3>Exercici 2. Operadors del Java</h3>
+<p>Llegeix les pàgines:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://download.oracle.com/javase/tutorial/java/nutsandbolts/opsummary.html">Summary of Operators</a></li>
+<li><a class="reference external" href="http://download.oracle.com/javase/tutorial/java/nutsandbolts/expressions.html">Expressions, Statements, and Blocks</a></li>
+</ul>
+<p>A continuació, contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>indica els operadors que ofereix el Java en format de taula.
+Afegeix una descripció amb les teves paraules i compara'ls amb els
+que coneixies de C.</li>
+<li>descriu l'ús recomanat dels parèntesis a les expressions de Java</li>
+<li>descriu què és un statement. Prova de trobar una traducció al teu idioma.</li>
+<li>descriu què és un bloc. Compara aquest concepte amb el que coneixes de C.</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-control-de-flux-d-execucio">
+<h3>Exercici 3. Control de flux d'execució</h3>
+<p>Llegeix les pàgines de la secció següent:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://download.oracle.com/javase/tutorial/java/nutsandbolts/flow.html">Control Flow Statements</a></li>
+</ul>
+<p>A continuació, contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>descriu el funcionament de les estructures condicionals del java
+(if, switch) Compara-les amb les del llenguatge C</li>
+<li>descriu el funcionament de les estructures mentre (while)
+Compara-les amb les del llenguatge C 3.  descriu el funcionament
+de les estructures per (for) Compara-les amb les del llenguatge C.
+Fes especial menció del que a la pàgina indicada anomenen
+&quot;Enhanced for&quot; o per millorat. L'has vist mai a algun altre
+llenguatge? A quin i amb quina notació?</li>
+</ol>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="aprenangles" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>En altres paraules, si encara no ets capaç de llegir
+anglès tècnic, ja pots posar-te les piles!</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./primers-exercicis-en-java.html">
+        Primers exercicis en Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./encapsulacio.html">
+        Encapsulació
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Procedural vs OO</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Procedural vs OO             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./classes-i-objectes.html">
+        Classes i objectes
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./constructors-part-i.html">
+        Constructors (part I)
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Procedural vs OO</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Els paradigmes de programació modular (procedural) i orientada  a
+objectes presenten característiques pròpies. De vegades costa de
+trobar equivalència d'un concepte d'un paradigma (normalment POO) a
+l'altre.</p>
+<p>Sovint els programadors aprenem a programar des de la
+programació procedural, per després <em>desembarcar</em> a la POO.</p>
+<p>Aquest document ofereix una introducció a la terminologia de la
+programació orientada a objectes a partir de la de la programació
+estructurada i modular.</p>
+<p>Es pressuposa coneixements dels conceptes bàsics de programació
+estructurada i modular, de programació en llenguatge C i unes primeres
+nocions de sintaxi pròpia de java.</p>
+<p>Per poder realitzar els exercicis d'aquest document caldrà disposar
+d'un compilador de C (per exemple la versió 4.6.x de gcc) i un jdk
+(per exemple la versió 1.7.x d'Oracle)</p>
+</div>
+<div class="section" id="comparacio-dels-dos-paradigmes">
+<h2>Comparació dels dos paradigmes</h2>
+<p>Quan volem desenvolupar un programa amb el paradigma procedural,
+normalment ens preocupem de decidir:</p>
+<ul class="simple">
+<li>quina és la informació d'entrada</li>
+<li>què hem de fer amb aquesta informació</li>
+<li>quina és la sortida que s'espera</li>
+</ul>
+<p>A partir d'aquesta informació definim una sèrie de variables on
+allotjar la informació d'entrada i de sortida, i on deixar resultats
+intermedis. A més a més, definim una sèrie de procediments
+(subrutines, accions, funcions) que manipulen aquestes variables fins
+a obtenir els valors de sortida esperats.</p>
+<div class="section" id="tads">
+<h3>TADs</h3>
+<p>Amb el temps, anem veient que algunes dades i procediments associats a
+aquestes, es van repetint en diferents programes. Per exemple, sovint
+ens trobem amb la necessitat de manipular diferents aspectes de les
+<em>dates</em> tot i que en alguns programes fem servir només per calcular
+edats, mentre que en d'altres en fem servir càlculs de distància en el
+temps. Així, implementem el concepte de tipus abstracte de dades (TAD)
+on ajuntem una representació de les dades amb els seus procediments
+associats.</p>
+<p>Considerem, per exemple, el següent TAD escrit en C:</p>
+<ul class="simple">
+<li>Fitxer triangle.h</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Definició del TAD Triangle</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef TRIANGLE_H</span>
+<span class="cp">#define TRIANGLE_H</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">base</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">altura</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Triangle</span><span class="p">;</span>
+
+<span class="cm">/* Assigna valors als atributs d&#39;un triangle */</span>
+<span class="kt">void</span> <span class="nf">inicialitza_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">double</span> <span class="n">base</span><span class="p">,</span> <span class="kt">double</span> <span class="n">altura</span><span class="p">);</span>
+
+<span class="cm">/* Calcula l&#39;àrea d&#39;un triangle. Pressuposa el triangle inicialitzat. */</span>
+<span class="kt">double</span> <span class="nf">calcula_area_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="n">t</span><span class="p">);</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</td></tr></table><ul class="simple">
+<li>Fitxer triangle.c</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Implementació del TAD Triangle</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include &quot;triangle.h&quot;</span>
+
+<span class="kt">void</span> <span class="nf">inicialitza_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">double</span> <span class="n">base</span><span class="p">,</span> <span class="kt">double</span> <span class="n">altura</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">t</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">=</span> <span class="n">base</span><span class="p">;</span>
+    <span class="n">t</span><span class="o">-&gt;</span><span class="n">altura</span> <span class="o">=</span> <span class="n">altura</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">calcula_area_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">.</span><span class="n">base</span> <span class="o">*</span> <span class="n">t</span><span class="p">.</span><span class="n">altura</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Amb aquesta implementació del TAD Triangle, podríem fer servir
+triangles en diferents programes. Es pot considerar <em>abstracte</em> perquè
+els programes que el facin servir poden utilitzar les funcions del TAD
+sense necessitat de conèixer la definició de les dades. Així, el TAD
+podria ser modificat en un futur, afegint-hi noves funcionalitats (ex.
+<tt class="docutils literal">double calcula_perimetre_triangle(Triangle t)</tt>) o bé canviar la
+representació de les dades a un format que es pugui trobar més adequat
+com ara un array de dos <tt class="docutils literal">double</tt> <a class="footnote-reference" href="#arrayadequat" id="id1">[1]</a>.</p>
+</div>
+<div class="section" id="classes">
+<h3>Classes</h3>
+<p>En una primera aproximació, podríem entendre la programació
+orientada a objectes com una mena d'<em>evolució</em> dels TADs.</p>
+<p>En notació POO, un TAD seria equiparable a una <em>classe</em>.</p>
+<p>Les classes agrupen dades i procediments que, en notació POO es
+coneixen com a <em>propietats</em> i <em>mètodes</em> respectivament. Ens referirem
+a les propietats i mètodes d'una classe com a <em>membres</em> de la classe.</p>
+<p>L'exemple del TAD Triangle, el traduïriem a Java, per exemple amb:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Implementació de la classe Triangle</span>
+<span class="cm"> */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Triangle</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">base</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">altura</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Triangle</span><span class="o">(</span><span class="kt">double</span> <span class="n">base</span><span class="o">,</span> <span class="kt">double</span> <span class="n">altura</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">base</span> <span class="o">=</span> <span class="n">base</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">altura</span> <span class="o">=</span> <span class="n">altura</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/* calcula i retorna l&#39;àrea del triangle */</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculaArea</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">altura</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>En aquesta implementació veiem que tant la definició de les dades (el
+<tt class="docutils literal">struct</tt> de C) com els procediments, apareixen en el mateix bloc de
+codi (entre les claus que segueixen a <tt class="docutils literal">public class Triangle</tt>)</p>
+<p>La paraula clau <tt class="docutils literal">class</tt> de la línia 5, indica que el que ve a
+continuació és el nom de la classe que s'està definint.</p>
+<p>Les línies 6 i 7 declaren les <em>propietats</em> base i altura, metre que
+els blocs iniciats a les línies 9 i 15 defineixen els mètodes
+associats a la classe Triangle.</p>
+<p>Acompanyant a la definició de la classe i dels seus membres, veiem que
+apareixen <tt class="docutils literal">public</tt> i <tt class="docutils literal">private</tt>. Es tracta d'uns modificadors que
+en Java permeten definir l'accessibilitat a aquesta classe i als seus
+membres. Pel que respecta a aquest document introductori, <em>public</em>
+indica que la classe o el membre pot ser accedit per tothom, mentre
+que <em>private</em> limita l'accés a només el bloc on estigui definit el
+membre <a class="footnote-reference" href="#modificadorsdacces" id="id2">[2]</a>.</p>
+<p>El conjunt membres públics d'una classe formen el que es coneix com a
+<em>interfície</em> de la classe. Mentre es mantingui la mateixa interfície,
+o com a molt, s'ampliï amb nous membres, els programes que fan servir
+la classe han de poder continuar funcionant sense canvis: potser el
+benefici més important de l'encapsulació.</p>
+<p>També cal esmentar que el mètode que es defineix a la línia 9 és una
+mica especial. Per començar, no retorna cap tipus (ni tant sols
+<tt class="docutils literal">void</tt>) i té el mateix nom de la classe. A aquests mètodes se'ls
+anomena <em>constructors</em> i tenen unes característiques especials que
+queden fora dels objectius d'aquest text. <a class="footnote-reference" href="#constructors" id="id3">[3]</a></p>
+</div>
+<div class="section" id="objectes-instancies-i-referencies">
+<h3>Objectes, instàncies i referències</h3>
+<p>Disposant de la definició d'un TAD, a l'igual que amb la definició
+d'una classe, en realitat no disposem de cap dada d'aquest
+tipus/classe. Per a aconseguir una dada d'aquest tipus/classe, ens
+caldrà crear-la.</p>
+<p>En C, ho fem simplement dient:</p>
+<div class="highlight"><pre><span class="n">Triangle</span> <span class="n">t</span><span class="p">;</span>
+</pre></div>
+<p>Amb aquesta instrucció, el compilador reserva l'espai requerit per
+allotjar tota la informació relativa a un triangle. Podem anomenar a
+aquest espai com <em>instància</em> del tipus triangle, i des del nostre
+programa ens referirem amb el nom <em>t</em>.</p>
+<p>Aquest espai, donat que ha estat reservat pel propi compilador, serà
+retornat automàticament en finalitzar el bloc on està definida.</p>
+<p>Per inicialitzar aquesta instància, si volem respectar el TAD, farem
+servir la funció <tt class="docutils literal">inicialitza_triangle()</tt>, per exemple:</p>
+<div class="highlight"><pre><span class="n">inicialitza_triangle</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+<p>En java, aquesta <em>instanciació</em> es realitzaria mitjançant:</p>
+<div class="highlight"><pre><span class="n">Triangle</span> <span class="n">t</span><span class="o">;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Triangle</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+</pre></div>
+<p>La primera línia <strong>no</strong> instància. Només declara una variable (o
+referència) a una instància (també coneguda com a <em>objecte</em>) de tipus
+Triangle. Fins que no s'executa la segona línia, no es reserva espai
+per la nova instància.</p>
+<p>Java, però, ens ofereix la possibilitat de compactar totes dues passes
+(declaració i instanciació) en una sola línia:</p>
+<div class="highlight"><pre><span class="n">Triangle</span> <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Triangle</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+</pre></div>
+<p>En tot cas, és molt important tenir clar que aquesta instrucció es
+composa de dues passes.</p>
+<p>A Java, com a molts altres llenguatges orientats a objectes, tots els
+objectes es creen de manera dinàmica. És a dir, cal indicar
+explícitament que es creï la instància (es reservi memòria per a
+allotjar-la) i això té lloc en temps d'execució i no de compilació com
+passa en C.</p>
+<p>C, és clar, també permet declarar dades dinàmicament. Per exemple,
+podem crear un triangle de manera dinàmica fent servir quelcom similar
+a</p>
+<div class="highlight"><pre><span class="n">Triangle</span> <span class="o">*</span><span class="n">t</span><span class="o">;</span>
+<span class="n">t</span> <span class="o">=</span> <span class="o">(</span><span class="n">Triangle</span><span class="o">*)</span> <span class="n">malloc</span><span class="o">(</span><span class="n">sizeof</span><span class="o">(</span><span class="n">Triangle</span><span class="o">));</span>
+</pre></div>
+<p>D'aquesta manera ens acostem molt més al que passa en Java. En aquest
+cas, però, la instància referenciada per la variable t ja no ha estat
+creada pel compilador i ens tocarà alliberar <em>explícitament</em> el seu espai
+quan ja no la necessitem. Això ho farem, per exemple, amb
+<tt class="docutils literal">free(t)</tt>. Afortunadament, en Java, no ens caldrà preocupar-nos
+d'alliberar explícitament la instància creada per <tt class="docutils literal">new</tt> perquè Java
+(de fet un procés anomenat <em>recolector d'escombraries</em> o <em>garbage
+collector</em>) ja se n'encarrega per nosaltres.</p>
+</div>
+<div class="section" id="us-dels-procediments-i-dels-metodes">
+<h3>Ús dels procediments i dels mètodes</h3>
+<p>Per poder cridar a un procediment en C, simplement fem:</p>
+<div class="highlight"><pre><span class="n">area</span> <span class="o">=</span> <span class="n">calcula_area_triangle</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+</pre></div>
+<p>Veiem que al procediment li passem com a argument el triangle del que
+ha de calcular l'àrea. És clar, la visió procedimental parteix de la
+base que tenim un conjunt de dades a manipular i uns procediments que
+la manipulen. El nom escollit per la funció
+<tt class="docutils literal">calcula_area_triangle()</tt> ja implica que estem donant-li l'ordre de
+calcular a <em>algú</em>, probablement al programa. Ens cal indicar al nom
+que es tracta del càlcul sobre un triangle, donat que també podríem
+estar treballant al mateix programa amb un altre TAD anomenat
+<em>Quadrat</em> que tingués una funció equivalent pel càlcul de l'àrea (ex.
+<tt class="docutils literal">calcula_area_quadrat()</tt>) Si ambdós es diguessin <tt class="docutils literal">calcula_area()</tt>
+el compilador no sabria a quin dels dos procediments ens referim i
+generaria un error.</p>
+<p>En Java, això no ens passa. El mètode està associat a la classe dins
+del bloc que defineix la classe. Per poder-lo cridar, ens caldrà fer
+referència d'alguna manera a la classe. La crida equivalent en Java
+seria:</p>
+<div class="highlight"><pre><span class="n">area</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="na">calcula_area</span><span class="o">();</span>
+</pre></div>
+<p>Fixem-nos que <em>t</em> no se li passa com a argument dins dels parèntesis
+de la crida, sinó que apareix abans del nom del mètode separat
+d'aquest per un punt. Aquesta notació és la mateixa que fa servir C
+per a poder accedir als camps d'un <em>struct</em> i bé a implicar que, per
+Java, tant les propietats com els mètodes formen part de la definició
+de la classe. És a dir, són <em>membres</em> de la classe.</p>
+<p>El mètode <tt class="docutils literal">calcula_area()</tt> queda associat a la classe <em>Triangle</em> pel
+fet que el tipus de la variable <em>t</em> és <em>Triangle</em>. A l'hora,
+<tt class="docutils literal">calcula_area()</tt> sap de quin triangle concret ha de calcular l'àrea
+perquè està associat a <em>t</em> en ser cridat.</p>
+<p>Es podria entendre com si es fes:</p>
+<div class="highlight"><pre><span class="n">area</span> <span class="o">=</span> <span class="n">Triangle</span><span class="o">.</span><span class="na">calcula_area</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>    <span class="c1">// no compila en Java!</span>
+</pre></div>
+<p>És a dir, la crida indica per una banda la classe en que es defineix
+el mètode, i per una altra la instància a la que s'ha d'aplicar el
+mètode. <a class="footnote-reference" href="#pythonsiaccepta" id="id4">[4]</a></p>
+<p>A la crida a un mètode d'un objecte, en POO també se la coneix com a
+<em>enviament de missatge</em>, on el tipus del missatge el defineix el propi
+mètode, mentre que el contingut del missatge es codifica en els
+arguments que se li passa.</p>
+</div>
+<div class="section" id="programacio-orientada-a-objectes">
+<h3>Programació orientada a objectes</h3>
+<p>Ara que hem fet una ullada a part de la nomenclatura de la programació
+orientada a objectes, no ens hauria d'estranyar que aquest paradigma
+entengui els programes com un conjunt d'objectes que interactuen entre
+si, en comptes d'una llista d'instruccions que manipulen dades.</p>
+<p>Cada objecte és capaç de rebre i enviar missatges a altres objectes
+(mitjançant crides a mètodes), processar dades, i en general mostrar
+un comportament depenent de la seva lògica (el codi dels mètodes), el
+seu estat (el valor de les seves propietats) i l'entorn en que es mou
+(els arguments dels missatges i altres dades &quot;globals&quot; com per exemple
+el contingut del buffer de teclat).</p>
+<p>Les dades dels programes ben orientats a objectes, solen estar
+&quot;protegides&quot; de l'accés de codi que no sigui el que ofereixen els
+mètodes de la classe.</p>
+<p>Cada classe sol tenir unes <em>responsabilitats</em> molt concretes i
+relacionades amb la classe, i minimitza la dependència amb altres
+classes. Això permet reutilitzar les classes en contexts molt
+diferents.</p>
+<p>Cada mètode, idealment, realitza una única responsabilitat de la
+classe a la que pertany. Els mètodes solen contenir poques
+instruccions ja que, quan la responsabilitat requereix moltes passes,
+normalment es divideix en &quot;subresponsabilitats&quot; més petites a
+realitzar per altres mètodes.</p>
+<p>El punt d'entrada (la funció <tt class="docutils literal">main()</tt>) d'un programa orientat a
+objectes, sol ser un mètode (que compleix alguns requisits com ara
+tenir un nom concret) de la classe que representa el &quot;programa
+principal&quot;.</p>
+</div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-objectes-instancies-i-referencies">
+<h3>Exercici 1. Objectes, instàncies i referències</h3>
+<p>Compara amb les teves paraules aquests tres conceptes (són el mateix?,
+com es relacionen entre si?)</p>
+</div>
+<div class="section" id="exercici-2-el-tad-quadrat">
+<h3>Exercici 2. El TAD Quadrat</h3>
+<p>Desenvolupa el TAD Quadrat en llenguatge C, amb les operacions
+equivalents al TAD Triangle vist anteriorment.</p>
+<p>Crea un nou programa principal anomenat <tt class="docutils literal">usafigures.c</tt> que, fent
+servir els dos TADs, calculi l'àrea d'un triangle de base 5 i altura
+3, i la d'un quadrat de costat 5. Pots fer servir el següent exemple
+com a plantilla:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Fitxer: usatriangle.c</span>
+<span class="cm"> * Programa que calcula l&#39;àrea d&#39;un triangle de base 5 i altura 3</span>
+<span class="cm"> */</span>
+<span class="cp">#include &quot;triangle.h&quot;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Triangle</span> <span class="n">t</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">area</span><span class="p">;</span>
+    <span class="n">inicialitza_triangle</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">calcula_area_triangle</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%g</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">area</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Recorda que amb gcc pots crear l'executable d'aquest codi amb la
+comanda:</p>
+<div class="highlight"><pre><span class="nv">$ </span>gcc -o usatriangle usatriangle.c triangle.c
+</pre></div>
+</div>
+<div class="section" id="exercici-3-la-classe-quadrat">
+<h3>Exercici 3. La classe Quadrat</h3>
+<p>Desenvolupa la classe Quadrat en llenguatge Java, amb les operacions
+equivalents a la classe Triangle vista anteriorment.</p>
+<p>Crea una nova classe anomenada <tt class="docutils literal">UsaFigures</tt> que realitzi un càlcul
+equivalent al de <tt class="docutils literal">usafigures.c</tt> de l'exercici anterior.</p>
+</div>
+<div class="section" id="exercici-4-identificacio-d-elements">
+<h3>Exercici 4. Identificació d'elements</h3>
+<p>Recupera el codi de les tres classes que has fet servir en l'exercici
+anterior. Col·loca-ho tot en un mateix document i indica quines línies
+contenen algun dels següents conceptes:</p>
+<ul class="simple">
+<li>declaració de classe</li>
+<li>declaració de propietat</li>
+<li>declaració de mètode</li>
+<li>declaració de variable</li>
+<li>instanciació</li>
+<li>lectura de propietat</li>
+<li>escriptura de propietat</li>
+<li>crida a mètode</li>
+</ul>
+<p>Per exemple, considera:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Implementació de la classe Triangle</span>
+<span class="cm"> */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Triangle</span> <span class="o">{</span>     <span class="c1">// declaració de classe</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">base</span><span class="o">;</span>    <span class="c1">// declaració de propietat</span>
+
+<span class="err">«</span><span class="o">...</span><span class="err">»</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="exercici-5-estatic-vs-dinamic">
+<h3>Exercici 5. Estàtic vs dinàmic</h3>
+<p>Descriu amb les teves paraules la diferència entre la creació estàtica
+i dinàmica d'instàncies. Argumenta a favor i en contra de cada opció.</p>
+</div>
+<div class="section" id="exercici-6-opcional-creacio-dinamica-d-instancies-d-un-tad-en-c">
+<h3>Exercici 6. (opcional) Creació dinàmica d'instàncies d'un TAD en C</h3>
+<p>Realitza una nova versió del codi dels programes que apareixen a
+l'exercici del TAD Quadrat. En aquest cas, aconsegueix que les
+instàncies de les figures siguin creades dinàmicament en comptes
+d'estàticament.</p>
+<p>Aquest exercici, tot i sent opcional, és molt recomanable per a
+arribar a entendre el funcionament d'instanciació de llenguatges com
+Java.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="arrayadequat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>En aquest exemple tan bàsic, probablement no és
+molt més adequat fer servir un array que deixar base i altura com
+estan. L'exemple, però, hauria de permetre veure que el canvi
+d'implementació de les dades no afecta als programes usuaris del
+TAD (a banda de requerir recompilació, és clar)</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="modificadorsdacces" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Si tens preses per saber què hi ha al darrera
+d'aquests mots en Java, pots consultar el que diuen els seus
+dissenyadors al tutorial de Java sobre <a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html">els modificadors</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="constructors" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Pels impacients, podeu mirar al tutorial de java
+què diuen sobre <a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/javaOO/constructors.html">els constructors</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pythonsiaccepta" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Hi ha llenguatges que accepten les dues
+notacions. Per exemple, Python requereix explicitar la instància
+com a primer paràmetre dels mètodes, i després permet realitzar
+crides tant a partir de la instància com a partir de la classe.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./classes-i-objectes.html">
+        Classes i objectes
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./constructors-part-i.html">
+        Constructors (part I)
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

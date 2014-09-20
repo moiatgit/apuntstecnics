@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Constructors (part II)</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Constructors (part II)             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./herencia.html">
+        Herència
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./polimorfisme.html">
+        Polimorfisme
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Constructors (part II)</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document és una breu recapitulació dels constructors en java.</p>
+<p>Tots els continguts d'aquest document ja han aparegut en altres
+documents, especialment a la <a class="reference external" href="./constructors-part-i.html">primera part de constructors</a></p>
+</div>
+<div class="section" id="constructors">
+<h2>Constructors</h2>
+<p>Un constructor és un tipus especial de bloc de codi que en programació
+orientada a objectes és cridat la creació d'una nova instància d'una
+classe, i que té la funció de preparar la instància per a ser
+utilitzada.</p>
+<div class="section" id="definicio-de-constructors">
+<h3>Definició de constructors</h3>
+<p>Per a definir un constructor en Java, hem de crear una <em>mena</em> de
+mètode amb les següents particularitats:</p>
+<ul class="simple">
+<li>la signatura del &quot;mètode&quot; no ha d'especificar cap tipus de retorn, ni
+tant sols <tt class="docutils literal">void</tt></li>
+<li>el nom del &quot;mètode* ha de coincidir amb el de la classe.</li>
+</ul>
+<p>En podem crear zero o més constructors per una classe, amb
+independència de la seva visibilitat (ex. públics o privats)</p>
+<p>Un exemple de creació de constructors pot ser:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">val</span><span class="o">;</span>        <span class="c1">// una propietat per a il·lustrar la</span>
+                            <span class="c1">// inicialització amb constructors</span>
+
+    <span class="kd">public</span> <span class="nf">B</span><span class="o">()</span> <span class="o">{</span>            <span class="c1">// definició d&#39;un constructor sense paràmetres</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">B</span><span class="o">(</span><span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>     <span class="c1">// un altre constructor</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">;</span>     <span class="c1">// incialització de la propietat</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nf">B</span><span class="o">(</span><span class="n">String</span> <span class="n">sval</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// i un altre</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">sval</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Com qualsevol altre mètode, el constructor pot ser sobrecarregat
+(<em>overloaded</em>). La única condició és que la llista de tipus dels
+arguments ha de ser diferent a cada constructor.</p>
+</div>
+<div class="section" id="us-de-constructors">
+<h3>Ús de constructors</h3>
+<p>En Java, la creació d'una nova instància la realitzem mitjançant
+l'expressió <tt class="docutils literal">new <span class="pre">«Constructor»(«args»)</span></tt> on «Constructor» coincideix
+amb el nom de la classe i «args» corresponen als valors
+d'inicialització (de vegades no hi ha cap).</p>
+<p>El resultat d'aquesta expressió és una referència a la nova instància
+acabada de crear. Sovint aquest resultat és assignat a una variable
+del mateix tipus (classe) que a la que pertany el constructor. Ex.</p>
+<div class="highlight"><pre><span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">A</span><span class="o">();</span>
+</pre></div>
+<p>De vegades pot passar que no ens interessi guardar la referència a la
+instància, sinó que només estiguem interessats en executar algun
+mètode i després oblidar-nos-en.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">A</span> <span class="o">{</span> <span class="kt">void</span> <span class="n">m</span><span class="o">()</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span> <span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">UsaA</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">new</span> <span class="nf">A</span><span class="o">().</span><span class="na">m</span><span class="o">();</span>    <span class="c1">// executa el mètode i &quot;oblida&quot; la instància</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fins i tot, pot ser que la instància només ens interessi per passar-li a
+algun altre objecte.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">A</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+<span class="kd">class</span> <span class="nc">B</span> <span class="o">{</span> <span class="n">B</span><span class="o">(</span><span class="n">A</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+<span class="kd">class</span> <span class="nc">UsaB</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">B</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">B</span><span class="o">(</span><span class="k">new</span> <span class="n">A</span><span class="o">());</span>   <span class="c1">// passa al constructor de B una nova instància d&#39;A</span>
+        <span class="err">«</span><span class="o">...</span><span class="err">»</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Per finalitzar, també és possible fer tot això en qualsevol context que
+esperi una instància d'una superclasse de la classe del constructor.
+Aquest punt es considera amb molt més detall en el tema de
+<a class="reference external" href="poo013.polimorfisme.rst">polimorfisme</a></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+<span class="kd">class</span> <span class="nc">UsaB</span> <span class="o">{</span>
+    <span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">B</span><span class="o">();</span>  <span class="c1">// es crea una instància de B i se li assigna a una referència de tipus A</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="constructor-per-defecte">
+<h3>Constructor per defecte</h3>
+<p>Al constructor sense paràmetres se li anomena sovint <em>constructor per
+defecte</em>.</p>
+<p>Si definim una classe sense explicitar cap constructor, Java ens
+crearà el constructor per defecte. Per exemple, considerem la classe:</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="o">{</span> <span class="o">}</span>
+</pre></div>
+<p>Aquest codi és equivalent a</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">B</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Fixem-nos que el constructor no defineix cap instrucció dins del seu cos.</p>
+</div>
+<div class="section" id="this">
+<h3>this()</h3>
+<p>Per referir-nos al constructor de la nostra instància podem fer servir
+la instrucció:</p>
+<div class="highlight"><pre><span class="k">this</span><span class="o">(</span><span class="err">«</span><span class="n">args</span><span class="err">»</span><span class="o">);</span>
+</pre></div>
+<p>Sent «args» és la llista d'arguments que passem al constructor (sovint
+no hi ha cap)</p>
+<p>Hem de complir però una condició: la crida a <tt class="docutils literal">this()</tt> només pot
+estar a la primera línia del cos d'un constructor.</p>
+<p>Aquesta possibilitat ens permet reaprofitar el codi entre
+constructors. Per exemple, suposem que tenim una classe que ofereix la
+possibilitat d'inicialitzar una o més propietats, mentre que la resta
+queden amb valors per defecte.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">enter</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">char</span> <span class="n">caracter</span><span class="o">;</span>
+
+    <span class="n">B</span><span class="o">()</span> <span class="o">{</span> <span class="k">this</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">);</span> <span class="o">}</span>
+
+    <span class="n">B</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="sc">&#39;A&#39;</span><span class="o">);</span> <span class="o">}</span>
+
+    <span class="n">B</span><span class="o">(</span><span class="kt">char</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">c</span><span class="o">);</span> <span class="o">}</span>
+
+    <span class="n">B</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">char</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span> <span class="n">enter</span><span class="o">=</span><span class="n">i</span><span class="o">;</span> <span class="n">caracter</span><span class="o">=</span><span class="n">c</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="super">
+<h3>super()</h3>
+<p>Per referir-nos al constructor de la superclasse, farem servir:</p>
+<div class="highlight"><pre><span class="kd">super</span><span class="o">(</span><span class="err">«</span><span class="n">args</span><span class="err">»</span><span class="o">);</span>
+</pre></div>
+<p>Al igual que amb <tt class="docutils literal">this()</tt>, la crida a <tt class="docutils literal">super()</tt> ha de ser la
+primera instrucció del constructor. Només pot haver una crida a un
+constructor.</p>
+<p>En cas que no afegim una crida a un constructor des del nostre
+constructor, Java ens afegirà una: al constructor per defecte de la
+superclasse.</p>
+<p>Per exemple, considera els següent codi:</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
+    <span class="n">B</span><span class="o">()</span> <span class="o">{}</span>  <span class="c1">// cos del constructor buit</span>
+<span class="o">}</span>
+</pre></div>
+<p>equival a</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
+    <span class="n">B</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>De fet, el constructor per defecte de B a l'exemple anterior, podria
+contenir instruccions al cos. Sempre i quan no fossin una crida a un
+constructor, afegir <tt class="docutils literal">super()</tt> com a primera instrucció continuaria
+sent equivalent.</p>
+<p><strong>Atenció</strong>: En cas que la superclasse (en el cas de l'exemple
+A) no disposi de constructor per defecte, es converteix en
+obligatori declarar almenys un constructor i fer la crida des d'aquest
+a un constructor vàlid. A l'exemple anterior, considerem el cas en que
+la definició de <em>A</em> fos la següent:</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">A</span> <span class="o">{</span>
+    <span class="n">A</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span><span class="err">«</span><span class="o">...</span><span class="err">»</span><span class="o">}</span> <span class="c1">// no es disposa de constructor per defecte!</span>
+<span class="o">}</span>
+</pre></div>
+<p>En aquest cas, les definicions anteriors de la classe B
+fallarien en temps de compilació. Per solucionar-ho caldria, o afegir
+el constructor per defecte a <em>A</em> o bé definir a <em>B</em>
+els constructors que facin referència al constructor específic de
+la seva superclasse</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span>
+    <span class="n">B</span><span class="o">()</span> <span class="o">{</span> <span class="kd">super</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span> <span class="o">}</span> <span class="c1">// cal passar algun valor enter!</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="section" id="visibilitat">
+<h3>Visibilitat</h3>
+<p>Com qualsevol altre mètode, es pot definir la visibilitat d'un constructor.</p>
+<p>En cas que declarem un constructor com a privat, només es podrà fer
+servir des de la pròpia classe. És típic especificar constructors
+privats en implementacions del patró <a class="reference external" href="http://ca.wikipedia.org/wiki/Patr%C3%B3_singleton">singleton</a>.</p>
+</div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-resum-de-constructors">
+<h3>Exercici 1. Resum de constructors</h3>
+<p>Construeix un esquema/resum amb els diferents aspectes que has vist
+dels constructors. Afegeix exemples propis que els il·lustrin.</p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./herencia.html">
+        Herència
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./polimorfisme.html">
+        Polimorfisme
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

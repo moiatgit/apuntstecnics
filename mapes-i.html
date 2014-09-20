@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Mapes I</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Mapes I             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./conjunts-en-java.html">
+        Conjunts en Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./mapes-ii.html">
+        Mapes II
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Mapes I</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document correspon a la primera part de l'estudi del concepte
+d'associació <em>clau-valor</em> que aquí anomenarem <em>mapes</em>.</p>
+<p>La introducció no és directa. Abans d'arribar-hi, presenta un cas
+d'estudi <a class="footnote-reference" href="#refheadfirst" id="id1">[1]</a> — una petita aplicació per gestionar un
+celler de vins <a class="footnote-reference" href="#consumresponsable" id="id2">[2]</a> — i segueix l'evolució del seu
+desenvolupament des dels primers requeriments fins deixar un disseny
+preparat pels canvis previsibles que ofereix el context per a aplicar
+el tema principal del document.</p>
+<p>En aquesta primera part s'estableixen les bases que permetran treure
+profit d'una de les maneres d'usar els mapes.</p>
+</div>
+<div class="section" id="la-botiga-de-vi">
+<h2>La botiga de vi</h2>
+<p>La senyora Estrella d'Argent és propietària d'una reconeguda botiga de
+vi a la ciutat especialitzada en vins de taula catalans. Fins ara,
+arribaves a la botiga i li descrivies les característiques que
+voldries que tingués el vi que cercaves, i quasi bé sempre la Sra.
+Estrella sortia de la rebotiga amb una o més ampolles que satisfeien
+els teus desitjos.</p>
+<p>Ara però, la Sra. Estrella comença a fer-se gran i hi el seu nebot li
+ajuda a col·locar les ampolles al magatzem. El problema és que
+d'aquesta manera la Sra. Estrella no se'n recorda on para cada vi quan
+el client li demana. La seva germana, la Gualda, li ha comentat que
+coneix un equip de desenvolupadors molt trempats (nosaltres) que li
+podrien fer una aplicació a mida per ajudar-la amb els estocs de vi.</p>
+<div class="section" id="exercici-1-cerques-de-vi">
+<h3>Exercici 1. Cerques de vi</h3>
+<p>En aquest exercici, implementarem una primera versió de l'aplicació de
+gestió d'estocs de la botiga de la Sra. Estrella.</p>
+<p>Així, el nostre model inicial es representa amb el diagrama de classes
+següent:</p>
+<div class="figure align-center">
+<img alt="Diagrama inicial de classes de la Botiga" src="./images/poo022.img001.botiga.png" />
+</div>
+<p>Les propietats que ens interessen de moment d'un vi
+<a class="footnote-reference" href="#simplificacions" id="id3">[3]</a> són:</p>
+<ul class="simple">
+<li>ref: un nr. de referència intern de la botiga. Ex. <tt class="docutils literal">2012010043</tt></li>
+<li>nom: el nom oficial del producte. Ex. <tt class="docutils literal">Roura blanc</tt></li>
+<li>preu: l'import a la venda (en euros i sense iva)</li>
+<li>lloc: la localització del producte al magatzem. Ex. <tt class="docutils literal">al fons
+prestatge vermell</tt>.</li>
+<li>celler: el celler que el produeix. Ex. <tt class="docutils literal">Juan Antonio Pérez Roura</tt></li>
+<li>origen: la denominació d'origen. Ex. <tt class="docutils literal">Alella</tt></li>
+<li>varietat: la varietat del raïm <a class="footnote-reference" href="#varietatraim" id="id4">[4]</a>. Ex. <tt class="docutils literal">sauvignon</tt></li>
+<li>tipus: el tipus de vi. Ex. <tt class="docutils literal">blanc</tt></li>
+<li>collita: l'any de collita. Ex. <tt class="docutils literal">2012</tt></li>
+</ul>
+<p>Alguns detalls d'implementació:</p>
+<ul>
+<li><p class="first">El mètode <tt class="docutils literal">Botiga.afegeix(Vi)</tt>, en cas que ja existeixi un
+vi amb el mateix nr. de referència (atribut <tt class="docutils literal">ref</tt>), genera
+l'excepció <tt class="docutils literal">BotigaException</tt> que estén directament
+<tt class="docutils literal">java.lang.Exception</tt>.</p>
+</li>
+<li><p class="first">El mètode <tt class="docutils literal">Vi Botiga.obte(ref)</tt>, en cas que no
+existeixi cap vi amb el nr. de referència indicat, genera
+l'excepció <tt class="docutils literal">BotigaException</tt>.</p>
+</li>
+<li><p class="first">El mètode <tt class="docutils literal">List&lt;Vi&gt; Botiga.cerca(Vi)</tt>, retorna la
+llista de vins que acompleixen tots els camps no nuls del
+vi que rep. En cas que no trobi cap vi que respongui a
+les especificacions, retorna una llista buida.</p>
+</li>
+<li><p class="first">El tipus <em>integer</em> pot ser representat per un <tt class="docutils literal">long</tt> o un <tt class="docutils literal">int</tt>
+depenent del context. Per exemple, per l'any de collita probablement
+en tindrem prou amb un <tt class="docutils literal">int</tt>, mentre que per la referència ens
+serà interessant disposar d'un <tt class="docutils literal">long</tt>.</p>
+</li>
+<li><p class="first">El tipus <em>Money</em> pot ser representat en Java pel tipus <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html">BigDecimal</a>
+arrodonint a dos decimals.</p>
+</li>
+<li><p class="first">El següent esquema de codi, tot i sent incomplet i no gaire elegant,
+pot ajudar a fer-te una idea de com podria funcionar.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Botiga</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;</span> <span class="n">vins</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Botiga</span><span class="o">()</span> <span class="o">{</span> <span class="n">vins</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;();</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">existeix</span><span class="o">(</span><span class="kt">long</span> <span class="n">ref</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Botiga.existeix() no implementat&quot;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afegeix</span><span class="o">(</span><span class="n">Vi</span> <span class="n">v</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">BotigaException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Botiga.afegeix() no completat&quot;</span><span class="o">);</span>
+        <span class="n">vins</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Vi</span> <span class="nf">obte</span><span class="o">(</span><span class="kt">long</span> <span class="n">ref</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">BotigaException</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Botiga.obte() no implementat&quot;</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/* retorna la llista de vins que s&#39;ajusten a la espec */</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;</span> <span class="nf">cerca</span><span class="o">(</span><span class="n">Vi</span> <span class="n">espec</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;</span> <span class="n">trobats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="n">v</span> <span class="o">:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// ignorem ref perquè és únic</span>
+
+            <span class="c1">// comprova nom</span>
+            <span class="k">if</span> <span class="o">((</span><span class="n">espec</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>  <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="na">getNom</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">espec</span><span class="o">.</span><span class="na">getNom</span><span class="o">())))</span> <span class="o">{</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">// comprova preu màxim</span>
+            <span class="k">if</span> <span class="o">((</span><span class="n">espec</span><span class="o">.</span><span class="na">getPreu</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="na">getPreu</span><span class="o">().</span><span class="na">compareTo</span><span class="o">(</span><span class="n">espec</span><span class="o">.</span><span class="na">getPreu</span><span class="o">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">))</span> <span class="o">{</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">// comprova lloc</span>
+            <span class="k">if</span> <span class="o">((</span><span class="n">espec</span><span class="o">.</span><span class="na">getLloc</span><span class="o">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(!</span> <span class="n">espec</span><span class="o">.</span><span class="na">getLloc</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="na">getLloc</span><span class="o">())))</span> <span class="o">{</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="c1">// «...» comprova la resta</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Botiga.cerca() no completat&quot;</span><span class="o">);</span>
+            <span class="n">trobats</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">v</span><span class="o">);</span> <span class="c1">// l&#39;afegim donat ha passat tots els filtres</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">trobats</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">Podem provar la Botiga amb el següent codi (també incomplet)</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaBotiga</span> <span class="o">{</span>
+
+    <span class="cm">/* afegeix uns vins */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">inicialitzaBotiga</span><span class="o">(</span><span class="n">Botiga</span> <span class="n">botiga</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Vi</span><span class="o">[]</span> <span class="n">vins</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>
+
+        <span class="n">vins</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2010010003</span><span class="o">,</span>
+                <span class="s">&quot;Roura blanc&quot;</span><span class="o">,</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">6.06</span><span class="o">),</span>
+                <span class="s">&quot;prestatge blau&quot;</span><span class="o">,</span>
+                <span class="s">&quot;Juan Antonio Pérez Roura&quot;</span><span class="o">,</span>
+                <span class="s">&quot;Alella&quot;</span><span class="o">,</span>
+                <span class="s">&quot;sauvignon&quot;</span><span class="o">,</span>
+                <span class="s">&quot;blanc&quot;</span><span class="o">,</span>
+                <span class="mi">2007</span><span class="o">);</span>
+
+        <span class="n">vins</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011100042</span><span class="o">,</span>
+                <span class="s">&quot;Cercium 2009&quot;</span><span class="o">,</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">5.65</span><span class="o">),</span>
+                <span class="s">&quot;prestatge verd amunt&quot;</span><span class="o">,</span>
+                <span class="s">&quot;Mas Llunes Vinyes i Cellers&quot;</span><span class="o">,</span>
+                <span class="s">&quot;Empordà&quot;</span><span class="o">,</span>
+                <span class="s">&quot;samsó&quot;</span><span class="o">,</span>
+                <span class="s">&quot;negre&quot;</span><span class="o">,</span>
+                <span class="mi">2009</span><span class="o">);</span>
+
+        <span class="n">vins</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011090002</span><span class="o">,</span>
+                <span class="s">&quot;Masia Serra - IO 2008&quot;</span><span class="o">,</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">13.50</span><span class="o">),</span>
+                <span class="s">&quot;prestatge verd amunt&quot;</span><span class="o">,</span>
+                <span class="s">&quot;Masia Serra&quot;</span><span class="o">,</span>
+                <span class="s">&quot;Empordà&quot;</span><span class="o">,</span>
+                <span class="s">&quot;garnatxa&quot;</span><span class="o">,</span>
+                <span class="s">&quot;negre&quot;</span><span class="o">,</span>
+                <span class="mi">2008</span><span class="o">);</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="nl">v:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">botiga</span><span class="o">.</span><span class="na">afegeix</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BotigaException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/* defineix una especificació de vi */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vi</span> <span class="nf">creaEspec</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Vi</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span>   <span class="c1">// sense nr. de ref perquè és únic</span>
+                <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el nom</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">10.50</span><span class="o">),</span> <span class="c1">// com a molt fins a aquest preu</span>
+                <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el lloc</span>
+                <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el celler</span>
+                <span class="s">&quot;Empordà&quot;</span><span class="o">,</span>  <span class="c1">// la denominació d&#39;origen sí importa</span>
+                <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa la varietat</span>
+                <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el tipus</span>
+                <span class="o">-</span><span class="mi">1</span>          <span class="c1">// no importa l&#39;any</span>
+                <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/* mostra la llista de vins trobats */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraVins</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;</span> <span class="n">trobats</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">trobats</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;No s&#39;ha trobat cap Vi&quot;</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;ha trobat les següents coincidències:&quot;</span><span class="o">);</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="nl">v:</span> <span class="n">trobats</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span>
+                        <span class="s">&quot;Vi: %s\n&quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;\tNom : %s\n&quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;\tPreu: %s\n&quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;\tLloc: %s\n&quot;</span> <span class="o">+</span>
+                        <span class="s">&quot;\t«...»\n&quot;</span><span class="o">,</span>
+                        <span class="n">v</span><span class="o">.</span><span class="na">getRef</span><span class="o">(),</span>
+                        <span class="n">v</span><span class="o">.</span><span class="na">getNom</span><span class="o">(),</span>
+                        <span class="n">NumberFormat</span><span class="o">.</span><span class="na">getCurrencyInstance</span><span class="o">().</span><span class="na">format</span><span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="na">getPreu</span><span class="o">()),</span>
+                        <span class="n">v</span><span class="o">.</span><span class="na">getLloc</span><span class="o">()</span>
+                        <span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Botiga</span> <span class="n">botiga</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Botiga</span><span class="o">();</span>
+        <span class="n">inicialitzaBotiga</span><span class="o">(</span><span class="n">botiga</span><span class="o">);</span>
+        <span class="n">Vi</span> <span class="n">espec</span> <span class="o">=</span> <span class="n">creaEspec</span><span class="o">();</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Vi</span><span class="o">&gt;</span> <span class="n">trobats</span> <span class="o">=</span> <span class="n">botiga</span><span class="o">.</span><span class="na">cerca</span><span class="o">(</span><span class="n">espec</span><span class="o">);</span>
+        <span class="n">mostraVins</span><span class="o">(</span><span class="n">trobats</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></li>
+</ul>
+<p>L'exercici consisteix en completar el codi que falta per que el
+programa <tt class="docutils literal">UsaBotiga</tt> funcioni.</p>
+<p>Comprova que estigui donant els resultats esperats.</p>
+</div>
+<div class="section" id="exercici-2-protegint-la-classe-vi">
+<h3>Exercici 2. Protegint la classe Vi</h3>
+<p>Això de fer servir Strings com a tipus de les propietats és sovint una
+mala idea. Què passa si diem que la denominació d'origen és &quot;Alella&quot;,
+&quot;alella&quot;, o fins i tot &quot;Aleya&quot;?</p>
+<p>Alguns d'aquests problemes els podem resoldre comparant només la
+versió diguem en majúscules, però d'altres...</p>
+<p>A aquest exercici hauràs de millorar el disseny de la classe Vi
+de manera que:</p>
+<ul class="simple">
+<li>el nom i el celler continuïn sent de tipus String, però en les
+cerques no es tindrà present les majúscules i minúscules
+<a class="footnote-reference" href="#caractersespecials" id="id5">[6]</a>. A més a més, les cerques seran parcials i
+per tant, el String buit (&quot;&quot;) serà tractat equivalentment a <tt class="docutils literal">null</tt>.
+Considera el mètode <tt class="docutils literal">String.contains()</tt>.</li>
+<li>Les localitzacions puguin ser: prestatge blau, prestatge verd amunt,
+prestatge verd a baix, prestatge vermell, i altre.</li>
+<li>La denominació d'origen pugui ser (com a mínim <a class="footnote-reference" href="#minimdo" id="id6">[5]</a>):
+Penedès, Terra Alta, Catalunya, Tarragona, Conca de Barberà,
+Costers del Segre, Empordà, Montsant, Priorat, Alella, Pla de
+Bages, i altre.</li>
+<li>La varietat pugui ser (com a mínim): Garnatxa, Malvasia, Monestrell,
+Moscatell, Parellada, Samsó, Macabeu, Xarel·lo, Sauvignon, i altre.</li>
+<li>El tipus de vi pugui ser: blanc, negre, rosat, i altre.</li>
+</ul>
+<p>Els valors <em>altre</em> que apareixen a tots aquests enumerats permetran
+indicar un valor no nul en els casos no contemplats a l'enumerat.</p>
+<p>Els accents i altres &quot;floritures&quot; de la nostra llengua poden
+posar entrebancs a l'estructura <tt class="docutils literal">enum</tt> de Java. Considera el següent
+codi d'exemple, que permetria fer ús del mètode <tt class="docutils literal">toString()</tt> per a
+poder mostrar correctament un valor de les possibles varietats</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">enum</span> <span class="n">Varietat</span> <span class="o">{</span>
+    <span class="n">GARNATXA</span> <span class="o">(</span><span class="s">&quot;Garnatxa&quot;</span><span class="o">),</span>
+    <span class="err">«</span><span class="o">...</span><span class="err">»</span>
+    <span class="n">SAMSO</span> <span class="o">(</span><span class="s">&quot;Samsó&quot;</span><span class="o">),</span>
+    <span class="n">XARELLO</span> <span class="o">(</span><span class="s">&quot;Xarel·lo&quot;</span><span class="o">),</span>
+    <span class="err">«</span><span class="o">...</span><span class="err">»</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">descr</span><span class="o">;</span>   <span class="c1">// descripció en format llegible</span>
+    <span class="n">Varietat</span><span class="o">(</span><span class="n">String</span> <span class="n">descr</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">descr</span> <span class="o">=</span> <span class="n">descr</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">descr</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Malgrat tot, hem deixat algunes de les propietats &quot;obertes&quot; a rebre
+valors poc adequats (ex.  un preu negatiu). A més, les propietats que
+mantenim com a Strings, tot i havent eliminat el tema de
+majúscules/minúscules, continuen patint de problemes a l'hora de
+cercar (molt notablement ús d'accents). De moment ens despreocuparem
+d'aquestes situacions.</p>
+<p>Evidentment, ara caldrà canviar la resta de classes per a adaptar-les
+a aquestes modificacions.</p>
+<p>Crea una nova versió del <tt class="docutils literal">UsaBotiga</tt> amb el següent codi
+d'inicialització:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">inicialitzaBotiga</span><span class="o">(</span><span class="n">Botiga</span> <span class="n">botiga</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Vi</span><span class="o">[]</span> <span class="n">vins</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>
+
+    <span class="n">vins</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2010010003</span><span class="o">,</span>
+            <span class="s">&quot;Roura blanc&quot;</span><span class="o">,</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">6.06</span><span class="o">),</span>
+            <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_BLAU</span><span class="o">,</span>
+            <span class="s">&quot;Juan Antonio Pérez Roura&quot;</span><span class="o">,</span>
+            <span class="n">Origen</span><span class="o">.</span><span class="na">ALELLA</span><span class="o">,</span>
+            <span class="n">Varietat</span><span class="o">.</span><span class="na">SAUVIGNON</span><span class="o">,</span>
+            <span class="n">Tipus</span><span class="o">.</span><span class="na">BLANC</span><span class="o">,</span>
+            <span class="mi">2007</span><span class="o">);</span>
+
+    <span class="n">vins</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011100042</span><span class="o">,</span>
+            <span class="s">&quot;Cercium 2009&quot;</span><span class="o">,</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">5.65</span><span class="o">),</span>
+            <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_VERD_AMUNT</span><span class="o">,</span>
+            <span class="s">&quot;Mas Llunes Vinyes i Cellers&quot;</span><span class="o">,</span>
+            <span class="n">Origen</span><span class="o">.</span><span class="na">EMPORDA</span><span class="o">,</span>
+            <span class="n">Varietat</span><span class="o">.</span><span class="na">SAMSO</span><span class="o">,</span>
+            <span class="n">Tipus</span><span class="o">.</span><span class="na">NEGRE</span><span class="o">,</span>
+            <span class="mi">2009</span><span class="o">);</span>
+
+    <span class="n">vins</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011090002</span><span class="o">,</span>
+            <span class="s">&quot;Masia Serra - IO 2008&quot;</span><span class="o">,</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">13.50</span><span class="o">),</span>
+            <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_VERD_AMUNT</span><span class="o">,</span>
+            <span class="s">&quot;Masia Serra&quot;</span><span class="o">,</span>
+            <span class="n">Origen</span><span class="o">.</span><span class="na">EMPORDA</span><span class="o">,</span>
+            <span class="n">Varietat</span><span class="o">.</span><span class="na">GARNATXA</span><span class="o">,</span>
+            <span class="n">Tipus</span><span class="o">.</span><span class="na">NEGRE</span><span class="o">,</span>
+            <span class="mi">2008</span><span class="o">);</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="nl">v:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">botiga</span><span class="o">.</span><span class="na">afegeix</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BotigaException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Considera també la nova versió del mètode <tt class="docutils literal">creaEspec()</tt></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="n">Vi</span> <span class="nf">creaEspec</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Vi</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span>              <span class="c1">// sense nr. de ref perquè és únic</span>
+            <span class="s">&quot;&quot;</span><span class="o">,</span>                    <span class="c1">// no importa el nom</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">10.50</span><span class="o">),</span> <span class="c1">// com a molt fins a aquest preu</span>
+            <span class="kc">null</span><span class="o">,</span>                  <span class="c1">// no importa el lloc</span>
+            <span class="s">&quot;&quot;</span><span class="o">,</span>                    <span class="c1">// no importa el celler</span>
+            <span class="n">Origen</span><span class="o">.</span><span class="na">EMPORDA</span><span class="o">,</span>        <span class="c1">// la denominació d&#39;origen sí importa</span>
+            <span class="kc">null</span><span class="o">,</span>                  <span class="c1">// no importa la varietat</span>
+            <span class="kc">null</span><span class="o">,</span>                  <span class="c1">// no importa el tipus</span>
+            <span class="o">-</span><span class="mi">1</span>                     <span class="c1">// no importa l&#39;any</span>
+            <span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Finalment, assegura't que crides el mètode <tt class="docutils literal">Botiga.cerca(espec)</tt>
+perquè et surti el mateix resultat que a l'exercici anterior.</p>
+</div>
+<div class="section" id="exercici-3-millorant-el-disseny-de-la-botiga-de-vins">
+<h3>Exercici 3. Millorant el disseny de la botiga de vins</h3>
+<p>Amb els canvis de l'exercici anterior hem millorat força la usabilitat
+de l'aplicació.</p>
+<p>Hi ha, però, un element que &quot;canta&quot;: per cercar els vins, el mètode
+<tt class="docutils literal">Botiga.cerca()</tt> requereix un Vi. El vi que li passem, però, <strong>no
+és</strong> exactament un <tt class="docutils literal">Vi</tt>. Per exemple, no té nr. de referència, el
+preu no és tampoc el preu real del vi sinó un màxim, i molt
+probablement no li indicarem la localització bàsicament perquè és
+probablement un dels objectius principals de la cerca
+<a class="footnote-reference" href="#finsaracercadaloc" id="id7">[7]</a>.</p>
+<p>Quan dissenyem aplicacions orientades a objectes, hem de tenir clar
+que aquests tipus d'incoherències tard o d'hora ens portaran
+problemes.</p>
+<p>El cert és que, com ja ho diu bé el nom del seu paràmetre, el mètode
+<tt class="docutils literal">cerca()</tt> espera una especificació de vi i <strong>no</strong> un vi!.  Si el
+concepte d'<em>especificació de vi</em> sembla tenir tanta rellevància,
+potser ja va sent hora que li reconeguem, no?</p>
+<p>Tenint en compte tot plegat, millorem el nostre disseny afegint la
+classe <tt class="docutils literal">ViEspec</tt> segons el següent diagrama.</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes amb l'especificació de Vins" src="./images/poo022.img002.espec.png" />
+</div>
+<p>Ara que les especificacions de Vi no disposen de preu, el mètode
+<tt class="docutils literal">cerca()</tt> ha d'oferir dues versions per mantenir la funcionalitat de
+cercar fins a un màxim de preu. En concret, el substituirem pels
+mètodes <tt class="docutils literal">cerca(ViEspec)</tt> i <tt class="docutils literal">cerca(ViEspec, preuMax)</tt>.</p>
+<p>Crea una nova versió de l'aplicació de manera que inclogui aquests
+canvis.</p>
+</div>
+<div class="section" id="exercici-4-la-botiga-de-vins-amplia-l-oferta">
+<h3>Exercici 4. La botiga de vins amplia l'oferta</h3>
+<p>La Sra. Estrella està encantada amb l'aplicació que li
+hem fet per a la seva botiga de vins. Li funciona tan bé que vol
+ampliar la seva oferta al món del cava.</p>
+<p>El cava és força semblant al vi: té un nr. de referència i un preu. Es
+col·loca en un lloc del magatzem, i té nom i celler. En quant a les
+varietats de raïm amb les que es fan el cava, podem considerar un
+subconjunt de les que s'utilitzen per l'elaboració del vi.</p>
+<p>El cava presenta, però, les següents diferències respecte el vi:</p>
+<ul class="simple">
+<li>al cava no se li indica la collita <a class="footnote-reference" href="#collitacava" id="id8">[9]</a>.</li>
+<li>hi ha algunes denominacions d'origen pròpies del cava que no
+comparteix amb el vi. En concret, les denominacions típiques del
+cava són: Alt Penedès i Tarragonès.</li>
+<li>Tampoc no coincideix amb la tipologia dels vins. Els tipus de cava
+són: Brut Nature, Extra Brut, Brut, Extra Sec, Sec, Semisec, i Dolç.
+Com sempre, afegirem l'opció &quot;altre&quot; per deixar la porta oberta a
+altres possibilitats.</li>
+</ul>
+<p>Com que són poques, afegirem les denominacions pròpies del cava a les
+del vi, i deixarem a mans dels experts la correcta associació.</p>
+<p>En el cas de la tipologia no aplicarem la mateixa solució que amb les
+denominacions perquè són força més. Així que ens tocarà crear la
+classe <tt class="docutils literal">TipusCava</tt> i reanomenar l'antic <tt class="docutils literal">Tipus</tt> per <tt class="docutils literal">TipusVi</tt>
+amb els mateixos valors que abans.</p>
+<p>El diagrama corresponent seria:</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes amb Cava" src="./images/poo022.img003.cava.png" />
+</div>
+<p>Amb aquest disseny ens trobem què <a class="footnote-reference" href="#canvisdisseny" id="id9">[8]</a>:</p>
+<ul class="simple">
+<li>s'ha evitat duplicar el mètode <tt class="docutils literal">existeix()</tt> amb un
+<tt class="docutils literal">existeixVi()</tt> i <tt class="docutils literal">existeixCava()</tt> basant-se en que els nr. de
+referència són identificatius entre tots dos tipus de productes de
+la botiga.</li>
+<li>el mètode <tt class="docutils literal">afegeix()</tt> queda sobrecarregat ja que amb el tipus del
+paràmetre podem decidir si hem d'afegir a una o altra llista.</li>
+<li>amb la resta de mètodes, però, no podem fer servir aquesta tècnica
+perquè no podem decidir el tipus de sortida a partir del de
+l'entrada. Això ens obliga a disposar de mètodes diferents amb codi
+pràcticament idèntic.</li>
+</ul>
+<p>En tot cas, ara ens toca realitzar els canvis que calguin a la nostra
+aplicació de manera que integri el nou producte.</p>
+<p>Per la creació d'un cava, pots fer servir:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">Cava</span> <span class="n">cava</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cava</span><span class="o">(</span><span class="mi">2009100004</span><span class="o">,</span>
+        <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">12.10</span><span class="o">),</span>
+        <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_VERMELL</span><span class="o">,</span>
+        <span class="s">&quot;Marfil escumós blanc de negre brut&quot;</span><span class="o">,</span>
+        <span class="s">&quot;Alella vinícola&quot;</span><span class="o">,</span>
+        <span class="n">Origen</span><span class="o">.</span><span class="na">ALELLA</span><span class="o">,</span>
+        <span class="n">Varietat</span><span class="o">.</span><span class="na">GARNATXA</span><span class="o">,</span>
+        <span class="n">TipusCava</span><span class="o">.</span><span class="na">BRUT</span><span class="o">);</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="exercici-5-pero-no-teniem-herencia-a-la-poo">
+<h3>Exercici 5. Però... no teníem herència a la POO?</h3>
+<p>Segur que ja te n'havies adonat. Aquest disseny no està fent us
+d'un dels mecanismes més paradigmàtics de la programació orientada a
+objectes: l'herència. Això fa que hi hagi un munt de informació
+duplicada.</p>
+<p>Millora el disseny anterior fent servir les següents pistes:</p>
+<p>Pista 1. Fixa't què tenen en comú el vi i el cava. Sí, tots dos són
+elements líquids produïts amb matèries primeres similars, amb una
+certa quantitat d'alcohol que la Sra. Estrella ven embotellats.
+Va, no ens emboliquem. Què tal simplement dir que són <em>begudes</em>?.</p>
+<p>Pista 2. No tan ràpid! Moltes de les propietats de les classes Vi i
+Cava, en realitat les contenen a partir d'altres classes (ex. ViEspec)
+Per tant, potser no resulta tant adequat posar a Beguda atributs com
+ara el nom de la beguda.</p>
+<p>Pista 3. Per cert, té sentit permetre instanciar una beguda en
+general? No hauríem de permetre només instàncies de Vi i de Cava?</p>
+<p>Pista 4. Què tenen en comú les especificacions de Vi i de Cava? No
+sembla que ja hem fet quelcom similar fa un moment?</p>
+<p>Pista 5. Malgrat la botiga podria funcionar amb una única llista de
+begudes, potser resultarà convenient disposar d'una llista per cada
+classe de begudes.</p>
+<p>Pista 6. Considera el següent diagrama UML com a referència dels
+canvis que has d'implementar.</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes amb herència" src="./images/poo022.img004.basic.png" />
+</div>
+</div>
+</div>
+<div class="section" id="la-botiga-de-vi-es-redissenya">
+<h2>La botiga de vi es redissenya</h2>
+<p>Tot i que aquest darrer disseny presenta clares millores respecte els
+anteriors, encara hi trobem algunes pegues:</p>
+<ul class="simple">
+<li>la Sra. Estrella podria estar interessada en realitzar cerques amb
+independència de si és vi o cava? Pensa que potser només li estan
+demanant per un determinat celler i no importa si és vi o cava.  La
+versió actual permetria fàcilment (i elegantment) afegir aquesta
+funcionalitat?</li>
+<li>el nostre codi presenta força duplicació. Per exemple, les
+classes Vi i Cava pràcticament són idèntiques excepte pel nom.
+Aquest problema s'accentua més en el cas que afegim un nou producte
+com ara el <em>vi d'agulla</em> que té els mateixos atributs que el vi
+estàndard (o de taula)</li>
+<li>el nostre codi presenta una certa resistència a canvis raonables.
+Les classes són altament dependents entre si. Tant que pràcticament
+qualsevol canvi afecta a la major part de les classes.<ol class="arabic">
+<li>Què costaria afegir un nou atribut a les begudes? Per exemple,
+imagina que ens interessa afegir la <em>graduació</em> a les diferents
+begudes? Un detall com aquest ens obliga a canviar pràcticament
+<strong>totes</strong> les classes!</li>
+<li>Què costaria afegir noves begudes a la botiga?  Per exemple,
+imagina que volem incorporar el <em>vi d'agulla</em>. Quantes classes es
+veuen afectades? És desitjable? Com afecta al problema de
+duplicació de codi?</li>
+</ol>
+</li>
+</ul>
+<p>Anem a veure com podem resoldre, o si més no alleugerir, aquests
+problemes al nostre disseny.</p>
+<div class="section" id="exercici-6-flexibilitzant-el-disseny-per-nous-atributs">
+<h3>Exercici 6. Flexibilitzant el disseny per nous atributs</h3>
+<p>Sabem que el nostre disseny, tal i com està, ens obliga a realitzar
+canvia a la majoria de les classes simplement per afegir un atribut
+nou.</p>
+<p>Considera la nova propietat del vi <tt class="docutils literal">graduacio</tt> amb les possibilitats
+<em>alta</em>, <em>mitjana</em>, <em>baixa</em>, <em>sense alcohol</em>, i <em>altre</em>; i el mètode
+get corresponent.</p>
+<p>Fes una revisió ràpida i apunta totes les classes que requereixen ser
+modificades per a integrar aquest canvi.</p>
+<p>El problema està en que totes les classes són molt interdependents. I
+l'objectiu seria trobar un disseny que ens permeti evitar modificar
+tantes coses per cada canvi a les propietats.</p>
+<p>Segueix els següents passos:</p>
+<ol class="arabic simple">
+<li>Abans de començar a codificar, dibuixa un diagrama UML que faràs
+servir com a guió per realitzar els canvis que se t'indiquen a
+continuació.</li>
+<li>canvia el constructor de les diferents begudes de manera que rebin
+directament una especificació en comptes de les seves propietats.
+Aquest canvi permetrà independitzar les classes de begudes de les
+propietats que les especifiquen.
+Ofereix també un <tt class="docutils literal">getEspec()</tt> que permeti recuperar
+l'especificació <a class="footnote-reference" href="#especinmutable" id="id10">[10]</a> . Ja no caldrà la resta de
+mètodes com ara <tt class="docutils literal">Vi.getNom()</tt>.</li>
+<li>canvia els mètodes <tt class="docutils literal">Botiga.cerca()</tt> de manera que aquest delegui
+la comparació de especificacions a un nou mètode <tt class="docutils literal">boolean
+BegudaEspec.coincideix(BegudaEspec)</tt> qui farà realment la
+comparació de les propietats que formen part de l'especificació.</li>
+<li>modifica el codi de prova perquè sigui capaç de funcionar amb els
+nous constructors.</li>
+<li>afegeix ara la nova propietat. Apuntat en quantes classes cal ara
+fer canvis.</li>
+</ol>
+<p>Fixa't que amb aquest nou disseny, afegir una nova propietat a
+l'especificació d'un vi només obliga a canviar <tt class="docutils literal">ViEspec</tt> i, és clar,
+allà on es construeixin les seves instàncies. Fixat que ara moltes
+classes com ara <tt class="docutils literal">Vi</tt> i <tt class="docutils literal">Botiga</tt> se n'han de preocupar!.</p>
+</div>
+<div class="section" id="exercici-7-el-celler-creix">
+<h3>Exercici 7. El celler creix</h3>
+<p>Ja sabem que la Sra. Estrella no es quedarà pas amb només vi i cava. Ens
+toca ampliar l'oferta a nous productes: el vi generós, el vi d'agulla
+i el vi gasificat.</p>
+<p>El vi generós presenta una tipologia pròpia amb els valors: ranci,
+fondellol, mistela, dolç, mut negre, mut blanc i vimblanc. A
+banda, té una propietat nova per indicar el licor que el fa &quot;generós&quot;.
+La propietat <em>licor</em> pot tenir els valors: reforçat, generós, sec i
+altre. Per la resta, coincideix amb el vi de taula (el que ja tractava
+la nostra aplicació)</p>
+<p>El vi d'agulla és en tot, igual al vi de taula. El vi gasificat només
+presenta les propietats genèriques de BegudaEspec.</p>
+<p>Ajudat d'un diagrama UML per descriure el que has d'implementar.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="refheadfirst" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>El cas que seguirem està inspirat en els exemples
+trobats al llibre <a class="reference external" href="http://www.headfirstlabs.com/books/hfooad/">Head First Object Oriented Analysis and Design</a> de l'editorial
+O'Reilly de novembre de 2006. Es tracta d'un llibre de seguiment
+agradable que et recomano si vols aprofundir en aquest tema.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="consumresponsable" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>L'autor vol deixar clar des de bon començament
+que, amb l'ús de begudes alcohòliques en els següents exercicis, de
+cap manera pretén incitar al seu consum.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="simplificacions" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Donat que el vi disposa d'una varietat
+impressionant de característiques i matisos, en aquest exercici ens
+veiem forçats a fer importants simplificacions. Si entens molt de
+vins, espero que sàpigues acceptar-les.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="varietatraim" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Suposarem que només hi ha una varietat de raïm
+per vi. Si tens temptacions d'afegir una llista de varietats, et
+proposo que ho deixis per la darrera versió.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="minimdo" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>Per simplicitat, s'ha eliminat accents i altres
+caràcters especials. Si la denominació d'origen del teu vi favorit
+no es troba aquí, estàs convidat a afegir-la. Aquesta possibilitat
+d'ampliació és vàlida per a qualsevol altre llista de l'enunciat.
+Intenta, però, no treure'n d'existents encara que no t'agradin.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="caractersespecials" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[6]</a></td><td>Potser voldràs posar-te a prova i fer que la
+comparació ignori caràcters especials com ara accents.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="finsaracercadaloc" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td>És cert, fins ara havíem inclós la
+localització a l'algorisme de cerca. No és l'error de disseny més
+greu que hem comés aquí. En tot cas, algú podria argumentar que
+potser pugui tenir sentit cercar per aquest paràmetre. Si
+l'argument convenç l'Estrella, podrem recuperar aquesta
+funcionalitat amb un mècanisme similar al que fem servir per
+controlar el preu màxim.  Perquè no dins de <tt class="docutils literal">ViEspec</tt>? Segur que
+quan acabis aquest exercici ja podràs trobar la resposta sense
+ajut.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="canvisdisseny" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[8]</a></td><td>És molt probable que a aquestes alçades de curs ja
+vegis molt clar com millorar aquest disseny. Amb tot, et proposo
+que el segueixis tal i com es demana i tinguis una mica de
+paciència.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="collitacava" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[9]</a></td><td>D'acord, segurament sí s'indica la collita pels més
+entesos en cava. Per fer més ric l'exemple suposarem que la gent
+sol mirar l'any pel vi i no pel cava.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="especinmutable" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id10">[10]</a></td><td>Donat que les especificacions són immutables, no
+ens hem de preocupar de guardar i lliurar-ne còpies.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./conjunts-en-java.html">
+        Conjunts en Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./mapes-ii.html">
+        Mapes II
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

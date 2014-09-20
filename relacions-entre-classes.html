@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Relacions entre classes</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Relacions entre classes             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./membres-dinstancia-i-de-classe.html">
+        Membres d'instància i de classe
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./herencia.html">
+        Herència
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Relacions entre classes</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En la programació orientada a objectes, els programes es composen de
+classes que interaccionen les unes amb les altres. Aquesta interacció
+de les classes es realitza en funció de la relació que tenen aquestes
+classes entre si.</p>
+<p>Aquest document explora aquestes relacions amb una excepció important,
+<em>l'herència</em>, que serà abordada en un altre document.</p>
+<p>Aquesta introducció es realitza de manera pràctica, a partir de
+l'anàlisi de dos exercicis.</p>
+<p>Es pressuposa coneixement de creació i construcció de classes en
+Java.</p>
+</div>
+<div class="section" id="exercici-1-el-picarol">
+<h2>Exercici 1. El Picarol</h2>
+<p>Definició: Quan una classe A usa els serveis (membres públics) d'una
+altra B, es diu que hi ha una <em>dependència</em> entre la classe A i la B.
+Quan B pateix algun canvi en la seva interfície, A podria requerir ser
+modificat.</p>
+<p>Definició: Es diu que una classe A <em>agrega</em> una classe B quan té una
+dependència de B, de manera que l'existència de B és independent de la
+de A. És a dir la instància de B pot ser creada abans que la de A i
+&quot;sobreviure&quot; després de A. Es diu que A usa (uses-a) B</p>
+<p>Aquesta relació de dependència es coneix com a <strong>agregació</strong>. En java,
+s'implementa normalment amb una propietat de l'objecte agregat. En cas
+d'haver de duplicar una instància de la classe A, les dues instàncies
+farien referència a la mateixa instància de la classe B.</p>
+<p>Considera la classe Picarol que ofereix el servei (mètode) <tt class="docutils literal">sona()</tt>
+que de moment, simplement escriu per pantalla el missatge
+&quot;clink-clink&quot;.</p>
+<p>Ara el nostre gat Renat, si li pengem un picarol, cada cop que es
+mogui (s'aixeca, seu o s'estira), farà sonar el picarol
+amb independència de si el gat calla o parla.</p>
+<p>Implementa la classe Picarol i amplia la classe del gat Renat amb els
+següents mètodes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">boolean tePicarol()</tt>: cert si té un picarol assignat. Inicialment no en té.</li>
+<li><tt class="docutils literal">posaPicarol(Picarol)</tt>: assigna un picarol. Si en tenia un, el
+substitueix pel nou</li>
+<li><tt class="docutils literal">Picarol treuPicarol()</tt>: retorna el picarol i l'elimina. Si no en
+tenia cap, retorna null.</li>
+</ul>
+<p>Crea una nova versió de l'entorn operatiu del gat Renat, que ofereixi
+les noves comandes:</p>
+<div class="highlight"><pre>posa&#39;t picarol
+treu-te picarol
+tens picarol?
+</pre></div>
+<p>En cas que ja tingui un picarol i li demanin posar-se un altre
+respondrà amb &quot;ja tinc picarol&quot;. En canvi, si no en tenia i se li
+demana treure'l dirà &quot;no en tinc cap de picarol&quot;. A la pregunta si té
+picarol contestarà &quot;sí&quot; o &quot;no&quot; segons correspongui. Cal tenir present
+que si Renat no pot parlar, en comptes d'aquests missatges dirà
+l'habitual &quot;...&quot;.</p>
+<p>Crea un joc de proves que mostri el funcionament d'aquestes noves
+funcionalitats així com el fet que sona quan el gat es mou.</p>
+<p>Atenció: el Gat Renat <strong>no</strong> ha de ser responsable de crear la
+instància de cap Picarol! És quelcom que els seus usuaris li donaran,
+si ho estimen oportú.</p>
+</div>
+<div class="section" id="exercici-2-els-ulls-del-gat-renat">
+<h2>Exercici 2. Els ulls del gat Renat</h2>
+<p>Definició: Es diu que una classe A es <em>composa</em> d'una altra B quan
+existeix una dependència de A a B com a l'agregació, però en aquest
+cas, la instància de B està completament lligada a la de A. Es diu
+també B forma part de A i que A té (has-a) B.</p>
+<p>Aquesta relació de dependència es coneix com <strong>composició</strong>. En java,
+la implementació és molt similar a la de la relació d'agregació: amb
+una propietat. La diferència consisteix en el fet que la creació de la
+instància (on es fa el new) és dins de la classe A. En cas que
+haguéssim de duplicar una instància de la classe A, hauríem també de
+duplicar la instància de la classe B.</p>
+<p>Implementa la classe UllDeGat. Un UllDeGat pot estar obert o tancat i
+ofereix els mètodes <tt class="docutils literal">obret()</tt>, <tt class="docutils literal">tancat()</tt> i <tt class="docutils literal">boolean
+estasObert()</tt>. En obrir-se els ulls <strong>sempre</strong> fa el soroll &quot;nyeek&quot; i
+en tancar-se <strong>sempre</strong> fa el soroll &quot;plonx&quot;. Evidentment, si demanem
+obrir quan els ulls ja es troben oberts, no en farà res. Inicialment
+l'ull estarà tancat per defecte i no farà soroll de tancament en
+néixer.</p>
+<p>Amplia la classe GatRenat de manera que ara tingui <strong>dos</strong> ulls. Els
+ulls estaran oberts o tancats depenent de l'estat del gat. Si el gat
+està dret, tots dos ulls estaran oberts. Si està assegut, l'ull dret
+estarà obert i l'esquerre estarà tancat. Quan està estirat, tots dos
+ulls estaran tancats. Per facilitar la prova, el gat sempre començarà
+a obrir/tancar l'ull esquerre abans que el dret.</p>
+<p>Crea un joc de proves que tingui com a entrada el joc de proves
+que vas crear quan l'entorn no considerava ni ulls ni picarol, i la
+sortida quedi adaptada als sorolls dels ulls. El joc de proves hauria
+de ser vàlid tan per l'entorn que considerava el picarol com per
+l'anterior, sense requerir cap canvi en ambdós programes.</p>
+</div>
+<div class="section" id="exercici-3-ampliacio-la-llista-dinamica-en-java">
+<h2>Exercici 3. (ampliació) La llista dinàmica en Java</h2>
+<p><strong>Atencio</strong>: Aquest és un exercici d'ampliació. Encara que opcional,
+pot resultar molt interessant per a aquells estudiants que no hagin
+pogut treballar amb memòria dinàmica de manera explícita (ex. amb el
+llenguatge C)</p>
+<p>Implementa en Java la llista dinàmica vista a la secció <strong>Constructors
+i Destructors</strong> de la introducció als <a class="reference external" href="./constructors-part-i.html">constructors</a>.</p>
+<p>Et caldran tres classes:</p>
+<ol class="arabic">
+<li><p class="first">Node: tindrà dos propietats: <em>valor</em> que per simplificar serà un
+string, i <em>seguent</em> que serà de tipus Node (sí, com la classe!) i
+que per defecte valdrà null.</p>
+<p>La classe oferirà la possibilitat d'accedir a les dues propietats
+(get/set) i inicialitzar-les totes dues, una o cap, en el moment de
+la seva construcció.</p>
+</li>
+<li><p class="first">Llista: tindrà una propietat: <em>primer</em> de tipus Node que
+inicialment apuntarà a null.</p>
+<p>Oferirà els mètodes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">void afegir(int, String)</tt>: afegeix un nou node a la posició de
+la llista indicada pel primer paràmetre i el valor expressat pel
+segon. En cas que la posició especificada sigui més gran que el
+nombre d'elements a la llista, simplement es col·locarà el nou
+element al final. Altrament, es desplaçaran convenientment tots
+els nodes de la llista per fer encabir el nou a la posició
+requerida.</li>
+<li><tt class="docutils literal">void eliminar(int)</tt>: elimina el node situat a la posició
+indicada pel paràmetre. Si la posició és superior al nombre
+d'elements de la llista, no fa res.</li>
+<li><tt class="docutils literal">void elimina(String)</tt>: elimina tots els nodes que el valor
+coincideixi amb el del paràmetre. Si no hi ha cap, no fa res.</li>
+<li><tt class="docutils literal">String toString()</tt>: retorna una representació de la llista en
+forma de String. Així, si la llista conté els valors &quot;Hola&quot;, &quot;i&quot;,
+&quot;adéu&quot;, aquest mètode retornarà el String &quot;[Hola -&gt; i -&gt; adéu]&quot;. Si
+està buida, retornarà simplement &quot;[]&quot;</li>
+</ul>
+</li>
+<li><p class="first">UsaLlista: disposarà d'un <tt class="docutils literal">main()</tt> que construirà una llista,
+afegirà els valors &quot;Hola&quot;, &quot;i&quot;, adéu&quot;, i després els eliminarà un a
+un començant pel primer. A cada pas, mostrarà el contingut de la
+llista per sortida estàndard. El resultat hauria de ser quelcom
+molt similar a:</p>
+<div class="highlight"><pre>[]
+[Hola]
+[Hola -&gt; i]
+[Hola -&gt; i -&gt; adéu]
+[i -&gt; adéu]
+[adéu]
+[]
+</pre></div>
+</li>
+</ol>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./membres-dinstancia-i-de-classe.html">
+        Membres d'instància i de classe
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./herencia.html">
+        Herència
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

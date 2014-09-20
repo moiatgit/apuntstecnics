@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Mapes II</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Mapes II             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./mapes-i.html">
+        Mapes I
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>Mapes II</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document correspon a la segona i darrera part de l'estudi del
+concepte d'associació <em>clau-valor</em> que aquí anomenem <em>mapes</em>.</p>
+<p>Pressuposa que s'ha seguit la <a class="reference external" href="./mapes-i.html">primera part</a>. De fet, la numeració dels
+exercicis d'aquesta part és consecutiva respecte les anteriors.</p>
+<p>En aquesta segona part reprenem el desenvolupament de la botiga de
+vins de la Sra. Estrella a partir del darrer exercici de la primera
+part.</p>
+</div>
+<div class="section" id="un-disseny-discutible">
+<h2>Un disseny discutible</h2>
+<p>Ens havíem quedat amb un disseny de la botiga de vins de la Sra.
+Estrella similar al que descriu el següent diagrama.</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes amb la botiga de Vins" src="./images/poo023.img001.inicial.png" />
+</div>
+<p>Com podem veure, cada cop que hem d'afegir una nova beguda hem de
+crear un mínim de dues classes: la de la beguda i la de la seva
+especificació. Sovint el contingut d'aquestes classes és idèntic al
+d'altres existents com per exemple les especificacions de Vi i
+ViGasificat. De fet, el codi de Vi, Cava, etc. té poc més que un
+constructor! És pitjor en el cas del vi gasificat, que no afegeix cap
+atribut als genèrics de beguda. Amb tot hem de crear la classe buida
+perquè funcioni tot plegat! A més a més, ens ha tocat modificar Botiga
+per a afegir un mecanisme de cerca per cada beguda i el mètode per a
+afegir una instància de beguda a l'inventari!</p>
+<p>És clar que tot plegat sembla un problema de tipus copy&amp;paste que, amb
+l'ajut d'un &quot;mico picatecles&quot; <a class="footnote-reference" href="#picatecles" id="id1">[1]</a> i una mica de paciència
+corregint els petits errors que se li escapin al mico... Però, també
+podem aspirar a un disseny millor, no?</p>
+<p>Convenim doncs que tot plegat és un disseny que, veient les ànsies
+d'ampliació de la Sra. Estrella, convindrà revisar, oi?</p>
+<p>Per a adreçar una solució a aquests problemes de disseny,
+(re)considerarem els següents elements: interfaces, encapsulació,
+canvi i enumerats.</p>
+<div class="section" id="interfaces">
+<h3>1. interfaces.</h3>
+<p>Quan implementem el nostre codi contra una interface en comptes d'una
+classe, el fem automàticament més flexible donat que podem fer servir
+diferents classes que implementen la interface sense modificar-lo.
+Fins i tot aquelles classes que encara no han estat programades!</p>
+<p>Per exemple, imagina que tens la següent jerarquia:</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes pels jugadors" src="./images/poo023.img002.jugadors.png" />
+</div>
+<p>Imagina que has d'implementar la classe Equip que té un mètode
+anomenat <tt class="docutils literal"><span class="pre">afegeixJugador(«?»)</span></tt> que permet afegir un jugador a
+l'equip.  Quin penses que serà el tipus més adequat per al paràmetre
+d'aquest mètode? En fem un per cada tipus de jugador (ex.
+<tt class="docutils literal">JugadorFutbol</tt>) o un de sol per Jugador?.</p>
+</div>
+<div class="section" id="encapsulacio">
+<h3>2. encapsulació</h3>
+<p>Sí, ja n'hem parlat a fartar. L'encapsulació és aquell mecanisme que
+amaga la implementació interna d'un element, a la que només es pot
+accedir mitjançant un conjunt de mètodes/serveis. Aquest mecanisme ens
+ofereix diferents avantatges ja coneguts com ara la facilitat de
+reutilització de codi, la modificabilitat de la implementació interna
+sense afectar al codi que la fa servir, i l'assegurament de la
+integritat de les dades internes.</p>
+<p>Un altre avantatge, del que potser no hem fet tan d'èmfasi fins ara,
+és que pot permetre protegir el nostre codi de canvis innecessaris. La
+idea bàsica és que intentarem aïllar les parts del nostre codi que més
+difícilment variaran d'aquelles que ho faran més probablement. És a
+dir, <strong>encapsularem allò que varia</strong>.</p>
+<p>Per exemple, imaginem que tenim la classe Pintor amb la següent
+descripció:</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes dels pintors" src="./images/poo023.img003.pintor.png" />
+</div>
+<p>Podem pensar que els diferents estils de pintors (impressionistes,
+cubistes, surrealistes, etc.) prepararan els cavallets i netejaran els
+pinzells de la mateixa manera <a class="footnote-reference" href="#pintura" id="id2">[2]</a>. En canvi, a l'hora de pintar, cadascú
+farà servir una manera molt diferent depenent del seu estil.</p>
+<p>Haurem, per tant, de trobar un disseny que permeti mantenir fixa la
+part que no varia, i que a l'hora faci molt fàcil ampliar/modificar la
+part que sí varia.</p>
+<p>Podem implementar Pintor com una classe abstracta. On
+<tt class="docutils literal">preparaCavallet()</tt> i <tt class="docutils literal">netejaPinzells()</tt> estiguin implementades i
+<tt class="docutils literal">pinta()</tt> sigui abstracta. Així, cada estil de pintor pot estendre
+aquesta classe i implementar el mètode <tt class="docutils literal">pinta()</tt> de la manera
+corresponent al seu estil. Podria funcionar, tot i que això impediria
+que alguns estils de pintor poguessin pertànyer a una altra jerarquia
+si els calgués (herència simple)</p>
+<p>Fixa't, però, en aquesta altra proposta:</p>
+<div class="figure align-center">
+<img alt="Diagrama de classes amb proposta amb interface" src="./images/poo023.img004.pintura.png" />
+</div>
+<p>On <tt class="docutils literal">Pintor.pinta()</tt> podria ser quelcom similar a:</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">pinta</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">estil</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">estil</span><span class="o">.</span><span class="na">pinta</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Aquesta solució no &quot;malgasta&quot; herència. A més a més, podem instanciar
+directament la classe Pintor en comptes d'estar forçat a fer servir
+les seves subclasses. Fixa't que Pintor està implementat contra una
+interface i no contra una classe concreta. Això li dóna una gran
+flexibilitat ja que pot funcionar fins i tot amb estils que encara
+estan per descobrir!</p>
+</div>
+<div class="section" id="canvi">
+<h3>3. canvi</h3>
+<blockquote>
+<p>The only constant is change, continuing change, inevitable change,
+that is the dominant factor in society today. No sensible decision
+can be made any longer without taking into account not only the
+world as it is, but the world as it will be.</p>
+<p class="attribution">&mdash;Isaac Asimov</p>
+</blockquote>
+<p>La qüestió no és si el nostre disseny d'avui haurà de canviar o no,
+sinó <strong>quan</strong> ho haurà de fer. Per a fer el nostre codi més resistent
+al canvi, un dels &quot;trucs&quot; ben coneguts és assegurar-nos que cada
+classe tingui un <em>únic punt de canvi</em>.</p>
+<p>Per exemple, considera la següent classe:</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">Cotxe</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">arrenca</span><span class="o">()</span> <span class="o">{}</span>
+    <span class="kt">void</span> <span class="nf">atura</span><span class="o">()</span>  <span class="o">{}</span>
+    <span class="kt">void</span> <span class="nf">canviaRodes</span><span class="o">(</span><span class="n">Roda</span><span class="o">[]</span> <span class="n">rodesNoves</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="kt">void</span> <span class="nf">condueix</span><span class="o">(</span><span class="n">Lloc</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="kt">void</span> <span class="nf">neteja</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Fixa't en tot el que arriba a fer aquesta classe. A banda de saber com
+arrencar i aturar el cotxe, també ha de conèixer com canviar les
+rodes, sobre la neteja, i com ha de ser conduït. Tot plegat, un munt
+de punts de possible canvi. L'haurem de modificar si varia el
+sistema de collat de les rodes, o la manera de conduir del conductor o
+de rentar la tapisseria.</p>
+<p>Si la teva classe té massa punts de canvi és que probablement està
+fent massa coses. Solucionar-ho és tan simple com dividir les
+funcionalitats en més classes. Per exemple, considera el disseny</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">Cotxe</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">arrenca</span><span class="o">()</span> <span class="o">{}</span>
+    <span class="kt">void</span> <span class="nf">atura</span><span class="o">()</span>  <span class="o">{}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">NetejaCotxes</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">neteja</span><span class="o">(</span><span class="n">Cotxe</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Conductor</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">condueix</span><span class="o">(</span><span class="n">Cotxe</span><span class="o">,</span> <span class="n">Lloc</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span>
+<span class="kd">class</span> <span class="nc">Mecanic</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">canviaRodes</span><span class="o">(</span><span class="n">Cotxe</span><span class="o">,</span> <span class="n">Roda</span><span class="o">[]</span> <span class="n">rodesNoves</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Fixa't que el nou disseny fa que cada classe tingui un mínim de punts
+de canvi.</p>
+</div>
+<div class="section" id="enum">
+<h3>4. enum</h3>
+<p>Els enumerats en java són en realitat un tipus especial de classe que
+indica les instàncies possibles.</p>
+<p>Com una classe qualsevol, té la possibilitat de definir els seus
+propis atributs i mètodes i, també, implementar interfaces. De fet,
+tot enum ve, de fàbrica, implementant dues interfaces
+java.io.Serializable i java.lang.Comparable.</p>
+<p>Considera el següent codi d'exemple:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Codi d&#39;exemple per mostrar el funcionament dels enums</span>
+<span class="cm"> * Es pot trobar informació detallada per exemple a:</span>
+<span class="cm"> *    http://download.oracle.com/javase/1.5.0/docs/guide/language/enums.html</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExempleUsEnum</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// recorrem els valors de Intercanvi com si fossin Codificat</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Codificat</span> <span class="nl">teCodi:</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">codi</span> <span class="o">=</span> <span class="n">teCodi</span><span class="o">.</span><span class="na">getCodi</span><span class="o">();</span>
+            <span class="cm">/* seria més eficient fer el següent codi recorrent els valors</span>
+<span class="cm">             * de Intercanvi amb elements de tipus Intercanvi, però en aquest</span>
+<span class="cm">             * cas no veuríem que podem tractar-los com a Codificat */</span>
+            <span class="n">Intercanvi</span> <span class="n">en</span> <span class="o">=</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">fromCodi</span><span class="o">(</span><span class="n">codi</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El codi de &#39;&quot;</span><span class="o">+</span> <span class="n">en</span> <span class="o">+</span> <span class="s">&quot;&#39; és &quot;</span> <span class="o">+</span> <span class="n">codi</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="cm">/* una interface senzilla per a tot allò que disposi d&#39;un codi numèric */</span>
+<span class="kd">interface</span> <span class="nc">Codificat</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCodi</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="cm">/* Un enum és bàsicament una classe que indica les instàncies possibles,</span>
+<span class="cm"> * amb el seu constructor i els seus membres. */</span>
+<span class="kd">enum</span> <span class="n">Intercanvi</span> <span class="kd">implements</span> <span class="n">Codificat</span> <span class="o">{</span>
+    <span class="n">ALTRES</span>      <span class="o">(</span><span class="mi">0</span><span class="o">),</span>    <span class="c1">// entre parèntesis els atributs del constructor</span>
+    <span class="n">COMPRES</span>     <span class="o">(</span><span class="mi">1</span><span class="o">),</span>
+    <span class="n">VENDES</span>      <span class="o">(</span><span class="mi">2</span><span class="o">),</span>
+    <span class="n">INTERCANVIS</span> <span class="o">(</span><span class="mi">4</span><span class="o">);</span>    <span class="c1">// el &#39;;&#39; és requerit en aquest cas!</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">codi</span><span class="o">;</span>   <span class="c1">// aquí va la declaració dels atributs del constructor</span>
+
+    <span class="kd">private</span> <span class="nf">Intercanvi</span><span class="o">(</span><span class="kt">int</span> <span class="n">codi</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">codi</span> <span class="o">=</span> <span class="n">codi</span><span class="o">;</span> <span class="o">}</span>  <span class="c1">// el constructor</span>
+
+    <span class="c1">// redefinim el toString()</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">toLowerCase</span><span class="o">();</span> <span class="o">}</span>
+
+    <span class="c1">// una manera d&#39;obtenir el valor corresponent a un codi.</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Intercanvi</span> <span class="nf">fromCodi</span><span class="o">(</span><span class="kt">int</span> <span class="n">codi</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Intercanvi</span> <span class="nl">e:</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCodi</span><span class="o">()</span> <span class="o">==</span> <span class="n">codi</span><span class="o">)</span> <span class="k">return</span> <span class="n">e</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// implementació del mètode definit a la interface</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCodi</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">codi</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Amb la seva sortida</p>
+<div class="highlight"><pre>El codi de &#39;altres&#39; és 0
+El codi de &#39;compres&#39; és 1
+El codi de &#39;vendes&#39; és 2
+El codi de &#39;intercanvis&#39; és 4
+</pre></div>
+</div>
+</div>
+<div class="section" id="redissenyant-la-botiga">
+<h2>Redissenyant la botiga</h2>
+<p>De vegades passa que les decisions que prenem ens porten a camins
+tortuosos. Hi ha una dita hindú que diu:</p>
+<blockquote>
+No importa quan de temps portis caminant per un camí, si te
+n'adones que no va allà on vols, fes mitja volta!</blockquote>
+<p>Doncs bé, amb els quatre punts vists anteriorment ens toca analitzar
+com podríem aplicar-los al redisseny de la botiga de begudes de la
+Sra. Estrella.</p>
+<div class="section" id="exercici-8-els-tipus-de-beguda">
+<h3>Exercici 8. Els tipus de beguda</h3>
+<p>Un dels problemes que té el nostre disseny és que les classes de les
+diferents begudes no fan pràcticament res diferent entre si. En
+realitat, només les posem per indicar distingir cada tipus de beguda.</p>
+<p>Normalment creem noves classes per implementar comportaments que no
+tenen les existents, però en aquest cas, la classe Vi fa el mateix que
+Cava, és a dir, únicament contenir una especificació de beguda.</p>
+<p>Perquè no afegir una nova propietat a Beguda que sigui TipusBeguda (un
+enum amb VI, CAVA...  podria fer un bon paper) Com que totes les
+classes <tt class="docutils literal"><span class="pre">«...»Espec</span></tt> són descendents de <tt class="docutils literal">BegudaEspec</tt>, podem tenir
+accés a les diferents especificacions sense gaires problemes, oi?</p>
+<p>Això sí, ara Beguda s'ha de poder instanciar, és clar!</p>
+<p>On posarem el tipus de beguda, a Beguda o a BegudaEspec?
+<a class="footnote-reference" href="#redundanttipus" id="id3">[3]</a> Una posiblitat seria:</p>
+<ul class="simple">
+<li>afegeix una propietat a cada especificació concreta que
+guardi el tipus de beguda a la que correspon l'especificació. Pensa
+si cal que cada instància tingui el seu propi tipus i si aquest pot
+variar.</li>
+<li>afegeix un mètode a BegudaEspec que retorni el tipus de beguda.</li>
+</ul>
+<p>Fixa't també que ara que ja no distingim com a classes els diferents
+tipus de begudes, hi ha un munt de mètodes de la classe Botiga que es
+simplifiquen.</p>
+<p>Defineix el UML amb aquests canvis i implementa'ls.</p>
+</div>
+<div class="section" id="exercici-9-tantes-especificacions-fan-nosa">
+<h3>Exercici 9. Tantes especificacions fan nosa!</h3>
+<p>D'acord, ens hem carregat les subclasses de beguda i, amb elles,
+una bona part de la complexitat del nostre disseny.</p>
+<p>Encara, però, no hem resolt el tema de les especificacions. Cada cop
+que volem afegir una nova beguda ens cal tenir en compte la seva
+especificació.</p>
+<p>Pensa: l'especificació d'una beguda no deixa de ser un conjunt més o
+menys variable de propietats de beguda com ara el nom, l'origen,
+etc.  I una propietat no deixa de ser un nom i un valor. El nom
+identifica la propietat i és únic respecte a la resta de propietats.
+Per exemple la propietat origen pot tenir el valor Origen.PENEDES.</p>
+<p>Seria possible guardar aquest conjunt de propietats en algun
+contenidor? Hi ha alguna classe que ens ofereixi la possibilitat
+d'afegir parells (clau, valor)? La resposta és SÍ! En un <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html">Map</a>.</p>
+<div class="figure align-center">
+<img alt="Jerarquia de classes de HashMap" src="./images/poo023.img005.hashmap.png" />
+</div>
+<p>Alguns dels mètodes que ens caldran:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">boolean containsKey(Object)</tt></p>
+<p>Retorna cert si el mapa conté la clau especificada.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">V get(Object)</tt></p>
+<p>Retorna el valor associat a la clau especificada al paràmetre o
+null si no conté cap valor associat a la clau.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">V put(K, V)</tt></p>
+<p>Associa la clau al valor i retorna l'antic valor associat a
+aquesta clau (null si no n'hi havia)</p>
+</li>
+</ul>
+<p>De moment, escollirem la classe <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/HashMap.html">HashMap</a>.
+Un tipus de Map amb un accés als elements força eficient.</p>
+<p>Abans de començar a codificar, com sempre, dibuixa el diagrama UML amb
+els nous canvis. Et servirà de guia per no perdre't.</p>
+<p>Alguns dels canvis que haurem de fer:</p>
+<ul class="simple">
+<li>crear un nou enumerat anomenat TipusPropietat amb valors com ara
+NOM, ORIGEN, etc.</li>
+<li>crear una interface anomenada PropietatBeguda. Planteja't si cal
+que especifiqui algun mètode.</li>
+<li>fer que els diferents enums (compte amb propietats com ara el nom
+o la collita) de les propietats implementin la interface
+PropietatBeguda.</li>
+<li>substituir les propietats de BegudaEspec per un nou membre
+HashMap&lt;TipusPropietat, PropietatBeguda&gt; amb les propietats de la
+classe... bé, decideix si el posem a Beguda o a BegudaEspec. Pista:
+pensa què afegeix ara la classe BegudaEspec.</li>
+<li>afegir a Beguda (o a BegudaEspec si encara la mantens) la
+possibilitat d'accedir als valors de les diferents propietats que
+l'especifiquen. És a dir, ens cal algun mètode que ens permeti
+substituir l'antic <tt class="docutils literal">getNom()</tt>. La proposta és implementar un
+<tt class="docutils literal">PropietatBeguda getPropietat(TipusPropietat)</tt></li>
+<li>modificar la resta d'elements perquè funcionin amb aquests canvis.</li>
+</ul>
+<p><em>Nota</em>: Potser t'hauràs adonat que ara no tenim un mecanisme fiable
+per a assegurar-nos de que cada tipus de beguda presenti totes les
+propietats que li correspon i només aquestes. Et proposo que de moment
+acceptis aquesta feblesa del sistema i, si tens interès, miris de
+solucionar-lo com una de les millores addicionals que et proposa el
+següent exercici.</p>
+</div>
+<div class="section" id="exercici-10-opcional-millores-addicionals">
+<h3>Exercici 10. (opcional) Millores addicionals</h3>
+<p>En cas que t'hagis quedat amb les ganes, aquest exercici et permet
+tancar alguns punts que han quedat oberts amb el disseny final de
+l'exercici anterior.</p>
+<ol class="arabic">
+<li><p class="first">Fer que la comprovació de coincidència permeti ignorar també els
+caràcters especials com ara accents i els espais de més. A més, que
+permeti acceptar aquelles entrades que continguin alguna de les
+paraules que s'introdueixin. Ex. si l'especificació cercada del
+celler indica &quot;Joan Juán&quot;, aquesta nova versió acceptarà &quot;Juan
+Antonio Pérez Roura&quot;</p>
+</li>
+<li><p class="first">Afegir un nou mètode de cerca que permeti l'ús d'expressions
+regulars per a aquells atributs textuals (com ara nom i celler).
+Aquesta és una ampliació molt fàcil, tenint en comptes que disposem
+de <tt class="docutils literal">String.matches(regex)</tt>, però potser et servirà com a
+introducció a aquesta potent tècnica de manipulació de strings.</p>
+</li>
+<li><p class="first">El disseny de l'exercici anterior, deixa sense comprovar que les
+especificacions que s'afegeixen a una beguda realment corresponguin
+al tipus de beguda que estan especificant. Per exemple, a un Cava
+se li podria passar perfectament una especificació sense nom o bé
+amb graduació.</p>
+<p>Aquesta proposta d'ampliació, hauria de generar una excepció en cas
+que l'especificació no contingui tots i només aquells atributs que
+corresponen a una beguda del tipus que estan especificant. Pista:
+TipusBeguda podria disposar d'una llista d'atributs requerits per
+cada tipus, o fins i tot disposar d'un mètode que accepti una
+especificació i comprovi si conté els elements que toquen.</p>
+</li>
+<li><p class="first">Se t'acut alguna altra millora?</p>
+</li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="picatecles" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Si aquesta expressió de &quot;mico picatecles&quot; t'ha
+semblat despectiva contra la noble professió d'aquells que
+programen sense utilitzar el cervell... tens tota la raó, és
+despectiva. Si el cim al que aspires professionalment és aquest,
+estàs perdent el temps amb aquests exercicis i, probablement, amb
+aquest cicle.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pintura" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Si en saps molt de pintura, per favor accepta-ho com a
+simplificació per a entendre el concepte.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="redundanttipus" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Tenint en comptes que Beguda disposa de
+l'especificació i que aquesta hauria de ser del tipus que correspon
+a la beguda, probablement incloure aquesta propietat a Beguda
+resultaria redundant o, com a molt, tindria una funció merament de
+comprovació d'errors, especialment durant la creació de la beguda.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./mapes-i.html">
+        Mapes I
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

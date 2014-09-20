@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Constructors (part I)</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Constructors (part I)             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./procedural-vs-oo.html">
+        Procedural vs OO
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./membres-dinstancia-i-de-classe.html">
+        Membres d'instància i de classe
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Constructors (part I)</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document introdueix els <em>constructors</em>, un tipus especial de
+bloc de codi que en programació orientada a objectes és cridat la
+creació d'una nova instància d'una classe, i que té la funció de
+preparar la instància per a ser utilitzada.</p>
+<p>Es tracta d'una primera aproximació al concepte que no tracta
+característiques més avançades com la relació amb l'herència. Aquests
+elements seran tractats posteriorment a la <a class="reference external" href="./constructors-part-ii.html">segona part</a> d'aquest document.</p>
+<p>Aquesta introducció comença amb una secció <em>teòrica</em> que descriu els
+constructors (i destructors), per després continuar amb l'anàlisi
+d'exercicis en Java.</p>
+<p><strong>Atenció</strong> La secció teòrica pot resultar molt complexa per qui mai
+no ha estat exposat a la gestió explícita de memòria dinàmica. Si és
+el teu cas, intenta aproximar-te-hi amb ment oberta.</p>
+<p>Es pressuposa que s'ha seguit els continguts de <a class="reference external" href="poo006.classes_objectes.rst">classes i objectes</a>.</p>
+</div>
+<div class="section" id="constructors-i-destructors">
+<h2>Constructors i destructors</h2>
+<p>Un aspecte important, pels programes en execució, és la reserva i
+posterior alliberament de memòria necessària per a poder fer encabir
+dinàmicament les dades que manipulen.</p>
+<p>Considerem per exemple, la implementació d'una <em>llista dinàmica</em> d'enllaç simple,
+sovint es realitza amb una estructura (Node) que conté almenys dos
+camps (el valor a guardar per un element de la llista i un apuntador
+al següent node). Normalment ens cal disposar d'un apuntador al primer
+node, i el darrer node apunta convenientment a un valor nul.</p>
+<p>La següent imatge esquematitza una llista d'aquestes amb dos elements.</p>
+<div class="figure">
+<img alt="Dos elements" src="./images/poo008.img001.llistadin_doselem.png" />
+</div>
+<p>En cas que hi vulguem afegir un nou node, ens cal realitzar les
+següents passes:</p>
+<ol class="arabic simple">
+<li><strong>reservar</strong> l'espai pel nou node</li>
+<li><strong>inicialitzar</strong> els valors del nou node. Com a mínim l'apuntador a
+següent node, que farem apuntar al node que correspongui de la
+llista, o bé a <em>null</em> si ha de ser el nou darrer.</li>
+<li>reassignar l'apuntador del node de la llista que ha de ser anterior
+al nou node, per què tingui com a següent el nou node.</li>
+</ol>
+<p>El resultat final queda representat per la següent imatge:</p>
+<div class="figure">
+<img alt="Tres elements" src="./images/poo008.img002.llistadin_treselem.png" />
+</div>
+<p>Per una altra banda, quan volem eliminar un element de la llista, les
+passes que hem de fer són:</p>
+<ol class="arabic simple">
+<li>fer que el punter a següent node del node anterior al que volem
+eliminar, passi a apuntar al node següent del node que volem
+eliminar.</li>
+<li><strong>alliberar</strong> l'espai ocupat pel node a eliminar.</li>
+</ol>
+<p>El resultat final queda:</p>
+<div class="figure">
+<img alt="Menys elements" src="./images/poo008.img003.llistadin_menyselem.png" />
+</div>
+<p>De les operacions vistes en aquest exemple, podem dir que tot node de
+la llista ha de ser:</p>
+<ol class="arabic simple">
+<li><strong>creat</strong>: <em>reserva de memòria</em> per a allotjar-lo i <em>inicialització</em></li>
+<li><strong>destruït</strong>: <em>alliberament</em> de la memòria reservada un cop sabem
+que no ens cal tornar a fer-lo servir.</li>
+</ol>
+<p>En Java, la creació d'una nova instància la realitzem mitjançant
+l'expressió <tt class="docutils literal">new <span class="pre">«Constructor»(«args»)</span></tt> on «Constructor» coincideix
+amb el nom de la classe i «args» corresponen als valors
+d'inicialització (sovint no hi ha cap).</p>
+<p>La destrucció en Java <strong>no</strong> es realitza explícitament (a diferència
+d'altres llenguatges OO com ara C++) <a class="footnote-reference" href="#javafinalize" id="id1">[2]</a>.</p>
+<p>Java (com molts altres llenguatges OO) disposen d'un procés de baixa
+prioritat anomenat <em>recolector d'escombraries</em> (<em>Garbage Collector</em>)
+que se n'encarrega d'anar alliberant aquells espais de memòria que ja
+no estan referenciats per ningú. El llenguatge no ens ofereix manera
+d'influenciar a aquest procés <a class="footnote-reference" href="#javagc" id="id2">[3]</a>.</p>
+<p>En tot cas <strong>sí</strong> podem ajudar al <em>Garbage Collector</em>. Si disposem
+d'una instància que ocupa <strong>molta</strong> memòria i sabem que ja no la
+necessitem més al nostre programa, sempre podem assignar totes les
+seves referències a <tt class="docutils literal">null</tt>. D'aquesta manera, el <em>Garbage Collector</em>
+sabrà de seguida que ja no cal i podrà actuar en conseqüència.
+Considera el següent exemple:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="err">«</span><span class="o">...</span><span class="err">»</span>
+<span class="n">ClasseGrossa</span> <span class="n">cg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClasseGrossa</span><span class="o">();</span> <span class="c1">// instància que ocupa molt</span>
+<span class="err">«</span><span class="o">...</span><span class="err">»</span>           <span class="c1">// usem la instància tot el que la necessitem</span>
+<span class="n">cg</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>      <span class="c1">// eliminem la referència a la instància</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="exercici-1-construccio-del-gat-renat">
+<h2>Exercici 1. Construcció del gat Renat</h2>
+<p>Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GatRenat</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">vides</span><span class="o">;</span>   <span class="c1">// vides disponibles del gat Renat</span>
+
+    <span class="c1">// constructor per defecte</span>
+    <span class="kd">public</span> <span class="nf">GatRenat</span><span class="o">()</span> <span class="o">{</span> <span class="n">vides</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="c1">// constructor específic</span>
+    <span class="kd">public</span> <span class="nf">GatRenat</span><span class="o">(</span><span class="kt">int</span> <span class="n">vides</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">vides</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">vides</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getVides</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">vides</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="c1">// canvia el nombre de vides si el nou valor és vàlid</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setVides</span><span class="o">(</span><span class="kt">int</span> <span class="n">vides</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">vides</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">vides</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">GatRenat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+        <span class="n">GatRenat</span> <span class="n">megaRenat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">(</span><span class="mi">12</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;A Mega Renat li queden &quot;</span> <span class="o">+</span> <span class="n">megaRenat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Executa el programa i respon a les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">A quina línia es posa el valor de vides de la instància creada a la 26?</p>
+</li>
+<li><p class="first">A quina línia es posa el valor de vides de la instància creada a la 28?</p>
+</li>
+<li><p class="first">Els blocs que s'inicien a les línies 5 i 8 semblen mètodes però hi
+ha algunes diferències amb un mètode convencional. Quines són?</p>
+</li>
+<li><p class="first">Què et suggereixen els comentaris de les línies 4 i 7?</p>
+</li>
+<li><p class="first">Quan s'executa el codi dels blocs iniciats a les línies 5 i 8.
+Ajuda't, si et cal, de <em>xivatos</em> <a class="footnote-reference" href="#xivato" id="id3">[1]</a>.</p>
+</li>
+<li><p class="first">Elimina o comenta la línia 5. Continua funcionant el codi? Perquè
+creus?</p>
+</li>
+<li><p class="first">Substitueix el codi del bloc de la línia 8 pel següent i descriu
+què passa a l'hora d'executar:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// constructor específic</span>
+<span class="kd">public</span> <span class="nf">GatRenat</span><span class="o">(</span><span class="kt">int</span> <span class="n">vides</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">();</span>
+    <span class="n">setVides</span><span class="o">(</span><span class="n">vides</span><span class="o">);</span>     <span class="c1">// o també this.setVides(vides);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">Per a què creus que serveix el <tt class="docutils literal">this()</tt>?</p>
+<p>Pista: posa un <em>xivato</em> al constructor per defecte i compara que
+passa en executar el codi quan <tt class="docutils literal">this()</tt> hi és, i quan el treus.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-2-el-gat-renat-pot-neixer-silenciosament">
+<h2>Exercici 2. El gat Renat pot néixer silenciosament</h2>
+<p>Crea una nova versió de la classe GatRenat a partir de la que
+incorporava la possibilitat de parlar i callar.</p>
+<p>En aquesta ocasió, la classe permetrà ser inicialitzada de manera que
+parli o calli. Cal però, evitar que codi que ja funcionava amb la
+versió anterior, deixi de fer-ho amb aquesta.</p>
+<p>Per defecte, el gat Renat <em>naixerà</em> podent parlar i dirà &quot;He nascut!&quot;
+en el moment de la seva creació. En cas, però, que es construeixi
+silenciós, no dirà res en nàixer.</p>
+</div>
+<div class="section" id="exercici-3-lentorn-operatiu-del-gat-renat">
+<h2>Exercici 3. L’entorn operatiu del gat Renat</h2>
+<p>Desenvolupa un nou programa que ofereixi a l’usuari la possibilitat
+d’interaccionar amb el gat Renat (inclòs el silenciar-lo i fer-lo
+tornar a parlar).</p>
+<p>El programa mostrarà com a &quot;prompt&quot; <tt class="docutils literal">[Renat]:</tt></p>
+<p>Les ordres que se li podran donar seran:</p>
+<div class="highlight"><pre>com estàs?
+aixeca’t
+seu
+estira’t
+miola
+calla
+parla
+adèu
+</pre></div>
+<p>L'entorn no distingirà entre majúscules i minúscules.</p>
+<p>En cas que la comanda introduïda per l'usuari no coincideixi amb
+alguna d'aquestes, l'entorn respondrà amb el missatge &quot;com?&quot; i
+continuarà demanant noves comandes.</p>
+<p>Inicialment el gat Renat parlarà i estarà estirat.</p>
+<p>Quan se li demani com està, si pot parlar, dirà <tt class="docutils literal">estic «estat»</tt> (per
+exemple, <tt class="docutils literal">estic estirat</tt>), altrament respondrà amb <tt class="docutils literal">...</tt>.</p>
+<p>Quan se li digui <tt class="docutils literal">adèu</tt>, si pot parlar respondrà amb <tt class="docutils literal">adèu</tt>,
+altrament també s'acomiadarà silenciosament amb un <tt class="docutils literal">...</tt>. En tots
+dos casos finalitzarà.</p>
+<p>Per la resta de comandes, el programa respondrà amb el que respongui
+el gat.</p>
+<p>Crea un joc de proves que permeti comprovar el funcionament de
+cadascuna de les opcions. El joc de proves estarà format per dos
+fitxers, un amb les comandes d'entrada i un amb la sortida esperada.</p>
+<p>El d'entrada començarà amb:</p>
+<div class="highlight"><pre>com estàs?
+aixeca&#39;t
+«...»
+</pre></div>
+<p>El de sortida començarà amb:</p>
+<div class="highlight"><pre>He nascut!
+[Renat] estic estirat
+[Renat] m&#39;aixeco
+[Renat] «...»
+</pre></div>
+<p>Nota: en cas que ens descuidem de finalitzar al fitxer d'entrada amb
+&quot;adèu&quot;, és molt probable que ens surti un error d'execució del tipus
+<tt class="docutils literal">java.lang.NullPointerException</tt>. El problema és que la lectura de
+l'entrada estàndard ens returna <tt class="docutils literal">null</tt> en comptes d'un string buit.
+Caldrà només continuar quan llegim res que no sigui null. És clar, si
+arribem a null finalitzarem l'execució però no ens acomiadarem de
+l'usuari. Faltaria més!</p>
+</div>
+<div class="section" id="exercici-4-la-classe-hora">
+<h2>Exercici 4. La classe Hora</h2>
+<p>Implementa la classe Hora amb les propietats (privades) hora, minut i
+segon de tipus enter, i els accessors (públics) que assegurin que
+l'hora és sempre vàlida.</p>
+<p>Per defecte, l'hora correspondrà a <tt class="docutils literal">0:00:00</tt>, però la classe oferirà
+els mecanismes necessaris per a inicialitzar una hora amb algun altre
+valor <em>vàlid</em>.</p>
+<p>Afegeix els següents mètodes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">void incrementa()</tt>: fa que l'hora tingui un segon més</li>
+<li><tt class="docutils literal">void seguent(int)</tt>: fa que l'hora s'incrementi en el nombre de segons indicats</li>
+<li><tt class="docutils literal">void decrementa()</tt>: fa que l'hora tingui un segon menys</li>
+<li><tt class="docutils literal">void decrementa(int)</tt>: fa que l'hora es decrementi en el nombre de segons indicats</li>
+<li><tt class="docutils literal">int compareTo(Hora)</tt>: compara amb l'hora indicada i retorna &lt;0 si és menor que la indicada, 0 si són iguals i &gt;0 si és més gran que la indicada.</li>
+<li><tt class="docutils literal">String toString()</tt>: retorna un string amb l'hora en format h:mm:ss.</li>
+</ul>
+<p>Desenvolupa una funció <tt class="docutils literal">main()</tt> que demani a l'usuari les dades de
+tres hores i, fent servir la classe Hora, les mostri ordenades
+creixentment.</p>
+<p><strong>Notes / pistes</strong></p>
+<ol class="arabic">
+<li><p class="first">En cas que un constructor específic es trobi amb un o més
+paràmetres no vàlids, inicialitzarà la instància amb els valors per
+defecte.</p>
+</li>
+<li><p class="first">Per escriure el 0 inicial als minuts i segons quan el valor és
+menor de 10, es pot fer servir el mètode <a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/data/numberformat.html">System.out.format()</a></p>
+<p>Per si vas justet de temps:</p>
+<div class="highlight"><pre><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;&#39;%d %02d %05d%n&#39;&quot;</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+</pre></div>
+<p>O més compacte:</p>
+<div class="highlight"><pre><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;&#39;%d %1$02d %1$05d%n&#39;&quot;</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+</pre></div>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-5-la-classe-persona">
+<h2>Exercici 5. La classe Persona</h2>
+<p>Implementa la classe Persona amb les propietats nom, cognoms, any de
+naixement i any de defunció protegides amb inicialitzadors i
+accessors, que respectin les següents regles:</p>
+<ol class="arabic simple">
+<li>l'any de naixement haurà de ser sempre un enter positiu</li>
+<li>l'any de defunció només pot ser -1, per representar que la persona
+encara és viva, o bé un valor superior o igual al de l'any de
+naixement. En cap cas, però, es permetrà a l'usuari de la classe
+indicar explícitament el valor -1 per l'any de defunció. Per
+corregir l'estat d'una persona i indicar que està viva, caldrà fer
+servir el mètode <tt class="docutils literal">setViu()</tt>.</li>
+<li>cap persona pot no tenir nom, cognoms o any de naixement.</li>
+<li>les persones poden ser inicialitzades vives o no.</li>
+</ol>
+<p>El càlcul de l'edat es realitzarà únicament a partir de l'any de
+naixement i serà, per tant, aproximat (no disposem del mes i el dia).</p>
+<p>Per saber l'any actual, podem fer servir el següent codi:</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">anyAct</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Calendar</span><span class="o">.</span><span class="na">YEAR</span><span class="o">);</span>
+</pre></div>
+<p>Desenvolupa un main() que demani a l'usuari les dades d'una persona
+(incloent la de defunció si és el cas), construeixi una instància de
+Persona amb aquestes dades i indiqui:</p>
+<ul class="simple">
+<li>si la persona és difunta: l'edat a la que va arribar</li>
+<li>si la persona està encara viva: l'edat actual</li>
+</ul>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="xivato" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td><p class="first">Un <em>xivato</em> és un missatge, normalment escrit per sortida
+estàndard, que permet saber que s'ha passat per alguna línia de codi.</p>
+<p>Es tracta d'una pràctica senzilla i eficaç per realitzar proves de
+codi quan no es disposa d'un depurador (o no es pot/vol fer
+servir).</p>
+<p>Solen ser molt més efectius quan incorporen certa informació de
+context. Per exemple, trobar-se:</p>
+<div class="highlight"><pre>per aquí 1
+per aquí 2
+</pre></div>
+<p>és molt menys informatiu vistós que un:</p>
+<div class="last"><div class="highlight"><pre>XXX GatRenat.setVides(-12): entra amb vides inicials 7
+XXX GatRenat.setVides(-12): surt amb vides finals 7
+</pre></div>
+</div></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="javafinalize" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>Si bé els objectes Java disposen del
+mètode <tt class="docutils literal">finalize()</tt>, es tracta d'un mètode per especificar accions
+de neteja i no per decidir quan una instància ha de ser alliberada.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="javagc" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[3]</a></td><td>De fet si que podem fer una crida a
+<tt class="docutils literal"><span class="pre">Runtime.getRuntime().gc()</span></tt> o <tt class="docutils literal">System.gc()</tt> què, com diu
+l'especificació del mètode, <em>suggereix</em> a la màquina virtual de
+Java a dedicar esforços per recuperar la memòria disponible, tot i
+que serà cridat de manera automàtica cada cop que la màquina
+virtual ho trobi necessari.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./procedural-vs-oo.html">
+        Procedural vs OO
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./membres-dinstancia-i-de-classe.html">
+        Membres d'instància i de classe
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

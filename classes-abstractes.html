@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Classes abstractes</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Classes abstractes             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./visibilitat.html">
+        Visibilitat
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./interfaces.html">
+        Interfaces
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Classes abstractes</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document introdueix l'alumne de programació orientada a
+objectes al concepte de classe abstracta. Està estructurat en una
+primera visió teòrica del concepte, per després oferir uns exercicis
+que permetin donar-li un sentit pràctic.</p>
+</div>
+<div class="section" id="id1">
+<h2>Classes abstractes</h2>
+<p>A una jerarquia de classes, es pressuposa que la superclasse és més
+<em>abstracta</em> que la subclasse. Sovint recollim els elements comuns
+d'unes classes i els agrupem en una superclasse (per exemple, la
+classe Animal és creada a partir d'elements comuns de Gat i Gos).</p>
+<p>Quan la raó principal de crear una classe és per actuar com a
+agrupador d'elements comuns de les seves subclasses, però no es pretén
+que existeixin instàncies d'aquesta classe, aquesta classe li diem
+classe abstracta.</p>
+<p>A l'exemple dels animals, té sentit instanciar un Gat o un Gos. En
+podem fer coses amb ells com, demanar-los que miolin o que bordin (que
+facin soroll). Quina &quot;pinta&quot; té però una instància d'Animal? Quin
+soroll ha de fer un animal quan se li ddemani <tt class="docutils literal">fesSoroll()</tt>?</p>
+<p>D'una classe abstracta no es poden fer instàncies, però poden contenir
+qualsevol dels elements que una classe &quot;normal&quot; tingui permès. A més a
+més, pot fer servir el modificador abstract per a indicar mètodes que
+han de ser implementats per les subclasses. En el moment que una
+classe fa servir el modificador abstract en algun dels seus mètodes,
+es torna abstracta.</p>
+<p>En cas que tots els mètodes d'una classe siguin abstractes, és
+preferible fer servir el concepte d'interface que veurem més endavant.</p>
+<p>Una subclasse d'una classe abstracta pot ser també abstracta.
+Simplement cal no implementar algun dels mètodes de la superclasse.</p>
+<p>Considerem el clàssic exemple de les figures geomètriques. Les figures
+geomètriques, com ara cercles, quadrats, triangles..., tenen alguns
+elements en comú. Per exemple, totes elles ocupen un àrea i se'ls pot
+mesurar el perímetre. En paraules de la POO, totes les figures
+disposen de dos mètodes: getArea() i getPerimetre() que retornen
+respectivament l'àrea i el perímetre corresponents a la figura.</p>
+<p>És a dir, les classes Cercle i Rectangle serien subclasses de la
+classe Figura. Ara bé, com calculem l'àrea d'una instància de la
+classe Figura? No té sentit, oi? Per tant, la classe Figura seria una
+classe abstracta.</p>
+<p>La implementació de la classe Figura vindria a ser quelcom similar a:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Figura</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">getArea</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">getPerimetre</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fixa't en l'ús del modificador abstract als diferents mètodes.</p>
+<p>La implementació de la classe Cercle podria ser:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Cercle</span> <span class="kd">extends</span> <span class="n">Figura</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">radi</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Cercle</span><span class="o">()</span> <span class="o">{</span> <span class="n">radi</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">Cercle</span><span class="o">(</span><span class="kt">double</span> <span class="n">radi</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">radi</span> <span class="o">=</span> <span class="n">radi</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getArea</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="n">getRadi</span><span class="o">(),</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="n">Math</span><span class="o">.</span><span class="na">PI</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getPerimetre</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Math</span><span class="o">.</span><span class="na">PI</span> <span class="o">*</span> <span class="n">getRadi</span><span class="o">();</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getRadi</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">radi</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fixat en que l'herència s'indica exactament igual que amb una
+superclasse no abstracta (concreta)</p>
+</div>
+<div class="section" id="exercici-1-figures">
+<h2>Exercici 1. Figures</h2>
+<p>Implementaren un package anomenat
+<em>org.estudi_poo.«elteunom».figures</em> que contindrà diferents
+figures geomètriques. De moment només: cercle (que ja el tens),
+rectangle, quadrat i triangle.</p>
+<p>Nota: si et passa pel cap, venç la temptació de fer Quadrat una subclasse de Rectangle (recorda el principi de Liskov)</p>
+</div>
+<div class="section" id="exercici-2-entorn-d-animals-abstractes">
+<h2>Exercici 2. Entorn d'Animals abstractes</h2>
+<p>Torna a considerar l'exercici de <em>l'entorn operatiu dels animals</em> del
+tema de <a class="reference external" href="{{url}}/poo/polimorfisme">polimorfisme</a>.</p>
+<p>Modifica la jerarquia d'animals de manera que ara la classe Animal
+sigui abstracta. Segurament l'únic mètode que necessites construir com
+a <em>abstract</em> és el de <tt class="docutils literal">Animal.fesSoroll()</tt>. Fixa't que ja no et
+caldrà fer res estrany com deixar el cos del mètode en blanc, ja que
+ara ni tindrà cos! Té més sentit, no?</p>
+<p>Si ho vas fer bé, tota la resta hauria de compilar i executar sense
+més canvi. Altrament, analitza si és raonable fer els canvis que
+t'obliga aquesta nova versió.</p>
+</div>
+<div class="section" id="exercici-3-mes-animals">
+<h2>Exercici 3. Més animals</h2>
+<p>Se't proposa ara crear una nova jerarquia d'animals. Per les
+necessitats de l'exercici, el que farem serà simplificar la classe
+Animal de l'exercici anterior. Evidentment, no s'espera que aquesta
+versió sigui compatible amb exercicis previs, eh?</p>
+<p>En aquest cas, Animal únicament tindrà els següents mètodes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">Animal(String nom)</tt></li>
+<li><tt class="docutils literal">String getNom()</tt></li>
+<li><tt class="docutils literal">String moute()</tt></li>
+<li><tt class="docutils literal">String menja()</tt></li>
+<li><tt class="docutils literal">String fesSoroll()</tt></li>
+<li><tt class="docutils literal">String dorm()</tt></li>
+</ul>
+<p>Fixa't que tant el constructor, com <tt class="docutils literal">getNom()</tt> poden ser
+implementats perfectament per la classe abstracta Animal, mentre que
+la resta són específics de cada animal concret.</p>
+<p>Implementa les subclasses d'animal Gat, Gos, Canari i Lleo, de manera
+que es pugui executar el següent codi.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">estudi_poo</span><span class="o">.</span><span class="err">«</span><span class="n">elteunom</span><span class="err">»</span><span class="o">.</span><span class="na">animals</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Vector</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaAnimals</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;</span> <span class="n">llistaAnimals</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;();</span>
+        <span class="c1">// crea uns quants animals</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Fido&quot;</span><span class="o">));</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">));</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Canari</span><span class="o">(</span><span class="s">&quot;Piolin&quot;</span><span class="o">));</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Lleo</span><span class="o">(</span><span class="s">&quot;Bonifaci&quot;</span><span class="o">));</span>
+        <span class="c1">// fa que tots els animals facin les diferents accions</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Animal</span> <span class="nl">a:</span> <span class="n">llistaAnimals</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">moute</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">menja</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">fesSoroll</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">dorm</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>En executar-lo, cal que es generi el següent resultat per sortida
+estàndard:</p>
+<div class="highlight"><pre>Fido camina
+Fido fa: nyam nyam
+Fido fa: bof bof
+Fido fa: ZZZzzzz
+Renat camina
+Renat fa: myam myam
+Renat fa: meww
+Renat fa: ZZZzzzz
+Piolin vola
+Piolin fa: pyam pyam
+Piolin fa: piu piu
+Piolin fa: pi-pi-pi-pi
+Bonifaci camina
+Bonifaci fa: gram gram
+Bonifaci fa: grrrr
+Bonifaci fa: ZRrrrrr
+</pre></div>
+<p><strong>Avís</strong>: és possible que trobis problemes per a adaptar codi
+d'exercicis previs que aparentment s'assemblen a les classes d'aquest.
+Com que hi ha prou canvis (ex. les instàncies de les classes i
+subclasses d'Animal, mai no mostren missatges per sortida estàndard
+sinó que el retornen) és recomanable començar tot el codi d'aquest
+exercici des de zero.</p>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./visibilitat.html">
+        Visibilitat
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./interfaces.html">
+        Interfaces
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

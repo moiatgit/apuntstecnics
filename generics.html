@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Generics</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Generics             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./excepcions.html">
+        Excepcions
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./contenidors-ordenats.html">
+        Contenidors ordenats
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Generics</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document és una introducció als <em>genèrics</em> de Java, a partir de
+diferents qüestions respecte els continguts de la <a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/index.html">lliçó Generics</a> de
+&quot;The Java Tutorials&quot;. No es cobreixen, però, tots els continguts
+d'aquest <em>tutorial</em>. Amb tot, t'animo a llegir el contingut sencer de
+manera que disposis d'una visió més global del tema.</p>
+</div>
+<div class="section" id="id1">
+<h2>Genèrics</h2>
+<div class="section" id="el-mon-sense-generics">
+<h3>El món sense genèrics</h3>
+<p>En versions antigues de Java (abans de la versió Java SE 5.0) ja
+estaven disponibles algunes classes per a agrupar objectes.
+Per exemple, <tt class="docutils literal">java.util.Vector</tt> implementa un <em>array</em> d'objectes que
+pot ampliar o reduir la seva mida per a adaptar-se a les dades que
+conté.</p>
+<p>El mètode per a afegir una nova entrada al final del vector era <tt class="docutils literal">boolean
+add(Object o)</tt>. Donat que tota classe és descendent de <tt class="docutils literal">Object</tt>, el
+resultat és que podíem afegir instàncies de qualsevol classe.</p>
+<p>El mètode <tt class="docutils literal">Object get(int index)</tt> ens permetia recuperar un element
+del vector a partir de la seva posició.</p>
+<p>Un exemple d'ús seria:</p>
+<div class="highlight"><pre><span class="n">Vector</span> <span class="n">estol</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">();</span>
+<span class="n">Gat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">);</span>
+<span class="n">estol</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">renat</span><span class="o">);</span>
+<span class="n">Gat</span> <span class="n">gat</span> <span class="o">=</span> <span class="o">(</span><span class="n">Gat</span><span class="o">)</span><span class="n">estol</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>    <span class="c1">// hem de fer el cast</span>
+</pre></div>
+<p>En principi això pot semblar que no és cap problema. Només una
+incomoditat haver de fer un <em>cast</em> quan ja sabem el tipus de tots els
+elements que hi guardem al vector.</p>
+<p>El problema es troba en la detecció d'errors. En cas que hi hagi
+error de tipus (que el que ens retorna el vector no sigui realment un
+gat) no ens assabentem fins que no executem el programa. El compilador
+no en sap res de tipus i se'n refia de nosaltres quan li concretem el
+tipus amb un <em>cast</em>. En programes molt més complexos que a l'exemple,
+això pot portar a que l'error no es detecti fins que, després de molt
+de temps d'ús, el programa es penja per una condició que mai abans
+s'havia produït.</p>
+<p>Per oferir la possibilitat de detectar aquest tipus d'error en temps
+de compilació, al Java SE 5.0 es van introduir els <em>genèrics</em>.</p>
+</div>
+<div class="section" id="exercici-1-perque-generics">
+<h3>Exercici 1. Perquè genèrics</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/why.html">Why generics</a></li>
+</ul>
+<p>Respon a les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Què permeten els genèrics?</li>
+<li>En que s'assemblen els <em>paràmetres formals</em> als <em>paràmetres de
+tipus</em>?</li>
+<li>En que es diferencien els <em>paràmetres formals</em> dels
+<em>paràmetres de tipus</em>?</li>
+<li>Descriu amb les teves paraules, tres avantatges de l'ús de genèrics
+al nostre codi.</li>
+</ol>
+</div>
+<div class="section" id="exercici-2-classes-generiques">
+<h3>Exercici 2. Classes genèriques</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/types.html">Generic Types</a></li>
+</ul>
+<p>Respon a les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">Què és un <em>tipus genèric</em>?</p>
+</li>
+<li><p class="first">Considera l'exemple de la versió simple de la classe <tt class="docutils literal">Box</tt>
+(secció <em>A Simple Box Class</em>).  Indica perquè no hi podem afegir
+tipus primitius però sí qualsevol altre element.</p>
+</li>
+<li><p class="first">Un altre cop sobre la caixa simple: desenvolupa un programa
+anomenat <tt class="docutils literal">CaixaDeGats</tt> que creï una caixa (<tt class="docutils literal">Box</tt>), hi
+afegeixi un gat Renat <a class="footnote-reference" href="#renat" id="id2">[1]</a> i després el recuperi i mostri el
+seu nom per sortida estàndard.</p>
+</li>
+<li><p class="first">Considera la secció <em>Invoking and Instantiating a Generic Type</em>. De
+quina manera es declara una referència d'una classe genèrica? De
+quina manera s'instancia una classe genèrica?</p>
+</li>
+<li><p class="first">Considera ara la versió de la caixa genèrica que apareix a la
+secció <em>A Generic Version of the Box Class</em>. Desenvolupa una nova
+versió de <tt class="docutils literal">CaixaDeGats</tt> que faci servir aquesta nova versió
+genèrica de la classe <tt class="docutils literal">Box</tt>.</p>
+</li>
+<li><p class="first">És obligatori anomenar als paràmetres de tipus amb una <tt class="docutils literal">T</tt>? Si és
+que no, hi trobes alguna raó per fer servir aquest nom?  ----</p>
+</li>
+<li><p class="first">Indica una manera alternativa d'escriure el següent codi a partir
+de Java SE 7</p>
+<div class="highlight"><pre><span class="n">Box</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">&gt;</span> <span class="n">gatBox</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Box</span><span class="o">&lt;&gt;();</span>
+</pre></div>
+</li>
+<li><p class="first">A la secció <em>Multiple Type Parameters</em> veiem un exemple
+d'<em>interface</em> i de classe genèrics amb més d'un paràmetre de tipus.
+Es podria fer servir <tt class="docutils literal">T</tt> i <tt class="docutils literal">S</tt> en comptes de <tt class="docutils literal">K</tt> i <tt class="docutils literal">V</tt>?
+Perquè creus que han fet servir <tt class="docutils literal">K</tt> i <tt class="docutils literal">V</tt>?</p>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-metodes-generics">
+<h3>Exercici 3. Mètodes genèrics</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/methods.html">Generic Methods</a></li>
+</ul>
+<p>Respon a les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">Què és un mètode genèric?</p>
+</li>
+<li><p class="first">Els mètodes genèrics han de ser sempre estàtics?</p>
+</li>
+<li><p class="first">Considera el següent codi que fa servir les classes <tt class="docutils literal">Util</tt> i
+<tt class="docutils literal">Pair</tt> d'aquest article:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Payme</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Gat</span> <span class="n">gat1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">);</span>
+        <span class="n">Gos</span> <span class="n">gos1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Fido&quot;</span><span class="o">);</span>
+        <span class="n">Gos</span> <span class="n">gos2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Rantanplan&quot;</span><span class="o">);</span>
+        <span class="n">Gos</span> <span class="n">gos3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Fido&quot;</span><span class="o">);</span>
+        <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">,</span> <span class="n">Gos</span><span class="o">&gt;</span> <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;&gt;(</span><span class="n">gat1</span><span class="o">,</span> <span class="n">gos1</span><span class="o">);</span>
+        <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">,</span> <span class="n">Gos</span><span class="o">&gt;</span> <span class="n">p2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;&gt;(</span><span class="n">gat1</span><span class="o">,</span> <span class="n">gos1</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;p1(%s,%s) == p2(%s,%s) -&gt; %s\n&quot;</span><span class="o">,</span>
+                <span class="n">p1</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">p1</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span> <span class="n">p2</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">p2</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span>
+                <span class="n">Util</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">));</span>
+        <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">,</span> <span class="n">Gos</span><span class="o">&gt;</span> <span class="n">p3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;&gt;(</span><span class="n">gat1</span><span class="o">,</span> <span class="n">gos2</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;p1(%s,%s) == p3(%s,%s) -&gt; %s\n&quot;</span><span class="o">,</span>
+                <span class="n">p1</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">p1</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span> <span class="n">p3</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">p3</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span>
+                <span class="n">Util</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p3</span><span class="o">));</span>
+        <span class="n">Pair</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">,</span> <span class="n">Gos</span><span class="o">&gt;</span> <span class="n">p4</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pair</span><span class="o">&lt;&gt;(</span><span class="n">gat1</span><span class="o">,</span> <span class="n">gos3</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;p1(%s,%s) == p4(%s,%s) -&gt; %s\n&quot;</span><span class="o">,</span>
+                <span class="n">p1</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">p1</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span> <span class="n">p4</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">p4</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span>
+                <span class="n">Util</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p4</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Executa'l i descriu el perquè de cada línia.</p>
+<p>En cas de que no disposis de les classes Gat i Gos, simplement
+crea una versió mínima que permeti l'execució d'aquest codi.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-4-generics-i-herencia">
+<h3>Exercici 4. Genèrics i herència</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/inheritance.html">Generics, Inheritance, and Subtypes</a></li>
+</ul>
+<p>Respon a les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">Perquè, si tenim el mètode següent</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">domestica</span><span class="o">(</span><span class="n">Animal</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+</pre></div>
+<p>són vàlides les següents crides? <a class="footnote-reference" href="#animal" id="id3">[2]</a></p>
+<div class="highlight"><pre><span class="n">domestica</span><span class="o">(</span><span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">));</span>
+<span class="n">domestica</span><span class="o">(</span><span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Fido&quot;</span><span class="o">));</span>
+</pre></div>
+</li>
+<li><p class="first">Perquè, si tenim el mètode següent</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">domestica</span><span class="o">(</span><span class="n">Vector</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+</pre></div>
+<p>no és vàlid el següent codi?</p>
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">domesticaGats</span><span class="o">(</span><span class="n">Vector</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">&gt;</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">domestica</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</li>
+<li><p class="first">Perquè a l'exemple que apareix a la secció <em>Generic Classes and
+Subtyping</em>, <tt class="docutils literal">PayloadList&lt;String, Integer&gt;</tt> és subclasse de
+<tt class="docutils literal">List&lt;String&gt;</tt>? Penses que també ho seria <tt class="docutils literal">PayloadList&lt;Integer,
+String&gt;</tt>? Perquè?</p>
+</li>
+<li><p class="first">Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestGen1</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostra</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">l</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="nl">s:</span> <span class="n">l</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;%s &quot;</span><span class="o">,</span> <span class="n">s</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">al</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;hola&quot;</span><span class="o">);</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;adéu&quot;</span><span class="o">);</span>
+        <span class="n">mostra</span><span class="o">(</span><span class="n">al</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Perquè funciona la crida <tt class="docutils literal">mostra(al)</tt> malgrat es fa servir
+<tt class="docutils literal">ArrayList&lt;String&gt;</tt> i no <tt class="docutils literal">List&lt;String</tt>?</p>
+</li>
+<li><p class="first">Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestGen2</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostra</span><span class="o">(</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">l</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="nl">o:</span> <span class="n">l</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;%s &quot;</span><span class="o">,</span> <span class="n">o</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">al</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;hola&quot;</span><span class="o">);</span>
+        <span class="n">al</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;adéu&quot;</span><span class="o">);</span>
+        <span class="n">mostra</span><span class="o">(</span><span class="n">al</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Perquè <strong>no</strong> funciona la crida <tt class="docutils literal">mostra(al)</tt> malgrat <tt class="docutils literal">String</tt>
+és un <tt class="docutils literal">Object</tt>?</p>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-5-delimitacio-de-parametres-de-tipus">
+<h3>Exercici 5. Delimitació de paràmetres de tipus</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/bounded.html">Bounded Type Parameters</a></li>
+</ul>
+<p>Considera la següent classe</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Engabiat</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Animal</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">T</span> <span class="n">animal</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Engabiat</span><span class="o">(</span><span class="n">T</span> <span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">animal</span> <span class="o">=</span> <span class="n">animal</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">T</span> <span class="nf">getEngabiat</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">animal</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>I el següent codi que la prova:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Test</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Engabiat</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;</span> <span class="n">e1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Engabiat</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;(</span><span class="k">new</span> <span class="n">Animal</span><span class="o">(</span><span class="s">&quot;Misteri&quot;</span><span class="o">));</span>
+        <span class="n">Engabiat</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;</span> <span class="n">e2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Engabiat</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;(</span><span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;e1: %s\n&quot;</span><span class="o">,</span> <span class="n">e1</span><span class="o">.</span><span class="na">getEngabiat</span><span class="o">());</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;e2: %s\n&quot;</span><span class="o">,</span> <span class="n">e2</span><span class="o">.</span><span class="na">getEngabiat</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Respon a les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">Descriu que implica el contingut entre &lt;&gt; a la definició de
+la classe <tt class="docutils literal">Engabiat</tt>.</p>
+</li>
+<li><p class="first">Perquè funciona <tt class="docutils literal">Test</tt>? Prova-ho!</p>
+<p>En cas de no disposar de les classes <tt class="docutils literal">Animal</tt> i <tt class="docutils literal">Gat</tt>, crea una
+versió de cada de manera que funcioni <tt class="docutils literal">Test</tt> (recorda un Gat <strong>és
+un</strong> Animal)</p>
+</li>
+<li><p class="first">Funcionaria si la instanciació fes servir el &quot;truc&quot; del diamant per
+demanar que el compilador infereixi el tipus?</p>
+<div class="highlight"><pre><span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Engabiat</span><span class="o">&lt;&gt;(</span><span class="err">«</span><span class="o">...</span><span class="err">»</span><span class="o">)</span>
+</pre></div>
+<p>Prova-ho. Que afegeixis alguna explicació del perquè del resultat
+en aquesta pregunta és opcional.</p>
+</li>
+<li><p class="first">Funcionaria si la declaració de <tt class="docutils literal">Engabiat</tt> fos la següent?</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Engabiat</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+</pre></div>
+<p>Perquè?</p>
+</li>
+<li><p class="first">Ara que ja saps aquest concepte, proposa una modificació de la
+classe <tt class="docutils literal">TestGen2</tt> del darrer exemple de l'exercici anterior, de
+manera que funcioni el <tt class="docutils literal">main()</tt> tal i com apareix a l'exemple.</p>
+</li>
+</ol>
+<!-- private  static <T extends Object> void mostra(ArrayList<T> l) -->
+</div>
+<div class="section" id="exercici-6-contenidors-amb-herencia">
+<h3>Exercici 6. Contenidors amb herència</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html">Upper Bounded Wildcards</a></li>
+</ul>
+<p>Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Animtest</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostra</span><span class="o">(</span><span class="n">ArrayList</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Animal</span><span class="o">&gt;</span> <span class="n">la</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Animal</span> <span class="nl">a:</span> <span class="n">la</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;%s &quot;</span><span class="o">,</span> <span class="n">a</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;</span> <span class="n">aa</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">Gat</span> <span class="n">gat1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">);</span>
+        <span class="n">Gat</span> <span class="n">gat2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Mishifú&quot;</span><span class="o">);</span>
+        <span class="n">Gos</span> <span class="n">gos1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Fido&quot;</span><span class="o">);</span>
+        <span class="n">aa</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat1</span><span class="o">);</span>
+        <span class="n">aa</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat2</span><span class="o">);</span>
+        <span class="n">aa</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gos1</span><span class="o">);</span>
+        <span class="n">mostra</span><span class="o">(</span><span class="n">aa</span><span class="o">);</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">&gt;</span> <span class="n">ag</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">ag</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat1</span><span class="o">);</span>
+        <span class="n">ag</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat2</span><span class="o">);</span>
+        <span class="n">mostra</span><span class="o">(</span><span class="n">ag</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Respon a les següents preguntes:</p>
+<ol class="arabic">
+<li><p class="first">Perquè funciona la primera crida a <tt class="docutils literal">mostra()</tt>?</p>
+</li>
+<li><p class="first">Perquè funciona la segona crida a <tt class="docutils literal">mostra()</tt>?</p>
+</li>
+<li><p class="first">Què vol dir l'interrogant (<tt class="docutils literal">?</tt>) a la definició del paràmetre
+<tt class="docutils literal">la</tt> de <tt class="docutils literal">mostra()</tt>?</p>
+</li>
+<li><p class="first">Funcionaria aquest codi si la definició fos simplement?</p>
+<div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostra</span><span class="o">(</span><span class="n">ArrayList</span><span class="o">&lt;?&gt;</span> <span class="n">la</span><span class="o">)</span>
+</pre></div>
+<p>Perquè?</p>
+</li>
+<li><p class="first">Què hauríem de canviar perquè funcionés sense l'interrogant. Ex.
+<tt class="docutils literal">void mostra(T animal)</tt></p>
+</li>
+<li><p class="first">A partir de les respostes de les dues preguntes anteriors, indica
+quin avantatge es desprèn de l'ús de <em>wildcards</em> en aquest exemple.</p>
+</li>
+</ol>
+<!-- private static <T extends Animal> void mostra(ArrayList<T> la) { -->
+</div>
+<div class="section" id="exercici-7-limitacions-dels-generics">
+<h3>Exercici 7. Limitacions dels genèrics</h3>
+<p>Llegeix el següent article:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/restrictions.html">Restrictions on Generics</a></li>
+</ul>
+<p>Descriu amb les teves paraules i de manera resumida cadascuna de les
+limitacions que apareixen en aquest article.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="renat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>En cas que no disposis d'aquesta classe, fes servir
+simplement un String.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="animal" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Pots suposar que Gat i Gos són subclasses d'animal.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./excepcions.html">
+        Excepcions
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./contenidors-ordenats.html">
+        Contenidors ordenats
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Encapsulació</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Encapsulació             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./reconeixement-delements-de-programacio.html">
+        Reconeixement d'elements de programació
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./classes-i-objectes.html">
+        Classes i objectes
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Encapsulació</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document és una introducció a un dels conceptes fonamentals de
+la programació orientada a objectes: l'encapsulació.</p>
+<p>Pressuposa que l'estudiant té coneixements bàsics de programació en C
+i, desitjablement, del concepte de TAD. Considera <a class="reference external" href="./tipus-abstractes-de-dades.html">aquesta introducció
+al concepte de TAD</a> (des del
+llenguatge C)</p>
+</div>
+<div class="section" id="tads-classes-i-encapsulacio">
+<h2>TADs, classes i Encapsulació</h2>
+<p>Llegim a la definició de <a class="reference external" href="http://ca.wikipedia.org/wiki/Tipus_abstracte_de_dades">TAD de la vikipèdia</a> :</p>
+<blockquote>
+En informàtica, un tipus abstracte de dades (TAD) és una
+especificació d'un conjunt de dades i d'un conjunt
+d'operacions que poden ser executades sobre el conjunt de
+dades. Com a tipus de dades diem que és abstracte en el sentit
+que és independent de les possibles implementacions.</blockquote>
+<p>De l'article <a class="reference external" href="http://ca.wikipedia.org/wiki/Classe_%28inform%C3%A0tica%29">Classe de la viquipèdia</a> extraiem la següent definició de classe:</p>
+<blockquote>
+En programació orientada a objectes, una classe és una construcció
+d'un llenguatge de programació usada per agrupar camps relacionats
+i mètodes.</blockquote>
+<p>De l'article <a class="reference external" href="http://en.wikipedia.org/wiki/Encapsulation_%28object-oriented_programming%29">Encapsulation de la Wikipedia</a> transcrivim:</p>
+<blockquote>
+<p>In a programming language, encapsulation is used to refer to one
+of two related but distinct notions, and sometimes to the
+combination thereof:</p>
+<ul class="simple">
+<li>A language mechanism for restricting access to some of the
+object's components.</li>
+<li>A language construct that facilitates the bundling of data with
+the methods (or other functions) operating on that data.</li>
+</ul>
+</blockquote>
+<p>És a dir, per una part tenim el concepte de TAD que ens permet
+especificar unes dades i les funcions que les manipulen d'una manera
+independent de les possibles implementacions. Per una altra bada,
+tenim el concepte de classe que, en POO, ens permet agrupar camps
+(dades) i mètodes (funcions) relacionats entre ells. Finalment
+disposem del concepte d'<em>encapsulació</em> que ens parla de mecanismes per
+restringir l'accés a alguns elements i facilitar l'agrupació de dades
+amb les funcions que operen amb aquestes dades.</p>
+<p>És possible que pugui semblar-te que tot plegat, aquests conceptes
+estan parlant del mateix o, si més no, de quelcom molt relacionat. A
+veure si amb un petit exemple podem afegir-hi una mica de sentit.</p>
+<div class="section" id="el-triangle-en-c">
+<h3>El Triangle en C</h3>
+<p>Considera el següent programa escrit en C:</p>
+<ul class="simple">
+<li>Fitxer triangle.h</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Definició del tipus Triangle</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef TRIANGLE_H</span>
+<span class="cp">#define TRIANGLE_H</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">base</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">altura</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Triangle</span><span class="p">;</span>
+
+<span class="cm">/* Assigna valors als atributs d&#39;un triangle */</span>
+<span class="kt">void</span> <span class="nf">inicialitza_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">double</span> <span class="n">base</span><span class="p">,</span> <span class="kt">double</span> <span class="n">altura</span><span class="p">);</span>
+
+<span class="cm">/* Calcula l&#39;àrea d&#39;un triangle. Pressuposa el triangle inicialitzat. */</span>
+<span class="kt">double</span> <span class="nf">calcula_area_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="n">t</span><span class="p">);</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</td></tr></table><ul class="simple">
+<li>Fitxer triangle.c</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Definició del tipus Triangle</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include &quot;triangle.h&quot;</span>
+
+<span class="kt">void</span> <span class="nf">inicialitza_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="o">*</span><span class="n">t</span><span class="p">,</span> <span class="kt">double</span> <span class="n">base</span><span class="p">,</span> <span class="kt">double</span> <span class="n">altura</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">t</span><span class="o">-&gt;</span><span class="n">base</span> <span class="o">=</span> <span class="n">base</span><span class="p">;</span>
+    <span class="n">t</span><span class="o">-&gt;</span><span class="n">altura</span> <span class="o">=</span> <span class="n">altura</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">calcula_area_triangle</span><span class="p">(</span><span class="n">Triangle</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">.</span><span class="n">base</span> <span class="o">*</span> <span class="n">t</span><span class="p">.</span><span class="n">altura</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><ul class="simple">
+<li>Fitxer usatriangle.c</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Programa que calcula l&#39;àrea d&#39;un triangle de base 5 i altura 3</span>
+<span class="cm"> */</span>
+<span class="cp">#include &quot;triangle.h&quot;</span>
+<span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Triangle</span> <span class="n">t</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">area</span><span class="p">;</span>
+
+    <span class="n">inicialitza_triangle</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">calcula_area_triangle</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%g</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">area</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Aquest exemple mostra una possible implementació del TAD Triangle.</p>
+</div>
+<div class="section" id="exercici-1-observa-el-tad-triangle">
+<h3>Exercici 1. Observa el TAD Triangle</h3>
+<p>Contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Per a què cal a <em>usatriangle.c</em> fer un include de <em>triangle.h</em> ?</li>
+<li>On es defineix l'estructura i el tipus <em>Triangle</em> ?</li>
+<li><em>usatriangle.c</em> necessita saber, tal i com està implementat, quina
+és l'estructura d'un Triangle?</li>
+<li>En comptes de fer servir <em>inicialitza_triangle()</em>,
+<em>usatriangle.c</em> podria inicialitzar els valors del triangle
+d'alguna altra manera? Com?</li>
+<li>Si canviem la implementació del Triangle de manera
+que guardem els valors base i altura en un array de dos
+double, indica què caldrà modificar perquè <em>usatriangle.c</em> pugui
+continuar funcionant. El què és més important, quin codi <strong>no</strong> és
+necessari modificar? Perquè creus que això pot ser important?</li>
+<li>En cas que haguérem canviat la implementació de <em>usatriangle.c</em>
+segons la resposta de la pregunta 4, en què hauria canviat la teva
+resposta de la pregunta 5? Quin consell donaries als usuaris del
+teu TAD Triangle tenint això en compte?</li>
+<li>Perquè creus que cal que <em>inicialitza_triangle()</em> i
+<em>calcula_area_triangle()</em> indiquin en el seu nom la paraula
+<em>triangle</em>? Pista: què passaria si tinguéssim a l'hora un Triangle
+i un Cercle amb similars funcionalitats?</li>
+</ol>
+</div>
+<div class="section" id="el-triangle-en-java">
+<h3>El Triangle en Java</h3>
+<p>Considera ara el següent codi que correspon, en certa mesura, al TAD
+Triangle vist anteriorment. Ara, en notació Java, direm la classe
+Triangle.</p>
+<ul class="simple">
+<li>Fitxer <em>Triangle.java</em></li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/*</span>
+<span class="cm"> * Implementació de la classe Triangle</span>
+<span class="cm"> */</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Triangle</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">base</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">double</span> <span class="n">altura</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Triangle</span><span class="o">(</span><span class="kt">double</span> <span class="n">base</span><span class="o">,</span> <span class="kt">double</span> <span class="n">altura</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">base</span> <span class="o">=</span> <span class="n">base</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">altura</span> <span class="o">=</span> <span class="n">altura</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/* calcula i retorna l&#39;àrea del triangle */</span>
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">calculaArea</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">base</span> <span class="o">*</span> <span class="n">altura</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><ul class="simple">
+<li>Fitxer <em>UsaTriangle.java</em></li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/** Classe que calcula l&#39;àrea d&#39;un triangle de base 5 i altura 3 */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaTriangle</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Triangle</span> <span class="n">t</span><span class="o">;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Triangle</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="na">calculaArea</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">area</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="exercici-2-observa-la-classe-triangle">
+<h3>Exercici 2. Observa la classe Triangle</h3>
+<p>Contesta les següents preguntes sobre la classe Triangle.</p>
+<ol class="arabic simple">
+<li>La proposta en Java té només dos fitxers en comptes dels tres de C.
+Aventura una explicació.</li>
+<li>Quin creus que és l'equivalent de <em>inicialitza_triangle()</em> de C en
+la versió Java? Quines diferències hi trobes? Considera tant la
+definició com l'ús.</li>
+<li>L'equivalent de <em>calcula_area_triangle()</em> sembla molt més directe
+en Java, oi? Descriu, però, les diferències que hi trobes tant en
+la definició com en l'ús</li>
+<li>On penses que (dins <em>UsaTriangle.java</em>) se li passa a
+<em>calculaArea()</em> el triangle del que ha de calcular l'àrea?</li>
+<li>Perquè creus que en la versió Java, es diu <em>calculaArea()</em> i no
+<em>calculaAreaTriangle()</em></li>
+<li>Aventura una raó per la qual <em>Triangle(double, double)</em> fa servir
+<em>this.base = base</em> tot tenint en compte que <em>calculaArea()</em>
+accedeix directament als atributs sense indicar <em>this</em>.</li>
+<li>Prova el següent canvi a <em>UsaTriangle.java</em>. Afegeix, després de
+declarar <em>t</em> una línia amb <em>t.base = 2;</em> que, si es comportés com a
+C, hauria de canviar el valor de l'atribut <em>base</em> del triangle. Què
+passa? Aventura una explicació pel missatge que t'apareix. Pista: La
+clau està en <em>private</em>.</li>
+<li>Intenta explicar el concepte d'<em>encapsulació</em> fent servir els
+exemples del TAD Triangle i la classe Triangle. És a dir, descriu
+quins mecanismes creus que ofereix Java per a permetre agrupar
+dades i funcions, i a l'hora protegir l'accés directe a les dades.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./reconeixement-delements-de-programacio.html">
+        Reconeixement d'elements de programació
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./classes-i-objectes.html">
+        Classes i objectes
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

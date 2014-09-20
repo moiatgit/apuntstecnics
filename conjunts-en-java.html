@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Conjunts en Java</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Conjunts en Java             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./contenidors-ordenats.html">
+        Contenidors ordenats
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./mapes-i.html">
+        Mapes I
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Conjunts en Java</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document introdueix l'agrupació d'informació sense ordre en un
+objecte Java. Per fer-ho, descriu l'important concepte d'<em>igualtat</em>
+des de la perspectiva del llenguatge.</p>
+</div>
+<div class="section" id="conjunts">
+<h2>Conjunts</h2>
+<p>Entendrem com <em>conjunt</em> una agrupació d'objectes en alguna classe
+contenidora que implementi la <em>interface</em> <tt class="docutils literal">Set</tt>.</p>
+<p>De entre les característiques particulars dels conjunts destacarem el
+fet que no accepten elements repetits i que no es poden fer
+assumpcions en l'ordre en que es recuperen els elements introduïts.</p>
+<p>El següent diagrama UML és una representació parcial de les classes i
+<em>interfaces</em> que ofereix l'API de Java per donar suport al concepte de
+conjunts.</p>
+<div class="figure align-center">
+<img alt="Jerarquia de HashSet" src="./images/poo021.img001.hashset.png" />
+</div>
+<p>Algunes de les operacions principals de la <em>interface</em> <tt class="docutils literal">Set</tt> són:</p>
+<ul class="simple">
+<li><tt class="docutils literal">boolean add(E e)</tt>: afegeix l'element <tt class="docutils literal">e</tt> al conjunt sempre i
+quant no s'hi trobi ja. En cas que s'afegeixi, retorna <tt class="docutils literal">true</tt>.</li>
+<li><tt class="docutils literal">int size()</tt>: retorna el nombre d'elements dins el conjunt.</li>
+<li><tt class="docutils literal">boolean remove(Object o)</tt>: elimina l'element <tt class="docutils literal">o</tt> del conjunt si
+hi era, i retorna <tt class="docutils literal">true</tt> en cas que l'hagi pogut eliminar.</li>
+<li><tt class="docutils literal">boolean contains(Object o)</tt>: retorna <tt class="docutils literal">true</tt> si el conjunt
+inclou l'objecte <tt class="docutils literal">o</tt>.</li>
+</ul>
+<p>Mira l'<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/Set.html">API de Set</a> per a
+més detalls.</p>
+<p>Per recórrer tots els elements d'un conjunt, donat que implementen
+<em>Iterable</em>, podem fer servir el bucle <em>foreach</em>. Per exemple</p>
+<div class="highlight"><pre><span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostra</span><span class="o">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">set</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="nl">s:</span> <span class="n">set</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Tal i com està definit el codi anterior, no podem fer cap assumpció de
+l'ordre en que apareixeran els elements del conjunt de <em>Strings</em>.</p>
+<p>Una de les implementacions de conjunts és <tt class="docutils literal">HashSet</tt>. Serà la que
+farem servir pels següents exercicis.</p>
+<div class="section" id="exercici-1-gestio-d-un-conjunt-de-strings">
+<h3>Exercici 1. Gestió d'un conjunt de Strings</h3>
+<p>Implementa un programa que permeti mantenir un conjunt de <em>Strings</em>.
+Les opcions disponibles seran:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal">a «string»</tt>: afegeix el String al conjunt si no existia.</p>
+<p>Si el pot afegir indica <tt class="docutils literal">Afegit «string»</tt> altrament indica <tt class="docutils literal">Ja
+existeix «string»</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">e «string»</tt>: consulta si el String es troba al conjunt. Indica
+<tt class="docutils literal">Existeix «string»</tt> o <tt class="docutils literal">No existeix «string»</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">r «string»</tt>: elimina el String del conjunt si existia.</p>
+<p>Si el pot eliminar indica <tt class="docutils literal">Eliminat «string»</tt> altrament indica
+<tt class="docutils literal">No existeix «string»</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">b</tt>         : buida el conjunt. Demana confirmació si hi ha al
+menys un element a eliminar amb <tt class="docutils literal">Eliminar «n» element/s? (s/N)</tt>.
+Si no hi ha cap element, indica <tt class="docutils literal">Conjunt buit</tt>.  Finalment, i en
+qualsevol dels casos, indica el nombre d'elements eliminats amb
+<tt class="docutils literal">Eliminats «n» element/s</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">q</tt>         : mostra el nombre d'elements al conjunt amb el
+missatge: <tt class="docutils literal">Nombre d'elements: «n»</tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">m</tt>         : mostra tots els elements del conjunt separats per
+coma i entre cometes dobles, o <tt class="docutils literal">Conjunt buit</tt> si no hi ha cap
+element.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">x</tt>         : finalitza l'execució.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="igualtat">
+<h2>Igualtat</h2>
+<p>Què vol dir que dos objectes siguin iguals?</p>
+<p>Probablement, estarem d'acord amb que dos objectes són iguals si fan
+referència a la mateixa instància, oi? És clar, és la identitat la que
+està en joc!</p>
+<p>Són iguals però, dos cadenes de caràcters que, no ocupant la mateixa
+posició de memòria, contenen el mateix (ex. &quot;hola&quot;)? Sembla què és
+quelcom que esperaríem, oi?</p>
+<p>Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">valor</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">EnvoltaString</span><span class="o">(</span><span class="n">String</span> <span class="n">valor</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">valor</span> <span class="o">=</span> <span class="n">valor</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="s">&quot;EnvoltaString: &quot;</span><span class="o">+</span> <span class="n">valor</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&quot;hola&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;\&quot;&quot;</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&quot;\&quot; == \&quot;&quot;</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="s">&quot;\&quot; -&gt; &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="o">));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;\&quot;&quot;</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&quot;\&quot;.equals(\&quot;&quot;</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="s">&quot;\&quot;) -&gt; &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">b</span><span class="o">)));</span>
+        <span class="c1">//</span>
+        <span class="n">EnvoltaString</span> <span class="n">esa</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="n">EnvoltaString</span> <span class="n">esb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">esa</span> <span class="o">+</span> <span class="s">&quot; == &quot;</span> <span class="o">+</span> <span class="n">esb</span> <span class="o">+</span> <span class="s">&quot; -&gt; &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">esa</span> <span class="o">==</span> <span class="n">esb</span><span class="o">));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">esa</span> <span class="o">+</span> <span class="s">&quot;.equals(&quot;</span> <span class="o">+</span> <span class="n">esb</span> <span class="o">+</span> <span class="s">&quot;) -&gt; &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">esa</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">esb</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>El codi anterior té com a sortida:</p>
+<div class="highlight"><pre>&quot;hola&quot; == &quot;hola&quot; -&gt; false
+&quot;hola&quot;.equals(&quot;hola&quot;) -&gt; true
+EnvoltaString: hola == EnvoltaString: hola -&gt; false
+EnvoltaString: hola.equals(EnvoltaString: hola) -&gt; false
+</pre></div>
+<p>Com ja sabem, per comparar <em>Strings</em> en Java, ens hem vist obligats a
+fer servir el mètode <tt class="docutils literal">equals()</tt>.</p>
+<p>Aquest mètode l'hereta tota classe que definim de la classe <tt class="docutils literal">Object</tt>.
+A l'exemple, però, no sembla funcionar per altres objectes
+com ara <tt class="docutils literal">EnvoltaString</tt>.</p>
+<p>El problema deu trobar al mètode <tt class="docutils literal">equals()</tt>. On està definit el codi
+de <tt class="docutils literal">equals()</tt> que s'executa a la darrera línia de l'exemple?</p>
+<p>A <tt class="docutils literal">Object</tt> és clar. Però lògicament a <tt class="docutils literal">Object</tt> no li podem demanar que
+sàpiga com comparar totes i cadascuna de les seves subclasses!</p>
+<p>Imagina-t'ho només amb <tt class="docutils literal">EnvoltaString</tt>. Quan hauria de considerar que
+dos <tt class="docutils literal">EnvoltaString</tt> són iguals? Quan els seus valors són iguals (segons
+<tt class="docutils literal">String.equals()</tt>)? Quan siguin iguals independents de majúscules i
+minúscules?</p>
+<p>Nosaltres decidim què fa iguals a dues instàncies de <tt class="docutils literal">EnvoltaString</tt>
+i, per tant, nosaltres haurem de desenvolupar el codi per
+comparar-les.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">valor</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">EnvoltaString</span><span class="o">(</span><span class="n">String</span> <span class="n">valor</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">valor</span> <span class="o">=</span> <span class="n">valor</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="s">&quot;EnvoltaString: &quot;</span><span class="o">+</span> <span class="n">valor</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">EnvoltaString</span> <span class="n">altre</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">altre</span><span class="o">.</span><span class="na">valor</span><span class="o">);</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">a</span> <span class="o">=</span> <span class="s">&quot;hola&quot;</span><span class="o">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+        <span class="n">EnvoltaString</span> <span class="n">esa</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="n">EnvoltaString</span> <span class="n">esb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">esa</span> <span class="o">+</span> <span class="s">&quot; == &quot;</span> <span class="o">+</span> <span class="n">esb</span> <span class="o">+</span> <span class="s">&quot; -&gt; &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">esa</span> <span class="o">==</span> <span class="n">esb</span><span class="o">));</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">esa</span> <span class="o">+</span> <span class="s">&quot;.equals(&quot;</span> <span class="o">+</span> <span class="n">esb</span> <span class="o">+</span> <span class="s">&quot;) -&gt; &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">esa</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">esb</span><span class="o">)));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fixa't que sobreescrivim <tt class="docutils literal">equals()</tt> de manera que, en rebre un altre <tt class="docutils literal">EnvoltaString</tt>, indiqui cert si els valors són iguals segons <tt class="docutils literal">String.equals()</tt>.</p>
+<p>La sortida d'aquest programa, com era d'esperar, serà:</p>
+<div class="highlight"><pre>EnvoltaString: hola == EnvoltaString: hola -&gt; false
+EnvoltaString: hola.equals(EnvoltaString: hola) -&gt; true
+</pre></div>
+<div class="section" id="exercici-2-envoltastring-indiferent-a-majuscules-i-minuscules">
+<h3>Exercici 2. EnvoltaString indiferent a majúscules i minúscules</h3>
+<p>Modifica la classe <tt class="docutils literal">EnvoltaString</tt> de manera que consideri iguals
+dos <tt class="docutils literal">EnvoltaString</tt> quan els seus valors coincideixen sense tenir en
+compte majúscules i minúscules.</p>
+<p>De fet, no hem redefinit completament el <tt class="docutils literal">equals()</tt> de <tt class="docutils literal">Object</tt>. Només l'hem sobrecarregat quan el paràmetre sigui un <tt class="docutils literal">EnvoltaString</tt>.</p>
+<p>Què passaria si provéssim el següent?</p>
+<div class="highlight"><pre><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">esa</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Vector</span><span class="o">&lt;</span><span class="n">GatRenat</span><span class="o">&gt;()));</span>
+</pre></div>
+<p>En aquest cas cridaria a <tt class="docutils literal">Object.equals()</tt> i respondria
+adequadament. Si volguéssim controlar-ho més podríem definir
+<tt class="docutils literal">equals()</tt> com:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">altre</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">altre</span> <span class="k">instanceof</span> <span class="n">EnvoltaString</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">// si ja no és ni un EnvoltaString malament</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">valor</span><span class="o">.</span><span class="na">equals</span><span class="o">(((</span><span class="n">EnvoltaString</span><span class="o">)</span><span class="n">altre</span><span class="o">).</span><span class="na">valor</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="exercici-3-envoltastring-es-compara-amb-strings">
+<h3>Exercici 3. EnvoltaString és compara amb Strings</h3>
+<p>Modifica la classe <tt class="docutils literal">EnvoltaString</tt> de manera que permeti comparar un
+<tt class="docutils literal">EnvoltaString</tt> també amb un String i que en aquest cas,
+<tt class="docutils literal">EnvoltaString.equals(String)</tt> sigui cert si el paràmetre és
+igual al valor del <tt class="docutils literal">EnvoltaString</tt>.</p>
+<p>Planteja dues versions, amb una que no faci servir <tt class="docutils literal">instanceof</tt>.</p>
+</div>
+<div class="section" id="no-hi-ha-prou-amb-equals">
+<h3>No hi ha prou amb <tt class="docutils literal">equals()</tt></h3>
+<p>Si les coses fossin tan fàcils com redefinir el mètode <tt class="docutils literal">equals()</tt>,
+Java seria massa avorrit.</p>
+<p>Considera la classe <a class="reference external" href="http://java.sun.com/javase/7/docs/api/java/util/HashSet.html">java.util.HashSet</a></p>
+<p>Segons la seva documentació, aquesta classe implementa un conjunt
+d'elements en el que les operacions bàsiques (afegir, eliminar,
+comptar i cercar) tenen un cost constant.</p>
+<p>Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>  <span class="c1">// aquest no l&#39;afegirà perquè està repetit</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Integer</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Una possible sortida seria:</p>
+<div class="highlight"><pre>Trobat l&#39;enter: 0
+Trobat l&#39;enter: 1
+Trobat l&#39;enter: 2
+Trobat l&#39;enter: 3
+</pre></div>
+<p>En aquest cas, els valors han sortit ordenats però no podem esperar
+això sempre d'una classe conjunt.</p>
+<p>Ara bé, que passarà amb una classe feta per nosaltres?</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="c1">// definim una classe interna que encapsula un Integer</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Enter</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Integer</span> <span class="n">valor</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">()</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>En negreta veiem els canvis principals. Ara, el nostre
+<tt class="docutils literal">EnvoltaString</tt> disposa d'un valor de tipus Integer, de constructors
+adequats per a incialitzar-lo i d'un mètode <tt class="docutils literal">toString()</tt>.</p>
+<p>Per altra banda, el <tt class="docutils literal">HashSet</tt> ara és de <tt class="docutils literal">EnvoltaString</tt> i no de <tt class="docutils literal">Integer</tt>.</p>
+<p>Funcionarà el programa? La sortida pot ser:</p>
+<div class="highlight"><pre>Trobat l&#39;enter: 1
+Trobat l&#39;enter: 3
+Trobat l&#39;enter: 2
+Trobat l&#39;enter: 2
+Trobat l&#39;enter: 0
+</pre></div>
+<p>No et deixis confondre per l'ordre de la sortida. Si a tu et surt un
+altre, recorda que els conjunts no es basen en un ordre concret.</p>
+<p>El punt crític està en el fet que el valor 2 està repetit! No viola
+això el què ha de ser un conjunt?</p>
+<p>Però, com s'ho pot fer <tt class="docutils literal">HashSet</tt> per saber que dos Enter són iguals?</p>
+<p>És clar, el problema està en que Enter no té implementat equals()</p>
+<p>Fem-ho doncs</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="c1">// definim una classe interna que encapsula un Integer</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Enter</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Integer</span> <span class="n">valor</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">()</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Enter</span> <span class="n">altre</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">altre</span><span class="o">.</span><span class="na">valor</span><span class="o">);</span> <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Funcionarà?</p>
+<p>Doncs no. Tenim el mateix resultat! Perquè?</p>
+<p>Tot plegat, té a veure amb un mètode heretat de <tt class="docutils literal">Object</tt> anomenat
+<tt class="docutils literal">hashCode()</tt></p>
+<p>Mirem el que ens diu la documentació d'<a class="reference external" href="http://java.sun.com/javase/7/docs/api/java/lang/Object.html#hashCode%28%29">aquest mètode</a>.</p>
+<blockquote>
+<p>[<tt class="docutils literal">int hashcode()</tt>] Returns a hash code value for the object.
+This method is supported for the benefit of hashtables such as
+those provided by java.util.Hashtable.</p>
+<p>The general contract of hashCode is:</p>
+<p>Whenever it is invoked on the same object more than once during an
+execution of a Java application, the hashCode method must
+consistently return the same integer, provided no information used
+in equals comparisons on the object is modified. This integer need
+not remain consistent from one execution of an application to
+another execution of the same application.</p>
+<p>If two objects are equal according to the equals(Object) method,
+then calling the hashCode method on each of the two objects must
+produce the same integer result.</p>
+<p>It is not required that if two objects are unequal according to
+the equals(java.lang.Object) method, then calling the hashCode
+method on each of the two objects must produce distinct integer
+results. However, the programmer should be aware that producing
+distinct integer results for unequal objects may improve the
+performance of hashtables.</p>
+<p>As much as is reasonably practical, the hashCode method defined by
+class Object does return distinct integers for distinct objects.
+(This is typically implemented by converting the internal address
+of the object into an integer, but this implementation technique
+is not required by the JavaTM programming language.)</p>
+</blockquote>
+<p>Considera que modifiquem el main() anterior amb el següent:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; amb hashCode: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Genera la següent sortida</p>
+<div class="highlight"><pre>Trobat l&#39;enter: 1 amb hashCode: 8152936
+Trobat l&#39;enter: 3 amb hashCode: 5538765
+Trobat l&#39;enter: 2 amb hashCode: 10039797
+Trobat l&#39;enter: 2 amb hashCode: 23660326
+Trobat l&#39;enter: 0 amb hashCode: 32716405
+</pre></div>
+<p>Fixa't que els dos &quot;2&quot; tenen valors diferents de <tt class="docutils literal">hashCode</tt>!</p>
+<p>El problema, però, té una fàcil solució: redefinint <tt class="docutils literal">hashCode()</tt> per
+la nostra classe.</p>
+<p>Per exemple, considera:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">static</span> <span class="kd">class</span> <span class="nc">Enter</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">valor</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Enter</span><span class="o">()</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Enter</span> <span class="n">altre</span><span class="o">)</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">altre</span><span class="o">.</span><span class="na">valor</span><span class="o">);</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fàcil, oi? Aprofitem el <tt class="docutils literal">hashCode</tt> de <tt class="docutils literal">Integer</tt> que hem de suposar
+que està ben definit, i ja està. Doncs... encara no funciona!</p>
+<p>La sortida ara és:</p>
+<div class="highlight"><pre>Trobat l&#39;enter: 0 amb hashCode: 0
+Trobat l&#39;enter: 1 amb hashCode: 1
+Trobat l&#39;enter: 2 amb hashCode: 2
+Trobat l&#39;enter: 2 amb hashCode: 2
+Trobat l&#39;enter: 3 amb hashCode: 3
+</pre></div>
+<p>És a dir, els <tt class="docutils literal">hashCode()</tt> dels dos '2' són iguals. Perquè no
+funciona doncs?</p>
+<p>A veure, repassem, tenim redefinit <tt class="docutils literal">equals()</tt> i <tt class="docutils literal">hashCode()</tt>. El
+primer retorna cert si, i només si, els valors són iguals segons
+<tt class="docutils literal">Integer.equals()</tt> mentre que el segon retorna un enter diferent
+depenent del valor (que amb <tt class="docutils literal">Integer</tt> semblava funcionar)</p>
+<p>Pensem...</p>
+<p>Posem un <em>xivato</em> als nostres mètodes i mirem que passa</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">valor</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">EnvoltaString</span><span class="o">()</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">EnvoltaString</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">EnvoltaString</span><span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="s">&quot;EnvoltaString: &quot;</span> <span class="o">+</span> <span class="n">valor</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">EnvoltaString</span> <span class="n">altre</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;EnvoltaString.equals(): this=&quot;</span><span class="o">+</span><span class="k">this</span><span class="o">+</span><span class="s">&quot;\taltre=&quot;</span><span class="o">+</span><span class="n">altre</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">altre</span><span class="o">.</span><span class="na">valor</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;EnvoltaString.hashCode(): this=&quot;</span><span class="o">+</span><span class="k">this</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">EnvoltaString</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">EnvoltaString</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="n">i</span><span class="o">));</span> <span class="o">}</span>
+        <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">EnvoltaString</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat el EnvoltaString: &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; amb hashCode: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Ens hauria de sortir el <em>xivato</em> cada cop que algú (<tt class="docutils literal">HashSet</tt>) cridi
+a aquestes funcions.</p>
+<p>Però la resposta és:</p>
+<div class="highlight"><pre>Enter.hashCode(): this=0
+Enter.hashCode(): this=1
+Enter.hashCode(): this=2
+Enter.hashCode(): this=3
+Enter.hashCode(): this=2
+Enter.hashCode(): this=0
+Trobat l&#39;enter: 0 amb hashCode: 0
+Enter.hashCode(): this=1
+Trobat l&#39;enter: 1 amb hashCode: 1
+Enter.hashCode(): this=2
+Trobat l&#39;enter: 2 amb hashCode: 2
+Enter.hashCode(): this=2
+Trobat l&#39;enter: 2 amb hashCode: 2
+Enter.hashCode(): this=3
+Trobat l&#39;enter: 3 amb hashCode: 3
+</pre></div>
+<p>Fixa't que crida <tt class="docutils literal">hashCode()</tt> dos cops per element. Primer en
+introduir-lo i després per extreure'l.</p>
+<p>Fixa't també que ni rastre de la crida a <tt class="docutils literal">equals()</tt>!</p>
+<p>Perquè no la fa? Perquè no crida a <tt class="docutils literal">equals()</tt> per comprovar si són
+elements iguals?</p>
+<p>Pensa abans de continuar llegint!</p>
+<p>Per a aquells que encara no ho hàgiu vist, el problema està en que
+<tt class="docutils literal">HashSet</tt> crida a <tt class="docutils literal">equals(Object)</tt> i no a <tt class="docutils literal">equals(Enter)</tt> !</p>
+<p>Per a arreglar-ho, haurem de programar <tt class="docutils literal">equals(Object)</tt> en comptes
+de <tt class="docutils literal">equals(Enter)</tt>. Sí, no sembla massa elegant des de la
+perspectiva OO, oi?. De moment és el que tenim.</p>
+<p>Per exemple:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kd">class</span> <span class="nc">EnvoltaString</span> <span class="o">{</span>
+    <span class="cm">/* definim una classe interna que encapsula un Integer */</span>
+    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Enter</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="n">Integer</span> <span class="n">valor</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">()</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">);</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="nf">Enter</span><span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span> <span class="n">valor</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span> <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="n">Object</span> <span class="n">altre</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Enter.equals(): this=&quot;</span><span class="o">+</span><span class="k">this</span><span class="o">+</span><span class="s">&quot;\taltre=&quot;</span><span class="o">+</span><span class="n">altre</span><span class="o">);</span>
+            <span class="kt">boolean</span> <span class="n">resultat</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">altre</span> <span class="k">instanceof</span> <span class="n">Enter</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">resultat</span> <span class="o">=</span> <span class="n">valor</span><span class="o">.</span><span class="na">equals</span><span class="o">(((</span><span class="n">Enter</span><span class="o">)</span><span class="n">altre</span><span class="o">).</span><span class="na">valor</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Enter.hashCode(): this=&quot;</span><span class="o">+</span><span class="k">this</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">valor</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Enter</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; amb hashCode: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Ara la sortida és</p>
+<div class="highlight"><pre>Enter.hashCode(): this=0
+Enter.hashCode(): this=1
+Enter.hashCode(): this=2
+Enter.hashCode(): this=3
+Enter.hashCode(): this=2
+Enter.equals(): this=2      altre=2
+Enter.hashCode(): this=0
+Trobat l&#39;enter: 0 amb hashCode: 0
+Enter.hashCode(): this=1
+Trobat l&#39;enter: 1 amb hashCode: 1
+Enter.hashCode(): this=2
+Trobat l&#39;enter: 2 amb hashCode: 2
+Enter.hashCode(): this=3
+Trobat l&#39;enter: 3 amb hashCode: 3
+</pre></div>
+<p>Fixa't que a <tt class="docutils literal">equals()</tt> només se'l crida un cop.</p>
+<p>Quan? Pensa-ho abans de continuar llegint!</p>
+<p>Evidentment és a l'hora d'inserir un element que coincideix amb un
+<tt class="docutils literal">hashCode()</tt> d'un altre ja existent.</p>
+<p>En tot cas, fixa't que finalment hem aconseguit el nostre objectiu:
+que un conjunt no repeteixi elements d'un tipus definit per nosaltres!</p>
+<p>En resum: quan l'usuari de la teva classe hagi de poder comparar la
+igualtat d'instàncies d'aquesta, redefineix també el mètode
+<tt class="docutils literal">hashCode()</tt> i assegura't que <tt class="docutils literal">equals()</tt> accepta <tt class="docutils literal">Object</tt>.</p>
+</div>
+<div class="section" id="exercici-4-una-colla-de-gats">
+<h3>Exercici 4. Una colla de gats</h3>
+<p>Crea una nova versió de la classe Gat que permeti a un
+<tt class="docutils literal">HashSet&lt;Gat&gt;</tt> funcionar correctament.</p>
+<p>Considerarem que un gat és igual a un altre si, i només si, els seus
+noms són iguals.</p>
+<p>Fes una classe <tt class="docutils literal">TestGatSet</tt> similar a la classe <tt class="docutils literal">EnvoltaString</tt>
+vista a l'exemple que afegeixi a un <tt class="docutils literal">HashSet&lt;Gat&gt;</tt> cinc instàncies
+de Gat tals que:</p>
+<ul class="simple">
+<li>donades dues instàncies de gat qualsevol d'entre les cinc
+(referenciem amb <tt class="docutils literal">g1</tt> i <tt class="docutils literal">g2</tt>) és fals <tt class="docutils literal">g1 == g2</tt>. És a dir,
+les cinc provenen de cinc crides a <tt class="docutils literal">new Gat(nom)</tt>.</li>
+<li>existeixen dues instàncies de gat d'entre les cinc (i només dues)
+tals que <tt class="docutils literal"><span class="pre">g1.getNom().equals(g2.getNom())</span></tt>. És a dir, únicament
+dos dels gats tenen el mateix nom. De la mateixa manera que
+<tt class="docutils literal">EnvoltaString</tt></li>
+<li>fes que la sortida de <tt class="docutils literal">TestGatSet</tt> mostri
+clarament que no hi ha cap gat repetit (és a dir, amb nom repetit).</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./contenidors-ordenats.html">
+        Contenidors ordenats
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./mapes-i.html">
+        Mapes I
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

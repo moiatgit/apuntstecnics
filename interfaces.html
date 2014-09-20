@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Interfaces</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Interfaces             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./classes-abstractes.html">
+        Classes abstractes
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./excepcions.html">
+        Excepcions
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Interfaces</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document ofereix una breu introducció al concepte
+d'<em>interface</em>.</p>
+<p>Es tracta d'un mecanisme molt flexible que permet definir el
+comportament de les classes, de tal manera que de vegades puguem
+arribar a no necessitar conèixer amb quina classe concreta estem
+treballant mentre tinguem clar que respon al comportament que esperem.</p>
+<p>El tema s'inicia amb l'anàlisi de les possibilitats d'implementació
+d'un cas concret en forma d'exercici. Tot seguit es fa una discussió
+més teòrica, per acabar amb uns exercicis que permeten posar en
+pràctica els continguts.</p>
+</div>
+<div class="section" id="animals-de-companyia">
+<h2>Animals de companyia</h2>
+<p>Considera la jerarquia de l'exercici dels animals abstractes.</p>
+<p>Imagina que ara volguéssim implementar els mètodes propis d'un animal
+de companyia (<tt class="docutils literal">siguesAmistos()</tt> i <tt class="docutils literal">juga()</tt>)</p>
+<p>Pensa en les diferents possibilitats i considera els seus avantatges i
+inconvenients:</p>
+<ol class="arabic simple">
+<li>implementar els mètodes a la classe Animal</li>
+<li>indicar els mètodes com a abstractes a la classe Animal i
+implementar-los a les subclasses</li>
+<li>Col·loca els mètodes només allà on tenen sentit (ex. al Gos i al
+Gat)</li>
+</ol>
+<div class="section" id="proposta-de-respostes">
+<h3>Proposta de respostes</h3>
+<p>No les miris fins que no hagis intentat donar una resposta pròpia!</p>
+<ol class="arabic simple">
+<li>implementar els mètodes a la classe Animal</li>
+</ol>
+<p><strong>PROS:</strong></p>
+<ul class="simple">
+<li>totes les subclasses d'Animal hereten automàticament els mètodes</li>
+<li>no cal modificar les subclasses existents ni adaptar les futures</li>
+<li>les subclasses poden ser usades polimòrficament com a animals de
+companyia</li>
+</ul>
+<p><strong>CONS:</strong></p>
+<ul class="simple">
+<li>un lleó com a animal de companyia?</li>
+<li>tots els animals juguen igual?</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li>indicar els mètodes com a abstractes a la classe Animal i
+implementar-los a les subclasses</li>
+</ol>
+<p><strong>PROS:</strong></p>
+<ul class="simple">
+<li>permet evitar el segon problema de la primera opció: els diferents
+animals podran implementar els mètodes a la seva manera.</li>
+</ul>
+<p><strong>CONS:</strong></p>
+<ul class="simple">
+<li>cal modificar totes les subclasses (fins i tot les que no
+corresponen a animals de companyia)</li>
+<li>queda lleig: sí, encara que no faci res, un Lleó indica (amb la seva
+interfície) que ofereix el mètode siguesAmistos()</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li>Col·loca els mètodes només allà on tenen sentit (ex. al Gos i al Gat)</li>
+</ol>
+<p><strong>PROS:</strong></p>
+<ul class="simple">
+<li>no cal preocupar-se de lleons llepant-te la cara en arribar a casa</li>
+<li>no cal modificar res de les classes que no són animals de companyia</li>
+</ul>
+<p><strong>CONS:</strong></p>
+<ul class="simple">
+<li>no podem fer servir polimorfisme amb les subclasses que són animals
+de companyia</li>
+<li>com que no hi ha cap &quot;contracte&quot; cada subclasse pot anomenar els
+mètodes de diferent manera: ex. siguesBonGosset() en comptes de
+siguesAmistos()</li>
+</ul>
+<p>Sembla com si necessitéssim una altra superclasse per Gos i Gat?</p>
+</div>
+</div>
+<div class="section" id="multiples-superclasses">
+<h2>Múltiples superclasses?</h2>
+<p>A això s'anomena herència múltiple i, com a aquestes alçades
+probablement ja sabràs, Java no l'admet! En canvi, ens ofereix una
+alternativa anomenada <em>interface</em>.</p>
+<p>Una <em>interface</em> de Java especifica un conjunt de constants i signatures
+de mètodes que hauran de ser definits per qualsevol classe que
+implementi la <em>interface</em>.</p>
+<p>Un dels avantatges de les <em>interfaces</em> és la possibilitat de
+desenvolupar independentment peces de codi que només es comprometen a
+respectar <em>un contracte</em>: la implementació de la <em>interface</em>.</p>
+<p>Donat que una classe pot implementar un nombre indefinit d'<em>interfaces</em>,
+aquest mecanisme resol parcialment l'aparent limitació del Java amb
+l'herència múltiple.</p>
+<p>Considerem el següent exemple adaptat del <a class="reference external" href="http://docs.oracle.com/javase/tutorial/">tutorial oficial de Java</a>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Conduible</span> <span class="o">{</span>
+   <span class="c1">// declaracions de constants (si escau)</span>
+   <span class="c1">// signatures dels mètodes</span>
+   <span class="kt">int</span> <span class="nf">gira</span><span class="o">(</span><span class="n">Direction</span> <span class="n">direccio</span><span class="o">,</span>   <span class="c1">// Un enumerat amb els valors LEFT i RIGHT</span>
+              <span class="kt">double</span> <span class="n">radi</span><span class="o">,</span> <span class="kt">double</span> <span class="n">velocitatInicial</span><span class="o">,</span> <span class="kt">double</span> <span class="n">velocitatFinal</span><span class="o">);</span>
+   <span class="kt">int</span> <span class="nf">canviaCarril</span><span class="o">(</span><span class="n">Direction</span> <span class="n">direccio</span><span class="o">,</span> <span class="kt">double</span> <span class="n">velocitatInicial</span><span class="o">,</span> <span class="kt">double</span> <span class="n">velocitatFinal</span><span class="o">);</span>
+   <span class="kt">int</span> <span class="nf">senyalitzaGir</span><span class="o">(</span><span class="n">Direction</span> <span class="n">direccio</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">activar</span><span class="o">);</span>
+   <span class="c1">// més signatures de mètodes</span>
+   <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fixa't que les signatures dels mètodes no tenen claus i finalitzen amb
+punt i coma. Et sona, oi?</p>
+<p>Per a fer servir la <em>interface</em> Conduible podem implementar:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Seat600</span> <span class="kd">implements</span> <span class="n">Conduible</span> <span class="o">{</span>
+   <span class="c1">// mètodes definits per Conduible</span>
+   <span class="kt">int</span> <span class="nf">senyalitzaGir</span><span class="o">(</span><span class="n">Direction</span> <span class="n">direccio</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">activar</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">//codi per activar i desactivar els intermitents del Seat 600</span>
+      <span class="c1">// ...</span>
+   <span class="o">}</span>
+   <span class="c1">// ...</span>
+   <span class="c1">// altres membres de la classe independents de la interface i</span>
+   <span class="c1">// no visibles als usuaris d&#39;aquesta</span>
+   <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Fixa't que, per a implementar una <em>interface</em>, ho indiquem amb
+implements. Per altra banda, implementar un mètode de la <em>interface</em>
+implica simplement escriure el mètode incloent el cos.</p>
+<p>Per què la classe implementi correctament una <em>interface</em> cal que
+implementi <strong>tots</strong> els mètodes especificats per la <em>interface</em>.</p>
+</div>
+<div class="section" id="classes-subclasses-classes-abstractes-interfaces">
+<h2>Classes, subclasses, classes abstractes, <em>interfaces</em>?</h2>
+<p>Recepta per a decidir si vols una classe, una subclasse, una classe
+abstracta o una <em>interface</em>.</p>
+<ol class="arabic simple">
+<li>Si de la teva nova classe només pots dir que és un <em>Object</em> (<em>is a</em>),
+llavors fes una classe concreta</li>
+<li>Si la teva nova classe correspon a una versió més específica d'una
+altra existent, fes una subclasse (recorda el principi de
+substitució de Liskov)</li>
+<li>Si et cal realitzar una plantilla per a un conjunt de classes i
+disposes d'algun codi que totes les subclasses podrien fer servir,
+i no t'interessa que es pugui instanciar aquesta classe, crea una
+classe abstracta</li>
+<li>Si et cal definir un rol al que altres classes hagin de jugar, amb
+independència de la posició d'aquestes a l'arbre jeràrquic, fes-ho
+amb una interfície.</li>
+</ol>
+</div>
+<div class="section" id="exercici-2-la-interficie-d-animals-de-companyia">
+<h2>Exercici 2. La interfície d'animals de companyia</h2>
+<p>Defineix la interfície AnimalDeCompanyia amb els mètodes <tt class="docutils literal">String
+siguesAmistos()</tt> i <tt class="docutils literal">String juga()</tt>. Fes que Gos i Gat implementin
+la interfície (Canari no cal)</p>
+<p>Aconsegueix que funcioni el codi següent:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">estudi_poo</span><span class="o">.</span><span class="err">«</span><span class="n">elteunom</span><span class="err">»</span><span class="o">.</span><span class="na">animals</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Vector</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaAnimals</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;</span> <span class="n">llistaAnimals</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Animal</span><span class="o">&gt;();</span>
+        <span class="n">Vector</span><span class="o">&lt;</span><span class="n">AnimalDeCompanyia</span><span class="o">&gt;</span> <span class="n">llistaAnimalsDeCompanyia</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">AnimalDeCompanyia</span><span class="o">&gt;();</span>
+        <span class="c1">// crea uns quants animals</span>
+        <span class="n">Gos</span> <span class="n">gos</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gos</span><span class="o">(</span><span class="s">&quot;Fido&quot;</span><span class="o">);</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gos</span><span class="o">);</span>
+        <span class="n">llistaAnimalsDeCompanyia</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gos</span><span class="o">);</span>
+        <span class="n">Gat</span> <span class="n">gat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="s">&quot;Renat&quot;</span><span class="o">);</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat</span><span class="o">);</span>
+        <span class="n">llistaAnimalsDeCompanyia</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat</span><span class="o">);</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Canari</span><span class="o">(</span><span class="s">&quot;Piolin&quot;</span><span class="o">));</span>
+        <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Lleo</span><span class="o">(</span><span class="s">&quot;Bonifaci&quot;</span><span class="o">));</span>
+        <span class="c1">// fa que tots els animals facin coses</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Animal</span> <span class="nl">a:</span> <span class="n">llistaAnimals</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">moute</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">menja</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">fesSoroll</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">dorm</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="c1">// fa que tots els animals de companyia facin coses</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">AnimalDeCompanyia</span> <span class="nl">a:</span> <span class="n">llistaAnimalsDeCompanyia</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">((</span><span class="n">Animal</span><span class="o">)</span><span class="n">a</span><span class="o">).</span><span class="na">getNom</span><span class="o">())</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">siguesAmistos</span><span class="o">());</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">((</span><span class="n">Animal</span><span class="o">)</span><span class="n">a</span><span class="o">).</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">juga</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>En executar, el codi anterior ha de generar el següent resultat per
+sortida estàndard:</p>
+<div class="highlight"><pre>Fido camina
+Fido fa: nyam nyam
+Fido fa: bof bof
+Fido fa: ZZZzzzz
+Renat camina
+Renat fa: myam myam
+Renat fa: meww
+Renat fa: ZZZzzzz
+Piolin vola
+Piolin fa: pyam pyam
+Piolin fa: piu piu
+Piolin fa: pi-pi-pi-pi
+Bonifaci camina
+Bonifaci fa: gram gram
+Bonifaci fa: grrrr
+Bonifaci fa: ZRrrrrr
+Fido et llepa la cara
+Fido busca una pilota
+Renat es frega amb la teva cama
+Renat esgarrapa el teu sofa
+</pre></div>
+<div class="section" id="pistes">
+<h3>Pistes:</h3>
+<ol class="arabic simple">
+<li><tt class="docutils literal">class Gos extends Animal implements AnimalDeCompanyia { ... }</tt></li>
+<li><tt class="docutils literal">AnimalDeCompanyia.getNom()</tt></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./classes-abstractes.html">
+        Classes abstractes
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./excepcions.html">
+        Excepcions
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
