@@ -1531,4 +1531,76 @@ càrrec de guardar, compilar i executar el nostre codi.&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;Ja tenim disponible el NetBeans!&lt;/p&gt;
 &lt;/div&gt;
-</summary></entry></feed>
+</summary></entry><entry><title>Un primer contacte amb la programació en Java</title><link href="http://apuntstecnics.herokuapp.com/un-primer-contacte-amb-la-programacio-en-java.html" rel="alternate"></link><updated>2013-08-30T00:00:00+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2013-08-30:un-primer-contacte-amb-la-programacio-en-java.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest document té com a objectiu oferir l'estudiant una primera
+impressió d'un programa en java tot comparant-lo amb una versió del
+programa en un altre llenguatge conegut: el &lt;em&gt;C&lt;/em&gt;&lt;/p&gt;
+&lt;div class="section" id="prerequisits"&gt;
+&lt;h3&gt;Prerequisits&lt;/h3&gt;
+&lt;p&gt;Per a aprofitar aquesta activitat, cal tenir alguns coneixements
+bàsics del llenguatge C (e.g. directius de precompil·lació, funcions)&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="continguts"&gt;
+&lt;h2&gt;Continguts&lt;/h2&gt;
+&lt;p&gt;Intenta interpretar les següents versions del mateix programa.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Versió C&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="lineno"&gt; 1&lt;/span&gt; &lt;span class="cp"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;span class="lineno"&gt; 2&lt;/span&gt; &lt;span class="cp"&gt;#include &amp;lt;math.h&amp;gt;&lt;/span&gt;
+&lt;span class="lineno"&gt; 3&lt;/span&gt; &lt;span class="cp"&gt;#define PI 3.14159265358979323846264338327&lt;/span&gt;
+&lt;span class="lineno"&gt; 4&lt;/span&gt; 
+&lt;span class="lineno"&gt; 5&lt;/span&gt; &lt;span class="cm"&gt;/* calcula l&amp;#39;àrea d&amp;#39;un cercle a partir del seu radi */&lt;/span&gt;
+&lt;span class="lineno"&gt; 6&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;calcula_area_cercle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="lineno"&gt; 7&lt;/span&gt;     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;PI&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;pow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt; 8&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="lineno"&gt; 9&lt;/span&gt; 
+&lt;span class="lineno"&gt;10&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="lineno"&gt;11&lt;/span&gt;   &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;area&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="lineno"&gt;12&lt;/span&gt;   &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Càlcul de l&amp;#39;àrea d&amp;#39;un cercle&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;13&lt;/span&gt;   &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Introduïu el radi: &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;14&lt;/span&gt;   &lt;span class="n"&gt;scanf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;%lg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;15&lt;/span&gt;   &lt;span class="n"&gt;area&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calcula_area_cercle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;16&lt;/span&gt;   &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;L&amp;#39;àrea és %.16lg&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;area&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;17&lt;/span&gt;   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="lineno"&gt;18&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Versió java&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="lineno"&gt; 1&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="lineno"&gt; 2&lt;/span&gt; 
+&lt;span class="lineno"&gt; 3&lt;/span&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CalculaRadi&lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="lineno"&gt; 4&lt;/span&gt;   &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;calcula_area&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="lineno"&gt; 5&lt;/span&gt;       &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;PI&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;pow&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt; 6&lt;/span&gt;   &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="lineno"&gt; 7&lt;/span&gt;   &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="kd"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="lineno"&gt; 8&lt;/span&gt;     &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Càlcul de l&amp;#39;àrea d&amp;#39;un cercle&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt; 9&lt;/span&gt;     &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;print&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Introduïu el radi: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;10&lt;/span&gt;     &lt;span class="n"&gt;BufferedReader&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;BufferedReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;InputStreamReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;in&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+&lt;span class="lineno"&gt;11&lt;/span&gt;     &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;linia&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reader&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;readLine&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="lineno"&gt;12&lt;/span&gt;     &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;radi&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Double&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;parseDouble&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;linia&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;  &lt;span class="c1"&gt;// conversió de String a double&lt;/span&gt;
+&lt;span class="lineno"&gt;13&lt;/span&gt;     &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;area&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calcula_area&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;radi&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;14&lt;/span&gt;     &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; L&amp;#39;àrea és &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;area&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="lineno"&gt;15&lt;/span&gt;   &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="lineno"&gt;16&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercicis"&gt;
+&lt;h2&gt;Exercicis&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Exercici 1&lt;/strong&gt;: Preguntes sobre el codi&lt;/p&gt;
+&lt;p&gt;Contesta les següents preguntes sobre el codi que hem vist.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Què fan aquests programes?&lt;/li&gt;
+&lt;li&gt;Compara la manera en que cada llenguatge mostra un missatge a
+l'usuari.&lt;/li&gt;
+&lt;li&gt;Compara la manera en que cada llenguatge obté una resposta de
+l'usuari.&lt;/li&gt;
+&lt;li&gt;Compara la manera en que cada llenguatge defineix el bloc principal
+del programa.&lt;/li&gt;
+&lt;li&gt;Compara la manera en que cada llenguatge defineix una funció.&lt;/li&gt;
+&lt;li&gt;Perquè la versió en Java no requereix definit la constant &lt;em&gt;PI&lt;/em&gt; i C
+sí?&lt;/li&gt;
+&lt;li&gt;Quin llenguatge et sembla més fàcil i quin més complex?
+Argumenta-ho?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</summary><category term="java"></category></entry></feed>
