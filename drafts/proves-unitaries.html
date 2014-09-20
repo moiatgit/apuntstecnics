@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Proves unitàries</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="../theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="../theme/bootstrap.moi.css" rel="stylesheet">
+<link href="../theme/local.css" rel="stylesheet">
+<link href="../theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="../">[Apunts tècnics]
+ Proves unitàries             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="../category/dev.html">dev</a></li>
+                <li ><a href="../category/eines.html">eines</a></li>
+                <li class="active"><a href="../category/misc.html">misc</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="../tag/java.html">java</a></li>
+                <li><a href="../tag/programari.html">programari</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Proves unitàries</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="../category/misc.html">
+        misc
+    </a>
+            amb els tags: 
+            <a href="../tag/java.html">java</a> 
+            <a href="../tag/test.html">test</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Hi ha moltes coses que s'han de tenir en comptes quan dissenyem
+programari: usabilitat i reusabilitat, interfícies ben definides,...
+i, no menys important, que el codi sigui fàcilment <em>testable</em>. El
+nostre codi serà més testable com més ens faciliti la tasca de provar
+el seu funcionament i detectar els errors que contingui, tan ara com
+en un futur quan estigui funcionant en nous contexts.</p>
+</div>
+<div class="section" id="errors">
+<h2>Errors</h2>
+<p>Els errors formen part de la realitat del desenvolupament informàtic
+<a class="footnote-reference" href="#totomerrors" id="id1">[1]</a>. Tots en cometem i ho fem a totes les fases: en
+agafar els requeriments, en analitzar-los i dissenyar les solucions,
+en codificar... Fins i tot, a l'hora de provar el nostre
+desenvolupament!</p>
+<p>Però, perquè hi ha errors?</p>
+<ul class="simple">
+<li>perquè som mals programadors?</li>
+<li>perquè no som prou disciplinats?</li>
+<li>perquè ens demanen desenvolupar massa ràpid</li>
+<li>...</li>
+</ul>
+<p>Bé! és simplement perquè som humans.</p>
+<p>En molts contexts de la nostra vida observarem que la gent intenta
+amagar els seus errors i, sovint, no &quot;destapa&quot; els errors d'altres
+per... bé, diguem per mantenir les bones relacions. A la nostra
+professió hem de fer un esforç i canviar aquesta manera de funcionar.
+El millor que ens pot passar és que trobem l'error abans que el nostre
+client. Creu-me que aquest no tindrà problemes amb les convencions
+socials. Per tant, si una prova ens troba un error abans del
+lliurament ho hem de celebrar (probablement millor després
+d'arreglar-lo).</p>
+<p>En resum: d'errors tots en fem, sempre en tindrem i millor trobar-los
+aviat.</p>
+</div>
+<div class="section" id="les-proves">
+<h2>Les proves</h2>
+<p>Les proves són accions destinades a trobar errors en la nostra
+aplicació. Atenció, fixa't que no he dit, destinades a demostrar que
+la nostra aplicació funciona. Si trobes un error amb una prova és que
+hi era, si no el trobes no vol dir que no hi sigui, potser la prova no
+ha estat prou efectiva.</p>
+<p>Una bona prova té alta probabilitat de trobar un error, presenta
+baixa redundància amb altres proves i minimitza la interacció humana
+(idealment és automatitzable).</p>
+<p>Quan s'està dissenyant o desenvolupant un component, s'ha de tenir al
+cap la idea de facilitar la prova.  Per exemple, se sap que un codi
+amb poques dependències facilita la prova. Per exemple, si el
+funcionament d'una classe és independent (de la BD, la GUI, la xarxa,
+altres classes) serà molt més fàcil dissenyar/realitzar proves per a
+aquesta classe.</p>
+<p>TDD (<a class="reference external" href="http://en.wikipedia.org/wiki/Test-driven_development">Test Driven Development</a>), una
+metodologia de desenvolupament basada en la prova, proposa que
+comencem pensant com provarem el nostre sistema abans de codificar-lo.</p>
+<p>En el moment en que comencem a analitzar els casos d'ús del sistema a
+desenvolupar, ja podem començar a definir com els provarem, el que
+es coneix com a casos de test <a class="footnote-reference" href="#casosdetest" id="id2">[2]</a>.</p>
+</div>
+<div class="section" id="classes-de-proves">
+<h2>Classes de proves</h2>
+<p>Hi ha moltes i molt diferents maneres de provar els sistemes
+informàtics. Tantes que es solen intentar classificar per poder-les
+entendre millor.</p>
+<div class="section" id="perspectives">
+<h3>Perspectives</h3>
+<p>Una de les classificacions habituals, es basa en les diferents
+perspectives de l'aplicació.</p>
+<p>La teva aplicació es pot veure (i s'ha de veure) des de tres
+perspectives: usuaris, testejadors, desenvolupadors.</p>
+<ul>
+<li><p class="first">Els usuaris</p>
+<p>Els usuaris veuen l'aplicació des de fora. És a dir, a partir de la
+seva interfície d'usuari. També, si vols, a partir dels casos
+d'ús. L'aplicació o bé fa el que esperen que faci, o bé no ho fa.</p>
+<p>No se'ls acudirà mirar, per exemple, el contingut de la BD. De fet,
+potser no tenen ni idea de què és ni, en tot cas, gaire interès.</p>
+<p>La majoria de nosaltres som usuaris d'alguna cosa que no comprenem
+per dins, com a mínim no profundament. Pensa en la rentadora, el
+cotxe, o el jersei que ens va fer l'àvia. Què passa quan esperem que
+faci el centrifugat, la nostra rentadora comença a treure escuma per
+tot arreu?, o quan posem primera al cotxe fa un soroll i fa que ens
+xoquem amb el vehicle del darrere?, o quan ens posem el jersei la
+nostra ma surt per l'aixella d'una de les mànigues? La majoria
+simplement direm que això no rutlla.</p>
+<p>Des de la perspectiva d'un usuari, l'aplicació és una <strong>caixa
+negra</strong>: el que hi ha dins del sistema està fora del seu abast.</p>
+</li>
+<li><p class="first">Els testejadors</p>
+<p>Hi ha gent, amb probablement el coneixement tècnic per desenvolupar
+aplicacions, que es dedica a provar aplicacions fetes per altres.
+Normalment no són els usuaris finals de l'aplicació i,
+desitjablement, tampoc són els que l'han desenvolupada.</p>
+<p>Comproven la funcionalitat (com amb la caixa negra) però, a l'hora,
+comproven que per dins, les coses canvien com s'esperava.  Per
+exemple, poden mirar la BD per veure si s'ha emmagatzemat
+correctament l'alta d'una nau industrial.</p>
+<p>Són necessaris especialment per a aquelles aplicacions que no
+permeten veure els resultats fàcilment. Per exemple, les aplicacions
+web sovint maneguen dades entre taules de la bd sense donar una
+sortida que permeti saber si aquestes dades es troben correctament
+emmagatzemades. En aquests casos, cal accedir a la BD juntament amb
+la interfície.</p>
+<p>Es diu que els testejadors veuen l'aplicació com una <strong>caixa grisa</strong>.</p>
+</li>
+<li><p class="first">Els desenvolupadors</p>
+<p>Els desenvolupadors veuen (i viuen en) els detalls d'implementació.
+Es preocupen per coses com ara si les classes tenen un bon disseny,
+si hi ha codi duplicat, si hi ha inconsistències en la representació
+de les dades...</p>
+<p>Es diu que veuen l'aplicació com una <strong>caixa blanca</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="nivell-de-les-proves">
+<h3>Nivell de les proves</h3>
+<p>Les proves sovint s'agrupen tenint en compte el seu abast. Les
+categories més habituals són proves de sistema, les d'integració i les
+unitàries.</p>
+<p>Les proves de sistema posen tots els elements de l'aplicació en
+conjunt, i sense tenir en compte els detalls de codificació, ens
+enfoquem en les funcionalitats que demanà el client. Sovint són proves
+de <em>caixa negra</em> o <em>grisa</em>.</p>
+<p>Les proves d'integració comproven com les diferents parts del sistema
+treballen quan les posem juntes. A diferència de les de sistema, no
+cal que totes les parts estiguin disponibles. Habitualment són proves
+de <em>caixa grisa</em>.</p>
+<p>Les proves unitàries s'enfoquen en una petita peça de codi aïllada de
+la resta de l'aplicació. Mira de minimitzar dependències amb altres
+parts i de provar tots els possibles camins (ex. totes les branques de
+cada condicional). Aquest tipus de proves és generalment
+automatitzable i, solen considerar-se de <em>caixa blanca</em>.</p>
+</div>
+</div>
+<div class="section" id="junit">
+<h2>JUnit</h2>
+<p>Aquesta secció t'introduirà un dels <em>frameworks</em> més utilitzats per a
+la prova unitària: el JUnit.</p>
+<p>El lloc oficial és <a class="reference external" href="http://www.junit.org">http://www.junit.org</a> i
+pots trobar respostes a diverses qüestions bàsiques com ara, com
+instal·lo a <a class="reference external" href="http://junit.sourceforge.net/doc/faq/faq.htm">http://junit.sourceforge.net/doc/faq/faq.htm</a>.</p>
+<div class="section" id="installem-el-junit">
+<h3>Instal·lem el JUnit</h3>
+<p>Per a instal·lar junit, cal seguir les passes a la pàgina
+d'instal·lació que es troba a <em>junit.org</em> i descarregar-se la versió
+més recent dels fitxers <tt class="docutils literal">junit.jar</tt> <a class="footnote-reference" href="#versiojunit" id="id3">[3]</a> i (des de la
+versió 4.11) també <tt class="docutils literal"><span class="pre">hamcrest-core.jar</span></tt> a un directori i afegeix els
+.jar al CLASSPATH.</p>
+<p>Passem a fer la primera prova: que hem fet la instal·lació correcta.</p>
+<div class="highlight"><pre><span class="nv">$ </span>java org.junit.runner.JUnitCore
+JUnit version 4.11
+
+Time: 0,002
+
+OK <span class="o">(</span>0 tests<span class="o">)</span>
+</pre></div>
+<p>Si la teva darrera línia coincideix amb OK (0 tests) és que tot ha
+anat bé. Altrament revisa amb atenció la instal·lació. Hi ha molts
+números que el problema estigui al CLASSPATH.</p>
+</div>
+<div class="section" id="provem-una-classe-senzilla">
+<h3>Provem una classe senzilla</h3>
+<p>Passem ara a provar una classe molt bàsica: la classe Punt. Ho farem
+seguint el principi de TFD (<em>Test First Development</em>), és a dir, primer
+fem la prova i després codifiquem.</p>
+<p>En primer lloc, crearem la classe de test <tt class="docutils literal">TestPunt</tt>. Sí, creem el
+text abans de crear la classe!</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">org.junit.*</span><span class="o">;</span>
+<span class="lineno"> 2</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPunt</span> <span class="o">{</span>
+<span class="lineno"> 3</span>     <span class="nd">@Test</span>
+<span class="lineno"> 4</span>         <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntConstructor</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno"> 5</span>             <span class="c1">// comprova que el constructor Punt() pugui ser cridat</span>
+<span class="lineno"> 6</span>             <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+<span class="lineno"> 7</span>         <span class="o">}</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span>     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="lineno">10</span>         <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">runner</span><span class="o">.</span><span class="na">JUnitCore</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="s">&quot;TestPunt&quot;</span><span class="o">);</span>
+<span class="lineno">11</span>     <span class="o">}</span>
+<span class="lineno">12</span> <span class="o">}</span>
+</pre></div>
+<p>Ara compilem</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="nv">$ </span>javac TestPunt.java
+<span class="lineno"> 2</span> TestPunt.java:6: error: cannot find symbol
+<span class="lineno"> 3</span>         Punt <span class="nv">p</span> <span class="o">=</span> new Punt<span class="o">()</span>;
+<span class="lineno"> 4</span>         ^
+<span class="lineno"> 5</span>   symbol:   class Punt
+<span class="lineno"> 6</span>   location: class TestPunt
+<span class="lineno"> 7</span> TestPunt.java:6: error: cannot find symbol
+<span class="lineno"> 8</span>         Punt <span class="nv">p</span> <span class="o">=</span> new Punt<span class="o">()</span>;
+<span class="lineno"> 9</span>                      ^
+<span class="lineno">10</span>   symbol:   class Punt
+<span class="lineno">11</span>   location: class TestPunt
+<span class="lineno">12</span> 2 errors
+</pre></div>
+<p>Com era previsible, tenim un error de compilació: no troba la classe
+Punt. Recorda que l'objectiu d'una prova és sempre trobar un error.
+Hem fet fallar el nostre primer test. Felicitats!</p>
+<p>Afegim ara la classe Punt, amb el codi <strong>estrictament</strong> necessari per
+corregir el problema anterior i passar el nostre primer test.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="o">{}</span>
+</pre></div>
+<p>Compilem i executem</p>
+<div class="highlight"><pre><span class="nv">$ </span>javac TestPunt.java <span class="o">&amp;&amp;</span> java TestPunt
+JUnit version 4.11
+.
+Time: 0,006
+
+OK <span class="o">(</span>1 <span class="nb">test</span><span class="o">)</span>
+</pre></div>
+<p>Molt bé! Sembla que hem passat el nostre primer test. No és gaire
+impressionant, oi?</p>
+<p>Fem un nou test, ara una mica més sofisticat: mirarem que els atributs
+d'un punt siguin inicialitzats correctament pel constructor per
+defecte. Novament començarem per la prova.</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">org.junit.*</span><span class="o">;</span>
+<span class="lineno"> 2</span> <span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.*;</span>    <span class="c1">// importa una classe static</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPunt</span> <span class="o">{</span>
+<span class="lineno"> 5</span>     <span class="nd">@Test</span>
+<span class="lineno"> 6</span>     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntConstructor</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno"> 7</span>         <span class="c1">// comprova que el constructor Punt() pugui ser cridat</span>
+<span class="lineno"> 8</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+<span class="lineno"> 9</span>     <span class="o">}</span>
+<span class="lineno">10</span> 
+<span class="lineno">11</span>     <span class="nd">@Test</span>
+<span class="lineno">12</span>     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntBuit</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno">13</span>         <span class="c1">// comprova que el constructor Punt() deixi a 0 els valors</span>
+<span class="lineno">14</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+<span class="lineno">15</span>         <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span> <span class="c1">// Afirma que la coordenada x val 0</span>
+<span class="lineno">16</span>         <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
+<span class="lineno">17</span>     <span class="o">}</span>
+<span class="lineno">18</span> 
+<span class="lineno">19</span>     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+<span class="lineno">20</span>         <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">runner</span><span class="o">.</span><span class="na">JUnitCore</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="s">&quot;TestPunt&quot;</span><span class="o">);</span>
+<span class="lineno">21</span>     <span class="o">}</span>
+<span class="lineno">22</span> <span class="o">}</span>
+</pre></div>
+<p>Com que novament tenim errors de compilació (no troba els membres
+<tt class="docutils literal">getX()</tt> i <tt class="docutils literal">getY()</tt>), completem la classe Punt afegint els
+atributs i mètodes d'accés imprescindibles per a passar el nou test.</p>
+<div class="highlight"><pre><span class="lineno">1</span>  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="o">{</span>
+<span class="lineno">2</span>      <span class="kd">private</span> <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>   <span class="c1">// coordenades del punt</span>
+<span class="lineno">3</span>      <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getX</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">;</span> <span class="o">}</span>
+<span class="lineno">4</span>      <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getY</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">y</span><span class="o">;</span> <span class="o">}</span>
+<span class="lineno">5</span>  <span class="o">}</span>
+</pre></div>
+<p>Passem, ara sí, els dos tests.</p>
+<div class="highlight"><pre><span class="nv">$ </span>javac TestPunt.java <span class="o">&amp;&amp;</span> java TestPunt
+JUnit version 4.11
+..
+Time: 0,006
+
+OK <span class="o">(</span>2 tests<span class="o">)</span>
+</pre></div>
+<p>D'aquesta manera anem codificant els tests i després la part de la
+classe que calgui per passar-los. Això, segons els de TFD ens
+garanteix que tot el que anem desenvolupant sempre és estable i què
+mai no desenvolupem de més.</p>
+</div>
+<div class="section" id="exercici-1-test-dels-setters">
+<h3>Exercici 1: Test dels setters</h3>
+<p>Crea un nou test a <tt class="docutils literal">TestPunt</tt> que comprovi l'assignació correcta
+dels mètodes <tt class="docutils literal">setX(int)</tt> i <tt class="docutils literal">setY(int)</tt>. Un cop compilat, afegeix a
+la classe Punt el codi necessari per passar el test.</p>
+<p>Pista:</p>
+<div class="highlight"><pre><span class="err">«</span><span class="o">...</span><span class="err">»</span>
+<span class="n">p</span><span class="o">.</span><span class="na">setX</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+<span class="n">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span>
+<span class="err">«</span><span class="o">...</span><span class="err">»</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-2-un-test-amb-error">
+<h3>Exercici 2: Un test amb error</h3>
+<p>Fins ara, tots els tests que hem fet, han donat error a l'hora de
+compilar. No sembla que JUnit estigui oferint-nos gaire cosa que no
+tingués ja el javac oi?</p>
+<p>Afegeix el següent codi a <tt class="docutils literal">TestPunt.java</tt>:</p>
+<div class="highlight"><pre><span class="lineno">1</span> <span class="nd">@Test</span>
+<span class="lineno">2</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntDefinit</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno">3</span>     <span class="c1">// comprova que el constructor Punt(int,int) deixi els valors correctes</span>
+<span class="lineno">4</span>     <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+<span class="lineno">5</span>     <span class="n">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span>
+<span class="lineno">6</span>     <span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
+<span class="lineno">7</span> <span class="o">}</span>
+</pre></div>
+<p>Copia també el constructor corresponent a Punt <a class="footnote-reference" href="#verbatim" id="id4">[4]</a></p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="nf">Punt</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="o">}</span>
+</pre></div>
+<p>En compilar, trobem</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="n">$</span> <span class="n">javac</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span>
+<span class="lineno"> 2</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">constructor</span> <span class="n">Punt</span> <span class="n">in</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">given</span> <span class="n">types</span><span class="o">;</span>
+<span class="lineno"> 3</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+<span class="lineno"> 4</span>                  <span class="o">^</span>
+<span class="lineno"> 5</span>   <span class="nl">required:</span> <span class="kt">int</span><span class="o">,</span><span class="kt">int</span>
+<span class="lineno"> 6</span>   <span class="nl">found:</span> <span class="n">no</span> <span class="n">arguments</span>
+<span class="lineno"> 7</span>   <span class="nl">reason:</span> <span class="n">actual</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">argument</span> <span class="n">lists</span> <span class="n">differ</span> <span class="n">in</span> <span class="n">length</span>
+<span class="lineno"> 8</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">constructor</span> <span class="n">Punt</span> <span class="n">in</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">given</span> <span class="n">types</span><span class="o">;</span>
+<span class="lineno"> 9</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+<span class="lineno">10</span>                  <span class="o">^</span>
+<span class="lineno">11</span>   <span class="nl">required:</span> <span class="kt">int</span><span class="o">,</span><span class="kt">int</span>
+<span class="lineno">12</span>   <span class="nl">found:</span> <span class="n">no</span> <span class="n">arguments</span>
+<span class="lineno">13</span>   <span class="nl">reason:</span> <span class="n">actual</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">argument</span> <span class="n">lists</span> <span class="n">differ</span> <span class="n">in</span> <span class="n">length</span>
+<span class="lineno">14</span> <span class="mi">2</span> <span class="n">errors</span>
+</pre></div>
+<p>Ops! ens havíem descuidat del constructor per defecte. Sort que el
+primer test de tots estava allà preparat per a ajudar-nos.</p>
+<p>Afegim el constructor per defecte, per exemple:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="nf">Punt</span><span class="o">()</span> <span class="o">{</span> <span class="k">this</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
+</pre></div>
+<p>En compilar i executar ens trobem el següent (retallat):</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> JUnit version 4.11
+<span class="lineno"> 2</span> ..E..
+<span class="lineno"> 3</span> Time: 0,009
+<span class="lineno"> 4</span> There was 1 failure:
+<span class="lineno"> 5</span> 1<span class="o">)</span> testPuntDefinit<span class="o">(</span>TestPunt<span class="o">)</span>
+<span class="lineno"> 6</span> java.lang.AssertionError: expected:&lt;4&gt; but was:&lt;3&gt;
+<span class="lineno"> 7</span>     at org.junit.Assert.fail<span class="o">(</span>Assert.java:88<span class="o">)</span>
+<span class="lineno"> 8</span>     at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:743<span class="o">)</span>
+<span class="lineno"> 9</span>     at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:118<span class="o">)</span>
+<span class="lineno">10</span>     at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:555<span class="o">)</span>
+<span class="lineno">11</span>     at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:542<span class="o">)</span>
+<span class="lineno">12</span>     at TestPunt.testPuntDefinit<span class="o">(</span>TestPunt.java:34<span class="o">)</span>
+<span class="lineno">13</span>     at sun.reflect.NativeMethodAccessorImpl.invoke0<span class="o">(</span>Native Method<span class="o">)</span>
+<span class="lineno">14</span>     «...»
+<span class="lineno">15</span>     at org.junit.runner.JUnitCore.main<span class="o">(</span>JUnitCore.java:40<span class="o">)</span>
+<span class="lineno">16</span>     at TestPunt.main<span class="o">(</span>TestPunt.java:38<span class="o">)</span>
+<span class="lineno">17</span> 
+<span class="lineno">18</span> FAILURES!!!
+<span class="lineno">19</span> Tests run: 4,  Failures: 1
+</pre></div>
+<p>La sortida el primer cop pot resultar una mica angoixant, oi?
+Analitzem-la.</p>
+<p>En primer lloc, la darrera línia ens diu que de quatre tests, ha
+fallat un. Per un de sol tant de soroll!</p>
+<p>Si mirem a partir de la línia 5 on posa <tt class="docutils literal">1)
+testPuntDefinit(TestPunt)</tt> veurem que ens diu:
+<tt class="docutils literal">java.lang.AssertionError: <span class="pre">expected:&lt;4&gt;</span> but <span class="pre">was:&lt;3&gt;</span></tt>. Literalment,
+s'esperava un 4 però ha trobat un 3. En essència, hi ha una afirmació
+(<em>assert</em>) que deia que havia de ser un 4 quan en realitat ens hem
+trobat un 3.</p>
+<p>A continuació, la primera línia on apareix una classe desenvolupada
+per nosaltres (en el cas de l'exemple a la línia 12 on diu <tt class="docutils literal">at
+TestPunt.testPuntDefinit(TestPunt.java:34)</tt>) ens indica que la línia
+del nostre codi on s'ha produït l'error.</p>
+<p>En el meu codi la línia 34 correspon a l'afirmació que la coordenada y
+val 4:</p>
+<div class="highlight"><pre><span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>  <span class="c1">// aquí està l&#39;error!</span>
+</pre></div>
+<p>Vist així, tenim una pista molt clara: o l'error es troba a
+<tt class="docutils literal">Punt.getY(int)</tt> o bé al constructor <tt class="docutils literal">Punt(int, int)</tt>.  Si mirem
+el codi del getter, trobem:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getY</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">y</span><span class="o">;</span> <span class="o">}</span>
+</pre></div>
+<p>Aquest codi no deixa marge pel dubte: ha d'estar bé! Per tant, haurem
+de mirar al constructor:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="nf">Punt</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="o">}</span>
+</pre></div>
+<p>Si mirem amb atenció, veurem que el codi conté un error: assignem a
+<tt class="docutils literal">this.y</tt> el valor de x en comptes del de y. Què hi farem? Passa a
+les millors famílies.</p>
+<p>Corregeix l'error i comprova que passi el test.</p>
+</div>
+<div class="section" id="exercici-3-un-altre-test">
+<h3>Exercici 3: Un altre test</h3>
+<p>Apa, fem un altre test per practicar. Afegeix un nou test anomenat
+<tt class="docutils literal">testSuma()</tt> que comprovi que el mètode <tt class="docutils literal">Punt.suma(Punt)</tt> funciona
+correctament. Aquest mètode tindrà el següent codi que, per suposat,
+afegiràs després de crear el teu test.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">suma</span><span class="o">(</span><span class="n">Punt</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span> <span class="n">x</span><span class="o">+=</span><span class="n">p</span><span class="o">.</span><span class="na">x</span><span class="o">;</span> <span class="n">y</span><span class="o">+=</span><span class="n">p</span><span class="o">.</span><span class="na">y</span><span class="o">;</span> <span class="o">}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-4-test-dels-accessors">
+<h3>Exercici 4. Test dels accessors?</h3>
+<p>A partir de les <a class="reference external" href="http://junit.sourceforge.net/doc/faq/faq.htm">respostes al FAQ</a> 4.4 i 4.5, descriu quan té sentit fer un cas de test als mètodes get/set i quan no.</p>
+</div>
+<div class="section" id="exercici-5-un-sol-error-per-test">
+<h3>Exercici 5. Un sol error per test</h3>
+<p>Descriu amb les teves paraules la resposta al FAQ 4.10</p>
+</div>
+<div class="section" id="exercici-6-la-classe-segment">
+<h3>Exercici 6. La classe Segment</h3>
+<p>Crea la classe Segment que contingui dos Punt, amb constructor per defecte i que defineixi els dos punts, mètodes get i set i el mètode longitud que torni la longitud del segment segons la fórmula:</p>
+<div class="highlight"><pre><span class="n">longitud</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="n">x1</span><span class="o">-</span><span class="n">x2</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="n">y1</span><span class="o">-</span><span class="n">y2</span><span class="o">,</span> <span class="mi">2</span><span class="o">));</span>
+</pre></div>
+<p>Crea també la classe TestSegment que provi la classe Segment.</p>
+</div>
+<div class="section" id="exercici-7-aprofitant-l-encapsulacio">
+<h3>Exercici 7. Aprofitant l'encapsulació</h3>
+<p>Modifica la classe Punt de manera que ara la implementació de les
+coordenades sigui</p>
+<div class="highlight"><pre><span class="kt">int</span><span class="o">[]</span> <span class="n">coord</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</pre></div>
+<p>on <tt class="docutils literal">coord[0]</tt> correspon a la coordenada x i <tt class="docutils literal">coord[1]</tt> correspon a la y.</p>
+<p>Aconsegueix que passi <tt class="docutils literal">TestPunt</tt> i <tt class="docutils literal">TestSegment</tt> sense haver de
+modificar cap test.</p>
+</div>
+<div class="section" id="provant-coses-mes-complexes">
+<h3>Provant coses més complexes</h3>
+<p>Amb el que hem vist fins ara, podem provar classes més aviat
+senzilletes. Què passa però quan la cosa es complica? Per exemple, com
+ens ho fem per comprovar <em>exceptions</em>? o bé classes abstractes? o fins
+i tot multifil?</p>
+<p>La resposta que et donaré ara és... cercant-ho és clar. La lectura
+completa de les FAQ ja són un bon punt de partida.</p>
+<p>En tot cas, intentarem fer una primera aproximació al &quot;búscate la
+vida&quot; que t'estic venent, amb el següent exercici. D'aquesta manera,
+espero, tindràs tota la confiança per trobar els <em>coms</em> de les teves
+necessitats amb els teus mitjans.</p>
+</div>
+<div class="section" id="exercici-8-punt-amb-excepcions">
+<h3>Exercici 8: Punt amb excepcions</h3>
+<p>Farem que la nostra classe Punt només admeti coordenades positives i
+que si es troba amb valors negatius, llenci l'excepció
+<tt class="docutils literal">IllegalArgumentException</tt>.</p>
+<p>Amplia les proves unitàries que hem definit abans per aquesta classe,
+de manera que contemplin aquests nous requisits.</p>
+<p><strong>Pista</strong>: (només en cas de desesperació) mira les FAQ al punt 4.6.
+Ah! Assegura't que cobreixes tots els punts possibles, doncs n'hi ha
+més d'un i més de dos!.</p>
+</div>
+<div class="section" id="exercici-9-la-botiga-de-vins">
+<h3>Exercici 9: La botiga de vins</h3>
+<p>Considera l'exercici 1 de la <a class="reference external" href="{{url}}/poo/mapes_i">botiga de vins</a></p>
+<p>Implementa les proves unitàries que consideris necessàries per poder
+provar exhaustivament la classe Botiga.</p>
+<p><strong>Nota</strong>: tingués en compte la descripció dels diferents membres
+públics d'aquesta classe, incloent elements com excepcions.</p>
+</div>
+</div>
+<div class="section" id="ampliacions">
+<h2>Ampliacions</h2>
+<p>El món de les proves unitàries és ample. Potser voldràs llegir <a class="reference external" href="http://www.agitar.com/downloads/TheWayOfTestivus.pdf">The
+Way of Testivus</a> per a
+aconseguir una visió més filosòfica i potser entretinguda del món on
+t'estàs ficant amb el tema del testeig.</p>
+<p>També pot ser-te interessant llegir-te el post del James Carr sobre
+els <a class="reference external" href="http://blog.james-carr.org/2006/11/03/tdd-anti-patterns/">antipatrons del TDD</a>. Allà hi
+trobaràs errors típics dels dissenyadors de proves, com ara:</p>
+<ul class="simple">
+<li>Definir un munt de proves que el sistema és capaç de passar sense
+donar error, però que si les mires amb detall, no testejen gaire
+cosa.</li>
+<li>Proves que realment només proven que les dades introduïdes per la
+prova són correctes.</li>
+<li>Proves que tinguin en comptes com està el sistema després d'una
+altra prova. Les proves dependents entre si poden provocar problemes
+si no estan ben documentades. Es preferible escriure proves
+autocontingudes, que es realitzin amb el sistema &quot;net&quot;</li>
+<li>Proves que requereixen un munt de preparació per començar a provar,
+fins al punt que es fa difícil saber què és el que es vol provar.</li>
+</ul>
+<p><em>Happy bug hunting!</em></p>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="totomerrors" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>De fet, no només del desenvolupament informàtic.
+Pensa en alguna cosa on no vegis possible que es trobi mai cap
+error. Escriu-la en algun lloc, potser en el futur canviaràs
+d'opinió.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="casosdetest" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Aquest tema s'escapa dels objectius d'aquest
+document. En tot cas, pensa un cas de test com una descripció d'una
+prova sobre un cas d'ús. En el cas de test sovint hi inclourem
+dades realistes, de vegades amb algun error, i indicarem què
+s'espera que generi el sistema a partir d'elles.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="versiojunit" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Durant la darrera actualització d'aquest document,
+la versió més actual disponible era la 4.11. Potser en el moment
+que intentis descarregar-la sigui una altra. Amb sort, els
+desenvolupadors del JUnit hauran mantingut la seva filosofia de
+compatibilitat enrere.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="verbatim" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>No facis de <em>debugger</em> i copia-ho <em>verbatim</em>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href="..">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="../images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

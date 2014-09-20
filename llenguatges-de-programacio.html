@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Llenguatges de programació</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Llenguatges de programació             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Llenguatges de programació</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb el tag:
+            <a href="./tag/programari.html">programari</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document descriu els llenguatges de programació i les
+característiques més rellevants a partir de les que són classificats.</p>
+</div>
+<div class="section" id="context">
+<h2>Context</h2>
+<p>Comencem repassant alguns conceptes bàsics.</p>
+<p><em>Algorisme</em>: seqüència de passes orientades a la realització d'una
+tasca o la resolució d'un problema.</p>
+<p>Depenent del context, en la vida quotidiana els algorismes els
+anomenem de diferents maneres: com receptes (passes per fregir un ou),
+instruccions (per posar la rentadora), mètodes de càlcul (passes per
+calcular l'arrel quadrada), etc.</p>
+<p><em>Programa</em>: seqüència d’instruccions orientada a ser executada per un
+ordinador sobre un conjunt de dades per donar resposta a un problema
+determinat, més la corresponent documentació.</p>
+<div class="figure align-center">
+<img alt="Esquema d'un programa" src="./images/prm002.img002.esquema_programa.png" />
+</div>
+<p><em>Aplicació</em>: conjunt de programes relacionats més la corresponent
+documentació. Un sinònim raonable és la paraula <em>programari</em>.</p>
+<p><em>Sistema informàtic</em>: conjunt d'aplicacions, maquinari on
+s'executa, operadors, usuaris, polítiques de backup/seguretat/...
+que donen resposta a una necessitat complexa.</p>
+<p><em>Instrucció</em>: comanda que indica a l’ordinador que faci una acció.</p>
+<p><em>Dada</em>: unitat de tractament d'informació.</p>
+<p><em>Informació</em>: les dades són valors <em>freds</em>. Què deu ser <tt class="docutils literal">42</tt>?</p>
+<p>Les dades es converteixen en informació quan les col·loquem en un
+context. Per exemple, saber que <tt class="docutils literal">42</tt> és <tt class="docutils literal">42 anys</tt> o bé <tt class="docutils literal">42 graus
+centígrads</tt> ens permet dir alguna cosa més de la dada. Podem intuir
+que correspon, per exemple, a una edat o bé a una temperatura. D'això
+en podríem dir el <em>tipus de dada</em>.  <a class="footnote-reference" href="#respostaunivers" id="id1">[1]</a></p>
+<p>Les dades es poden classificar en <em>tipus de dades</em>. Dels exemples de
+dades anteriors, podríem dir que són, respectivament, de tipus nombre
+enter, però també, de tipus edat o temperatura, numèric o constant
+universal.</p>
+<p>Quan la informació s'amplia i la integrem amb altres coneixements,
+apareix un significat. Per exemple, si ens diuen que l'aigua està a
+<em>42 graus de temperatura</em> i aquesta aigua és on pretenem banyar-nos,
+ens suggerirà quelcom molt diferent a si l'aigua és amb la que ens
+volem bullir uns espaguetis.</p>
+<p>Sigui com sigui, cal tenir clar que tant el significat com la
+informació és quelcom que posem nosaltres. L'ordinador només entén de
+dades. Encara més, ni tant sols entén de tipus de dades, ja que per
+ell les dades tenen totes la forma de seqüències de 0 i 1. De fet,
+també les instruccions són 0 i 1 per l'ordinador.</p>
+<p>Les dades són emmagatzemades en algun lloc de la memòria
+<a class="footnote-reference" href="#emmagatzemainstruccions" id="id2">[2]</a>. Per fer-ne referència, és a dir, per usar
+la dada, els programes ha de fer servir la posició de memòria on s'ha
+deixat la dada. Ho podem imaginar com si haguéssim d'indicar on són
+les coses per les seves coordenades geogràfiques. Com que és una mica
+dur això d'haver de recordar en quina posició hem deixat cada cosa,
+els llenguatges més modernets (la majoria) ofereixen la possibilitat
+de donar un nom a aquestes posicions. D'aquest nom en diem sovint
+<em>variables</em>.</p>
+</div>
+<div class="section" id="definicions">
+<h2>Definicions</h2>
+<p>Entrem ja en el tema principal d'aquest document:</p>
+<p><em>Llenguatge de programació</em>: conjunt de símbols combinats entre si
+segons una sintaxis determinada que permet l’especificació dels
+programes.</p>
+<div class="figure align-center">
+<img alt="Esquema dels diferents llenguatges" src="./images/prm002.img001.esquema_comunicacio.png" />
+</div>
+<p>Els programes no són més que una comunicació d'instruccions en algun
+llenguatge concret.</p>
+<p>Per ser considerat un llenguatge de programació, cal que permeti
+computar. Per tant, llenguatges com HTML, CSS o fins i tot SQL
+normalment no són considerats com a llenguatges de programació. Sovint
+la característica que se li demana a un llenguatge per ser considerat
+de programació és que sigui <em>Turin Complet</em> <a class="footnote-reference" href="#turingcomplete" id="id3">[3]</a>.</p>
+<p>Es comença amb la descripció dels requeriments. El client comunica al
+desenvolupador el que vol amb un llenguatge natural que,
+desitjablement, comparteixin tots dos.</p>
+<p>El pseudocodi és un llenguatge una mica més formal que el llenguatge
+natural però molt més informal que un llenguatge de programació.  El
+fem servir els desenvolupadors per aclarir idees abans de posar-les en
+pràctica amb els detalls formals d'un llenguatge de programació
+<a class="footnote-reference" href="#enganypseudocodi" id="id4">[4]</a>.</p>
+<p>Sovint es descriuen els algorismes en pseudocodi per després, si es
+consideren viables, traduir-los al llenguatge escollit (com ara
+Java, C, assamblador...) <a class="footnote-reference" href="#programamaquina" id="id5">[5]</a></p>
+<p>La traducció al llenguatge de programació genera un o més fitxers,
+generalment de text. Es diu que aquests fitxers contenen el <em>codi font</em>
+dels programes.</p>
+<p>El codi font no pot ser interpretat directament per l'ordinador que
+només entén els 0 i 1 ja esmentats. Cal llavors passar per un o més
+processos de traducció que, sortosament, els farà el propi ordinador.</p>
+<p>Els <em>traductors</em> són programes s'encarreguen de traduir d'un
+llenguatge de programació o un llenguatge intermedi a un altre
+llenguatge intermedi o bé a codi màquina per a ser executat finalment
+per l'ordinador.</p>
+<p>De <em>traductors</em> en tenim de diferents tipus:</p>
+<ul>
+<li><p class="first"><em>Compilador</em>: traductor de programes expressats en un llenguatge
+de programació a codi màquina o a un llenguatge intermedi.</p>
+<p>La traducció es realitza sencera abans d’executar cap
+instrucció. Per tant, el programa ha de ser sintàcticament
+correcte al 100% per començar a ser executat.</p>
+<p>Sovint cal una fase d’enllaçament (link) amb altres programes
+(ex. biblioteques del sistema operatiu) perquè el codi pugui ser
+executat.</p>
+<p>En acabar, es genera un fitxer amb el codi traduït, més els
+enllaços corresponents,  que podrà ser executat <em>teòricament</em>
+per sempre més, sense que calgui tornar a compilar.</p>
+</li>
+<li><p class="first"><em>Intèrpret</em>: tradueix les instruccions i, sinó hi ha error,
+llença la seva execució d'una en una. Per tant, El programa pot
+començar a executar-se malgrat hi hagi algun error en
+instruccions posteriors.</p>
+<p>Si es vol tornar a executar el programa, caldrà tornar a
+interpretar cadascuna de les instruccions que s'hagin
+d'executar.</p>
+</li>
+<li><p class="first"><em>Màquina virtual</em>: es podria considerar com un cas particular
+d'intèrpret que tradueix d'un llenguatge intermedi al codi
+màquina corresponent a la plataforma on s'executa la màquina
+virtual.</p>
+<p>El codi màquina és altament depenent de la màquina que
+l'executa. Per exemple, no podem executar el mateix codi màquina
+en diferents màquines (ex. el PC i el mòbil) ni en diferents
+sistemes operatius. L'avantatge de les màquines virtuals rau en
+el fet que aquestes realitzen una abstracció de la plataforma on
+s'executen, de manera que el programa, en codi intermedi, pugui
+ser compilat a una màquina i executat en una altra.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="paradigmes">
+<h2>Paradigmes</h2>
+<p>Els llenguatges de programació es poden classificar de moltes maneres
+diferents sent una de les més descriptives el paradigma o paradigmes
+que implementen.</p>
+<p>Podem entendre el concepte de <em>paradigma de programació</em> com la manera
+o estil de representar i estructurar els elements bàsics que formen
+els programes.</p>
+<p>Hi distingim bàsicament dos famílies o branques de paradigmes de
+programació:</p>
+<ul class="simple">
+<li>el paradigma imperatiu</li>
+<li>el paradigma declaratiu</li>
+</ul>
+<p>El paradigma imperatiu és el que hem estudiat fins el moment. El
+programa especifica a la màquina quines passes (instruccions /
+<em>statements</em>) ha de realitzar per a
+aconseguir l'objectiu.</p>
+<p>Per la seva banda, el paradigma declaratiu <em>descriu</em> la lògica del
+programa sense detallar les passes que permeten aconseguir l'objectiu
+final . És a dir, descriu el <em>què</em> es vol aconseguir. Serà el
+compilador o intèrpret l'encarregat de traduir aquesta descripció (el
+<em>com</em>)</p>
+<p>Entre els paradigmes de programació més populars es troben:</p>
+<ul class="simple">
+<li>el paradigma procedural</li>
+<li>el paradigma lògic</li>
+<li>el paradigma funcional</li>
+<li>el paradigma orientat a objectes</li>
+</ul>
+<p>El paradigma procedural és l'estudiat fins ara al cicle. Es tracta
+d'un paradigma imperatiu basat en els paradigmes de programació
+estructurada i modular. Alguns exemples són C, Fortan, Pascal, ADA.</p>
+<p>El paradigma lògic és un paradigma declaratiu basat en lògica formal.
+Els programes s'estructuren en axiomes (coses que sabem o
+afirmacions), regles d'inferència (si A i B llavors C), i preguntes (o
+teoremes) que corresponen al resultat a obtenir. Els exemples més
+coneguts són Prolog i Datalog.</p>
+<p>El paradigma funcional és un paradigma declaratiu basat en l'avaluació
+de funcions matemàtiques que evitant la modificació de l'estat de la
+màquina (sense efectes secundaris / <em>side-effects</em>). Els programes
+s'especifiquen amb expressions. Les expressions retornen un valor
+depenent únicament dels paràmetres que rebin (independent del nombre
+de cops ni de l'estat de la màquina). Darrerament els llenguatges
+funcionals estan retornant amb molta força amb la promesa que permeten
+codificació de programes més robustos i mantenibles que els
+imperatius. Entre els exemples més coneguts hi trobaríem Lisp,
+Miranda, Haskell.</p>
+<p>El paradigma orientat a objectes és una extensió del paradigma
+procedural en el que les dades i el procediments que les manipulen són
+agrupades o <em>encapsulades</em> en <em>objectes</em>. És el paradigma
+indiscutiblement més <em>de moda</em> dels darrers anys, fins el punt que la
+majoria dels llenguatges de programació més <em>tradicionals</em> van
+disposar d'alguna implementació que donés suport a aquest paradigma.
+Exemples populars són C++ (del C) i Delphy (del Pascal). Hi ha
+llenguatges orientats a objectes <em>purs</em> (on tots els elements són
+objectes) com ara Eiffel, Smalltalk, Rubi, Scala. Hi ha d'altres no
+tan <em>purs</em>, sigui perquè permeten programació no orientada a objecte
+(com C++, Python) o simplement per incloure tipus primitius no
+objectes (Java, C#, PHP, JavaScript).</p>
+<p>Darrerament s'estan popularitzant llenguatges multiparadigma. Per
+exemple, Python, Ruby i Scala permeten programació orientada a
+objectes i funcional.</p>
+<p>A <a class="reference external" href="http://en.wikipedia.org/wiki/Comparison_of_programming_paradigms">aquest article de la Vikipedia</a>
+disposen d'una taula resum prou descriptiva.</p>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-quin-aspecte-fan">
+<h3>Exercici 1. Quin aspecte fan</h3>
+<p>Pels paradigmes <em>procedural</em>, <em>lògic</em>, <em>funcional</em> i <em>orientat a
+objectes</em> escull al menys un llenguatge que els implementi. Dóna
+preferencia a llenguatges que no apareguin a la llista dels exemples
+de classe o, com a mínim a llenguatges que no coneguis.</p>
+<p>Ara consulta el lloc web <a class="reference external" href="http://rosettacode.org/">Rosetta Code</a> i
+troba alguna tasca que et cridi l'atenció. Per exemple, el problema de
+les vuit reines o <em>eight queens problem</em> es troba resolt, en una
+versió genèrica, amb múltiples llenguatges a
+<a class="reference external" href="http://rosettacode.org/wiki/N-queens_problem">http://rosettacode.org/wiki/N-queens_problem</a>).</p>
+<p>De la tasca escollida, troba codi que la resolgui en els quatre
+llenguatges que has decidit abans amb el C (què és un procedural que
+ja deus conèixer).</p>
+<p>Analitza els cinc codis i intenta esbrinar com cada versió arriba a
+fer el càlcul a partir dels coneixements de programació de que ja
+disposes.  Compara els diferents codis entre si i fes una valoració.</p>
+<p><em>Ampliació</em>: Si t'engresca aquest exercici, et proposo que miris
+algun llenguatge ben diferent dels que hem comentat. Per exemple,
+fes-li una ullada als <em>llenguatges de programació esotèrics</em> com el
+Brainfuck o Unlambda. És possible que no els trobis a <em>Rosetta Code</em>
+però de ben segur que et sorprendran. En cas que vulguis fer aquesta
+ampliació, simplement agafa alguna versió del &quot;Hola Món&quot; que sovint
+t'ofereixen i compara-la amb el llenguatge <em>no esotèric</em> que vulguis.</p>
+</div>
+<div class="section" id="exercici-2-llenguatges-populars">
+<h3>Exercici 2. Llenguatges populars</h3>
+<p>Consulta <a class="reference external" href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">L'índex de llenguatges de Tiobe</a>
+i contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Descriu amb les teves paraules quines són les condicions que
+requereixen a Tiobe per considerar un llenguatge com a llenguatge
+de programació.</li>
+<li>Perquè no consideren <em>excel</em> com un llenguatge de programació?</li>
+<li>Perquè no consideren <em>html</em> com un llenguatge de programació?</li>
+<li>Llista els llenguatges que apareixen al &quot;Hall of Fame&quot; i que
+actualment es troben entre els 10 més populars. Indica quin o quins
+paradigmes suporten principalment.</li>
+<li>Tiobe afirma que <em>The index can be used to check whether your
+programming skills are still up to date or to make a strategic
+decision about what programming language should be adopted when
+starting to build a new software system.</em> Vista la informació i
+tenint en comptes els objectius d'aquest cicle, creus que els
+llenguatges de programació amb els que treballes/treballaràs durant
+aquest cicle són prou actuals?</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-la-pila-web">
+<h3>Exercici 3. La pila Web</h3>
+<p>Considera la següent imatge que representa les diferents capes d'una
+aplicació Web típica amb algunes de les tecnologies que veurem aquest
+curs.</p>
+<div class="figure align-center">
+<img alt="Capes d'una aplicació Web" src="./images/prm002.img003.stack_curs.png" />
+</div>
+<p>Respon a les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Quines de les tecnologies que hi apareixen poden ser considerades
+llenguatges de programació <em>com cal</em> i quines no?</li>
+<li>Per les capes que tenen associades algun llenguatge de programació,
+troba com a mínim un llenguatge de programació addicional que sigui
+raonablement habitual en la capa.</li>
+</ol>
+</div>
+<div class="section" id="exercici-4-llenguatge-del-futur">
+<h3>Exercici 4. Llenguatge del futur</h3>
+<p>Amb tot el que hem vist, fem ara d'endevins. Posa't el barret de
+bruixeta/bruixot, agafa la bmirar mirar ola de cristall i atreveix-te a
+pronosticar quin és el llenguatge de programació més interessant per a
+aprendre avui de manera que maximitzi el teu èxit professional en els
+propers cinc anys. Justifica la teva aposta.</p>
+</div>
+</div>
+<div class="section" id="anotacions">
+<h2>Anotacions</h2>
+<table class="docutils footnote" frame="void" id="respostaunivers" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>És possible que <tt class="docutils literal">42</tt> sigui després de tot més
+que una dada. Si tens temps i vols llegir quelcom no tan tècnic, mira
+<a class="reference external" href="http://ca.wikipedia.org/wiki/La_Resposta_a_la_Pregunta_Definitiva_sobre_la_Vida,_l%27Univers_i_Tot_Plegat">aquesta entrada</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="emmagatzemainstruccions" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>De fet, l'ordinador també emmagatzema
+les instruccions a memòria de la mateixa manera (amb 0 i 1) Ja
+veus, en memòria dades i instruccions són una mateixa cosa.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="turingcomplete" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>En cas que t'interessin els detalls, pots
+començar amb <a class="reference external" href="http://en.wikipedia.org/wiki/Turing_completeness">aquest article sobre completesa de Turing</a> de la
+wikipedia.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="enganypseudocodi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>No us deixeu enganyar. Si una notació en
+pseudocodi pot ser executada per un ordinador, no és pseudocodi sinó
+codi sense el <em>pseudo</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="programamaquina" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Queden lluny els temps en que es programava
+directament en llenguatge màquina. La salut mental mitja dels
+desenvolupadors del món ha millorat (una mica) d'ençà.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

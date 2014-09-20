@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Configuració d'Eclipse per C/C++</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Configuració d'Eclipse per C/C++             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./tutorial-dinstallacio-de-eclipse.html">
+        Tutorial d'instal·lació de Eclipse
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./tutorial-dinstallacio-de-eclipse.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./glossari-de-conceptes-declipse.html">
+        Glossari de conceptes d'Eclipse
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Configuració d'Eclipse per C/C++</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/eines.html">
+        eines
+    </a>
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document descriu la preparació de Eclipse com a IDE de
+desenvolupament en C/C++ al sistema operatiu Ubuntu 12.04.
+Probablement les passes seran similars a altres sistemes operatius,
+distribucions i versions. En tot cas, pots fer una ullada a la
+<a class="reference external" href="href=&quot;http://wiki.eclipse.org/CDT/User/FAQ&quot;">documentació oficial del projecte</a>.</p>
+<p>Abans de començar, comprova que no disposes ja de la instal·lació del
+plugin CDT. Ho pots fer, per exemple, intentant crear un nou projecte
+C++ a partir de <tt class="docutils literal">File <span class="pre">-&gt;</span> New <span class="pre">-&gt;</span> <span class="pre">Project...</span></tt>. Si al quadre que
+apareix hi trobem una secció anomenada <tt class="docutils literal">C/C++</tt> i hi podem crear un
+projecte C, podem ignorar la resta d'aquesta guia perquè ja el tenim
+instal·lat!</p>
+<p>Instal·larem el plug-in <a class="reference external" href="href=&quot;http://www.eclipse.org/cdt/&quot;">CDT</a>
+(C/C++ Development Tooling)</p>
+</div>
+<div class="section" id="installacio">
+<h2>Instal·lació</h2>
+<p>Realitzarem la instal·lació tot seguint les següents passes.</p>
+<div class="section" id="el-compilador">
+<h3>1. El compilador</h3>
+<p>Donat que el projecte CDT no ofereix el compilador de C/C++,
+haurem d'instal·lar un nosaltres. A l'Ubuntu el més probable és que
+el tinguem ja. Ho podem comprovar amb:</p>
+<pre class="literal-block">
+$ g++ --version
+g++ (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+Copyright (C) 2011 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+$ make --version
+GNU Make 3.81
+Copyright (C) 2006  Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+This program built for i686-pc-linux-gnu
+</pre>
+<p>En cas d'error amb la primera comanda, caldrà instal·lar el
+compilador. En cas d'error amb <tt class="docutils literal">make</tt>, comprovarem si <tt class="docutils literal">gmake</tt>
+sí està disponible. Altrament, haurem d'instal·lar-ho.  Donat que
+aquestes instruccions van més enllà dels objectius d'aquesta petita
+guia, caldrà cercar les instruccions corresponents pel sistema
+operatiu objectiu.</p>
+</div>
+<div class="section" id="installem-el-plug-in">
+<h3>2. Instal·lem el plug-in</h3>
+<p>Naveguem pels menus <tt class="docutils literal">Help <span class="pre">-&gt;</span> Install New <span class="pre">Software...</span></tt> i al quadre de
+diàleg que emergeix premem el botó <tt class="docutils literal">add</tt>. Ens apareix un nou quadre
+de diàleg amb els camps de text <tt class="docutils literal">Name</tt> i <tt class="docutils literal">Location</tt>. Al primer li
+posarem <strong>CDT</strong> i al segon
+<strong>http://download.eclipse.org/tools/cdt/releases/juno</strong></p>
+<div class="figure align-center">
+<img alt="Instal·lació del pluguin CDT" src="./images/eclipse002.add_CDT.png" />
+</div>
+<p>Potser li costarà una estona, però si tot va bé acabarà mostrant
+dues entrades anomenades <tt class="docutils literal">CDT Main Features</tt> i <tt class="docutils literal">CDT Optional
+Features</tt>. Desplegarem la primera (fent clic sobre el triangle que
+apareix abans de cada entrada) i escollirem la primera de les
+subentrades que hi apareixen: <strong>C/C++ Development Tools</strong>.
+<strong>Important</strong>: no és adequat seleccionar-ho tot! Hi ha dependències
+que potser faran que no ens funcioni l'aplicació.</p>
+<p>Farem <tt class="docutils literal">Next</tt> dos cops i, si estem d'acord amb els termes de la
+llicència d'ús <a class="footnote-reference" href="#noaggree" id="id1">[1]</a> , sel·leccionem l'opció <strong>I accept the
+terms of license aggreement</strong>, premem <tt class="docutils literal">Finish</tt> i esperem una
+estoneta.</p>
+<div class="figure align-center">
+<img alt="Acceptació dels terminis i llicència d'Eclipse" src="./images/eclipse002.aggreement_CDT.png" />
+</div>
+<p>Finalment haurem de reiniciar Eclipse i, en rearrancar, ja tindrem
+el plug-in disponible.</p>
+</div>
+<div class="section" id="provem-la-installacio">
+<h3>3. Provem la instal·lació</h3>
+<p>Naveguem <tt class="docutils literal">File <span class="pre">-&gt;</span> New <span class="pre">-&gt;</span> <span class="pre">Project...</span></tt> i hi escollim <cite>C Project`</cite>.</p>
+<p>Anomenem el projecte quelcom similar a &quot;HolaCDT&quot; a la localització per
+defecte i de tipus <strong>Empty Project</strong> i fem <tt class="docutils literal">següent</tt>.</p>
+<p>Al quadre de diàleg <tt class="docutils literal">Select Configurations</tt> premem el botó
+<tt class="docutils literal">Advanced <span class="pre">settings...</span></tt></p>
+<p>Al quadre de diàleg <tt class="docutils literal">Properties for HolaCDT</tt> naveguem per l'arbre
+d'opcions <tt class="docutils literal">C/C++ General</tt>-&gt; <tt class="docutils literal">Code Analysis</tt> -&gt; <tt class="docutils literal">Launching</tt> i
+marquem l'opció <tt class="docutils literal">Run with build</tt>.</p>
+<p>Si ens demana que si volem obrir la perspectiva associada a CDT,
+direm que Sí.</p>
+<p>Seleccionem ara crear un nou fitxer font (<tt class="docutils literal">File</tt> -&gt; <tt class="docutils literal">New</tt> -&gt; <tt class="docutils literal">Source
+File</tt>), li posem com a nom holacdt.c i finalitzem l'ajudant amb el
+botó <tt class="docutils literal">Finish</tt>.</p>
+<p>Escrivim ara el codi del nostre programa després de la capçalera
+que ens han generat automàticament.</p>
+<div class="highlight"><pre><span class="cp">#include&lt;stdio.h&gt;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hola CDT!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Finalment executem el programa amb <tt class="docutils literal">Run <span class="pre">-&gt;</span> Run</tt>. Ens demanarà si
+volem guardar els canvis. Un cop guardats, compilarà i enllaçarà el
+codi per nosaltres, i finalment ens mostrarà el resultat a la vista
+anomenada <tt class="docutils literal">Console</tt> que probablement apareixerà sota l'àrea de
+l'editor. <a class="footnote-reference" href="#launchfailed" id="id2">[2]</a></p>
+<div class="figure align-center">
+<img alt="Resultat d'execució de *holacdt.c*" src="./images/eclipse002.img003.holacdt_final.png" />
+</div>
+</div>
+</div>
+<div class="section" id="anotacions">
+<h2>Anotacions</h2>
+<table class="docutils footnote" frame="void" id="noaggree" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Si no estem d'acord amb els termes de la llicència,
+tot i estant en el nostre dret, tenim un problema per continuar
+seguint aquesta guia.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="launchfailed" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>En cas que aparegui un missatge d'error indicant
+<tt class="docutils literal">Launch failed.&nbsp; Binary not found</tt> és que ens hem deixat de
+configurar l'opció de <tt class="docutils literal">Run with build</tt> a les propietats del
+projecte. Encara podem arreglar-ho sense haver de començar. Només
+ens cal indicar-li a Eclipse quin és el <tt class="docutils literal">main()</tt> que ha
+d'executar. Per fer-ho, guardarem el projecte (<tt class="docutils literal">File</tt> -&gt; <tt class="docutils literal">Save''
+o <span class="pre">``ctrl-s</span></tt>), construïm el projecte amb (<tt class="docutils literal">Project</tt> -&gt; <tt class="docutils literal">Build
+all</tt> o <tt class="docutils literal"><span class="pre">ctrl-b</span></tt>) i creem la configuració amb <tt class="docutils literal">Run</tt> -&gt; <tt class="docutils literal">Run
+<span class="pre">configurations...</span></tt>) Al quadre de diàleg que ens apareix,
+seleccionarem <tt class="docutils literal">C/C++ Application</tt> i si no ens apareix dins el
+nostre projecte <tt class="docutils literal">HolaCDT Debug</tt> premem el botó de <tt class="docutils literal">New</tt>. Ara,
+en el nostre projecte premem <tt class="docutils literal">Search <span class="pre">Project...</span></tt> i escollim
+l'executable <tt class="docutils literal">holaCDT</tt>. Acceptem i premem <tt class="docutils literal">Run</tt> i tot plegat
+hauria de funcionar ara.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./tutorial-dinstallacio-de-eclipse.html">
+        Tutorial d'instal·lació de Eclipse
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./tutorial-dinstallacio-de-eclipse.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./glossari-de-conceptes-declipse.html">
+        Glossari de conceptes d'Eclipse
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

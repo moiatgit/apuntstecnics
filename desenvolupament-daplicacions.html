@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Desenvolupament d'aplicacions</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Desenvolupament d'aplicacions             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Desenvolupament d'aplicacions</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb el tag:
+            <a href="./tag/programari.html">programari</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Del prefaci del llibre <em>The Pragmatic Programmer: From Journeyman to
+Master</em></p>
+<blockquote>
+<p>Programming is a craft. At its simplest, it comes down to getting
+a computer to do what you want it to do (or what your user wants
+it to do). As a programmer, you are part listener, part advisor,
+part interpreter, and part dictator. You try to capture elusive
+requirements and find a way of expressing them so that a mere
+machine can do them justice. You try to document your work so that
+others can understand it, and you try to engineer your work so
+that others can build on it. What's more, you try to do all this
+against the relentless ticking of the project clock. You work
+small miracles every day.</p>
+<p>It's a difficult job.</p>
+<p>There are many people offering you help. Tool vendors tout the
+miracles their products perform. Methodology gurus promise that
+their techniques guarantee results. Everyone claims that their
+programming language is the best, and every operating system is
+the answer to all conceivable ills.</p>
+<p>Of course, none of this is true. There are no easy answers. There
+is no such thing as a best solution, be it a tool, a language, or
+an operating system. There can only be systems that are more
+appropriate in a particular set of circumstances.</p>
+<p>This is where pragmatism comes in. You shouldn't be wedded to any
+particular technology, but have a broad enough background and
+experience base to allow you to choose good solutions in
+particular situations. Your background stems from an understanding
+of the basic principles of computer science, and your experience
+comes from a wide range of practical projects. Theory and practice
+combine to make you strong.</p>
+</blockquote>
+<p>Els usem, els construïm, els modifiquem, en somiem amb nous.
+L'element amb que treballem els desenvolupadors de programari és,
+evidentment, el programari. Però què és exactament el programari?
+Quines característiques té? Com es construeix?</p>
+<p>En aquest tema es tracta el concepte de <em>programari</em> des de diferents
+perspectives amb l'objectiu d'oferir un context de reflexió sobre el
+producte de la nostra professió.</p>
+</div>
+<div class="section" id="definicio-de-programari">
+<h2>Definició de programari</h2>
+<div class="section" id="definicio-formal-de-programari">
+<h3>Definició formal de programari</h3>
+<p>Una definició formal de llibre de text diria que el programari es
+composa de:</p>
+<ol class="arabic simple">
+<li>les instruccions (programes de computadora) que en executar-se
+proporcionen les característiques, funcions i grau de rendiment
+desitjats;</li>
+<li>les estructures de dades que permeten que els programes manipulin
+informació de manera adequada; y</li>
+<li>els documents que descriuen l'operació i ús dels programes.</li>
+</ol>
+<p>Però, amb això sabem que és el programari?</p>
+</div>
+<div class="section" id="caracteristiques">
+<h3>Característiques</h3>
+<p>El programari presenta unes característiques molt particulars, en
+destacarem aquí:</p>
+<ul>
+<li><p class="first">es desenvolupa o es construeix, no es manufactura en el sentit
+clàssic</p>
+<p>No es treballa amb matèria (física), les despeses que ocasiona estan
+en els desenvolupadors i no tant en els materials</p>
+</li>
+<li><p class="first">no es desgasta però es deteriora</p>
+<p>amb el temps, les modificacions que es realitzen per manteniment
+introdueixen més i més errors</p>
+</li>
+<li><p class="first">es construeix majoritàriament &quot;a mida&quot;</p>
+<ul class="simple">
+<li>començant sempre pràcticament des de zero,</li>
+<li>sense pràcticament fer servir components a diferència de la
+tendència general de la industria</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="tipus-de-programari">
+<h3>Tipus de programari</h3>
+<p>El programari sovint es classifica en una o més de les següents
+categories:</p>
+<ul>
+<li><p class="first">programari de sistemes</p>
+<p>S.O., compiladors, i altres utilitats que es fan servir sovint per
+altres programes</p>
+</li>
+<li><p class="first">programari d'aplicació</p>
+<p>Programes que resolen una necessitat específica de negoci (ex.
+processament de transaccions als punts de venda i el control de
+processos de manufactura en temps real com ara <em>just-in-time</em>)</p>
+</li>
+<li><p class="first">programari científic i d'enginyeria</p>
+<p>Caracteritzats per algorismes &quot;devoradors de nombres&quot; ex.
+analitzadors de dades (astronomia, vulcanologia, tensió
+automotriu, biologia molecular...)</p>
+</li>
+<li><p class="first">programari incrustat (embedded)</p>
+<ul class="simple">
+<li>resideix a memòria de només lectura dels sistemes</li>
+<li>controlen característiques i funcions concretes per l'usuari i
+pel propi sistema ex. control del teclat d'un forn microones,
+funcions digitals de l'automòbil (control del combustible, de
+frenada...)</li>
+</ul>
+</li>
+<li><p class="first">programari de línia de productes</p>
+<p>Ofereixen una capacitat específica valida per un gran nombre
+d'usuaris dins d'un sector concret: (ex. productes de control
+d'inventaris, comptabilitat...) o molt genèrics (ex. processadors
+de texts, full de càlculs, presentació, multimedia, gestió de
+bases de dades...)</p>
+</li>
+<li><p class="first">aplicacions basades en web (WebApps)</p>
+<p>Des d'un conjunt d'arxius en html fins a aplicacions B2B (Business
+to Business) i de comerç electrònic.</p>
+</li>
+<li><p class="first">aplicacions per dispositius mòbils (<em>apps</em>)</p>
+<ul class="simple">
+<li>s'executen en smartphones, tablets i altres dispositius
+lleugers.</li>
+<li>connectades, amb localització geogràfica, amb interaccions més
+properes a l'usuari (gestos tàctils, moviment i posició del
+dispositiu, anàlisi de audio i vídeo, etc.)</li>
+</ul>
+</li>
+<li><p class="first">programari d'intel·ligència artificial</p>
+<ul class="simple">
+<li>fa servir algorismes no numèrics (ex. basats en heurístics) per
+a la resolució de problemes complexos que encara no poden ser
+abordats per l'anàlisi directe. Inclouen aplicacions per a la
+robòtica, els sistemes experts, el reconeixement de patrons
+(imatge, so), les xarxes neuronals artificials, demostració de
+teoremes, jocs d'ordinador i, per descomptat, parts importants
+de les <em>apps</em> més innovadores.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="el-programari-heretat-legacy-software">
+<h3>El programari heretat (legacy software)</h3>
+<p>Existeixen milers de programes en funcionament de totes les tipologies</p>
+<p>Algunes descripcions:</p>
+<ul class="simple">
+<li>Els sistemes de programari heretats van ser desenvolupats fa
+dècades, i han estat modificats de forma contínua per a complir els
+requeriments dels canvis als negocis i de les plataformes de còmput.
+La proliferació d'aquests sistemes ha causat mals de cap a les grans
+organitzacions, que els perceben com a costosos de mantenir i
+d'evolució molt arriscada</li>
+<li>Molts sistemes heretats donen suport a les funcions centrals de
+negoci i són indispensables per les empreses</li>
+<li>Es caracteritza per la seva longevitat i per ser crítics pels
+negocis</li>
+</ul>
+<p>Una característica addicional en general és la poca qualitat d'aquest
+programari:</p>
+<ul class="simple">
+<li>dissenys impossibles d'entendre,</li>
+<li>codi complicat,</li>
+<li>documentació escassa o inexistent,</li>
+<li>casos de proba i resultats que mai van ser arxivats,</li>
+<li>historial de canvis pobrement mantingut, ...</li>
+<li>no s'adapta 100% a les necessitats</li>
+</ul>
+<p>I, què es pot fer amb tot això?</p>
+<p>La <em>regla d'or</em> sempre ha estat &quot;mentre funcioni no el toquis!&quot;.</p>
+<p>Amb el temps, però, tot programari en ús requereix canvis perquè:</p>
+<ul class="simple">
+<li>cal adaptar-lo a noves tecnologies (ex. a entorns visuals, xarxa...)</li>
+<li>calen nous requeriments de negoci o els requeriments han canviat</li>
+<li>cal que interaccioni amb nous sistemes i sgbds, ...</li>
+<li>quan s'ha de modificar, cal que es realitzi un procés de
+reenginyeria per a garantir la seva evolució futura.</li>
+</ul>
+<p>Què passa? És què els anteriors desenvolupadors no ho sabien fer?</p>
+<ul class="simple">
+<li>La crua realitat és que nosaltres estem desenvolupant el programari
+heretat de demà.</li>
+<li>El programari evoluciona contínuament. El programari nou es
+construeix a partir de l'antic, i tots han d'interactuar i cooperar
+amb altres.</li>
+<li>El nostre repte, com a desenvolupadors, és trobar mecanismes per
+desenvolupar programari de manera que interaccioni adequadament amb
+el programari heretat i, a l'hora, sigui més mantenible que aquest.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="desenvolupament-del-programari">
+<h2>Desenvolupament del programari</h2>
+<p>Ara que ja tenim una idea més &quot;enriquida&quot; del què és el programari,
+anem a veure com el construïm.</p>
+<div class="section" id="elements-del-desenvolupament">
+<h3>Elements del desenvolupament</h3>
+<p>Per desenvolupar programari necessitem</p>
+<ul>
+<li><p class="first">un procés o model de desenvolupament</p>
+<ul class="simple">
+<li>defineix el marc de treball</li>
+<li>persegueix el desenvolupament racional i a temps del programari</li>
+<li>ofereix control de la gestió dels projectes de programari</li>
+<li>estableix el context on s'apliquen els mètodes tècnics, es
+generen els productes (models, documents, dades, informes,
+formats)</li>
+<li>assegura la qualitat</li>
+<li>ofereix control de la gestió del canvi</li>
+</ul>
+</li>
+<li><p class="first">un conjunt de mètodes</p>
+<ul class="simple">
+<li>són els “com” tècnics de la construcció del programari.</li>
+<li>inclouen tasques com: comunicació, anàlisi de requeriments,
+modelat del disseny construcció dels programes, realització de
+proves, i  suport</li>
+</ul>
+</li>
+<li><p class="first">un conjunt d'eines</p>
+<ul>
+<li><p class="first">proporcionen un suport pel procés i els mètodes.</p>
+</li>
+<li><p class="first">quan les eines estan integrades entre si, es parla d'una eina CASE
+(Computer Aided Software Engineering)</p>
+<p>(<a class="reference external" href="http://ca.wikipedia.org/wiki/Eines_CASE">http://ca.wikipedia.org/wiki/Eines_CASE</a>) Les eines CASE (Computer
+Aided Software Engineering, Enginyeria del programari Assistida
+per Ordinador) són diverses aplicacions informàtiques destinades a
+augmentar la productivitat en el desenvolupament de programari
+reduint el cost del desenvolupament en termes temps i diners.
+Aquestes eines proporcionen ajudes en totes les fases del cicle de
+vida de desenvolupament de programari com per exemple el procés de
+realitzar un disseny del projecte, calcular costos, implementació
+automàtica de codi a partir del disseny, compilació automàtica,
+documentació o detecció d'errors entre d'altres.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="model-de-desenvolupament">
+<h3>Model de desenvolupament</h3>
+<p>Els models de desenvolupament consideren les següents activitats
+generals:</p>
+<ul>
+<li><p class="first">comunicació</p>
+<ul class="simple">
+<li>col·laboració i comunicació amb el client</li>
+<li>client (<em>stakeholder</em> <a class="footnote-reference" href="#stakeholder" id="id1">[1]</a>) és qualsevol que tingui
+interès en l'èxit del resultat del projecte</li>
+</ul>
+</li>
+<li><p class="first">planificació</p>
+<p>Descriu el pla de treball:</p>
+<ul class="simple">
+<li>les tasques tècniques a realitzar</li>
+<li>els riscos probables</li>
+<li>els recursos requerits</li>
+<li>els productes a generar</li>
+<li>la programació de les tasques en el temps associades als recursos</li>
+</ul>
+</li>
+<li><p class="first">modelat</p>
+<ul>
+<li><p class="first">elaboració dels models que permeten al desenvolupador i al client
+entendre i posar-se d'acord amb els requeriments del programari a
+desenvolupar.</p>
+</li>
+<li><p class="first">definició del disseny que satisfarà aquests requeriments</p>
+</li>
+<li><p class="first">generalment es composa de dues accions diferenciades: anàlisi i
+disseny.</p>
+</li>
+<li><p class="first">l'anàlisi</p>
+<p>Inclou investigació, elaboració, negociació, especificació i validació dels requeriments.</p>
+<p>Condueix a un model d'anàlisi o especificació de requeriments.</p>
+</li>
+<li><p class="first">el disseny</p>
+<p>Pot ser de dades, arquitectònic, d'interfície i a nivell de components</p>
+<p>Crea un model de disseny o especificació de disseny.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">construcció</p>
+<ul class="simple">
+<li>generació del producte a partir del disseny (codificació)</li>
+<li>realització de les proves</li>
+</ul>
+</li>
+<li><p class="first">desplegat</p>
+<ul class="simple">
+<li>lliurament al client</li>
+<li>avaluació per part del client del resultat</li>
+</ul>
+</li>
+</ul>
+<p>A banda de les activitats generals, s'inclou un conjunt d'activitats
+de suport. Entre d'altres:</p>
+<ul>
+<li><p class="first">seguiment i suport del projecte</p>
+<p>permet l'avaluació del progrés comparant-lo amb el pla del projecte</p>
+<p>permet prendre mesures per a corregir les possibles desviacions</p>
+</li>
+<li><p class="first">gestió del risc</p>
+<p>avalua els riscos que puguin afectar al desenvolupament o a la qualitat</p>
+</li>
+<li><p class="first">assegurament de la qualitat</p>
+<p>defineix i condueix les activitats requerides per a assegurar la
+qualitat del programari</p>
+</li>
+<li><p class="first">revisions tècniques</p>
+<p>avalua els productes que es van desenvolupant per a trobar i
+eliminar errors abans que arribin a la següent acció o activitat</p>
+</li>
+<li><p class="first">mesurament</p>
+<p>defineix i recull mesures del procés, el projecte i el producte</p>
+<p>ajuda a garantir la satisfacció dels requeriments</p>
+</li>
+<li><p class="first">gestió de la reutilització</p>
+<p>defineix els criteris per a la reutilització dels productes
+(incloent components de programari)</p>
+<p>estableix mecanismes per a la creació de components reusables</p>
+</li>
+<li><p class="first">preparació i producció</p>
+<p>activitats requerides per a crear els productes com ara models, documents, registres, formats i llistes.</p>
+</li>
+</ul>
+<p>Existeixen diferents models de desenvolupament en ús actualment, des
+de l'històric <em>model clàssic</em> o <em>en cascada</em>, a les diferents versions
+de <em>desenvolupament àgil</em> (ex. eXtreme Programming, Scrum). Tots ells
+persegueixen un desenvolupament controlat que satisfaga el client.</p>
+</div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-val-si-pero-que-es-el-programari">
+<h3>Exercici 1. Val sí, però... què és el programari?</h3>
+<p>Descriu amb les teves paraules en un paràgraf què és el programari, de
+manera que ho pugui entendre una persona que s'estigui plantejant fer
+un cicle de desenvolupament de programari.</p>
+</div>
+<div class="section" id="exercici-2-el-nostre-producte-es-unic">
+<h3>Exercici 2. El nostre producte és únic?</h3>
+<p>Troba un o més exemples de productes desenvolupats per les persones
+que comparteixin el màxim de les tres característiques que esmenta
+aquest article.</p>
+<p>Atreveix-te a fer una abstracció de quina mena de productes es
+desenvolupen com el programari.</p>
+</div>
+<div class="section" id="exercici-3-tipologies-de-programari">
+<h3>Exercici 3. Tipologies de programari</h3>
+<p>Per com a mínim cinc tipologies esmentades en aquest article, proposa
+un o més programaris concrets que trobis que poden encabir-hi.</p>
+</div>
+<div class="section" id="exercici-4-genesi-del-programari-heretat">
+<h3>Exercici 4. Gènesi del programari heretat</h3>
+<p>Argumenta amb quina activitat o activitat es creen o es produeixen les
+característiques menys desitjables del programari heretat.</p>
+</div>
+<div class="section" id="exercici-5-els-teus-riscos">
+<h3>Exercici 5. Els teus riscos</h3>
+<p>Descriu un mínim de dos riscos <em>creïbles</em> que consideris que podrien
+afectar-te en la superació satisfactoria d'aquest cicle. Considera
+quina seria la severitat i proposa alguna estratègia per eliminar-los,
+pal·liar-los o/i <em>sobreviure-hi</em> en el cas que finalment esdevinguin
+una realitat.</p>
+</div>
+<div class="section" id="exercici-6-gestio-del-canvi">
+<h3>Exercici 6. Gestió del canvi</h3>
+<p>Els continguts d'aquest article indiquen que els models de
+desenvolupament ofereixen <em>control gestió del canvi</em>. Descriu com es
+relaciona aquest concepte amb el de <em>legacy software</em>.</p>
+</div>
+</div>
+<div class="section" id="annotacions">
+<h2>Annotacions</h2>
+<table class="docutils footnote" frame="void" id="stakeholder" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><em>stakeholder</em> en anglès vol dir persona que subjecta
+una estaca. A la nostra professió, aquesta estaca és gran i
+afilada...  si no cuides bé als teus clients ja saps on anirà a
+parar aquesta estaca... (acudit vist a &quot;Ingeniería del Software, un
+enfoque Práctico&quot; 6a ed. del Roger Pressman)</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

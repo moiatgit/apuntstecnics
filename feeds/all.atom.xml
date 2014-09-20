@@ -1,0 +1,1672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Apunts tècnics</title><link href="http://apuntstecnics.herokuapp.com/" rel="alternate"></link><link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" rel="self"></link><id>http://apuntstecnics.herokuapp.com/</id><updated>2014-09-09T23:57:30+02:00</updated><entry><title>Tutorial d'instal·lació del JDK</title><link href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-del-jdk.html" rel="alternate"></link><updated>2014-09-09T23:57:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:tutorial-dinstallacio-del-jdk.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest document descriu la instal·lació del JDK (Java Development Kit)
+de Oracle a un sistema Ubuntu.&lt;/p&gt;
+&lt;p&gt;Tot i que probablement altres implementacions (com ara OpenJDK) i
+altres versions anteriors (ex. la 6) podrien servir perfectament pels
+requeriments del curs, farem servir la versió 7 del JDK d'Oracle.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installacio"&gt;
+&lt;h2&gt;Instal·lació&lt;/h2&gt;
+&lt;p&gt;Les següents instruccions permeten la instal·lació del JDK d'Oracle a
+un Ubuntu 12.04.&lt;/p&gt;
+&lt;p&gt;Si penses instal·lar-ho a un sistema diferent, considera seguir les
+instruccions de la &lt;a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads"&gt;pàgina oficial&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Els usuaris d'Ubuntu, disposem d'un repositori on trobem un paquet que
+ens automatitza la instal·lació.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo add-apt-repository ppa:webupd8team/java
+You are about to add the following PPA to your system:
+ Oracle Java &lt;span class="o"&gt;(&lt;/span&gt;JDK&lt;span class="o"&gt;)&lt;/span&gt; Installer &lt;span class="o"&gt;(&lt;/span&gt;automatically downloads and installs Oracle JDK7&lt;span class="o"&gt;)&lt;/span&gt;. There are no actual Java files in this PPA. More info: http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html
+ More info: https://launchpad.net/~webupd8team/+archive/java
+Press &lt;span class="o"&gt;[&lt;/span&gt;ENTER&lt;span class="o"&gt;]&lt;/span&gt; to &lt;span class="k"&gt;continue &lt;/span&gt;or ctrl-c to cancel adding it
+«...»
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get update
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install oracle-java7-installer
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;En aquest moment ja hauríem de tenir instal·lat el jdk 7 a la nostra
+màquina. Pot passar, però, que encara no estigui enllaçada la nova
+versió. Ho comprovarem fent&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;java -version
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Si ens surt quelcom similar a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;java version &amp;quot;1.7.0_05&amp;quot;
+Java(TM) SE Runtime Environment (build 1.7.0_05-b05)
+Java HotSpot(TM) Server VM (build 23.1-b03, mixed mode)
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ja estem. Altrament caldrà seleccionar aquesta versió. És fàcil:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo update-alternatives --config java
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Que ens generarà quelcom similar a&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Hi ha 3 possibilitats per a l&amp;#39;alternativa java (que proveeix /usr/bin/java).
+
+  Selecció    Camí                                          Prioritat  Estat
+------------------------------------------------------------
+  0            /usr/lib/jvm/java-7-oracle/jre/bin/java         1062      mode automàtic
+  1            /usr/lib/jvm/java-6-openjdk-i386/jre/bin/java   1061      mode manual
+* 2            /usr/lib/jvm/java-6-sun/jre/bin/java            63        mode manual
+  3            /usr/lib/jvm/java-7-oracle/jre/bin/java         1062      mode manual
+
+Premeu retorn per a mantenir l&amp;#39;opció per defecte[*], o introduïu un número de selecció: 3
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;En el cas de l'exemple, cal escollir &lt;tt class="docutils literal"&gt;0&lt;/tt&gt; o &lt;tt class="docutils literal"&gt;3&lt;/tt&gt; doncs són les
+opcions que apunten a la versió 7 acabada d'instal·lar. Escollirem
+&lt;tt class="docutils literal"&gt;0&lt;/tt&gt; per deixar al sistema d'alternatives que decideixi l'opció en
+cas que tornem a instal·lar o eliminem algun paquet.&lt;/p&gt;
+&lt;p&gt;Ara, hauríem de disposar dels programes &lt;tt class="docutils literal"&gt;javac&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;java&lt;/tt&gt; en la
+darrera versió. Podem fer una darrera comprovació amb:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;javac -version
+javac 1.7.0_45
+&lt;span class="nv"&gt;$ &lt;/span&gt;java -version
+java version &lt;span class="s2"&gt;&amp;quot;1.7.0_45&amp;quot;&lt;/span&gt;
+Java&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/span&gt; SE Runtime Environment &lt;span class="o"&gt;(&lt;/span&gt;build 1.7.0_45-b18&lt;span class="o"&gt;)&lt;/span&gt;
+Java HotSpot&lt;span class="o"&gt;(&lt;/span&gt;TM&lt;span class="o"&gt;)&lt;/span&gt; 64-Bit Server VM &lt;span class="o"&gt;(&lt;/span&gt;build 24.45-b08, mixed mode&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="java"></category></entry><entry><title>Desenvolupament d'aplicacions</title><link href="http://apuntstecnics.herokuapp.com/desenvolupament-daplicacions.html" rel="alternate"></link><updated>2014-09-09T22:59:50+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:desenvolupament-daplicacions.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Del prefaci del llibre &lt;em&gt;The Pragmatic Programmer: From Journeyman to
+Master&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Programming is a craft. At its simplest, it comes down to getting
+a computer to do what you want it to do (or what your user wants
+it to do). As a programmer, you are part listener, part advisor,
+part interpreter, and part dictator. You try to capture elusive
+requirements and find a way of expressing them so that a mere
+machine can do them justice. You try to document your work so that
+others can understand it, and you try to engineer your work so
+that others can build on it. What's more, you try to do all this
+against the relentless ticking of the project clock. You work
+small miracles every day.&lt;/p&gt;
+&lt;p&gt;It's a difficult job.&lt;/p&gt;
+&lt;p&gt;There are many people offering you help. Tool vendors tout the
+miracles their products perform. Methodology gurus promise that
+their techniques guarantee results. Everyone claims that their
+programming language is the best, and every operating system is
+the answer to all conceivable ills.&lt;/p&gt;
+&lt;p&gt;Of course, none of this is true. There are no easy answers. There
+is no such thing as a best solution, be it a tool, a language, or
+an operating system. There can only be systems that are more
+appropriate in a particular set of circumstances.&lt;/p&gt;
+&lt;p&gt;This is where pragmatism comes in. You shouldn't be wedded to any
+particular technology, but have a broad enough background and
+experience base to allow you to choose good solutions in
+particular situations. Your background stems from an understanding
+of the basic principles of computer science, and your experience
+comes from a wide range of practical projects. Theory and practice
+combine to make you strong.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Els usem, els construïm, els modifiquem, en somiem amb nous.
+L'element amb que treballem els desenvolupadors de programari és,
+evidentment, el programari. Però què és exactament el programari?
+Quines característiques té? Com es construeix?&lt;/p&gt;
+&lt;p&gt;En aquest tema es tracta el concepte de &lt;em&gt;programari&lt;/em&gt; des de diferents
+perspectives amb l'objectiu d'oferir un context de reflexió sobre el
+producte de la nostra professió.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="definicio-de-programari"&gt;
+&lt;h2&gt;Definició de programari&lt;/h2&gt;
+&lt;div class="section" id="definicio-formal-de-programari"&gt;
+&lt;h3&gt;Definició formal de programari&lt;/h3&gt;
+&lt;p&gt;Una definició formal de llibre de text diria que el programari es
+composa de:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;les instruccions (programes de computadora) que en executar-se
+proporcionen les característiques, funcions i grau de rendiment
+desitjats;&lt;/li&gt;
+&lt;li&gt;les estructures de dades que permeten que els programes manipulin
+informació de manera adequada; y&lt;/li&gt;
+&lt;li&gt;els documents que descriuen l'operació i ús dels programes.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Però, amb això sabem que és el programari?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="caracteristiques"&gt;
+&lt;h3&gt;Característiques&lt;/h3&gt;
+&lt;p&gt;El programari presenta unes característiques molt particulars, en
+destacarem aquí:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;es desenvolupa o es construeix, no es manufactura en el sentit
+clàssic&lt;/p&gt;
+&lt;p&gt;No es treballa amb matèria (física), les despeses que ocasiona estan
+en els desenvolupadors i no tant en els materials&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;no es desgasta però es deteriora&lt;/p&gt;
+&lt;p&gt;amb el temps, les modificacions que es realitzen per manteniment
+introdueixen més i més errors&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;es construeix majoritàriament &amp;quot;a mida&amp;quot;&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;començant sempre pràcticament des de zero,&lt;/li&gt;
+&lt;li&gt;sense pràcticament fer servir components a diferència de la
+tendència general de la industria&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="tipus-de-programari"&gt;
+&lt;h3&gt;Tipus de programari&lt;/h3&gt;
+&lt;p&gt;El programari sovint es classifica en una o més de les següents
+categories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;programari de sistemes&lt;/p&gt;
+&lt;p&gt;S.O., compiladors, i altres utilitats que es fan servir sovint per
+altres programes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;programari d'aplicació&lt;/p&gt;
+&lt;p&gt;Programes que resolen una necessitat específica de negoci (ex.
+processament de transaccions als punts de venda i el control de
+processos de manufactura en temps real com ara &lt;em&gt;just-in-time&lt;/em&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;programari científic i d'enginyeria&lt;/p&gt;
+&lt;p&gt;Caracteritzats per algorismes &amp;quot;devoradors de nombres&amp;quot; ex.
+analitzadors de dades (astronomia, vulcanologia, tensió
+automotriu, biologia molecular...)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;programari incrustat (embedded)&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;resideix a memòria de només lectura dels sistemes&lt;/li&gt;
+&lt;li&gt;controlen característiques i funcions concretes per l'usuari i
+pel propi sistema ex. control del teclat d'un forn microones,
+funcions digitals de l'automòbil (control del combustible, de
+frenada...)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;programari de línia de productes&lt;/p&gt;
+&lt;p&gt;Ofereixen una capacitat específica valida per un gran nombre
+d'usuaris dins d'un sector concret: (ex. productes de control
+d'inventaris, comptabilitat...) o molt genèrics (ex. processadors
+de texts, full de càlculs, presentació, multimedia, gestió de
+bases de dades...)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;aplicacions basades en web (WebApps)&lt;/p&gt;
+&lt;p&gt;Des d'un conjunt d'arxius en html fins a aplicacions B2B (Business
+to Business) i de comerç electrònic.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;aplicacions per dispositius mòbils (&lt;em&gt;apps&lt;/em&gt;)&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;s'executen en smartphones, tablets i altres dispositius
+lleugers.&lt;/li&gt;
+&lt;li&gt;connectades, amb localització geogràfica, amb interaccions més
+properes a l'usuari (gestos tàctils, moviment i posició del
+dispositiu, anàlisi de audio i vídeo, etc.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;programari d'intel·ligència artificial&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;fa servir algorismes no numèrics (ex. basats en heurístics) per
+a la resolució de problemes complexos que encara no poden ser
+abordats per l'anàlisi directe. Inclouen aplicacions per a la
+robòtica, els sistemes experts, el reconeixement de patrons
+(imatge, so), les xarxes neuronals artificials, demostració de
+teoremes, jocs d'ordinador i, per descomptat, parts importants
+de les &lt;em&gt;apps&lt;/em&gt; més innovadores.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="el-programari-heretat-legacy-software"&gt;
+&lt;h3&gt;El programari heretat (legacy software)&lt;/h3&gt;
+&lt;p&gt;Existeixen milers de programes en funcionament de totes les tipologies&lt;/p&gt;
+&lt;p&gt;Algunes descripcions:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Els sistemes de programari heretats van ser desenvolupats fa
+dècades, i han estat modificats de forma contínua per a complir els
+requeriments dels canvis als negocis i de les plataformes de còmput.
+La proliferació d'aquests sistemes ha causat mals de cap a les grans
+organitzacions, que els perceben com a costosos de mantenir i
+d'evolució molt arriscada&lt;/li&gt;
+&lt;li&gt;Molts sistemes heretats donen suport a les funcions centrals de
+negoci i són indispensables per les empreses&lt;/li&gt;
+&lt;li&gt;Es caracteritza per la seva longevitat i per ser crítics pels
+negocis&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Una característica addicional en general és la poca qualitat d'aquest
+programari:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;dissenys impossibles d'entendre,&lt;/li&gt;
+&lt;li&gt;codi complicat,&lt;/li&gt;
+&lt;li&gt;documentació escassa o inexistent,&lt;/li&gt;
+&lt;li&gt;casos de proba i resultats que mai van ser arxivats,&lt;/li&gt;
+&lt;li&gt;historial de canvis pobrement mantingut, ...&lt;/li&gt;
+&lt;li&gt;no s'adapta 100% a les necessitats&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I, què es pot fer amb tot això?&lt;/p&gt;
+&lt;p&gt;La &lt;em&gt;regla d'or&lt;/em&gt; sempre ha estat &amp;quot;mentre funcioni no el toquis!&amp;quot;.&lt;/p&gt;
+&lt;p&gt;Amb el temps, però, tot programari en ús requereix canvis perquè:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;cal adaptar-lo a noves tecnologies (ex. a entorns visuals, xarxa...)&lt;/li&gt;
+&lt;li&gt;calen nous requeriments de negoci o els requeriments han canviat&lt;/li&gt;
+&lt;li&gt;cal que interaccioni amb nous sistemes i sgbds, ...&lt;/li&gt;
+&lt;li&gt;quan s'ha de modificar, cal que es realitzi un procés de
+reenginyeria per a garantir la seva evolució futura.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Què passa? És què els anteriors desenvolupadors no ho sabien fer?&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;La crua realitat és que nosaltres estem desenvolupant el programari
+heretat de demà.&lt;/li&gt;
+&lt;li&gt;El programari evoluciona contínuament. El programari nou es
+construeix a partir de l'antic, i tots han d'interactuar i cooperar
+amb altres.&lt;/li&gt;
+&lt;li&gt;El nostre repte, com a desenvolupadors, és trobar mecanismes per
+desenvolupar programari de manera que interaccioni adequadament amb
+el programari heretat i, a l'hora, sigui més mantenible que aquest.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="desenvolupament-del-programari"&gt;
+&lt;h2&gt;Desenvolupament del programari&lt;/h2&gt;
+&lt;p&gt;Ara que ja tenim una idea més &amp;quot;enriquida&amp;quot; del què és el programari,
+anem a veure com el construïm.&lt;/p&gt;
+&lt;div class="section" id="elements-del-desenvolupament"&gt;
+&lt;h3&gt;Elements del desenvolupament&lt;/h3&gt;
+&lt;p&gt;Per desenvolupar programari necessitem&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;un procés o model de desenvolupament&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;defineix el marc de treball&lt;/li&gt;
+&lt;li&gt;persegueix el desenvolupament racional i a temps del programari&lt;/li&gt;
+&lt;li&gt;ofereix control de la gestió dels projectes de programari&lt;/li&gt;
+&lt;li&gt;estableix el context on s'apliquen els mètodes tècnics, es
+generen els productes (models, documents, dades, informes,
+formats)&lt;/li&gt;
+&lt;li&gt;assegura la qualitat&lt;/li&gt;
+&lt;li&gt;ofereix control de la gestió del canvi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;un conjunt de mètodes&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;són els “com” tècnics de la construcció del programari.&lt;/li&gt;
+&lt;li&gt;inclouen tasques com: comunicació, anàlisi de requeriments,
+modelat del disseny construcció dels programes, realització de
+proves, i  suport&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;un conjunt d'eines&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;proporcionen un suport pel procés i els mètodes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;quan les eines estan integrades entre si, es parla d'una eina CASE
+(Computer Aided Software Engineering)&lt;/p&gt;
+&lt;p&gt;(&lt;a class="reference external" href="http://ca.wikipedia.org/wiki/Eines_CASE"&gt;http://ca.wikipedia.org/wiki/Eines_CASE&lt;/a&gt;) Les eines CASE (Computer
+Aided Software Engineering, Enginyeria del programari Assistida
+per Ordinador) són diverses aplicacions informàtiques destinades a
+augmentar la productivitat en el desenvolupament de programari
+reduint el cost del desenvolupament en termes temps i diners.
+Aquestes eines proporcionen ajudes en totes les fases del cicle de
+vida de desenvolupament de programari com per exemple el procés de
+realitzar un disseny del projecte, calcular costos, implementació
+automàtica de codi a partir del disseny, compilació automàtica,
+documentació o detecció d'errors entre d'altres.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="model-de-desenvolupament"&gt;
+&lt;h3&gt;Model de desenvolupament&lt;/h3&gt;
+&lt;p&gt;Els models de desenvolupament consideren les següents activitats
+generals:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;comunicació&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;col·laboració i comunicació amb el client&lt;/li&gt;
+&lt;li&gt;client (&lt;em&gt;stakeholder&lt;/em&gt; &lt;a class="footnote-reference" href="#stakeholder" id="id1"&gt;[1]&lt;/a&gt;) és qualsevol que tingui
+interès en l'èxit del resultat del projecte&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;planificació&lt;/p&gt;
+&lt;p&gt;Descriu el pla de treball:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;les tasques tècniques a realitzar&lt;/li&gt;
+&lt;li&gt;els riscos probables&lt;/li&gt;
+&lt;li&gt;els recursos requerits&lt;/li&gt;
+&lt;li&gt;els productes a generar&lt;/li&gt;
+&lt;li&gt;la programació de les tasques en el temps associades als recursos&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;modelat&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;elaboració dels models que permeten al desenvolupador i al client
+entendre i posar-se d'acord amb els requeriments del programari a
+desenvolupar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;definició del disseny que satisfarà aquests requeriments&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;generalment es composa de dues accions diferenciades: anàlisi i
+disseny.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;l'anàlisi&lt;/p&gt;
+&lt;p&gt;Inclou investigació, elaboració, negociació, especificació i validació dels requeriments.&lt;/p&gt;
+&lt;p&gt;Condueix a un model d'anàlisi o especificació de requeriments.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;el disseny&lt;/p&gt;
+&lt;p&gt;Pot ser de dades, arquitectònic, d'interfície i a nivell de components&lt;/p&gt;
+&lt;p&gt;Crea un model de disseny o especificació de disseny.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;construcció&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;generació del producte a partir del disseny (codificació)&lt;/li&gt;
+&lt;li&gt;realització de les proves&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;desplegat&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;lliurament al client&lt;/li&gt;
+&lt;li&gt;avaluació per part del client del resultat&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A banda de les activitats generals, s'inclou un conjunt d'activitats
+de suport. Entre d'altres:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;seguiment i suport del projecte&lt;/p&gt;
+&lt;p&gt;permet l'avaluació del progrés comparant-lo amb el pla del projecte&lt;/p&gt;
+&lt;p&gt;permet prendre mesures per a corregir les possibles desviacions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;gestió del risc&lt;/p&gt;
+&lt;p&gt;avalua els riscos que puguin afectar al desenvolupament o a la qualitat&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;assegurament de la qualitat&lt;/p&gt;
+&lt;p&gt;defineix i condueix les activitats requerides per a assegurar la
+qualitat del programari&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;revisions tècniques&lt;/p&gt;
+&lt;p&gt;avalua els productes que es van desenvolupant per a trobar i
+eliminar errors abans que arribin a la següent acció o activitat&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;mesurament&lt;/p&gt;
+&lt;p&gt;defineix i recull mesures del procés, el projecte i el producte&lt;/p&gt;
+&lt;p&gt;ajuda a garantir la satisfacció dels requeriments&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;gestió de la reutilització&lt;/p&gt;
+&lt;p&gt;defineix els criteris per a la reutilització dels productes
+(incloent components de programari)&lt;/p&gt;
+&lt;p&gt;estableix mecanismes per a la creació de components reusables&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;preparació i producció&lt;/p&gt;
+&lt;p&gt;activitats requerides per a crear els productes com ara models, documents, registres, formats i llistes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Existeixen diferents models de desenvolupament en ús actualment, des
+de l'històric &lt;em&gt;model clàssic&lt;/em&gt; o &lt;em&gt;en cascada&lt;/em&gt;, a les diferents versions
+de &lt;em&gt;desenvolupament àgil&lt;/em&gt; (ex. eXtreme Programming, Scrum). Tots ells
+persegueixen un desenvolupament controlat que satisfaga el client.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercicis"&gt;
+&lt;h2&gt;Exercicis&lt;/h2&gt;
+&lt;div class="section" id="exercici-1-val-si-pero-que-es-el-programari"&gt;
+&lt;h3&gt;Exercici 1. Val sí, però... què és el programari?&lt;/h3&gt;
+&lt;p&gt;Descriu amb les teves paraules en un paràgraf què és el programari, de
+manera que ho pugui entendre una persona que s'estigui plantejant fer
+un cicle de desenvolupament de programari.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-2-el-nostre-producte-es-unic"&gt;
+&lt;h3&gt;Exercici 2. El nostre producte és únic?&lt;/h3&gt;
+&lt;p&gt;Troba un o més exemples de productes desenvolupats per les persones
+que comparteixin el màxim de les tres característiques que esmenta
+aquest article.&lt;/p&gt;
+&lt;p&gt;Atreveix-te a fer una abstracció de quina mena de productes es
+desenvolupen com el programari.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-tipologies-de-programari"&gt;
+&lt;h3&gt;Exercici 3. Tipologies de programari&lt;/h3&gt;
+&lt;p&gt;Per com a mínim cinc tipologies esmentades en aquest article, proposa
+un o més programaris concrets que trobis que poden encabir-hi.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-4-genesi-del-programari-heretat"&gt;
+&lt;h3&gt;Exercici 4. Gènesi del programari heretat&lt;/h3&gt;
+&lt;p&gt;Argumenta amb quina activitat o activitat es creen o es produeixen les
+característiques menys desitjables del programari heretat.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-5-els-teus-riscos"&gt;
+&lt;h3&gt;Exercici 5. Els teus riscos&lt;/h3&gt;
+&lt;p&gt;Descriu un mínim de dos riscos &lt;em&gt;creïbles&lt;/em&gt; que consideris que podrien
+afectar-te en la superació satisfactoria d'aquest cicle. Considera
+quina seria la severitat i proposa alguna estratègia per eliminar-los,
+pal·liar-los o/i &lt;em&gt;sobreviure-hi&lt;/em&gt; en el cas que finalment esdevinguin
+una realitat.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-6-gestio-del-canvi"&gt;
+&lt;h3&gt;Exercici 6. Gestió del canvi&lt;/h3&gt;
+&lt;p&gt;Els continguts d'aquest article indiquen que els models de
+desenvolupament ofereixen &lt;em&gt;control gestió del canvi&lt;/em&gt;. Descriu com es
+relaciona aquest concepte amb el de &lt;em&gt;legacy software&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="annotacions"&gt;
+&lt;h2&gt;Annotacions&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="stakeholder" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;em&gt;stakeholder&lt;/em&gt; en anglès vol dir persona que subjecta
+una estaca. A la nostra professió, aquesta estaca és gran i
+afilada...  si no cuides bé als teus clients ja saps on anirà a
+parar aquesta estaca... (acudit vist a &amp;quot;Ingeniería del Software, un
+enfoque Práctico&amp;quot; 6a ed. del Roger Pressman)&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="programari"></category></entry><entry><title>Llenguatges de programació</title><link href="http://apuntstecnics.herokuapp.com/llenguatges-de-programacio.html" rel="alternate"></link><updated>2014-09-09T22:59:40+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:llenguatges-de-programacio.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest document descriu els llenguatges de programació i les
+característiques més rellevants a partir de les que són classificats.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="context"&gt;
+&lt;h2&gt;Context&lt;/h2&gt;
+&lt;p&gt;Comencem repassant alguns conceptes bàsics.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Algorisme&lt;/em&gt;: seqüència de passes orientades a la realització d'una
+tasca o la resolució d'un problema.&lt;/p&gt;
+&lt;p&gt;Depenent del context, en la vida quotidiana els algorismes els
+anomenem de diferents maneres: com receptes (passes per fregir un ou),
+instruccions (per posar la rentadora), mètodes de càlcul (passes per
+calcular l'arrel quadrada), etc.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Programa&lt;/em&gt;: seqüència d’instruccions orientada a ser executada per un
+ordinador sobre un conjunt de dades per donar resposta a un problema
+determinat, més la corresponent documentació.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Esquema d'un programa" src="http://apuntstecnics.herokuapp.com/images/prm002.img002.esquema_programa.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;Aplicació&lt;/em&gt;: conjunt de programes relacionats més la corresponent
+documentació. Un sinònim raonable és la paraula &lt;em&gt;programari&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Sistema informàtic&lt;/em&gt;: conjunt d'aplicacions, maquinari on
+s'executa, operadors, usuaris, polítiques de backup/seguretat/...
+que donen resposta a una necessitat complexa.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Instrucció&lt;/em&gt;: comanda que indica a l’ordinador que faci una acció.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Dada&lt;/em&gt;: unitat de tractament d'informació.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Informació&lt;/em&gt;: les dades són valors &lt;em&gt;freds&lt;/em&gt;. Què deu ser &lt;tt class="docutils literal"&gt;42&lt;/tt&gt;?&lt;/p&gt;
+&lt;p&gt;Les dades es converteixen en informació quan les col·loquem en un
+context. Per exemple, saber que &lt;tt class="docutils literal"&gt;42&lt;/tt&gt; és &lt;tt class="docutils literal"&gt;42 anys&lt;/tt&gt; o bé &lt;tt class="docutils literal"&gt;42 graus
+centígrads&lt;/tt&gt; ens permet dir alguna cosa més de la dada. Podem intuir
+que correspon, per exemple, a una edat o bé a una temperatura. D'això
+en podríem dir el &lt;em&gt;tipus de dada&lt;/em&gt;.  &lt;a class="footnote-reference" href="#respostaunivers" id="id1"&gt;[1]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Les dades es poden classificar en &lt;em&gt;tipus de dades&lt;/em&gt;. Dels exemples de
+dades anteriors, podríem dir que són, respectivament, de tipus nombre
+enter, però també, de tipus edat o temperatura, numèric o constant
+universal.&lt;/p&gt;
+&lt;p&gt;Quan la informació s'amplia i la integrem amb altres coneixements,
+apareix un significat. Per exemple, si ens diuen que l'aigua està a
+&lt;em&gt;42 graus de temperatura&lt;/em&gt; i aquesta aigua és on pretenem banyar-nos,
+ens suggerirà quelcom molt diferent a si l'aigua és amb la que ens
+volem bullir uns espaguetis.&lt;/p&gt;
+&lt;p&gt;Sigui com sigui, cal tenir clar que tant el significat com la
+informació és quelcom que posem nosaltres. L'ordinador només entén de
+dades. Encara més, ni tant sols entén de tipus de dades, ja que per
+ell les dades tenen totes la forma de seqüències de 0 i 1. De fet,
+també les instruccions són 0 i 1 per l'ordinador.&lt;/p&gt;
+&lt;p&gt;Les dades són emmagatzemades en algun lloc de la memòria
+&lt;a class="footnote-reference" href="#emmagatzemainstruccions" id="id2"&gt;[2]&lt;/a&gt;. Per fer-ne referència, és a dir, per usar
+la dada, els programes ha de fer servir la posició de memòria on s'ha
+deixat la dada. Ho podem imaginar com si haguéssim d'indicar on són
+les coses per les seves coordenades geogràfiques. Com que és una mica
+dur això d'haver de recordar en quina posició hem deixat cada cosa,
+els llenguatges més modernets (la majoria) ofereixen la possibilitat
+de donar un nom a aquestes posicions. D'aquest nom en diem sovint
+&lt;em&gt;variables&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="definicions"&gt;
+&lt;h2&gt;Definicions&lt;/h2&gt;
+&lt;p&gt;Entrem ja en el tema principal d'aquest document:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Llenguatge de programació&lt;/em&gt;: conjunt de símbols combinats entre si
+segons una sintaxis determinada que permet l’especificació dels
+programes.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Esquema dels diferents llenguatges" src="http://apuntstecnics.herokuapp.com/images/prm002.img001.esquema_comunicacio.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Els programes no són més que una comunicació d'instruccions en algun
+llenguatge concret.&lt;/p&gt;
+&lt;p&gt;Per ser considerat un llenguatge de programació, cal que permeti
+computar. Per tant, llenguatges com HTML, CSS o fins i tot SQL
+normalment no són considerats com a llenguatges de programació. Sovint
+la característica que se li demana a un llenguatge per ser considerat
+de programació és que sigui &lt;em&gt;Turin Complet&lt;/em&gt; &lt;a class="footnote-reference" href="#turingcomplete" id="id3"&gt;[3]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Es comença amb la descripció dels requeriments. El client comunica al
+desenvolupador el que vol amb un llenguatge natural que,
+desitjablement, comparteixin tots dos.&lt;/p&gt;
+&lt;p&gt;El pseudocodi és un llenguatge una mica més formal que el llenguatge
+natural però molt més informal que un llenguatge de programació.  El
+fem servir els desenvolupadors per aclarir idees abans de posar-les en
+pràctica amb els detalls formals d'un llenguatge de programació
+&lt;a class="footnote-reference" href="#enganypseudocodi" id="id4"&gt;[4]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Sovint es descriuen els algorismes en pseudocodi per després, si es
+consideren viables, traduir-los al llenguatge escollit (com ara
+Java, C, assamblador...) &lt;a class="footnote-reference" href="#programamaquina" id="id5"&gt;[5]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;La traducció al llenguatge de programació genera un o més fitxers,
+generalment de text. Es diu que aquests fitxers contenen el &lt;em&gt;codi font&lt;/em&gt;
+dels programes.&lt;/p&gt;
+&lt;p&gt;El codi font no pot ser interpretat directament per l'ordinador que
+només entén els 0 i 1 ja esmentats. Cal llavors passar per un o més
+processos de traducció que, sortosament, els farà el propi ordinador.&lt;/p&gt;
+&lt;p&gt;Els &lt;em&gt;traductors&lt;/em&gt; són programes s'encarreguen de traduir d'un
+llenguatge de programació o un llenguatge intermedi a un altre
+llenguatge intermedi o bé a codi màquina per a ser executat finalment
+per l'ordinador.&lt;/p&gt;
+&lt;p&gt;De &lt;em&gt;traductors&lt;/em&gt; en tenim de diferents tipus:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;Compilador&lt;/em&gt;: traductor de programes expressats en un llenguatge
+de programació a codi màquina o a un llenguatge intermedi.&lt;/p&gt;
+&lt;p&gt;La traducció es realitza sencera abans d’executar cap
+instrucció. Per tant, el programa ha de ser sintàcticament
+correcte al 100% per començar a ser executat.&lt;/p&gt;
+&lt;p&gt;Sovint cal una fase d’enllaçament (link) amb altres programes
+(ex. biblioteques del sistema operatiu) perquè el codi pugui ser
+executat.&lt;/p&gt;
+&lt;p&gt;En acabar, es genera un fitxer amb el codi traduït, més els
+enllaços corresponents,  que podrà ser executat &lt;em&gt;teòricament&lt;/em&gt;
+per sempre més, sense que calgui tornar a compilar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;Intèrpret&lt;/em&gt;: tradueix les instruccions i, sinó hi ha error,
+llença la seva execució d'una en una. Per tant, El programa pot
+començar a executar-se malgrat hi hagi algun error en
+instruccions posteriors.&lt;/p&gt;
+&lt;p&gt;Si es vol tornar a executar el programa, caldrà tornar a
+interpretar cadascuna de les instruccions que s'hagin
+d'executar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;Màquina virtual&lt;/em&gt;: es podria considerar com un cas particular
+d'intèrpret que tradueix d'un llenguatge intermedi al codi
+màquina corresponent a la plataforma on s'executa la màquina
+virtual.&lt;/p&gt;
+&lt;p&gt;El codi màquina és altament depenent de la màquina que
+l'executa. Per exemple, no podem executar el mateix codi màquina
+en diferents màquines (ex. el PC i el mòbil) ni en diferents
+sistemes operatius. L'avantatge de les màquines virtuals rau en
+el fet que aquestes realitzen una abstracció de la plataforma on
+s'executen, de manera que el programa, en codi intermedi, pugui
+ser compilat a una màquina i executat en una altra.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="paradigmes"&gt;
+&lt;h2&gt;Paradigmes&lt;/h2&gt;
+&lt;p&gt;Els llenguatges de programació es poden classificar de moltes maneres
+diferents sent una de les més descriptives el paradigma o paradigmes
+que implementen.&lt;/p&gt;
+&lt;p&gt;Podem entendre el concepte de &lt;em&gt;paradigma de programació&lt;/em&gt; com la manera
+o estil de representar i estructurar els elements bàsics que formen
+els programes.&lt;/p&gt;
+&lt;p&gt;Hi distingim bàsicament dos famílies o branques de paradigmes de
+programació:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;el paradigma imperatiu&lt;/li&gt;
+&lt;li&gt;el paradigma declaratiu&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;El paradigma imperatiu és el que hem estudiat fins el moment. El
+programa especifica a la màquina quines passes (instruccions /
+&lt;em&gt;statements&lt;/em&gt;) ha de realitzar per a
+aconseguir l'objectiu.&lt;/p&gt;
+&lt;p&gt;Per la seva banda, el paradigma declaratiu &lt;em&gt;descriu&lt;/em&gt; la lògica del
+programa sense detallar les passes que permeten aconseguir l'objectiu
+final . És a dir, descriu el &lt;em&gt;què&lt;/em&gt; es vol aconseguir. Serà el
+compilador o intèrpret l'encarregat de traduir aquesta descripció (el
+&lt;em&gt;com&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;Entre els paradigmes de programació més populars es troben:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;el paradigma procedural&lt;/li&gt;
+&lt;li&gt;el paradigma lògic&lt;/li&gt;
+&lt;li&gt;el paradigma funcional&lt;/li&gt;
+&lt;li&gt;el paradigma orientat a objectes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;El paradigma procedural és l'estudiat fins ara al cicle. Es tracta
+d'un paradigma imperatiu basat en els paradigmes de programació
+estructurada i modular. Alguns exemples són C, Fortan, Pascal, ADA.&lt;/p&gt;
+&lt;p&gt;El paradigma lògic és un paradigma declaratiu basat en lògica formal.
+Els programes s'estructuren en axiomes (coses que sabem o
+afirmacions), regles d'inferència (si A i B llavors C), i preguntes (o
+teoremes) que corresponen al resultat a obtenir. Els exemples més
+coneguts són Prolog i Datalog.&lt;/p&gt;
+&lt;p&gt;El paradigma funcional és un paradigma declaratiu basat en l'avaluació
+de funcions matemàtiques que evitant la modificació de l'estat de la
+màquina (sense efectes secundaris / &lt;em&gt;side-effects&lt;/em&gt;). Els programes
+s'especifiquen amb expressions. Les expressions retornen un valor
+depenent únicament dels paràmetres que rebin (independent del nombre
+de cops ni de l'estat de la màquina). Darrerament els llenguatges
+funcionals estan retornant amb molta força amb la promesa que permeten
+codificació de programes més robustos i mantenibles que els
+imperatius. Entre els exemples més coneguts hi trobaríem Lisp,
+Miranda, Haskell.&lt;/p&gt;
+&lt;p&gt;El paradigma orientat a objectes és una extensió del paradigma
+procedural en el que les dades i el procediments que les manipulen són
+agrupades o &lt;em&gt;encapsulades&lt;/em&gt; en &lt;em&gt;objectes&lt;/em&gt;. És el paradigma
+indiscutiblement més &lt;em&gt;de moda&lt;/em&gt; dels darrers anys, fins el punt que la
+majoria dels llenguatges de programació més &lt;em&gt;tradicionals&lt;/em&gt; van
+disposar d'alguna implementació que donés suport a aquest paradigma.
+Exemples populars són C++ (del C) i Delphy (del Pascal). Hi ha
+llenguatges orientats a objectes &lt;em&gt;purs&lt;/em&gt; (on tots els elements són
+objectes) com ara Eiffel, Smalltalk, Rubi, Scala. Hi ha d'altres no
+tan &lt;em&gt;purs&lt;/em&gt;, sigui perquè permeten programació no orientada a objecte
+(com C++, Python) o simplement per incloure tipus primitius no
+objectes (Java, C#, PHP, JavaScript).&lt;/p&gt;
+&lt;p&gt;Darrerament s'estan popularitzant llenguatges multiparadigma. Per
+exemple, Python, Ruby i Scala permeten programació orientada a
+objectes i funcional.&lt;/p&gt;
+&lt;p&gt;A &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Comparison_of_programming_paradigms"&gt;aquest article de la Vikipedia&lt;/a&gt;
+disposen d'una taula resum prou descriptiva.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercicis"&gt;
+&lt;h2&gt;Exercicis&lt;/h2&gt;
+&lt;div class="section" id="exercici-1-quin-aspecte-fan"&gt;
+&lt;h3&gt;Exercici 1. Quin aspecte fan&lt;/h3&gt;
+&lt;p&gt;Pels paradigmes &lt;em&gt;procedural&lt;/em&gt;, &lt;em&gt;lògic&lt;/em&gt;, &lt;em&gt;funcional&lt;/em&gt; i &lt;em&gt;orientat a
+objectes&lt;/em&gt; escull al menys un llenguatge que els implementi. Dóna
+preferencia a llenguatges que no apareguin a la llista dels exemples
+de classe o, com a mínim a llenguatges que no coneguis.&lt;/p&gt;
+&lt;p&gt;Ara consulta el lloc web &lt;a class="reference external" href="http://rosettacode.org/"&gt;Rosetta Code&lt;/a&gt; i
+troba alguna tasca que et cridi l'atenció. Per exemple, el problema de
+les vuit reines o &lt;em&gt;eight queens problem&lt;/em&gt; es troba resolt, en una
+versió genèrica, amb múltiples llenguatges a
+&lt;a class="reference external" href="http://rosettacode.org/wiki/N-queens_problem"&gt;http://rosettacode.org/wiki/N-queens_problem&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;De la tasca escollida, troba codi que la resolgui en els quatre
+llenguatges que has decidit abans amb el C (què és un procedural que
+ja deus conèixer).&lt;/p&gt;
+&lt;p&gt;Analitza els cinc codis i intenta esbrinar com cada versió arriba a
+fer el càlcul a partir dels coneixements de programació de que ja
+disposes.  Compara els diferents codis entre si i fes una valoració.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Ampliació&lt;/em&gt;: Si t'engresca aquest exercici, et proposo que miris
+algun llenguatge ben diferent dels que hem comentat. Per exemple,
+fes-li una ullada als &lt;em&gt;llenguatges de programació esotèrics&lt;/em&gt; com el
+Brainfuck o Unlambda. És possible que no els trobis a &lt;em&gt;Rosetta Code&lt;/em&gt;
+però de ben segur que et sorprendran. En cas que vulguis fer aquesta
+ampliació, simplement agafa alguna versió del &amp;quot;Hola Món&amp;quot; que sovint
+t'ofereixen i compara-la amb el llenguatge &lt;em&gt;no esotèric&lt;/em&gt; que vulguis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-2-llenguatges-populars"&gt;
+&lt;h3&gt;Exercici 2. Llenguatges populars&lt;/h3&gt;
+&lt;p&gt;Consulta &lt;a class="reference external" href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html"&gt;L'índex de llenguatges de Tiobe&lt;/a&gt;
+i contesta les següents preguntes:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Descriu amb les teves paraules quines són les condicions que
+requereixen a Tiobe per considerar un llenguatge com a llenguatge
+de programació.&lt;/li&gt;
+&lt;li&gt;Perquè no consideren &lt;em&gt;excel&lt;/em&gt; com un llenguatge de programació?&lt;/li&gt;
+&lt;li&gt;Perquè no consideren &lt;em&gt;html&lt;/em&gt; com un llenguatge de programació?&lt;/li&gt;
+&lt;li&gt;Llista els llenguatges que apareixen al &amp;quot;Hall of Fame&amp;quot; i que
+actualment es troben entre els 10 més populars. Indica quin o quins
+paradigmes suporten principalment.&lt;/li&gt;
+&lt;li&gt;Tiobe afirma que &lt;em&gt;The index can be used to check whether your
+programming skills are still up to date or to make a strategic
+decision about what programming language should be adopted when
+starting to build a new software system.&lt;/em&gt; Vista la informació i
+tenint en comptes els objectius d'aquest cicle, creus que els
+llenguatges de programació amb els que treballes/treballaràs durant
+aquest cicle són prou actuals?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-la-pila-web"&gt;
+&lt;h3&gt;Exercici 3. La pila Web&lt;/h3&gt;
+&lt;p&gt;Considera la següent imatge que representa les diferents capes d'una
+aplicació Web típica amb algunes de les tecnologies que veurem aquest
+curs.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Capes d'una aplicació Web" src="http://apuntstecnics.herokuapp.com/images/prm002.img003.stack_curs.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Respon a les següents preguntes:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Quines de les tecnologies que hi apareixen poden ser considerades
+llenguatges de programació &lt;em&gt;com cal&lt;/em&gt; i quines no?&lt;/li&gt;
+&lt;li&gt;Per les capes que tenen associades algun llenguatge de programació,
+troba com a mínim un llenguatge de programació addicional que sigui
+raonablement habitual en la capa.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-4-llenguatge-del-futur"&gt;
+&lt;h3&gt;Exercici 4. Llenguatge del futur&lt;/h3&gt;
+&lt;p&gt;Amb tot el que hem vist, fem ara d'endevins. Posa't el barret de
+bruixeta/bruixot, agafa la bmirar mirar ola de cristall i atreveix-te a
+pronosticar quin és el llenguatge de programació més interessant per a
+aprendre avui de manera que maximitzi el teu èxit professional en els
+propers cinc anys. Justifica la teva aposta.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="anotacions"&gt;
+&lt;h2&gt;Anotacions&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="respostaunivers" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;És possible que &lt;tt class="docutils literal"&gt;42&lt;/tt&gt; sigui després de tot més
+que una dada. Si tens temps i vols llegir quelcom no tan tècnic, mira
+&lt;a class="reference external" href="http://ca.wikipedia.org/wiki/La_Resposta_a_la_Pregunta_Definitiva_sobre_la_Vida,_l%27Univers_i_Tot_Plegat"&gt;aquesta entrada&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="emmagatzemainstruccions" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;De fet, l'ordinador també emmagatzema
+les instruccions a memòria de la mateixa manera (amb 0 i 1) Ja
+veus, en memòria dades i instruccions són una mateixa cosa.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="turingcomplete" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;En cas que t'interessin els detalls, pots
+començar amb &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Turing_completeness"&gt;aquest article sobre completesa de Turing&lt;/a&gt; de la
+wikipedia.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="enganypseudocodi" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;No us deixeu enganyar. Si una notació en
+pseudocodi pot ser executada per un ordinador, no és pseudocodi sinó
+codi sense el &lt;em&gt;pseudo&lt;/em&gt;.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="programamaquina" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Queden lluny els temps en que es programava
+directament en llenguatge màquina. La salut mental mitja dels
+desenvolupadors del món ha millorat (una mica) d'ençà.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="programari"></category></entry><entry><title>Entorn integrat de desenvolupament</title><link href="http://apuntstecnics.herokuapp.com/entorn-integrat-de-desenvolupament.html" rel="alternate"></link><updated>2014-09-09T22:59:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:entorn-integrat-de-desenvolupament.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest article introdueix l'estudiant a un tipus d'aplicació
+dissenyades a servir de suport al desenvolupament d'aplicacions
+informàtiques. Són conegudes com entorns de desenvolupament integrat o
+IDE per les inicials en anglès (&lt;em&gt;Integrated Development Environment&lt;/em&gt;)
+&lt;a class="footnote-reference" href="#interactiu" id="id1"&gt;[1]&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="justificacio"&gt;
+&lt;h2&gt;Justificació&lt;/h2&gt;
+&lt;p&gt;Per a poder desenvolupar un programa (fins i tot el més complex) en un
+llenguatge de programació concret, als desenvolupadors ens calen
+relativament molt poques eines. Considerem, sinó, el que implicaria la
+creació de quelcom de complexitat similar en quasi bé qualsevol altra
+disciplina (per exemple, en la construcció d'un vaixell o un edifici)&lt;/p&gt;
+&lt;p&gt;D'entre les eines, i bàsicament per a poder realitzar proves, en
+comptem el compilador (amb enllaçador si escau) o interpret
+corresponent al llenguatge, la plataforma (una màquina virtual o
+potser un simulador) on s'ha d'executar el programa, i poc més.&lt;/p&gt;
+&lt;p&gt;Hi ha, però, una eina pràcticament inevitable i requerida per la
+majoria &lt;a class="footnote-reference" href="#llenguatgesvisuals" id="id2"&gt;[2]&lt;/a&gt; dels desenvolupadors amb independència
+de la tecnologia per la que estigui orientat el programa: &lt;em&gt;l'editor de
+text&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Això és així perquè el codi font dels programes està format per text
+pla a la majoria dels llenguatges de programació.&lt;/p&gt;
+&lt;p&gt;Per exemple, amb el &lt;em&gt;bloc de notes&lt;/em&gt; de MS Windows &lt;a class="footnote-reference" href="#paciencia" id="id3"&gt;[3]&lt;/a&gt; podem
+codificar qualsevol programa en Java que es pugui realitzar amb les
+eines més sofisticades de desenvolupament disponibles.&lt;/p&gt;
+&lt;p&gt;Per sort, els editors de text han evolucionat força i poca gent deu
+quedar que desenvolupi grans aplicacions amb el bloc de notes.&lt;/p&gt;
+&lt;p&gt;Alguns dels afegits als editors de text que ens faciliten la vida als
+desenvolupadors són:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;numeració de línies i accés directe a partir d'un número de línia&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;ressaltat sintàctic o &lt;em&gt;syntax highlighting&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;ressaltat de parèntesis (claus, corxets, ...) concordants&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;autocompleció&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;de paraules que ja han aparegut al document, altres documents
+oberts o diccionaris&lt;/li&gt;
+&lt;li&gt;d'estructures pròpies del llenguatge (ex. tancament de claus, o
+autoindentat)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;gestió de l'històric de canvis en el fitxer amb la possibilitat de
+revertir a algun estat anterior&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;ressaltat de diferències entre dos fitxers&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;integració amb el compilador&lt;/p&gt;
+&lt;p&gt;Alguns permeten col·locar el punter automàticament en la línia on el
+compilador troba l'error.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;possibilitats d'ampliar l'editor&lt;/p&gt;
+&lt;p&gt;Alguns ofereixen la possibilitat d'afegir (i, fins i tot,
+desenvolupar) noves funcionalitats. Per exemple, per a integrar
+l'editor amb algun sistema de control de versions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;En el mercat van apareixent editors amb funcionalitats cada cop més
+sofisticades amb l'objectiu d'ajudar en el desenvolupament de
+programes.&lt;/p&gt;
+&lt;p&gt;Com es tracta d'una eina que el desenvolupador fa servir durant moltes
+hores, no ha de resultar estrany que alguns desenvolupadors defensin
+apassionadament el seu editor com el millor &lt;a class="footnote-reference" href="#viemacs" id="id4"&gt;[4]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Si amb el modest &lt;em&gt;notepad&lt;/em&gt; ja podíem teòricament desenvolupar
+qualsevol aplicació i aquests editors més potents ens faciliten encara
+més el desenvolupament, què més pot demanar un desenvolupador?&lt;/p&gt;
+&lt;p&gt;Per a alguns desenvolupadors, les seves necessitats difícilment queden
+cobertes per cap editor. Per ells, l'editor queda com un comandament a
+distància de la tele que et permeti canviar de canals i controlar el
+volum, però t'obligui a aixecar-te per canviar el contrast.  Per a
+aquests desenvolupadors la resposta és &lt;em&gt;entorn de desenvolupament
+integrat&lt;/em&gt; o IDE &lt;a class="footnote-reference" href="#comandament" id="id5"&gt;[5]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Les eines bàsiques que inclou un IDE són:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;un editor de text&lt;/li&gt;
+&lt;li&gt;un compilador/interpret (o integració amb el compilador/interpret)&lt;/li&gt;
+&lt;li&gt;un depurador&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;A banda, els IDE més moderns inclouen moltes o totes les millores
+esmentades anteriorment, i poden afegir-ne de manera integrada, entre
+d'altres:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;eines d'automatització (ex. de generació del paquet a distribuir, o
+sincronització amb el servidor de producció)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;gestió de projectes&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;gestió de múltiples desenvolupadors&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;suport per multiples tecnologies i llenguatges simultàniament&lt;/p&gt;
+&lt;p&gt;Per exemple, en el desenvolupament d'aplicacions web és molt típic
+trobar-se treballant a l'hora amb un llenguatge de servidor com ara
+php, un de client (javascript), un o més de representació de la
+informació (html, css), etc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;gestió dels recursos associats (ex. icones dels botons)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;navegació en el codi incloent les biblioteques del llenguatge&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;validador sintàctic&lt;/p&gt;
+&lt;p&gt;Incloent el ressaltat d'errors sintàctics en temps d'edició&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;ajuda en la documentació del codi&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;ajuda en l'autocompleció avançada&lt;/p&gt;
+&lt;p&gt;No és tant que autocompleti amb les paraules que comencen per la
+paraula que estem escrivint, com que ho faci únicament amb els
+elements que tenen sentit en el lloc concret on s'està escrivint.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;dipòsits de codi i gestió de versions&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;suport d'automatització de proves&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;eines d'anàlisi del codi, d'optimització i de refacció
+(&lt;em&gt;refactoring&lt;/em&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;suport en la construcció d'interfícies gràfiques&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;integració amb suport i consulta sobre l'ús del llenguatge&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;i un llarg etcètera que inclou detalls com l'ajut a la gestió de la
+localització (idiomes), gestió de plantilles de codi, modelització
+gràfica (UML)...&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="exemples-d-ides"&gt;
+&lt;h3&gt;Exemples d'IDEs&lt;/h3&gt;
+&lt;p&gt;Podem trobar molts exemples de IDEs a &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Comparison_of_integrated_development_environments"&gt;l'article comparatiu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Centrant-nos, per exemple, en els IDEs amb suport al llenguatge Java,
+trobem, entre d'altres:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://es.wikipedia.org/wiki/Eclipse_%28software%29"&gt;Eclipse&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://es.wikipedia.org/wiki/NetBeans"&gt;Netbeans&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://es.wikipedia.org/wiki/JDeveloper"&gt;JDeveloper&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercicis"&gt;
+&lt;h2&gt;Exercicis&lt;/h2&gt;
+&lt;div class="section" id="exercici-1-installacio-de-l-ide-eclipse"&gt;
+&lt;h3&gt;Exercici 1. Instal·lació de l'IDE Eclipse&lt;/h3&gt;
+&lt;p&gt;Instal·larem l'entorn de desenvolupament Eclipse.&lt;/p&gt;
+&lt;p&gt;Podem seguir la &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-eclipse.html"&gt;guia d'instal·lació d'eclipse&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Disposem d'una altre &lt;a class="reference external" href="{{url}}/eines/eclipse-us-basic"&gt;guia&lt;/a&gt; que us
+oferirà una vista pas a pas de l'ús bàsic de l'IDE Eclipse. Caldrà
+seguir aquesta guia per poder realitzar alguns exercicis.&lt;/p&gt;
+&lt;p&gt;Finalment farem una prova desenvolupant un petit programa per a
+veure algunes de les característiques de l'entorn.&lt;/p&gt;
+&lt;p&gt;Es demana:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;captura de pantalla on es pugui veure el codi i l'execució des
+de l'Eclipse, del programa HolaMon fet en Java.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;els fitxers generats per Eclipse pel projecte HolaMon dins de
+l'espai de treball (ex. ~/dev/eclipse/workspace/HolaMon) Per
+exemple, es pot fer servir la comanda:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+~/dev/eclipse/workspace$ tar czvf HolaMon.tar.gz HolaMon/
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Important&lt;/strong&gt; Assegura't que la captura de pantalla permeti veure la
+data d'execució i el teu nom dins de l'equip en que ho fas. És a dir,
+&lt;strong&gt;no&lt;/strong&gt; capturis exclusivament la finestra que conté Eclipse.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-2-configuracio-d-eclipse-per-desenvolupar-en-c"&gt;
+&lt;h3&gt;Exercici 2. Configuració d'Eclipse per desenvolupar en C&lt;/h3&gt;
+&lt;p&gt;Un cop realitzada la instal·lació de Eclipse, el configurarem per a
+poder treballar amb el llenguatge de programació C. El suport a aquest
+llenguatge no ve instal·lat per defecte.  Podem fer servir la &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/configuracio-declipse-per-cc.html"&gt;guia
+d'instal·lació del plug-in per C&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Es demana:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;captura de pantalla on es pugui veure el codi i l'execució des
+de l'Eclipse, del programa HolaCDT.&lt;/li&gt;
+&lt;li&gt;els fitxers generats per Eclipse pel projecte HolaCDT dins de
+l'espai de treball.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-voste-pot-anar-a-la-preso"&gt;
+&lt;h3&gt;Exercici 3. Vostè pot anar a la presó&lt;/h3&gt;
+&lt;p&gt;Desenvolupa un programa en C amb l'IDE Eclipse que demani a l'usuari
+el nom i l'edat. Si és major d'edat, el programa respondrà:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Vostè ja pot anar a la presó!
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I, en tot cas, acabarà acomiadant-se de l'usuari dient:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Vagi amb compte «nom».
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;On «nom» es veurà substituït pel nom especificat per l'usuari.&lt;/p&gt;
+&lt;p&gt;Com als exercicis anteriors, es demana:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;captura de pantalla on es pugui veure el codi i l'execució del
+programa.&lt;/li&gt;
+&lt;li&gt;els fitxers generats per Eclipse pel projecte.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-4-installacio-de-l-ide-netbeans"&gt;
+&lt;h3&gt;Exercici 4. Instal·lació de l'IDE NetBeans&lt;/h3&gt;
+&lt;p&gt;Instal·larem l'entorn de desenvolupament NetBeans.
+Podem fer servir aquesta &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-netbeans.html"&gt;guia d'instal·lació de NetBeans&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Es demana:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;captura de pantalla on es pugui veure el codi i l'execució des
+de NetBeans, del programa HolaMon fet en Java.&lt;/li&gt;
+&lt;li&gt;els fitxers generats per NetBeans pel projecte HolaMon&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-5-opcional-configuracio-de-netbeans"&gt;
+&lt;h3&gt;Exercici 5. (Opcional) Configuració de NetBeans&lt;/h3&gt;
+&lt;p&gt;En aquest exercici se't demana que instal·lis el complement de
+NetBeans que et permeti programar-hi en C. En aquesta ocasió et toca a
+tu investigar com (no t'hauria de suposar una gran càrrega).&lt;/p&gt;
+&lt;p&gt;Un cop realitzat, crea un projecte equivalent al de l'exercici &lt;em&gt;Vostè
+pot anar a la presó&lt;/em&gt; i executa'l.&lt;/p&gt;
+&lt;p&gt;Lliura la captura de pantalla que demostri que ho has fet.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-6-opcional-installacio-d-altres-ides"&gt;
+&lt;h3&gt;Exercici 6. (Opcional) Instal·lació d'altres IDEs&lt;/h3&gt;
+&lt;p&gt;Aquest exercici, tot i que és &lt;strong&gt;opcional&lt;/strong&gt;, es recomana per a
+aquells estudiants que tinguin temps disponible.&lt;/p&gt;
+&lt;p&gt;Es tracta d'instal·lar altres IDEs. En concret, es proposen:
+dos propietaris (un d'ells d'ús gratuït i l'altre amb llicència
+gratuïta per estudiants)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="http://www.oracle.com/technetwork/developer-tools/jdev/overview/index.html"&gt;IDE JDeveloper&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Es tracta d'un IDE propietari però d'ús gratuït.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;a class="reference external" href="http://www.microsoft.com/visualstudio/eng/products/visual-studio-2010-express"&gt;IDE VisualStudio&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Atenció: aquest IDE, tot i que molt popular, presenta unes
+restriccions importants respecte el sistema operatiu en el que
+s'executa. A més en el moment d'escriure aquest continguts, no
+inclou Java entre els llenguatges acceptats.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Es demana el lliurament de captures de pantalla que mostrin l'execució
+d'un programa tipus Hola Món dins de l'entorn o entorns escollits.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="annotacions"&gt;
+&lt;h2&gt;Annotacions&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="interactiu" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Trobaràs en alguns llocs que la &lt;em&gt;I&lt;/em&gt; de IDE
+s'espandeix a &lt;em&gt;Interactiu&lt;/em&gt; en comptes d'&lt;em&gt;Integrat&lt;/em&gt;.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="llenguatgesvisuals" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;p class="first"&gt;Hi ha la possibilitat de realitzar programes
+de manera completament visual en algunes tecnologies (mireu per
+exemple &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Visual_programming_language"&gt;VPL&lt;/a&gt;.&lt;/p&gt;
+&lt;p class="last"&gt;Cercant la simplicitat d'aquest article, considerem que l'eina
+necessaria per la codificació del programa estaria dins de la
+mateixa categoria que el compilador, i ignorarem aquestes
+tecnologies no tan extenses.&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="paciencia" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Si decideixes programar amb el bloc de notes de MS
+Windows (especialment en la seva versió clàssica) probablement et
+caldrà a més, tenir molta paciència i un cert sentit masoquista. En
+tot cas, contra gustos...&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="viemacs" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Pot resultar fascinant seguir les baralles entre els
+editors &lt;em&gt;vi&lt;/em&gt; i &lt;em&gt;emacs&lt;/em&gt;. Mireu per exemple l'article &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Editor_war"&gt;Editor war&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="comandament" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;El concepte d'&lt;em&gt;aixecar-se&lt;/em&gt; en aquesta metèfora
+representa anar a altres aplicacions diferents de l'editor, sovint
+la consola. Per a molts desenvolupadors això no representa cap
+dificultat. Ans al contrari, anar a una consola amb una bona
+&lt;em&gt;shell&lt;/em&gt; ofereix una flexibilitat que difícilment podrà igualar el
+millor entorn integrat.  Així, trobaràs que encara hi ha
+desenvolupadors que treballen molt eficientment amb un editor com
+ara Vim / Emacs i una o més consoles Bash entre els que es mouen
+ràpidament amb alguna combinació de tecles (mai el ratolí!).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="programari"></category></entry><entry><title>Tutorial d'instal·lació de Eclipse</title><link href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-eclipse.html" rel="alternate"></link><updated>2014-09-09T22:59:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:tutorial-dinstallacio-de-eclipse.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest document descriu una manera d'instal·lar l'IDE Eclipse a un
+sistema Ubuntu. Per les característiques particulars de l'aplicació
+Eclipse, aquestes instruccions haurien de funcionar sense gaires
+canvis a altres sistemes operatius.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installacio"&gt;
+&lt;h2&gt;Instal·lació&lt;/h2&gt;
+&lt;p&gt;Per la realització d'una instal·lació de Eclipse seguirem les següents
+passes des d'una consola:&lt;/p&gt;
+&lt;ol class="arabic" start="0"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Abans d'instal·lar Eclipse&lt;/p&gt;
+&lt;p&gt;Donat que Eclipse és una aplicació java, caldrà disposar d'una
+màquina virtual (JVM) al nostre sistema per a poder-la executar.&lt;/p&gt;
+&lt;p&gt;Tot i que virtualment podríem fer servir altres implementacions
+(ex. OpenJDK o gcj), seguirem el &lt;a class="reference external" href="http://www.eclipse.org/forums/index.php/t/161212/"&gt;consell&lt;/a&gt; del
+fòrum d'Eclipse i farem servir el JDK d'Oracle.&lt;/p&gt;
+&lt;p&gt;Per altra banda, instal·larem la versió 7 de Java, la darrera
+disponible en el moment en que es va elaborar aquesta guia (juliol
+2012)&lt;/p&gt;
+&lt;p&gt;Com que la llicència del jdk d'Oracle (abans Sun) va canviant el
+grau d'&lt;em&gt;obertura&lt;/em&gt; des de la perspectiva d'algunes distribucions
+(com ara Ubuntu), és possible (de fet probable) que no disposem de
+cap versió instal·lada o que aquesta no sigui la desitjada.&lt;/p&gt;
+&lt;p&gt;Per a assegurar-nos que el nostre sistema disposa de la versió del
+JDK que volem, podem fer quelcom similar a:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo update-alternatives --config java
+&lt;/pre&gt;
+&lt;p&gt;Si ens respon quelcom similar a:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+update-alternatives: error: no alternatives for java.
+&lt;/pre&gt;
+&lt;p&gt;o bé quelcom que no inclou la versió desitjada com ara:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Hi ha 2 possibilitats per a l'alternativa java (que proveeix /usr/bin/java).
+
+  Selecció    Camí                                          Prioritat  Estat
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-6-openjdk-i386/jre/bin/java   1061      mode automàtic
+  1            /usr/lib/jvm/java-6-sun/jre/bin/java            63        mode manual
+&lt;/pre&gt;
+&lt;p&gt;caldrà instal·lar java. Trobareu una guia breu per Ubuntu &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-del-jdk.html"&gt;aquí&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Obtenció de l'Eclipse&lt;/p&gt;
+&lt;p&gt;Si l'ús que hem de fer d'aquest IDE és molt introductori, podríem
+fer servir la versió d'Eclipse que es troba als repositoris
+d'Ubuntu, malgrat queda molt endarrerida respecte la darrera versió
+que es troba al lloc oficial del IDE:
+&lt;a class="reference external" href="http://www.eclipse.org/downloads/"&gt;http://www.eclipse.org/downloads/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;En el moment en que es va escriure aquesta guia, la
+darrera versió disponible era la 4.2, mentre que la dels
+repositoris anaven encara per la 3.7.&lt;/p&gt;
+&lt;p&gt;Aquesta guia proposa la instal·lació de la darrera versió
+disponible per desenvolupadors de java &amp;quot;Eclipse IDE for Java
+Developers&amp;quot;.&lt;/p&gt;
+&lt;p&gt;D'aquesta manera ens trobarem un fitxer anomenat quelcom similar a:
+./eclipse-java-juno-linux-gtk.tar.gz&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Instal·lació de l'IDE&lt;/p&gt;
+&lt;p&gt;L'aplicació Eclipse és una mica particular en relació a d'altres,
+en el sentit que la seva instal·lació consisteix en simplement
+descomprimir el paquet i executar l'IDE.&lt;/p&gt;
+&lt;p&gt;Així, escollirem el directori on volem que quedi instal·lada
+l'aplicació. Per exemple, &lt;tt class="docutils literal"&gt;~/soft&lt;/tt&gt;. Així, podem fer servir
+quelcom similar a:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ mkdir -p ~/soft
+$ mv eclipse-java-juno-linux-gtk.tar.gz ~/soft
+$ cd ~/soft
+$ tar xzvf eclipse-java-juno-linux-gtk.tar.gz
+&lt;/pre&gt;
+&lt;p&gt;Amb això, ja podem executar eclipse&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+~/soft/ $ eclipse/eclipse
+&lt;/pre&gt;
+&lt;p&gt;En cas que aparegui un missatge d'error com ara:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Missatge d'error amb la màquina virtual de Java" src="http://apuntstecnics.herokuapp.com/images/eclipse001.error_jdk.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Vol dir que hi ha algun problema amb la màquina virtual de Java.
+En aquest cas, intentem, si més no, reinstal·lar-la.&lt;/p&gt;
+&lt;p&gt;Per comoditat, es pot crear algun llançador. Per exemple, per poder
+executar-ho des de línia de comandes, pot ser còmode:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+    $ cd ~
+    $ mkdir -p bin
+    $ cd bin
+    $ cat &amp;gt; eclipse.sh &amp;lt;&amp;lt; EOF
+    &amp;gt; #! /bin/sh
+    &amp;gt; ~/soft/eclipse/eclipse &amp;amp;
+    &amp;gt; EOF
+    $ chmod u+x eclipse.sh
+
+i, des de qualsevol lloc ::
+
+    $ eclipse.sh
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Configuració del directori de treball&lt;/p&gt;
+&lt;p&gt;En arrancar, Eclipse ens demanarà un lloc on deixar els projectes
+Eclipse amb que treballem (&lt;em&gt;workspace&lt;/em&gt;). Escollirem un directori
+que ens sigui còmode.&lt;/p&gt;
+&lt;p&gt;Serà aquí on podrem trobar els fitxers que es generin amb els
+nostres projectes.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Una prova ràpida&lt;/p&gt;
+&lt;p&gt;Per defecte, Eclipse s'instal·la per construir aplicacions en
+java.&lt;/p&gt;
+&lt;p&gt;Aprofitant que no hem de fer res especial, farem una primera prova
+de l'entorn creant un &amp;quot;original&amp;quot; programa de salutació al món.&lt;/p&gt;
+&lt;p&gt;Anirem a File -&amp;gt; New -&amp;gt; Java Project, definirem el nom del projecte
+(ex. HolaMon) i deixarem la resta d'opcions per defecte. Quan ja ho
+tenim tot, premem &lt;em&gt;Finish&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Amb això, Eclipse ens ha creat el projecte HolaMon amb diferents
+carpetes i recursos.&lt;/p&gt;
+&lt;p&gt;Anem ara a File -&amp;gt; New -&amp;gt; Class, i al quadre de text &lt;tt class="docutils literal"&gt;Name:&lt;/tt&gt; hi
+introduïm &amp;quot;HolaMon&amp;quot;. Marquem el quadre de selecció &lt;tt class="docutils literal"&gt;public static
+void main(String[] args)&lt;/tt&gt; de la secció &lt;tt class="docutils literal"&gt;Which method stubs would
+you like to create?&lt;/tt&gt; i, deixant la resta d'opcions amb els valors
+per defecte premem &lt;em&gt;Finish&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;En aquest moment ens apareixerà una finestra amb un aspecte similar
+al següent:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Aspecte de l'entorn gràfic d'Eclipse" src="http://apuntstecnics.herokuapp.com/images/eclipse001.img001.holamon.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;A la subfinestra més ampla (a la dreta), hi trobem un editor amb el
+codi del nostre projecte. Eclipse ens ha creat un primer esquema de
+la classe HolaMon que hem demanat crear.&lt;/p&gt;
+&lt;p&gt;Ara, allà on posa &lt;tt class="docutils literal"&gt;// TODO &lt;span class="pre"&gt;Auto-generated&lt;/span&gt; method stub&lt;/tt&gt; escriurem
+&lt;tt class="docutils literal"&gt;Sys&lt;/tt&gt;. A continuació, farem &amp;lt;ctrl&amp;gt;-&amp;lt;espai&amp;gt; i podrem veure que
+Eclipse ens ofereix una llista de suggeriments per completar la
+paraula que estem escrivint (navegable amb el cursor) juntament amb
+documentació corresponent a la proposta de compleció
+sel·leccionada. Farem &amp;lt;enter&amp;gt; per completar.&lt;/p&gt;
+&lt;p&gt;Continuem escrivint un punt &lt;tt class="docutils literal"&gt;.&lt;/tt&gt; i observem que ens apareix una
+llista de possibilitats per a continuar que podem navegar amb el
+cursor. Si escrivim ara una lletra (ex. &lt;tt class="docutils literal"&gt;o&lt;/tt&gt;) reduirà les
+propostes a aquelles que comencen amb &amp;quot;o&amp;quot;. Escollirem l'única opció
+disponible (&lt;tt class="docutils literal"&gt;out&lt;/tt&gt;) i tornarem a escriure un punt. Ens apareix una
+nova llista amb la primera opció &lt;tt class="docutils literal"&gt;println(String x)&lt;/tt&gt;. Justament
+la funció que ens interessa. L'escollim amb &amp;lt;enter&amp;gt; i ens
+autocompleta a la funció &lt;tt class="docutils literal"&gt;System.out.println()&lt;/tt&gt; deixant-nos el
+cursor dins dels parèntesis amb el nom d'una variable &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; i
+informant-nos del possible tipus de dades que hi podem ficar dins.
+Substituirem la &lt;tt class="docutils literal"&gt;x&lt;/tt&gt; per la cadena &lt;tt class="docutils literal"&gt;&amp;quot;Hola &lt;span class="pre"&gt;Món!\n&amp;quot;&lt;/span&gt;&lt;/tt&gt; i farem
+&amp;lt;enter&amp;gt;. Eclipse col·loca el cursor al final de la sentència.
+Acabem amb un punt i coma la línia.&lt;/p&gt;
+&lt;p&gt;Si tot està correcte (Eclipse ens avisaria en cas contrari) podem
+ja executar el nostre programa. Run -&amp;gt; Run. Eclipse ens demana si
+volem guardar els canvis (ens permet marcar autoguardar si volem).
+En fer &lt;em&gt;OK&lt;/em&gt;  ens apareix una nova subfinestra a la part inferior on
+es veu el resultat de l'execució del programa. Eclipse s'ha fet
+càrrec de compilar i executar el nostre codi.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Ja tenim disponible l'Eclipse.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Configuració d'Eclipse per C/C++</title><link href="http://apuntstecnics.herokuapp.com/configuracio-declipse-per-cc.html" rel="alternate"></link><updated>2014-09-09T22:58:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:configuracio-declipse-per-cc.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest document descriu la preparació de Eclipse com a IDE de
+desenvolupament en C/C++ al sistema operatiu Ubuntu 12.04.
+Probablement les passes seran similars a altres sistemes operatius,
+distribucions i versions. En tot cas, pots fer una ullada a la
+&lt;a class="reference external" href="href=&amp;quot;http://wiki.eclipse.org/CDT/User/FAQ&amp;quot;"&gt;documentació oficial del projecte&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Abans de començar, comprova que no disposes ja de la instal·lació del
+plugin CDT. Ho pots fer, per exemple, intentant crear un nou projecte
+C++ a partir de &lt;tt class="docutils literal"&gt;File &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; New &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="pre"&gt;Project...&lt;/span&gt;&lt;/tt&gt;. Si al quadre que
+apareix hi trobem una secció anomenada &lt;tt class="docutils literal"&gt;C/C++&lt;/tt&gt; i hi podem crear un
+projecte C, podem ignorar la resta d'aquesta guia perquè ja el tenim
+instal·lat!&lt;/p&gt;
+&lt;p&gt;Instal·larem el plug-in &lt;a class="reference external" href="href=&amp;quot;http://www.eclipse.org/cdt/&amp;quot;"&gt;CDT&lt;/a&gt;
+(C/C++ Development Tooling)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installacio"&gt;
+&lt;h2&gt;Instal·lació&lt;/h2&gt;
+&lt;p&gt;Realitzarem la instal·lació tot seguint les següents passes.&lt;/p&gt;
+&lt;div class="section" id="el-compilador"&gt;
+&lt;h3&gt;1. El compilador&lt;/h3&gt;
+&lt;p&gt;Donat que el projecte CDT no ofereix el compilador de C/C++,
+haurem d'instal·lar un nosaltres. A l'Ubuntu el més probable és que
+el tinguem ja. Ho podem comprovar amb:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ g++ --version
+g++ (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+Copyright (C) 2011 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+$ make --version
+GNU Make 3.81
+Copyright (C) 2006  Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+This program built for i686-pc-linux-gnu
+&lt;/pre&gt;
+&lt;p&gt;En cas d'error amb la primera comanda, caldrà instal·lar el
+compilador. En cas d'error amb &lt;tt class="docutils literal"&gt;make&lt;/tt&gt;, comprovarem si &lt;tt class="docutils literal"&gt;gmake&lt;/tt&gt;
+sí està disponible. Altrament, haurem d'instal·lar-ho.  Donat que
+aquestes instruccions van més enllà dels objectius d'aquesta petita
+guia, caldrà cercar les instruccions corresponents pel sistema
+operatiu objectiu.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installem-el-plug-in"&gt;
+&lt;h3&gt;2. Instal·lem el plug-in&lt;/h3&gt;
+&lt;p&gt;Naveguem pels menus &lt;tt class="docutils literal"&gt;Help &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; Install New &lt;span class="pre"&gt;Software...&lt;/span&gt;&lt;/tt&gt; i al quadre de
+diàleg que emergeix premem el botó &lt;tt class="docutils literal"&gt;add&lt;/tt&gt;. Ens apareix un nou quadre
+de diàleg amb els camps de text &lt;tt class="docutils literal"&gt;Name&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;Location&lt;/tt&gt;. Al primer li
+posarem &lt;strong&gt;CDT&lt;/strong&gt; i al segon
+&lt;strong&gt;http://download.eclipse.org/tools/cdt/releases/juno&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Instal·lació del pluguin CDT" src="http://apuntstecnics.herokuapp.com/images/eclipse002.add_CDT.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Potser li costarà una estona, però si tot va bé acabarà mostrant
+dues entrades anomenades &lt;tt class="docutils literal"&gt;CDT Main Features&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;CDT Optional
+Features&lt;/tt&gt;. Desplegarem la primera (fent clic sobre el triangle que
+apareix abans de cada entrada) i escollirem la primera de les
+subentrades que hi apareixen: &lt;strong&gt;C/C++ Development Tools&lt;/strong&gt;.
+&lt;strong&gt;Important&lt;/strong&gt;: no és adequat seleccionar-ho tot! Hi ha dependències
+que potser faran que no ens funcioni l'aplicació.&lt;/p&gt;
+&lt;p&gt;Farem &lt;tt class="docutils literal"&gt;Next&lt;/tt&gt; dos cops i, si estem d'acord amb els termes de la
+llicència d'ús &lt;a class="footnote-reference" href="#noaggree" id="id1"&gt;[1]&lt;/a&gt; , sel·leccionem l'opció &lt;strong&gt;I accept the
+terms of license aggreement&lt;/strong&gt;, premem &lt;tt class="docutils literal"&gt;Finish&lt;/tt&gt; i esperem una
+estoneta.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Acceptació dels terminis i llicència d'Eclipse" src="http://apuntstecnics.herokuapp.com/images/eclipse002.aggreement_CDT.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Finalment haurem de reiniciar Eclipse i, en rearrancar, ja tindrem
+el plug-in disponible.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="provem-la-installacio"&gt;
+&lt;h3&gt;3. Provem la instal·lació&lt;/h3&gt;
+&lt;p&gt;Naveguem &lt;tt class="docutils literal"&gt;File &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; New &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="pre"&gt;Project...&lt;/span&gt;&lt;/tt&gt; i hi escollim &lt;cite&gt;C Project`&lt;/cite&gt;.&lt;/p&gt;
+&lt;p&gt;Anomenem el projecte quelcom similar a &amp;quot;HolaCDT&amp;quot; a la localització per
+defecte i de tipus &lt;strong&gt;Empty Project&lt;/strong&gt; i fem &lt;tt class="docutils literal"&gt;següent&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Al quadre de diàleg &lt;tt class="docutils literal"&gt;Select Configurations&lt;/tt&gt; premem el botó
+&lt;tt class="docutils literal"&gt;Advanced &lt;span class="pre"&gt;settings...&lt;/span&gt;&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;Al quadre de diàleg &lt;tt class="docutils literal"&gt;Properties for HolaCDT&lt;/tt&gt; naveguem per l'arbre
+d'opcions &lt;tt class="docutils literal"&gt;C/C++ General&lt;/tt&gt;-&amp;gt; &lt;tt class="docutils literal"&gt;Code Analysis&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;Launching&lt;/tt&gt; i
+marquem l'opció &lt;tt class="docutils literal"&gt;Run with build&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Si ens demana que si volem obrir la perspectiva associada a CDT,
+direm que Sí.&lt;/p&gt;
+&lt;p&gt;Seleccionem ara crear un nou fitxer font (&lt;tt class="docutils literal"&gt;File&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;New&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;Source
+File&lt;/tt&gt;), li posem com a nom holacdt.c i finalitzem l'ajudant amb el
+botó &lt;tt class="docutils literal"&gt;Finish&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Escrivim ara el codi del nostre programa després de la capçalera
+que ens han generat automàticament.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include&amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hola CDT!&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finalment executem el programa amb &lt;tt class="docutils literal"&gt;Run &lt;span class="pre"&gt;-&amp;gt;&lt;/span&gt; Run&lt;/tt&gt;. Ens demanarà si
+volem guardar els canvis. Un cop guardats, compilarà i enllaçarà el
+codi per nosaltres, i finalment ens mostrarà el resultat a la vista
+anomenada &lt;tt class="docutils literal"&gt;Console&lt;/tt&gt; que probablement apareixerà sota l'àrea de
+l'editor. &lt;a class="footnote-reference" href="#launchfailed" id="id2"&gt;[2]&lt;/a&gt;&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Resultat d'execució de *holacdt.c*" src="http://apuntstecnics.herokuapp.com/images/eclipse002.img003.holacdt_final.png" /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="anotacions"&gt;
+&lt;h2&gt;Anotacions&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="noaggree" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Si no estem d'acord amb els termes de la llicència,
+tot i estant en el nostre dret, tenim un problema per continuar
+seguint aquesta guia.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="launchfailed" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;En cas que aparegui un missatge d'error indicant
+&lt;tt class="docutils literal"&gt;Launch failed.&amp;nbsp; Binary not found&lt;/tt&gt; és que ens hem deixat de
+configurar l'opció de &lt;tt class="docutils literal"&gt;Run with build&lt;/tt&gt; a les propietats del
+projecte. Encara podem arreglar-ho sense haver de començar. Només
+ens cal indicar-li a Eclipse quin és el &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; que ha
+d'executar. Per fer-ho, guardarem el projecte (&lt;tt class="docutils literal"&gt;File&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;Save''
+o &lt;span class="pre"&gt;``ctrl-s&lt;/span&gt;&lt;/tt&gt;), construïm el projecte amb (&lt;tt class="docutils literal"&gt;Project&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;Build
+all&lt;/tt&gt; o &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ctrl-b&lt;/span&gt;&lt;/tt&gt;) i creem la configuració amb &lt;tt class="docutils literal"&gt;Run&lt;/tt&gt; -&amp;gt; &lt;tt class="docutils literal"&gt;Run
+&lt;span class="pre"&gt;configurations...&lt;/span&gt;&lt;/tt&gt;) Al quadre de diàleg que ens apareix,
+seleccionarem &lt;tt class="docutils literal"&gt;C/C++ Application&lt;/tt&gt; i si no ens apareix dins el
+nostre projecte &lt;tt class="docutils literal"&gt;HolaCDT Debug&lt;/tt&gt; premem el botó de &lt;tt class="docutils literal"&gt;New&lt;/tt&gt;. Ara,
+en el nostre projecte premem &lt;tt class="docutils literal"&gt;Search &lt;span class="pre"&gt;Project...&lt;/span&gt;&lt;/tt&gt; i escollim
+l'executable &lt;tt class="docutils literal"&gt;holaCDT&lt;/tt&gt;. Acceptem i premem &lt;tt class="docutils literal"&gt;Run&lt;/tt&gt; i tot plegat
+hauria de funcionar ara.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Glossari de conceptes d'Eclipse</title><link href="http://apuntstecnics.herokuapp.com/glossari-de-conceptes-declipse.html" rel="alternate"></link><updated>2014-09-09T22:57:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:glossari-de-conceptes-declipse.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Tal i com ens indiquen a la &lt;a class="reference external" href="http://www.eclipse.org/home/newcomers.php"&gt;introducció de benvinguda&lt;/a&gt;,&lt;/p&gt;
+&lt;blockquote&gt;
+eclipse és una comunitat orientada a la construcció d'una
+plataforma de desenvolupament extensible i altres elements de
+suport per tot el cicle de vida del programari.&lt;/blockquote&gt;
+&lt;p&gt;Amb més de 200 projectes, Eclipse és molt més que un IDE de
+desenvolupament en Java.&lt;/p&gt;
+&lt;p&gt;L'element d'Eclipse amb el que interaccionarem és el &lt;em&gt;Workbench&lt;/em&gt; o
+&lt;em&gt;taula de treball&lt;/em&gt;. De fet, la majoria de les vegades, quan estem
+parlant d'Eclipse en realitat ens referim al Workbench.&lt;/p&gt;
+&lt;p&gt;Aquest document conté un petit glossari dels conceptes bàsics que
+apareixen en aquest Workbench.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="glossari"&gt;
+&lt;h2&gt;Glossari&lt;/h2&gt;
+&lt;p&gt;Workspace&lt;/p&gt;
+&lt;blockquote&gt;
+El workspace o &lt;em&gt;espai de treball&lt;/em&gt; és la carpeta on es guarda tot
+el que treballem amb l'Eclipse.&lt;/blockquote&gt;
+&lt;p&gt;Workbench&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;El Workbench o &lt;em&gt;taula de treball&lt;/em&gt; és una finestra de l'aplicació
+Eclipse. Ofereix una o més perspectives.&lt;/p&gt;
+&lt;p&gt;Poden haver més d'un workbench simultàniament.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Àrees del Workbench&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Al Workbench ens hi trobem dos tipus d'àrea: els &lt;strong&gt;editors&lt;/strong&gt; i les
+&lt;strong&gt;vistes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Les àrees a Eclipse disposen de barres d'eines independents, poden
+ser maximitzades, minimitzades, redimensionades, col·locades a
+diferents posicions del Workbench, duplicades, etc.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Editor&lt;/p&gt;
+&lt;blockquote&gt;
+Un editor és un dels tipus d'àrea del Workbench. Els editors
+permeten crear, editar i guardar fitxers.&lt;/blockquote&gt;
+&lt;p&gt;Vista&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Una vista és un dels dos tipus d'àrea del Workbench. Les vistes
+ofereixen una representació estructurada de la informació
+relacionada amb un fitxer, un projecte o d'altres recursos, i
+sovint ens permetrà navegar entre aquesta informació i fins i tot
+manipular-la.&lt;/p&gt;
+&lt;p&gt;Eclipse ofereix una bona varietat de vistes. Per exemple, &lt;em&gt;Project
+explorer&lt;/em&gt;, &lt;em&gt;search&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Perspectives&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Eclipse permet definir el conjunt de vistes a mostrar al
+Workbench, així com la seva distribució i els elements que
+apareixeran a la barra principal d'eines i alguns menús.
+Aquestes definicions es fan en forma de &lt;em&gt;perspectives&lt;/em&gt;.
+Existeixen perspectives predefinides que poden ser
+utilitzades, però també modificades, i es poden definir de
+noves.&lt;/p&gt;
+&lt;p&gt;Exemples de perspectives predefinides són &lt;em&gt;java&lt;/em&gt; i &lt;em&gt;debug&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;En cas que hàgim modificat una perspectiva i vulguem tornar a
+la versió inicial, hi ha disponible una opció de &lt;em&gt;reset&lt;/em&gt; i
+tornem a la versió guardada de la perspectiva. Podem també
+guardar els nostres canvis a una perspectiva per defecte i
+també crear-ne de noves.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Tutorial d'instal·lació de NetBeans</title><link href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-netbeans.html" rel="alternate"></link><updated>2014-09-09T22:56:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:tutorial-dinstallacio-de-netbeans.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquest document descriu una manera d'instal·lar l'IDE NetBeans a un
+sistema Ubuntu.&lt;/p&gt;
+&lt;p&gt;Atenció: La instal·lació a altres sistemes operatius no hauria de
+resultar gaire més complexa.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installacio"&gt;
+&lt;h2&gt;Instal·lació&lt;/h2&gt;
+&lt;p&gt;Per la realització d'una instal·lació de NetBeans seguirem les
+següents passes des d'una consola:&lt;/p&gt;
+&lt;ol class="arabic" start="0"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Abans d'instal·lar NetBeans&lt;/p&gt;
+&lt;p&gt;Donat que NetBeans és una aplicació java, caldrà disposar d'una
+màquina virtual (JVM) al nostre sistema per a poder-la instal·lar.&lt;/p&gt;
+&lt;p&gt;Si encara no la tens instal·lada, pots seguir el &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-eclipse.html"&gt;pas 0 de la guia
+d'instal·lació d'Eclipse&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Obtenció del NetBeans&lt;/p&gt;
+&lt;p&gt;El NetBeans podria ser instal·lat des del centre de programari que
+ofereix l'Ubuntu. Amb tot, en el moment en que s'escrivia aquesta
+guia, la versió empaquetada disponible era la 7.0.1, mentre que la
+darrera publicada era la 7.2.&lt;/p&gt;
+&lt;p&gt;Tot i que, probablement, no trobarem cap diferència entre les dues
+versions per un ús no professional de l'IDE, en aquesta guia es
+proposa realitzar la instal·lació de la darrera versió.&lt;/p&gt;
+&lt;p&gt;Per tant, caldrà anar al lloc oficial de NetBeans (netbeans.org) a
+la secció de descàrregues (des de la pàgina principal hi ha un
+enllaç directe a la descàrrega de la darrera versió)&lt;/p&gt;
+&lt;p&gt;Ara escollim idioma i plataforma (probablement la proposta per
+defecte serà la correcta), i escollim la descàrrega de la versió
+Java SE (la més bàsica) donat que més endavant podrem afegir altres
+complements com indica la pàgina al final.&lt;/p&gt;
+&lt;p&gt;Es descarregarà l'instal·lador, un script d'uns 83 Mb.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Instal·lació del NetBeans&lt;/p&gt;
+&lt;p&gt;La instal·lació del NetBeans a partir de l'instal·lador descarregat
+és molt fàcil. Simplement cal executar l'instal·lador i anar
+seguint les instruccions.&lt;/p&gt;
+&lt;p&gt;Per executar l'instal·lador podem, per exemple, anar al directori
+on l'hem descarregat i fer:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ bash netbeans-7-2-ml-javase-linux.sh
+&lt;/pre&gt;
+&lt;p&gt;Ens caldrà, a banda d'acceptar una sèrie d'acords de llicències,
+definir el directori on instal·lar NetBeans i el JDK. Per exemple,
+podem escollir el directori &lt;tt class="docutils literal"&gt;~/soft/netbeans7.2&lt;/tt&gt; i el jdk per
+defecte.&lt;/p&gt;
+&lt;p&gt;En acabar, continuarà descarregant i finalment instal·larà
+l'aplicació.&lt;/p&gt;
+&lt;p&gt;Per comoditat, es pot crear algun llançador. Per exemple, per poder
+executar-ho des de línia de comandes, pot ser còmode:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ cd ~
+$ mkdir -p bin
+$ cd bin
+$ cat &amp;gt; netbeans.sh &amp;lt;&amp;lt; EOF
+&amp;gt; #! /bin/sh
+&amp;gt; ~/soft/netbeans-7.2/bin/netbeans &amp;amp;
+&amp;gt; EOF
+$ chmod u+x netbeans.sh
+&lt;/pre&gt;
+&lt;p&gt;i, des de qualsevol lloc&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ netbeans.sh
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Una prova ràpida&lt;/p&gt;
+&lt;p&gt;Per defecte, NetBeans s'instal·la per construir aplicacions en
+java.&lt;/p&gt;
+&lt;p&gt;Aprofitant que no hem de fer res especial, farem una primera prova
+de l'entorn creant un &amp;quot;original&amp;quot; programa de salutació al món.&lt;/p&gt;
+&lt;p&gt;Anirem a Fitxer -&amp;gt; Nou projecte i escollirem els valors per defecte
+(Categoria Java i Projectes Java Aplication) Farem &lt;em&gt;Següent&lt;/em&gt; i
+escollirem un nom de projecte (ex. HolaMon) i un lloc on deixar el
+projecte (potser l'opció per defecte ja ens està bé) Quan ja ho
+tenim tot, premem &lt;em&gt;Finalitzar&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;En aquest moment ens apareixerà una finestra amb un aspecte similar
+al següent:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Projecte HolaMon a Netbeans" src="http://apuntstecnics.herokuapp.com/images/netbeans001.holamon.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;A la subfinestra més ampla (a la dreta), hi trobem un editor amb el
+codi del nostre projecte. NetBeans ens ha autocompletat una sèrie
+d'elements per nosaltres. Entre d'altres, ens ha afegit el nostre
+nom, i ens ha creat un primer esquema de la classe HolaMon que hem
+demanat crear.&lt;/p&gt;
+&lt;p&gt;Ara, allà on posa &lt;tt class="docutils literal"&gt;// TODO code application logic here&lt;/tt&gt;
+escriurem &lt;tt class="docutils literal"&gt;Sys&lt;/tt&gt;. A continuació, farem &amp;lt;ctrl&amp;gt;-&amp;lt;espai&amp;gt; i podrem
+veure que NetBeans ens ofereix, no només com continuar la paraula
+que estem escrivint, sinó també documentació corresponent a la
+proposta de compleció. Farem &amp;lt;enter&amp;gt; per completar.&lt;/p&gt;
+&lt;p&gt;Continuem escrivint un punt &lt;tt class="docutils literal"&gt;.&lt;/tt&gt; i observem que ens apareix una
+llista de possibilitats per a continuar que podem navegar amb el
+cursor. Escollirem &lt;tt class="docutils literal"&gt;out&lt;/tt&gt; i tornarem a escriure un punt. Ens
+apareix una nova llista. Aquest cop, començarem a escriure &lt;tt class="docutils literal"&gt;pri&lt;/tt&gt;
+i observarem que ens porta a les paraules que comencen amb &amp;quot;pri&amp;quot;.
+Escollirem la primera i ens autocompletarà a la funció
+&lt;tt class="docutils literal"&gt;System.out.print()&lt;/tt&gt; deixant-nos el cursor dins dels parèntesis i
+informant-nos del possible tipus de dades que hi podem ficar dins.
+Escriurem entre cometes &lt;tt class="docutils literal"&gt;&amp;quot;Hola &lt;span class="pre"&gt;Món!\n&amp;quot;&lt;/span&gt;&lt;/tt&gt; i farem &amp;lt;enter&amp;gt;. NetBeans
+col·loca el cursor al final de la sentència.&lt;/p&gt;
+&lt;p&gt;Si tot està correcte (NetBeans ens avisaria en cas contrari) podem
+ja executar el nostre programa. Execució -&amp;gt; Executar projecte
+(HolaMon) i ens apareix una nova subfinestra a la part inferior on
+es veu el resultat de l'execució del programa. NetBeans s'ha fet
+càrrec de guardar, compilar i executar el nostre codi.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Ja tenim disponible el NetBeans!&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Instal·lació de Pelican</title><link href="http://apuntstecnics.herokuapp.com/installacio-de-pelican.html" rel="alternate"></link><updated>2013-08-06T00:00:00+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2013-08-06:installacio-de-pelican.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;Aquesta pàgina conté una guia d'instal·lació i configuració bàsica del
+&lt;a class="reference external" href="http://blog.getpelican.com/"&gt;Pelican&lt;/a&gt;, el gestor de blocs estàtics
+que donen forma a aquests materials, sobre la plataforma &lt;a class="reference external" href="https://www.heroku.com/"&gt;Heroku&lt;/a&gt; que és el lloc del que descarregues els
+continguts.&lt;/p&gt;
+&lt;p&gt;Les passes estan provades sobre un &lt;a class="reference external" href="https://www.debian.org/index.ca.html"&gt;Debian Wheezy&lt;/a&gt;, però haurien de funcionar en
+altres sistemes sense gaires canvis.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="guia-d-installacio"&gt;
+&lt;h2&gt;Guia d'instal·lació&lt;/h2&gt;
+&lt;p&gt;Seguint les indicacions del lloc:
+&lt;a class="reference external" href="http://docs.getpelican.com/en/3.2/getting_started.html"&gt;http://docs.getpelican.com/en/3.2/getting_started.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Assegura't de que disposes d'un python 2.7.x&lt;/p&gt;
+&lt;p&gt;Farem servir &lt;a class="reference external" href="https://pypi.python.org/pypi/pip"&gt;pip&lt;/a&gt;. Si no el tens,
+instal·lal, ex.:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install python-pip
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;També farem servir &lt;a class="reference external" href="http://www.virtualenv.org/en/latest/"&gt;virtualenv&lt;/a&gt; per permetre crear entorns
+aïllats de Python. Si no el tens, el pots instal·lar amb:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pip install virtualenv
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Creem un entorn virtual pel pelican i l'activem:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;virtualenv ~/virtualenvs/pelican
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/virtualenvs/pelican
+&lt;span class="nv"&gt;$ &lt;/span&gt;. bin/activate
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ara ja podem instal·lar pelican:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pip install pelican
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;La configuració bàsica de pelican la pots fer amb:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Aquesta comanda et demanarà diferents elements de configuració que
+podràs canviar més tard. Et deixarà l'esquelet del lloc allà on hagis
+indicat a la primera pregunta.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Atenció&lt;/strong&gt;: la versió que estic fent servir (3.2.2) no està preparada
+per Unicode. Si també és el teu cas, et recomano que posis qualsevol
+cosa sense accents ni caràcters &amp;quot;especials&amp;quot; i després ho canviïs tot
+al fitxer de configuració &lt;tt class="docutils literal"&gt;pelicanconf.py&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Un cop ho tens, et trobaràs una estructura de directoris semblant a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;content/
+develop_server.sh
+Makefile
+output/
+pelicanconf.py
+publishconf.py
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Pots fer un primer post tipus &lt;tt class="docutils literal"&gt;holapelican.rst&lt;/tt&gt; amb simplement crear
+un fitxer amb el següent contingut &lt;a class="footnote-reference" href="#noespecificadata" id="id1"&gt;[1]&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gh"&gt;############&lt;/span&gt;
+&lt;span class="gh"&gt;Hola Pelican&lt;/span&gt;
+&lt;span class="gh"&gt;############&lt;/span&gt;
+
+&lt;span class="nc"&gt;:date:&lt;/span&gt; &lt;span class="nf"&gt;2013-08-06 19:00&lt;/span&gt;
+
+El meu primer post
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Converteix-lo a html amb la utilitat &lt;em&gt;make&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make html
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I consulta el que has fet, per exemple amb:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;output
+output/ &lt;span class="nv"&gt;$ &lt;/span&gt;python -m SimpleHTTPServer &amp;amp;
+output/ &lt;span class="nv"&gt;$ &lt;/span&gt;iceweasel localhost:8000
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;En cas que vulguis gestionar les versions dels continguts del teu
+lloc amb git, crea un repositori a l'arrel del teu lloc.&lt;/p&gt;
+&lt;p&gt;En el meu cas, el que m'interessa és només gestionar les versions dels
+fitxers de configuració, donat que els continguts del bloc els tinc a
+un altre lloc i no tinc cap interès en l'històric de canvis dels html.&lt;/p&gt;
+&lt;p&gt;Per tot plegat, he creat el fitxer &lt;cite&gt;.gitignore&lt;/cite&gt; a l'arrel del meu lloc
+amb els següents continguts:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;output/
+content/
+*.pyc
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ara, per crear el repositori git farem:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git init
+&lt;span class="nv"&gt;$ &lt;/span&gt;git add .
+&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -am &lt;span class="s2"&gt;&amp;quot;primer commit&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ara que ja el tenim en local, ho passarem al núvol fent servir Heroku.
+Si encara no tens un compte, et caldrà fer-te amb un.  És gratuït per
+l'ús que farem aquí. Consulta les condicions en cas de dubtes.&lt;/p&gt;
+&lt;p&gt;Heroku necessita que el que li posem sigui una aplicació. El nostre
+objectiu, però, és de moment un bloc estàtic. Així caldrà enganyar-lo
+una mica. Li farem creure que el nostre bloc estàtic és una aplicació
+php:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;output
+&lt;span class="nv"&gt;$ &lt;/span&gt;touch index.php
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;php_flag engine off&amp;#39;&lt;/span&gt; &amp;gt; .htaccess
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ara crearem un repositori git dins de &lt;cite&gt;output/&lt;/cite&gt; amb els continguts pel
+Heroku i hi afegirem tots els continguts:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git init
+&lt;span class="nv"&gt;$ &lt;/span&gt;git add .
+&lt;span class="nv"&gt;$ &lt;/span&gt;git commit -am &lt;span class="s2"&gt;&amp;quot;commit inicial per heroku&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ara lliguem el nostre projecte amb Heroku (des del directori
+&lt;cite&gt;output/&lt;/cite&gt;):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;heroku create nomdelmeubloc
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Fem un &lt;em&gt;push&lt;/em&gt; amb:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git push heroku master
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ja podem consultar el nostre bloc a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;iceweasel http://nomdelmeubloc.herokuapp.com
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;O fent servir el propi &lt;cite&gt;heroku&lt;/cite&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;heroku app:open
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A partir d'ara, cada cop que vulguis afegir canvis a les entrades del
+teu bloc, caldrà que facis el commit i el push a heroku. Si els canvis
+inclouen nous fitxers, caldrà també afegir-los al git.&lt;/p&gt;
+&lt;p&gt;El problema és que el Makefile que ens proporciona Pelican ens
+esborrarà els continguts del directori &lt;cite&gt;output/&lt;/cite&gt; i amb això el nostre
+repositori git i els fitxers generats per enganyar a Heroku.
+Per solucionar aquest problema, he creat &lt;cite&gt;aquest script &amp;lt;https://github.com/moiatgit/Utility-scripts/blob/master/pelican2heroku.sh&amp;gt;`_que m'ho fa
+automàticament. El script es basa en deixar el repositori de Heroku a
+una carpeta diferent de `output/&lt;/cite&gt;. Cada cop que es vol publicar (amb
+l'opció &lt;cite&gt;--publish&lt;/cite&gt;) afegirà al repositori tots els fitxers nous i els
+enviarà a Heroku.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="notes"&gt;
+&lt;h2&gt;Notes&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="noespecificadata" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;p class="first"&gt;Per defecte, cal especificar la data dels teus
+posts o Pelican et donarà un error. Pots fer que Pelican agafi la
+data del sistema afegint a &lt;tt class="docutils literal"&gt;pelicanconf.py&lt;/tt&gt; la següent linia:&lt;/p&gt;
+&lt;div class="last"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;DEFAULT_DATE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;fs&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary></entry></feed>

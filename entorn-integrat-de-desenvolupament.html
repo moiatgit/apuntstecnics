@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Entorn integrat de desenvolupament</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Entorn integrat de desenvolupament             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Entorn integrat de desenvolupament</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb el tag:
+            <a href="./tag/programari.html">programari</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest article introdueix l'estudiant a un tipus d'aplicació
+dissenyades a servir de suport al desenvolupament d'aplicacions
+informàtiques. Són conegudes com entorns de desenvolupament integrat o
+IDE per les inicials en anglès (<em>Integrated Development Environment</em>)
+<a class="footnote-reference" href="#interactiu" id="id1">[1]</a></p>
+</div>
+<div class="section" id="justificacio">
+<h2>Justificació</h2>
+<p>Per a poder desenvolupar un programa (fins i tot el més complex) en un
+llenguatge de programació concret, als desenvolupadors ens calen
+relativament molt poques eines. Considerem, sinó, el que implicaria la
+creació de quelcom de complexitat similar en quasi bé qualsevol altra
+disciplina (per exemple, en la construcció d'un vaixell o un edifici)</p>
+<p>D'entre les eines, i bàsicament per a poder realitzar proves, en
+comptem el compilador (amb enllaçador si escau) o interpret
+corresponent al llenguatge, la plataforma (una màquina virtual o
+potser un simulador) on s'ha d'executar el programa, i poc més.</p>
+<p>Hi ha, però, una eina pràcticament inevitable i requerida per la
+majoria <a class="footnote-reference" href="#llenguatgesvisuals" id="id2">[2]</a> dels desenvolupadors amb independència
+de la tecnologia per la que estigui orientat el programa: <em>l'editor de
+text</em>.</p>
+<p>Això és així perquè el codi font dels programes està format per text
+pla a la majoria dels llenguatges de programació.</p>
+<p>Per exemple, amb el <em>bloc de notes</em> de MS Windows <a class="footnote-reference" href="#paciencia" id="id3">[3]</a> podem
+codificar qualsevol programa en Java que es pugui realitzar amb les
+eines més sofisticades de desenvolupament disponibles.</p>
+<p>Per sort, els editors de text han evolucionat força i poca gent deu
+quedar que desenvolupi grans aplicacions amb el bloc de notes.</p>
+<p>Alguns dels afegits als editors de text que ens faciliten la vida als
+desenvolupadors són:</p>
+<ul>
+<li><p class="first">numeració de línies i accés directe a partir d'un número de línia</p>
+</li>
+<li><p class="first">ressaltat sintàctic o <em>syntax highlighting</em></p>
+</li>
+<li><p class="first">ressaltat de parèntesis (claus, corxets, ...) concordants</p>
+</li>
+<li><p class="first">autocompleció</p>
+<ul class="simple">
+<li>de paraules que ja han aparegut al document, altres documents
+oberts o diccionaris</li>
+<li>d'estructures pròpies del llenguatge (ex. tancament de claus, o
+autoindentat)</li>
+</ul>
+</li>
+<li><p class="first">gestió de l'històric de canvis en el fitxer amb la possibilitat de
+revertir a algun estat anterior</p>
+</li>
+<li><p class="first">ressaltat de diferències entre dos fitxers</p>
+</li>
+<li><p class="first">integració amb el compilador</p>
+<p>Alguns permeten col·locar el punter automàticament en la línia on el
+compilador troba l'error.</p>
+</li>
+<li><p class="first">possibilitats d'ampliar l'editor</p>
+<p>Alguns ofereixen la possibilitat d'afegir (i, fins i tot,
+desenvolupar) noves funcionalitats. Per exemple, per a integrar
+l'editor amb algun sistema de control de versions.</p>
+</li>
+</ul>
+<p>En el mercat van apareixent editors amb funcionalitats cada cop més
+sofisticades amb l'objectiu d'ajudar en el desenvolupament de
+programes.</p>
+<p>Com es tracta d'una eina que el desenvolupador fa servir durant moltes
+hores, no ha de resultar estrany que alguns desenvolupadors defensin
+apassionadament el seu editor com el millor <a class="footnote-reference" href="#viemacs" id="id4">[4]</a>.</p>
+<p>Si amb el modest <em>notepad</em> ja podíem teòricament desenvolupar
+qualsevol aplicació i aquests editors més potents ens faciliten encara
+més el desenvolupament, què més pot demanar un desenvolupador?</p>
+<p>Per a alguns desenvolupadors, les seves necessitats difícilment queden
+cobertes per cap editor. Per ells, l'editor queda com un comandament a
+distància de la tele que et permeti canviar de canals i controlar el
+volum, però t'obligui a aixecar-te per canviar el contrast.  Per a
+aquests desenvolupadors la resposta és <em>entorn de desenvolupament
+integrat</em> o IDE <a class="footnote-reference" href="#comandament" id="id5">[5]</a>.</p>
+<p>Les eines bàsiques que inclou un IDE són:</p>
+<ul class="simple">
+<li>un editor de text</li>
+<li>un compilador/interpret (o integració amb el compilador/interpret)</li>
+<li>un depurador</li>
+</ul>
+<p>A banda, els IDE més moderns inclouen moltes o totes les millores
+esmentades anteriorment, i poden afegir-ne de manera integrada, entre
+d'altres:</p>
+<ul>
+<li><p class="first">eines d'automatització (ex. de generació del paquet a distribuir, o
+sincronització amb el servidor de producció)</p>
+</li>
+<li><p class="first">gestió de projectes</p>
+</li>
+<li><p class="first">gestió de múltiples desenvolupadors</p>
+</li>
+<li><p class="first">suport per multiples tecnologies i llenguatges simultàniament</p>
+<p>Per exemple, en el desenvolupament d'aplicacions web és molt típic
+trobar-se treballant a l'hora amb un llenguatge de servidor com ara
+php, un de client (javascript), un o més de representació de la
+informació (html, css), etc.</p>
+</li>
+<li><p class="first">gestió dels recursos associats (ex. icones dels botons)</p>
+</li>
+<li><p class="first">navegació en el codi incloent les biblioteques del llenguatge</p>
+</li>
+<li><p class="first">validador sintàctic</p>
+<p>Incloent el ressaltat d'errors sintàctics en temps d'edició</p>
+</li>
+<li><p class="first">ajuda en la documentació del codi</p>
+</li>
+<li><p class="first">ajuda en l'autocompleció avançada</p>
+<p>No és tant que autocompleti amb les paraules que comencen per la
+paraula que estem escrivint, com que ho faci únicament amb els
+elements que tenen sentit en el lloc concret on s'està escrivint.</p>
+</li>
+<li><p class="first">dipòsits de codi i gestió de versions</p>
+</li>
+<li><p class="first">suport d'automatització de proves</p>
+</li>
+<li><p class="first">eines d'anàlisi del codi, d'optimització i de refacció
+(<em>refactoring</em>)</p>
+</li>
+<li><p class="first">suport en la construcció d'interfícies gràfiques</p>
+</li>
+<li><p class="first">integració amb suport i consulta sobre l'ús del llenguatge</p>
+</li>
+<li><p class="first">i un llarg etcètera que inclou detalls com l'ajut a la gestió de la
+localització (idiomes), gestió de plantilles de codi, modelització
+gràfica (UML)...</p>
+</li>
+</ul>
+<div class="section" id="exemples-d-ides">
+<h3>Exemples d'IDEs</h3>
+<p>Podem trobar molts exemples de IDEs a <a class="reference external" href="http://en.wikipedia.org/wiki/Comparison_of_integrated_development_environments">l'article comparatiu</a></p>
+<p>Centrant-nos, per exemple, en els IDEs amb suport al llenguatge Java,
+trobem, entre d'altres:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://es.wikipedia.org/wiki/Eclipse_%28software%29">Eclipse</a></li>
+<li><a class="reference external" href="http://es.wikipedia.org/wiki/NetBeans">Netbeans</a></li>
+<li><a class="reference external" href="http://es.wikipedia.org/wiki/JDeveloper">JDeveloper</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-installacio-de-l-ide-eclipse">
+<h3>Exercici 1. Instal·lació de l'IDE Eclipse</h3>
+<p>Instal·larem l'entorn de desenvolupament Eclipse.</p>
+<p>Podem seguir la <a class="reference external" href="./tutorial-dinstallacio-de-eclipse.html">guia d'instal·lació d'eclipse</a>.</p>
+<p>Disposem d'una altre <a class="reference external" href="{{url}}/eines/eclipse-us-basic">guia</a> que us
+oferirà una vista pas a pas de l'ús bàsic de l'IDE Eclipse. Caldrà
+seguir aquesta guia per poder realitzar alguns exercicis.</p>
+<p>Finalment farem una prova desenvolupant un petit programa per a
+veure algunes de les característiques de l'entorn.</p>
+<p>Es demana:</p>
+<ol class="arabic">
+<li><p class="first">captura de pantalla on es pugui veure el codi i l'execució des
+de l'Eclipse, del programa HolaMon fet en Java.</p>
+</li>
+<li><p class="first">els fitxers generats per Eclipse pel projecte HolaMon dins de
+l'espai de treball (ex. ~/dev/eclipse/workspace/HolaMon) Per
+exemple, es pot fer servir la comanda:</p>
+<pre class="literal-block">
+~/dev/eclipse/workspace$ tar czvf HolaMon.tar.gz HolaMon/
+</pre>
+</li>
+</ol>
+<p><strong>Important</strong> Assegura't que la captura de pantalla permeti veure la
+data d'execució i el teu nom dins de l'equip en que ho fas. És a dir,
+<strong>no</strong> capturis exclusivament la finestra que conté Eclipse.</p>
+</div>
+<div class="section" id="exercici-2-configuracio-d-eclipse-per-desenvolupar-en-c">
+<h3>Exercici 2. Configuració d'Eclipse per desenvolupar en C</h3>
+<p>Un cop realitzada la instal·lació de Eclipse, el configurarem per a
+poder treballar amb el llenguatge de programació C. El suport a aquest
+llenguatge no ve instal·lat per defecte.  Podem fer servir la <a class="reference external" href="./configuracio-declipse-per-cc.html">guia
+d'instal·lació del plug-in per C</a>.</p>
+<p>Es demana:</p>
+<ol class="arabic simple">
+<li>captura de pantalla on es pugui veure el codi i l'execució des
+de l'Eclipse, del programa HolaCDT.</li>
+<li>els fitxers generats per Eclipse pel projecte HolaCDT dins de
+l'espai de treball.</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-voste-pot-anar-a-la-preso">
+<h3>Exercici 3. Vostè pot anar a la presó</h3>
+<p>Desenvolupa un programa en C amb l'IDE Eclipse que demani a l'usuari
+el nom i l'edat. Si és major d'edat, el programa respondrà:</p>
+<div class="highlight"><pre>Vostè ja pot anar a la presó!
+</pre></div>
+<p>I, en tot cas, acabarà acomiadant-se de l'usuari dient:</p>
+<div class="highlight"><pre>Vagi amb compte «nom».
+</pre></div>
+<p>On «nom» es veurà substituït pel nom especificat per l'usuari.</p>
+<p>Com als exercicis anteriors, es demana:</p>
+<ol class="arabic simple">
+<li>captura de pantalla on es pugui veure el codi i l'execució del
+programa.</li>
+<li>els fitxers generats per Eclipse pel projecte.</li>
+</ol>
+</div>
+<div class="section" id="exercici-4-installacio-de-l-ide-netbeans">
+<h3>Exercici 4. Instal·lació de l'IDE NetBeans</h3>
+<p>Instal·larem l'entorn de desenvolupament NetBeans.
+Podem fer servir aquesta <a class="reference external" href="./tutorial-dinstallacio-de-netbeans.html">guia d'instal·lació de NetBeans</a>.</p>
+<p>Es demana:</p>
+<ol class="arabic simple">
+<li>captura de pantalla on es pugui veure el codi i l'execució des
+de NetBeans, del programa HolaMon fet en Java.</li>
+<li>els fitxers generats per NetBeans pel projecte HolaMon</li>
+</ol>
+</div>
+<div class="section" id="exercici-5-opcional-configuracio-de-netbeans">
+<h3>Exercici 5. (Opcional) Configuració de NetBeans</h3>
+<p>En aquest exercici se't demana que instal·lis el complement de
+NetBeans que et permeti programar-hi en C. En aquesta ocasió et toca a
+tu investigar com (no t'hauria de suposar una gran càrrega).</p>
+<p>Un cop realitzat, crea un projecte equivalent al de l'exercici <em>Vostè
+pot anar a la presó</em> i executa'l.</p>
+<p>Lliura la captura de pantalla que demostri que ho has fet.</p>
+</div>
+<div class="section" id="exercici-6-opcional-installacio-d-altres-ides">
+<h3>Exercici 6. (Opcional) Instal·lació d'altres IDEs</h3>
+<p>Aquest exercici, tot i que és <strong>opcional</strong>, es recomana per a
+aquells estudiants que tinguin temps disponible.</p>
+<p>Es tracta d'instal·lar altres IDEs. En concret, es proposen:
+dos propietaris (un d'ells d'ús gratuït i l'altre amb llicència
+gratuïta per estudiants)</p>
+<ul>
+<li><p class="first"><a class="reference external" href="http://www.oracle.com/technetwork/developer-tools/jdev/overview/index.html">IDE JDeveloper</a></p>
+<p>Es tracta d'un IDE propietari però d'ús gratuït.</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.microsoft.com/visualstudio/eng/products/visual-studio-2010-express">IDE VisualStudio</a></p>
+<p>Atenció: aquest IDE, tot i que molt popular, presenta unes
+restriccions importants respecte el sistema operatiu en el que
+s'executa. A més en el moment d'escriure aquest continguts, no
+inclou Java entre els llenguatges acceptats.</p>
+</li>
+</ul>
+<p>Es demana el lliurament de captures de pantalla que mostrin l'execució
+d'un programa tipus Hola Món dins de l'entorn o entorns escollits.</p>
+</div>
+</div>
+<div class="section" id="annotacions">
+<h2>Annotacions</h2>
+<table class="docutils footnote" frame="void" id="interactiu" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Trobaràs en alguns llocs que la <em>I</em> de IDE
+s'espandeix a <em>Interactiu</em> en comptes d'<em>Integrat</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="llenguatgesvisuals" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">Hi ha la possibilitat de realitzar programes
+de manera completament visual en algunes tecnologies (mireu per
+exemple <a class="reference external" href="http://en.wikipedia.org/wiki/Visual_programming_language">VPL</a>.</p>
+<p class="last">Cercant la simplicitat d'aquest article, considerem que l'eina
+necessaria per la codificació del programa estaria dins de la
+mateixa categoria que el compilador, i ignorarem aquestes
+tecnologies no tan extenses.</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="paciencia" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Si decideixes programar amb el bloc de notes de MS
+Windows (especialment en la seva versió clàssica) probablement et
+caldrà a més, tenir molta paciència i un cert sentit masoquista. En
+tot cas, contra gustos...</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="viemacs" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Pot resultar fascinant seguir les baralles entre els
+editors <em>vi</em> i <em>emacs</em>. Mireu per exemple l'article <a class="reference external" href="http://en.wikipedia.org/wiki/Editor_war">Editor war</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="comandament" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>El concepte d'<em>aixecar-se</em> en aquesta metèfora
+representa anar a altres aplicacions diferents de l'editor, sovint
+la consola. Per a molts desenvolupadors això no representa cap
+dificultat. Ans al contrari, anar a una consola amb una bona
+<em>shell</em> ofereix una flexibilitat que difícilment podrà igualar el
+millor entorn integrat.  Així, trobaràs que encara hi ha
+desenvolupadors que treballen molt eficientment amb un editor com
+ara Vim / Emacs i una o més consoles Bash entre els que es mouen
+ràpidament amb alguna combinació de tecles (mai el ratolí!).</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
