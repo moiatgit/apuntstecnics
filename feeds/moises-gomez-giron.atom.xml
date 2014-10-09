@@ -476,16 +476,17 @@ s'executa, operadors, usuaris, polítiques de backup/seguretat/...
 que donen resposta a una necessitat complexa.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Instrucció&lt;/em&gt;: comanda que indica a l’ordinador que faci una acció.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Dada&lt;/em&gt;: unitat de tractament d'informació.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Informació&lt;/em&gt;: les dades són valors &lt;em&gt;freds&lt;/em&gt;. Què deu ser &lt;tt class="docutils literal"&gt;42&lt;/tt&gt;?&lt;/p&gt;
-&lt;p&gt;Les dades es converteixen en informació quan les col·loquem en un
-context. Per exemple, saber que &lt;tt class="docutils literal"&gt;42&lt;/tt&gt; és &lt;tt class="docutils literal"&gt;42 anys&lt;/tt&gt; o bé &lt;tt class="docutils literal"&gt;42 graus
-centígrads&lt;/tt&gt; ens permet dir alguna cosa més de la dada. Podem intuir
-que correspon, per exemple, a una edat o bé a una temperatura. D'això
-en podríem dir el &lt;em&gt;tipus de dada&lt;/em&gt;.  &lt;a class="footnote-reference" href="#respostaunivers" id="id1"&gt;[1]&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Les dades es poden classificar en &lt;em&gt;tipus de dades&lt;/em&gt;. Dels exemples de
-dades anteriors, podríem dir que són, respectivament, de tipus nombre
-enter, però també, de tipus edat o temperatura, numèric o constant
-universal.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Informació&lt;/em&gt;: Dades dins d'un context.&lt;/p&gt;
+&lt;p&gt;Les dades són valors &lt;em&gt;freds&lt;/em&gt;. Què deu ser &lt;tt class="docutils literal"&gt;42&lt;/tt&gt;? Les dades es
+converteixen en informació quan les col·loquem en un context. Per
+exemple, saber que &lt;tt class="docutils literal"&gt;42&lt;/tt&gt; és &lt;tt class="docutils literal"&gt;42 anys&lt;/tt&gt; o bé &lt;tt class="docutils literal"&gt;42 graus centígrads&lt;/tt&gt;
+ens permet dir alguna cosa més de la dada. Podem intuir que correspon,
+per exemple, a una edat o bé a una temperatura. D'això en podríem dir
+el &lt;em&gt;tipus de dada&lt;/em&gt;.  &lt;a class="footnote-reference" href="#respostaunivers" id="id1"&gt;[1]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Les dades poden ser classificades a partir del seu &lt;em&gt;tipus de dades&lt;/em&gt;.
+Dels exemples de dades anteriors, podríem dir que són, respectivament,
+de tipus nombre enter, però també, de tipus edat o temperatura,
+numèric o constant universal.&lt;/p&gt;
 &lt;p&gt;Quan la informació s'amplia i la integrem amb altres coneixements,
 apareix un significat. Per exemple, si ens diuen que l'aigua està a
 &lt;em&gt;42 graus de temperatura&lt;/em&gt; i aquesta aigua és on pretenem banyar-nos,
@@ -515,13 +516,12 @@ programes.&lt;/p&gt;
 &lt;div class="figure align-center"&gt;
 &lt;img alt="Esquema dels diferents llenguatges" src="http://apuntstecnics.herokuapp.com/images/prm002.img001.esquema_comunicacio.png" /&gt;
 &lt;/div&gt;
-&lt;p&gt;Els programes no són més que una comunicació d'instruccions en algun
-llenguatge concret.&lt;/p&gt;
 &lt;p&gt;Per ser considerat un llenguatge de programació, cal que permeti
 computar. Per tant, llenguatges com HTML, CSS o fins i tot SQL
-normalment no són considerats com a llenguatges de programació. Sovint
-la característica que se li demana a un llenguatge per ser considerat
-de programació és que sigui &lt;em&gt;Turin Complet&lt;/em&gt; &lt;a class="footnote-reference" href="#turingcomplete" id="id3"&gt;[3]&lt;/a&gt;.&lt;/p&gt;
+generalment no són considerats com a llenguatges de programació.
+Sovint la característica que se li demana a un llenguatge per ser
+considerat de programació és que sigui &lt;em&gt;Turin Complet&lt;/em&gt;
+&lt;a class="footnote-reference" href="#turingcomplete" id="id3"&gt;[3]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Es comença amb la descripció dels requeriments. El client comunica al
 desenvolupador el que vol amb un llenguatge natural que,
 desitjablement, comparteixin tots dos.&lt;/p&gt;
@@ -1683,7 +1683,7 @@ majúscules)&lt;/p&gt;
 8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="cm"&gt;/*&lt;/span&gt;
 &lt;span class="cm"&gt;  * Programa que saluda al món&lt;/span&gt;
 &lt;span class="cm"&gt;  */&lt;/span&gt;
- &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HolaMon&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+ &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HolaMon&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
      &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
          &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hola Món!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
      &lt;span class="o"&gt;}&lt;/span&gt;
