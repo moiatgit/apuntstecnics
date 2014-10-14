@@ -1,5 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Apunts tècnics</title><link href="http://apuntstecnics.herokuapp.com/" rel="alternate"></link><link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" rel="self"></link><id>http://apuntstecnics.herokuapp.com/</id><updated>2014-09-09T23:57:30+02:00</updated><entry><title>Tutorial d'instal·lació del JDK</title><link href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-del-jdk.html" rel="alternate"></link><updated>2014-09-09T23:57:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:tutorial-dinstallacio-del-jdk.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Apunts tècnics</title><link href="http://apuntstecnics.herokuapp.com/" rel="alternate"></link><link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" rel="self"></link><id>http://apuntstecnics.herokuapp.com/</id><updated>2014-10-14T22:46:43+02:00</updated><entry><title>Us bàsic de l'entorn de desenvolupament integrat Eclipse</title><link href="http://apuntstecnics.herokuapp.com/us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html" rel="alternate"></link><updated>2014-10-14T22:46:43+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-10-14:us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html</id><summary type="html">&lt;!-- categories: eines --&gt;
+&lt;!-- tags: eclipse --&gt;
+&lt;!-- permalink: '/:categories/eclipse-us-basic' --&gt;
+&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;En aquest document accedirem als elements bàsics personalització i ús
+de l'entorn Eclipse.&lt;/p&gt;
+&lt;p&gt;Per seguir-lo, caldrà disposar de&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;eclipse instal·lat amb jdk correctament instal·lat&lt;/li&gt;
+&lt;li&gt;plug-in CDT instal·lat&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Si encara no tens instal·lat Eclipse, pots seguir aquesta
+&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-eclipse.html"&gt;guia d'eclipse&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Si no tens instal·lat el CDT, pots seguir aquesta
+&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/configuracio-declipse-per-cc.html"&gt;guia de CDT&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="continguts"&gt;
+&lt;h2&gt;Continguts&lt;/h2&gt;
+&lt;p&gt;Començarem amb la creació d'un programa en C que respongui al següent
+enunciat de requeriments:&lt;/p&gt;
+&lt;blockquote&gt;
+Escriu un programa que demani a l'usuari dos punts en el pla i li
+mostri la longitud del segment que descriuen.&lt;/blockquote&gt;
+&lt;p&gt;Crea un nou projecte de tipus &lt;em&gt;C Project&lt;/em&gt; i anomenal &lt;em&gt;Punts&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Selecciona el projecte acabat de crear i, amb el botó dret, crea un
+nou fitxer font de C&lt;/p&gt;
+&lt;p&gt;Ens crea el nou fitxer amb una capçalera de comentaris on surt la
+data de creació i el nom de l'autor (el nom de l'usuari del
+sistema)&lt;/p&gt;
+&lt;p&gt;Comença a escriure &lt;tt class="docutils literal"&gt;int main(&lt;/tt&gt; i fixa't que et tanca el parèntesi
+automàticament. Un detall és que si tot i així el tanques tu, no et
+queden dos parèntesis tancats.&lt;/p&gt;
+&lt;p&gt;Passa el mateix amb les claus. Si obres &lt;tt class="docutils literal"&gt;{&lt;/tt&gt; i fas &amp;lt;enter&amp;gt;, et
+tanca la clau i t'indenta adequadament en la línia on probablement
+voldràs començar a escriure codi.&lt;/p&gt;
+&lt;p&gt;Introdueix &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;printf(&amp;quot;Introdueix&lt;/span&gt; les coordenades de dos punts\n&amp;quot;)&lt;/tt&gt;
+sense el punt i coma final. Veuràs que t'avisa del problema amb un
+interrogant al costat esquerre de la línia. Si poses el cursor a
+sobre de l'interrogant, podràs llegir una descripció de l'error. En
+aquest cas &lt;tt class="docutils literal"&gt;Missing ;&lt;/tt&gt;. Corregeix la situació i l'avís
+desapareixerà.&lt;/p&gt;
+&lt;p&gt;També veuràs que algunes paraules del missatge apareixen
+subratllades en vermell. El comprovador ortogràfic no està
+configurat pel català &lt;a class="footnote-reference" href="#spellcat" id="id1"&gt;[1]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Afegeix&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+printf(&amp;quot;Punt 1 coordenada x: &amp;quot;);
+scanf(&amp;quot;%f&amp;quot;, &amp;amp;x1);
+&lt;/pre&gt;
+&lt;p&gt;Un nou avís ens informa que la variable x1 no apareix definida.
+Escollim l'opció de creació d'una variable local i veiem que ens la
+crea però amb el tipus incorrecte (no sempre encerta) A més, ens ha
+col·locat la declaració a la línia justament anterior al seu ús
+quan en C es usual posar-les a l'inici del bloc. Fes les
+correccions corresponents.&lt;/p&gt;
+&lt;p&gt;Escriu peticions per la resta de coordenades, fes el càlcul de la
+longitud del segment i mostra el resultat per pantalla.&lt;/p&gt;
+&lt;p&gt;El programa hauria de quedar quelcom similar a:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+/*
+ * calculaSegment.c
+ *
+ *  Created on: 16/08/2012
+ *      Author: Moisès
+ */
+
+#include&amp;lt;stdio.h&amp;gt;
+#include&amp;lt;math.h&amp;gt;
+int main() {
+    float x1, y1, x2, y2;
+    float longitud;
+    printf(&amp;quot;Introdueix les coordenades de dos punts\n&amp;quot;);
+    printf(&amp;quot;Punt 1 coordenada x: &amp;quot;);
+    scanf(&amp;quot;%f&amp;quot;, &amp;amp;x1);
+    printf(&amp;quot;Punt 1 coordenada y: &amp;quot;);
+    scanf(&amp;quot;%f&amp;quot;, &amp;amp;y1);
+    printf(&amp;quot;Punt 2 coordenada x: &amp;quot;);
+    scanf(&amp;quot;%f&amp;quot;, &amp;amp;x2);
+    printf(&amp;quot;Punt 2 coordenada y: &amp;quot;);
+    scanf(&amp;quot;%f&amp;quot;, &amp;amp;y2);
+    longitud = sqrt(pow((x2-x1), 2)+pow((y2-y1), 2));
+    printf(&amp;quot;La longitud del segment és %0.2f\n&amp;quot;, longitud);
+    return 0;
+}
+&lt;/pre&gt;
+&lt;p&gt;Ara executarem el nostre codi (ex. Run-&amp;gt;run) &lt;a class="footnote-reference" href="#sqrtproblem" id="id2"&gt;[2]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Eclipse ens ha fet tot: compilar, enllaçar i llençar l'execució. Si
+anem a la consola veurem que podem introduir les dades i executar
+el nostre programa.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Funcionament del càlcul de segment" src="http://apuntstecnics.herokuapp.com/images/eclipse004.img001.funcionant.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Suposem que volem canviar el nom de les variables del primer punt
+per &lt;tt class="docutils literal"&gt;coord1&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;coord2&lt;/tt&gt;. Fàcil. Cliquem sobre qualsevol
+aparició de &lt;tt class="docutils literal"&gt;x1&lt;/tt&gt; i escollim &lt;em&gt;Refactor&lt;/em&gt; del menú contextual (clic
+dret) Ara escollim &lt;em&gt;Rename&lt;/em&gt; i comencem a escriure el nou nom.
+Tornem a posar, però, els noms anteriors que eren molt més curts.&lt;/p&gt;
+&lt;p&gt;Estaria bé veure els números de línia, no? Windows -&amp;gt; Preferences
+-&amp;gt; Editors -&amp;gt; Text Editors -&amp;gt; Show line numbers.&lt;/p&gt;
+&lt;p&gt;Ara crearem una funció que calculi la longitud del segment. Per
+fer-ho, en comptes de copiar&amp;amp;enganxar, el que farem serà
+seleccionar l'expressió que assignem a &lt;tt class="docutils literal"&gt;longitud&lt;/tt&gt; i fem
+Refactor-&amp;gt;Extract function. Aqui, simplement escollim el nom de la
+funció (per exemple &lt;tt class="docutils literal"&gt;calcula_longitud&lt;/tt&gt; i Eclipse ens ho fa tot
+sol!. Ens ha posat com a tipus de retorn &lt;em&gt;double&lt;/em&gt;. El podem
+corregir si volem un float.&lt;/p&gt;
+&lt;p&gt;Ara tornarem a executar el programa. Aquest cop, però, anirem a Run
+-&amp;gt; Debug. Ens demanarà obrir una nova perspectiva, acceptem-ho i
+veurem quelcom similar a la següent imatge.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Depuració amb Eclipse" src="http://apuntstecnics.herokuapp.com/images/eclipse004.img002.depurant.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;A la secció 1 trobem el fil d'execució en que estem. Com que no estem
+desenvolupant una aplicació multifil, podem ignorar-la&lt;/p&gt;
+&lt;p&gt;La secció 2 correspon a la inspecció de variables i altres elements
+de l'execució del nostre programa. Es clar que les variables no han
+estat inicialitzades i contenen soroll.&lt;/p&gt;
+&lt;p&gt;La secció 3 continua sent el nostre codi però té ressaltada la
+línia amb el proper codi a executar. De moment només ha declarat
+les variables. Atenció que, tot i que podem editar, ara no és el
+moment més adequat i probablement ens demanarà tornar a executar
+per tenir en compte els canvis. També és interessant passar per
+sobre de les variables amb el cursor de l'apuntador. Veurem
+informació en temps d'execució.&lt;/p&gt;
+&lt;p&gt;La secció 4 ja l'havíem vista. Ens dona un esquema del codi. Podem
+veure-hi les nostres dues funcions &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;calcula_longitud()&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;La secció 5 també la coneixem: correspon a la consola.&lt;/p&gt;
+&lt;p&gt;Amb Run -&amp;gt; Step Over (o F6) podem executar la línia actual. Així
+podem anar fent fins que arribem a &lt;tt class="docutils literal"&gt;scanf()&lt;/tt&gt;. No podrem avançar
+fins que no introduïm un valor i fem enter a la consola.&lt;/p&gt;
+&lt;p&gt;Fixem-nos que a la secció d'inspecció de variables podem veure el
+nou valor de &lt;tt class="docutils literal"&gt;x1&lt;/tt&gt;. Suposem que voldríem que fos un altre. Doncs
+l'editem a la secció d'inspecció i ja està!&lt;/p&gt;
+&lt;p&gt;Com que és una mica incòmode anar línia a línia, afegirem un punt
+d'aturada a la línia on assignem valor a la variable &lt;tt class="docutils literal"&gt;longitud&lt;/tt&gt;.
+Ho farem, per exemple, amb clic dret sobre el número de línia i
+&lt;em&gt;Toggle breakpoint&lt;/em&gt; (tot i que és més directe amb un doble clic
+sobre la part grisa del costat) Ara continuem amb l'execució del
+programa amb Run -&amp;gt; Resume o F8. S'aturarà quan arribi a la línia
+amb el punt d'aturada.&lt;/p&gt;
+&lt;p&gt;Ara tenim dues opcions. Executar aquesta línia com un bloc (farem
+F6) o bé entrar dins de la funció &lt;tt class="docutils literal"&gt;calcula_longitud()&lt;/tt&gt; per
+inspeccionar-la (Run -&amp;gt; Step Into o F5) Si fem aquesta segona
+notarem que l'inspector de variables ja no té longitud. Això és
+perquè estem en un bloc on aquesta variable no existeix. De fet,
+encara que tenen el mateix nom, la resta de les variables no són
+les mateixes que les del bloc principal.&lt;/p&gt;
+&lt;p&gt;Per cert, trobarem l'executable a la carpeta Debug dins de la carpeta
+en el &lt;em&gt;workspace&lt;/em&gt; corresponent al nostre projecte.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;table class="docutils footnote" frame="void" id="spellcat" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Tot i que es pot configurar perquè faci la comprovació
+pel català, el procés no resulta gaire interessant pels objectius
+d'aquesta guia. Queda com a exercici de l'usuari interessat.
+Altrament caldrà ignorar aquest subratllat, o encara millor,
+inhabilitar la comprovació ortogràfica.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="sqrtproblem" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Amb les darreres versions del compilador gcc (i
+potser amb altres) cal linkar explícitament la biblioteca math al
+nostre programa. Per fer-ho haurem d'anar a les propietats del
+projecte -&amp;gt; C/C++ Build -&amp;gt; Settings -&amp;gt; GCC C Linker -&amp;gt; Libraries, i
+aquí premem l'icona verda amb un + i afegim &lt;tt class="docutils literal"&gt;m&lt;/tt&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Tutorial d'instal·lació del JDK</title><link href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-del-jdk.html" rel="alternate"></link><updated>2014-09-09T23:57:30+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-09-09:tutorial-dinstallacio-del-jdk.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
 &lt;p&gt;Aquest document descriu la instal·lació del JDK (Java Development Kit)
 de Oracle a un sistema Ubuntu.&lt;/p&gt;
@@ -911,9 +1083,9 @@ trobem, entre d'altres:&lt;/p&gt;
 &lt;h3&gt;Exercici 1. Instal·lació de l'IDE Eclipse&lt;/h3&gt;
 &lt;p&gt;Instal·larem l'entorn de desenvolupament Eclipse.&lt;/p&gt;
 &lt;p&gt;Podem seguir la &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/tutorial-dinstallacio-de-eclipse.html"&gt;guia d'instal·lació d'eclipse&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Disposem d'una altre &lt;a class="reference external" href="{{url}}/eines/eclipse-us-basic"&gt;guia&lt;/a&gt; que us
-oferirà una vista pas a pas de l'ús bàsic de l'IDE Eclipse. Caldrà
-seguir aquesta guia per poder realitzar alguns exercicis.&lt;/p&gt;
+&lt;p&gt;Disposem d'una altre &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html"&gt;guia&lt;/a&gt; que us oferirà una vista
+pas a pas de l'ús bàsic de l'IDE Eclipse. Caldrà seguir aquesta guia
+per poder realitzar alguns exercicis.&lt;/p&gt;
 &lt;p&gt;Finalment farem una prova desenvolupant un petit programa per a
 veure algunes de les característiques de l'entorn.&lt;/p&gt;
 &lt;p&gt;Es demana:&lt;/p&gt;
