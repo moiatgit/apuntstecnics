@@ -323,13 +323,21 @@ l'estat a dret i torni a mostrar el nou estat.</p>
 </pre></div>
 </td></tr></table><p>Contesta les següents preguntes:</p>
 <ol class="arabic simple">
-<li>Què passa si intentes executar el següent codi a UsaGatRenat? Perquè creus?</li>
+<li>Què passa si intentes executar el següent codi? Perquè creus?</li>
 </ol>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">GatRenat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
-<span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaGatRenat</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">GatRenat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
+        <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 </td></tr></table><ol class="arabic simple" start="2">
 <li>Què s'està declarant a la línia 3? Així, que pot voler dir <em>mètode</em>
@@ -354,9 +362,9 @@ en notació POO?</li>
    <span class="o">}</span>
 </pre></div>
 </td></tr></table><ol class="arabic simple" start="4">
-<li>Amb aquesta definició, és possible fer que, a partir d'una
-instància de GatRenat, el nombre de vides estigui malament? Perquè
-o Com?</li>
+<li>Sense modificar la classe GatRenat, és possible aconseguir que una
+instància de GatRenat pugui tenir un nombre de vides negatiu?
+Perquè o Com?</li>
 </ol>
 </div>
 <div class="section" id="exercici-7-l-estat-del-renat-es-sempre-bo">

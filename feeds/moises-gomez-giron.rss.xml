@@ -478,6 +478,9 @@ documentació o detecció d'errors entre d'altres.&lt;/p&gt;
 &lt;h3&gt;Model de desenvolupament&lt;/h3&gt;
 &lt;p&gt;Els models de desenvolupament consideren les següents activitats
 generals:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Activitats generals" src="http://apuntstecnics.herokuapp.com/images/prm001.img001.activitats_generals.png" /&gt;
+&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p class="first"&gt;comunicació&lt;/p&gt;
 &lt;ul class="simple"&gt;
@@ -620,6 +623,7 @@ parar aquesta estaca... (acudit vist a &amp;quot;Ingeniería del Software, un
 enfoque Práctico&amp;quot; 6a ed. del Roger Pressman)&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;!-- XXX TODO add exercises --&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Tue, 09 Sep 2014 22:59:50 +0200</pubDate><guid>tag:apuntstecnics.herokuapp.com,2014-09-09:desenvolupament-daplicacions.html</guid><category>programari</category></item><item><title>Llenguatges de programació</title><link>http://apuntstecnics.herokuapp.com/llenguatges-de-programacio.html</link><description>&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
@@ -3175,13 +3179,21 @@ l'estat a dret i torni a mostrar el nou estat.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Contesta les següents preguntes:&lt;/p&gt;
 &lt;ol class="arabic simple"&gt;
-&lt;li&gt;Què passa si intentes executar el següent codi a UsaGatRenat? Perquè creus?&lt;/li&gt;
+&lt;li&gt;Què passa si intentes executar el següent codi? Perquè creus?&lt;/li&gt;
 &lt;/ol&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
-3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;GatRenat&lt;/span&gt; &lt;span class="n"&gt;renat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GatRenat&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-&lt;span class="n"&gt;renat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;vides&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;renat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;vides&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Al gat Renat li queden &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;renat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getVides&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot; vides&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UsaGatRenat&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;GatRenat&lt;/span&gt; &lt;span class="n"&gt;renat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GatRenat&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;renat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;vides&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;renat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;vides&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Al gat Renat li queden &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;renat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getVides&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot; vides&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;ol class="arabic simple" start="2"&gt;
 &lt;li&gt;Què s'està declarant a la línia 3? Així, que pot voler dir &lt;em&gt;mètode&lt;/em&gt;
@@ -3206,9 +3218,9 @@ en notació POO?&lt;/li&gt;
    &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;ol class="arabic simple" start="4"&gt;
-&lt;li&gt;Amb aquesta definició, és possible fer que, a partir d'una
-instància de GatRenat, el nombre de vides estigui malament? Perquè
-o Com?&lt;/li&gt;
+&lt;li&gt;Sense modificar la classe GatRenat, és possible aconseguir que una
+instància de GatRenat pugui tenir un nombre de vides negatiu?
+Perquè o Com?&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-7-l-estat-del-renat-es-sempre-bo"&gt;
