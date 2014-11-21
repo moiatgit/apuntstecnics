@@ -4081,7 +4081,7 @@ paràmetres no vàlids, inicialitzarà la instància amb els valors per
 defecte.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Per escriure el 0 inicial als minuts i segons quan el valor és
-menor de 10, es pot fer servir el mètode &lt;a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/data/numberformat.html"&gt;System.out.format()&lt;/a&gt;&lt;/p&gt;
+menor de 10, es pot fer servir el mètode &lt;a class="reference external" href="https://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html"&gt;System.out.format()&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Per si vas justet de temps:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;#39;%d %02d %05d%n&amp;#39;&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -4940,7 +4940,7 @@ nom! (Pista: constructor)&lt;/p&gt;
 RenatJR: he nascut
 Misifú: he nascut
 Garfield: he nascut
-Hem creat 4 gats
+Hem creat 3 gats
 El gat RenatJR diu que està estirat
 El gat Misifú diu que està estirat
 El gat Garfield diu que està estirat
