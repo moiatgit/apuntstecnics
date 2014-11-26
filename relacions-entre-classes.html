@@ -120,8 +120,11 @@ que de moment, simplement escriu per pantalla el missatge
 <p>Ara el nostre gat Renat, si li pengem un picarol, cada cop que es
 mogui (s'aixeca, seu o s'estira), farà sonar el picarol
 amb independència de si el gat calla o parla.</p>
-<p>Implementa la classe Picarol i amplia la classe del gat Renat amb els
-següents mètodes:</p>
+<p>Es demana:</p>
+<ul>
+<li><p class="first">implementa la classe Picarol amb el mètode <em>sona()</em>.</p>
+</li>
+<li><p class="first">amplia la classe del gat Renat amb els següents mètodes:</p>
 <ul class="simple">
 <li><tt class="docutils literal">boolean tePicarol()</tt>: cert si té un picarol assignat. Inicialment no en té.</li>
 <li><tt class="docutils literal">posaPicarol(Picarol)</tt>: assigna un picarol. Si en tenia un, el
@@ -129,12 +132,15 @@ substitueix pel nou</li>
 <li><tt class="docutils literal">Picarol treuPicarol()</tt>: retorna el picarol i l'elimina. Si no en
 tenia cap, retorna null.</li>
 </ul>
-<p>Crea una nova versió de l'entorn operatiu del gat Renat, que ofereixi
-les noves comandes:</p>
+</li>
+<li><p class="first">crea una nova versió de l'entorn operatiu del gat Renat, que
+ofereixi les noves comandes:</p>
 <div class="highlight"><pre>posa&#39;t picarol
 treu-te picarol
 tens picarol?
 </pre></div>
+</li>
+</ul>
 <p>En cas que ja tingui un picarol i li demanin posar-se un altre
 respondrà amb &quot;ja tinc picarol&quot;. En canvi, si no en tenia i se li
 demana treure'l dirà &quot;no en tinc cap de picarol&quot;. A la pregunta si té
@@ -233,6 +239,131 @@ molt similar a:</p>
 </li>
 </ol>
 </div>
+<div class="section" id="exercici-4-challenge-les-urpes-del-gat-renat">
+<h2>Exercici 4. (<em>Challenge</em>) Les Urpes del gat Renat</h2>
+<p>Et proposo aquest exercici d'ampliació dels conceptes que hem
+treballat en aquest tema.</p>
+<p>Atenció: aquest problema és un <strong>repte</strong>. La part més difícil és, com
+sol passar, entendre el que es demana. Ah! Encara que ho sembli, no et
+caldrà multifil (<em>multithread</em>).</p>
+<p>Implementa la classe UrpesDeGat i modifica GatRenat segons el diagrama
+de classes:</p>
+<p>El funcionament de UrpesDeGat és el següent:</p>
+<ol class="arabic simple">
+<li>Inicialment les urpes estan esmolades al 100% i s'estan desgastant</li>
+<li>Quan criden el servei esmola(), les urpes comencen a esmolar-se. El
+màxim, és clar, és un 100%.</li>
+<li>Quan criden el servei desgasta(), les urpes comencen a
+desgastar-se. El mínim, és clar, és un 0%</li>
+<li>Quan es demana el canvi a esmolant o desgastant, o bé quan es
+demana el grau d'esmolat es recalcula el grau d'esmolament a partir
+del temps que portava esmolant-se o desgastant-se des del darrer
+recàlcul, i per cada 1 milisegon se li suma/resta un 1%
+d'esmolament.</li>
+</ol>
+<p>El gat Renat tindrà urpes, és clar. I fixa't que ara el gat Renat
+tindrà un nou estat possible (caminant). Quan el gat estigui en un
+estat que no sigui caminant, les seves urpes estaran desgastant-se i,
+quan estigui caminant, en canvi, les urpes estaran esmolant-se. En cas
+que les urpes estiguin totalment desgastades, el gat Renat deixarà de
+fer-nos cas a les ordres de canvi d'estat i es posarà a caminar fins
+que el grau d'esmolament sigui al menys 20%.</p>
+<p>Prova la nova versió del gat Renat amb el seu entorn operatiu, tot
+realitzant els canvis que consideris oportuns per a mostrar les noves
+funcionalitats.</p>
+<p>Com a pista/ajut per a treballar aquest exercici, considera el següent
+codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* Demostració d&#39;ús del temps */</span>
+<span class="kn">import</span> <span class="nn">java.util.Calendar</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GatRenat</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">vides</span> <span class="o">=</span> <span class="mi">9</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">long</span> <span class="n">momentNaixement</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">GatRenat</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// ens guardem el moment del naixement</span>
+        <span class="n">momentNaixement</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">getTimeInMillis</span><span class="o">();</span>
+        <span class="c1">// ens esperem una estoneta perquè es pensin que costa molt crear un gat</span>
+        <span class="n">esperatUnaEstona</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">esperatUnaEstona</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// fa que el programa es detengui una estona pseudoaleatòria</span>
+        <span class="c1">// De moment, no cal que intentis entendre com ho fa això</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="kt">long</span> <span class="n">tempsEspera</span> <span class="o">=</span> <span class="o">(</span><span class="kt">long</span><span class="o">)(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="o">);</span>
+            <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">tempsEspera</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getVides</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">vides</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setVides</span><span class="o">(</span><span class="kt">int</span> <span class="n">vides</span><span class="o">)</span> <span class="o">{</span> <span class="k">if</span> <span class="o">(</span><span class="n">vides</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">vides</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getTempsViu</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// retorna el nombre de milisegons que porta viu</span>
+        <span class="kt">long</span> <span class="n">actual</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">getTimeInMillis</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">actual</span> <span class="o">-</span> <span class="n">momentNaixement</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Gat Renat amb &quot;</span> <span class="o">+</span> <span class="n">vides</span> <span class="o">+</span> <span class="s">&quot; vides.  Porta viu &quot;</span> <span class="o">+</span> <span class="n">getTempsViu</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; milisegons&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// crea uns quants GatRenat per demostrar com passa el temps</span>
+        <span class="n">GatRenat</span><span class="o">[]</span> <span class="n">gats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">[</span><span class="mi">10</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">gats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">gats</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
+            <span class="n">gats</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">setVides</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">gats</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+        <span class="c1">// tornem a veure el temps que porten vius</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;I si tornem mirar:&quot;</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">gats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">gats</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
 </div>
 <div class="well small">
 <ul id="navigation"> 
