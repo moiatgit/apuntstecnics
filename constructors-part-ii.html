@@ -200,12 +200,18 @@ Aquest punt es considera amb molt més detall en el tema de
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">class</span> <span class="nc">B</span> <span class="kd">extends</span> <span class="n">A</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
 <span class="kd">class</span> <span class="nc">UsaB</span> <span class="o">{</span>
-    <span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">B</span><span class="o">();</span>  <span class="c1">// es crea una instància de B i se li assigna a una referència de tipus A</span>
+    <span class="kt">void</span> <span class="nf">f</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">A</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">B</span><span class="o">();</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
-</td></tr></table></div>
+</td></tr></table><p>Fixat que al mètode f() de UsaB es crea una instància de B i se li
+assigna a una referència de tipus A.</p>
+</div>
 <div class="section" id="constructor-per-defecte">
 <h3>Constructor per defecte</h3>
 <p>Al constructor sense paràmetres se li anomena sovint <em>constructor per
@@ -227,8 +233,8 @@ crearà el constructor per defecte. Per exemple, considerem la classe:</p>
 la instrucció:</p>
 <div class="highlight"><pre><span class="k">this</span><span class="o">(</span><span class="err">«</span><span class="n">args</span><span class="err">»</span><span class="o">);</span>
 </pre></div>
-<p>Sent «args» és la llista d'arguments que passem al constructor (sovint
-no hi ha cap)</p>
+<p>On «args» és la llista d'arguments que passem al constructor (pot ser
+cap).</p>
 <p>Hem de complir però una condició: la crida a <tt class="docutils literal">this()</tt> només pot
 estar a la primera línia del cos d'un constructor.</p>
 <p>Aquesta possibilitat ens permet reaprofitar el codi entre

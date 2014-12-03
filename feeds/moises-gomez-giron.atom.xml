@@ -4727,7 +4727,7 @@ característiques particulars a les seves subclasses.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;No admet herència múltiple: cada classe pot ser (i de fet és) només
-subclasse d'una única classe &lt;a class="footnote-reference" href="#javainterfaces" id="id1"&gt;[2]&lt;/a&gt;.&lt;/p&gt;
+subclasse d'una única classe &lt;a class="footnote-reference" href="#javainterfaces" id="id1"&gt;[3]&lt;/a&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Al final de la jerarquia, la classe més general és &lt;tt class="docutils literal"&gt;Object&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
@@ -4749,7 +4749,7 @@ completa dels membres d'&lt;a class="reference external" href="http://docs.oracl
 &lt;h3&gt;Visualització del concepte d'extensió&lt;/h3&gt;
 &lt;p&gt;La interfície pública d'una classe està formada per tots els membres
 públics que defineix la classe, més tots els membres públics
-&lt;a class="footnote-reference" href="#protected" id="id2"&gt;[6]&lt;/a&gt; que hereta.&lt;/p&gt;
+&lt;a class="footnote-reference" href="#protected" id="id2"&gt;[7]&lt;/a&gt; que hereta.&lt;/p&gt;
 &lt;p&gt;Considerem el següent diagrama:&lt;/p&gt;
 &lt;div class="figure align-center"&gt;
 &lt;img alt="herència" src="http://apuntstecnics.herokuapp.com/images/poo011.img002.herencia.png" /&gt;
@@ -4884,7 +4884,8 @@ de GatRenat.&lt;/p&gt;
 amb el mateix nom. La paraula clau &lt;tt class="docutils literal"&gt;this&lt;/tt&gt; ens permet accedir a la
 propietat.&lt;/p&gt;
 &lt;p&gt;En el cas del mètode &lt;tt class="docutils literal"&gt;menja(Menjar)&lt;/tt&gt; l'ocultació correspon a
-una redefinició del mètode que es coneix també com &lt;em&gt;overriding&lt;/em&gt;.&lt;/p&gt;
+una redefinició del mètode que es coneix també com &lt;em&gt;overriding&lt;/em&gt;
+&lt;a class="footnote-reference" href="#overridingoverwriting" id="id4"&gt;[2]&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Per a accedir des de la subclasse, a membres de la superclasse
 redefinits (&lt;em&gt;overrided&lt;/em&gt;) fem servir la paraula clau &lt;tt class="docutils literal"&gt;super&lt;/tt&gt;.&lt;/p&gt;
 &lt;p&gt;De fet, podríem fer servir &lt;tt class="docutils literal"&gt;super&lt;/tt&gt; per a accedir a membres &lt;em&gt;no&lt;/em&gt;
@@ -4958,7 +4959,7 @@ amb el polimorfisme)&lt;/p&gt;
 &lt;p&gt;De vegades pot passar que heretem coses que no volem.&lt;/p&gt;
 &lt;p&gt;Considera per exemple el cas de l'ornitorinc. Es tracta d'un mamífer.
 Sí, té un aspecte una mica... peculiar com es pot començar a apreciar
-a la foto &lt;a class="footnote-reference" href="#ornitorinc" id="id4"&gt;[3]&lt;/a&gt;. Aquest animaló d'Australia fa servir ous per
+a la foto &lt;a class="footnote-reference" href="#ornitorinc" id="id5"&gt;[4]&lt;/a&gt;. Aquest animaló d'Australia fa servir ous per
 reproduir-se, és verinós, té bec d'ànec, cua de castor i potes de
 llúdria. Ah!  l'alletament de les cries es realitza a través de porus
 a la pell en comptes de fer servir mamelles, no fos que semblés normal
@@ -4978,7 +4979,7 @@ ens queden poques opcions.&lt;/p&gt;
 creant una nova propietat a la subclasse amb el mateix nom i
 visibilitat privada. Ara tindrem dues còpies de la propietat però al
 menys no serà accessible, i si accedim a la instància considerant-la
-de la superclasse &lt;a class="footnote-reference" href="#polimorfisme" id="id5"&gt;[5]&lt;/a&gt; encara hi accedirem a la propietat
+de la superclasse &lt;a class="footnote-reference" href="#polimorfisme" id="id6"&gt;[6]&lt;/a&gt; encara hi accedirem a la propietat
 heretada!&lt;/p&gt;
 &lt;p&gt;Si és un mètode públic, no podem fer el mateix que amb una propietat,
 perquè l'estem redefinint amb una visibilitat més restrictiva i el
@@ -4989,7 +4990,7 @@ privileges; was public&lt;/tt&gt;&lt;/p&gt;
 &lt;li&gt;documentar a la nostra classe que el membre heretat no es suporta.&lt;/li&gt;
 &lt;li&gt;ocultar el membre heretat amb una versió pròpia&lt;/li&gt;
 &lt;li&gt;fer que el cos del mètode redefinit llenci l'excepció
-&lt;tt class="docutils literal"&gt;UnsuportedOperationException&lt;/tt&gt;. &lt;a class="footnote-reference" href="#excepcions" id="id6"&gt;[4]&lt;/a&gt;&lt;/li&gt;
+&lt;tt class="docutils literal"&gt;UnsuportedOperationException&lt;/tt&gt;. &lt;a class="footnote-reference" href="#excepcions" id="id7"&gt;[5]&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;És a dir, avisarem als desenvolupadors que vulguin fer servir la
 nostra classe, que el mètode no està suportat, i en cas que tot i
@@ -5156,10 +5157,28 @@ redefinit a la subclasse (&lt;em&gt;overrided&lt;/em&gt;) ni hagi estat definit 
 superclasse com a &lt;tt class="docutils literal"&gt;private&lt;/tt&gt;.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="overridingoverwriting" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;p class="first"&gt;De vegades, trobarem que en comptes d' &lt;em&gt;overriding&lt;/em&gt;
+es refereixen a aquest concepte com a &lt;em&gt;overwriting&lt;/em&gt;. La diferència pot ser
+subtil, però existeix. Es diu que quelcom &lt;em&gt;overwrites&lt;/em&gt; una altra cosa quan la
+reemplaça completament de manera que ja deixi d'existir la reemplaçada. Podríem
+fer servir com a sinònim el terme &lt;em&gt;reemplaça&lt;/em&gt;. Quan la substitució d'una cosa
+per una altra té només efecte en alguns casos i no en tots (és a dir, hi ha
+casos en que encara es podria fer servir l'anterior) llavors es parla d'
+&lt;em&gt;overriding&lt;/em&gt;. En el cas concret en que una subclasse redefineix un mètode que
+hereda de la superclasse, la definició original del mètode de la superclasse
+encara és usable per altres subclasses que no l'hagin redefinit.&lt;/p&gt;
+&lt;p class="last"&gt;Com a traducció podríem fer servir &lt;em&gt;sobreescriure&lt;/em&gt; per &lt;em&gt;overwrite&lt;/em&gt; i
+i &lt;em&gt;anteposar&lt;/em&gt; per &lt;em&gt;override&lt;/em&gt;.&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;table class="docutils footnote" frame="void" id="javainterfaces" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;p class="first"&gt;Java no ofereix herència múltiple per evitar
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;&lt;p class="first"&gt;Java no ofereix herència múltiple per evitar
 certs problemes que hi apareixen quan es permet heredar de
 múltiples superclasses. Els curiosos podeu cercar el concepte del
 &lt;em&gt;Deadly Diamond of Death&lt;/em&gt; per exemple a
@@ -5173,20 +5192,20 @@ fonts.&lt;/p&gt;
 &lt;table class="docutils footnote" frame="void" id="ornitorinc" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Foto obtinguda de &lt;a class="reference external" href="http://commons.wikimedia.org"&gt;Wikimedia commons&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Foto obtinguda de &lt;a class="reference external" href="http://commons.wikimedia.org"&gt;Wikimedia commons&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;table class="docutils footnote" frame="void" id="excepcions" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id6"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Si encara no coneixes les excepcions, no t'amoïnis,
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id7"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Si encara no coneixes les excepcions, no t'amoïnis,
 que arribaran aviat.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;table class="docutils footnote" frame="void" id="polimorfisme" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Estudiarem més endavant, el concepte de polimorfisme.
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id6"&gt;[6]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Estudiarem més endavant, el concepte de polimorfisme.
 En poques paraules, és la possibilitat de fer servir una instància
 considerant-la d'un tipus diferent del que és (per exemple, com la
 seva superclasse)&lt;/td&gt;&lt;/tr&gt;
@@ -5195,7 +5214,7 @@ seva superclasse)&lt;/td&gt;&lt;/tr&gt;
 &lt;table class="docutils footnote" frame="void" id="protected" rules="none"&gt;
 &lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[6]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Per ser precisos, hereta tots els mèmbres no privats
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[7]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Per ser precisos, hereta tots els mèmbres no privats
 de la superclasse. Aquesta puntualització tindrà més sentit quan
 coneguem el concepte de &lt;em&gt;visibilitat&lt;/em&gt;.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
@@ -5315,12 +5334,18 @@ Aquest punt es considera amb molt més detall en el tema de
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2
 3
-4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;B&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;B&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UsaB&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;  &lt;span class="c1"&gt;// es crea una instància de B i se li assigna a una referència de tipus A&lt;/span&gt;
+    &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;f&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Fixat que al mètode f() de UsaB es crea una instància de B i se li
+assigna a una referència de tipus A.&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class="section" id="constructor-per-defecte"&gt;
 &lt;h3&gt;Constructor per defecte&lt;/h3&gt;
 &lt;p&gt;Al constructor sense paràmetres se li anomena sovint &lt;em&gt;constructor per
@@ -5342,8 +5367,8 @@ crearà el constructor per defecte. Per exemple, considerem la classe:&lt;/p&gt;
 la instrucció:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Sent «args» és la llista d'arguments que passem al constructor (sovint
-no hi ha cap)&lt;/p&gt;
+&lt;p&gt;On «args» és la llista d'arguments que passem al constructor (pot ser
+cap).&lt;/p&gt;
 &lt;p&gt;Hem de complir però una condició: la crida a &lt;tt class="docutils literal"&gt;this()&lt;/tt&gt; només pot
 estar a la primera línia del cos d'un constructor.&lt;/p&gt;
 &lt;p&gt;Aquesta possibilitat ens permet reaprofitar el codi entre

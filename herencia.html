@@ -160,7 +160,7 @@ característiques particulars a les seves subclasses.</p>
 </pre></div>
 </li>
 <li><p class="first">No admet herència múltiple: cada classe pot ser (i de fet és) només
-subclasse d'una única classe <a class="footnote-reference" href="#javainterfaces" id="id1">[2]</a>.</p>
+subclasse d'una única classe <a class="footnote-reference" href="#javainterfaces" id="id1">[3]</a>.</p>
 </li>
 <li><p class="first">Al final de la jerarquia, la classe més general és <tt class="docutils literal">Object</tt>.</p>
 </li>
@@ -182,7 +182,7 @@ completa dels membres d'<a class="reference external" href="http://docs.oracle.c
 <h3>Visualització del concepte d'extensió</h3>
 <p>La interfície pública d'una classe està formada per tots els membres
 públics que defineix la classe, més tots els membres públics
-<a class="footnote-reference" href="#protected" id="id2">[6]</a> que hereta.</p>
+<a class="footnote-reference" href="#protected" id="id2">[7]</a> que hereta.</p>
 <p>Considerem el següent diagrama:</p>
 <div class="figure align-center">
 <img alt="herència" src="./images/poo011.img002.herencia.png" />
@@ -317,7 +317,8 @@ de GatRenat.</p>
 amb el mateix nom. La paraula clau <tt class="docutils literal">this</tt> ens permet accedir a la
 propietat.</p>
 <p>En el cas del mètode <tt class="docutils literal">menja(Menjar)</tt> l'ocultació correspon a
-una redefinició del mètode que es coneix també com <em>overriding</em>.</p>
+una redefinició del mètode que es coneix també com <em>overriding</em>
+<a class="footnote-reference" href="#overridingoverwriting" id="id4">[2]</a>.</p>
 <p>Per a accedir des de la subclasse, a membres de la superclasse
 redefinits (<em>overrided</em>) fem servir la paraula clau <tt class="docutils literal">super</tt>.</p>
 <p>De fet, podríem fer servir <tt class="docutils literal">super</tt> per a accedir a membres <em>no</em>
@@ -391,7 +392,7 @@ amb el polimorfisme)</p>
 <p>De vegades pot passar que heretem coses que no volem.</p>
 <p>Considera per exemple el cas de l'ornitorinc. Es tracta d'un mamífer.
 Sí, té un aspecte una mica... peculiar com es pot començar a apreciar
-a la foto <a class="footnote-reference" href="#ornitorinc" id="id4">[3]</a>. Aquest animaló d'Australia fa servir ous per
+a la foto <a class="footnote-reference" href="#ornitorinc" id="id5">[4]</a>. Aquest animaló d'Australia fa servir ous per
 reproduir-se, és verinós, té bec d'ànec, cua de castor i potes de
 llúdria. Ah!  l'alletament de les cries es realitza a través de porus
 a la pell en comptes de fer servir mamelles, no fos que semblés normal
@@ -411,7 +412,7 @@ ens queden poques opcions.</p>
 creant una nova propietat a la subclasse amb el mateix nom i
 visibilitat privada. Ara tindrem dues còpies de la propietat però al
 menys no serà accessible, i si accedim a la instància considerant-la
-de la superclasse <a class="footnote-reference" href="#polimorfisme" id="id5">[5]</a> encara hi accedirem a la propietat
+de la superclasse <a class="footnote-reference" href="#polimorfisme" id="id6">[6]</a> encara hi accedirem a la propietat
 heretada!</p>
 <p>Si és un mètode públic, no podem fer el mateix que amb una propietat,
 perquè l'estem redefinint amb una visibilitat més restrictiva i el
@@ -422,7 +423,7 @@ privileges; was public</tt></p>
 <li>documentar a la nostra classe que el membre heretat no es suporta.</li>
 <li>ocultar el membre heretat amb una versió pròpia</li>
 <li>fer que el cos del mètode redefinit llenci l'excepció
-<tt class="docutils literal">UnsuportedOperationException</tt>. <a class="footnote-reference" href="#excepcions" id="id6">[4]</a></li>
+<tt class="docutils literal">UnsuportedOperationException</tt>. <a class="footnote-reference" href="#excepcions" id="id7">[5]</a></li>
 </ol>
 <p>És a dir, avisarem als desenvolupadors que vulguin fer servir la
 nostra classe, que el mètode no està suportat, i en cas que tot i
@@ -589,10 +590,28 @@ redefinit a la subclasse (<em>overrided</em>) ni hagi estat definit a la
 superclasse com a <tt class="docutils literal">private</tt>.</td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="overridingoverwriting" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td><p class="first">De vegades, trobarem que en comptes d' <em>overriding</em>
+es refereixen a aquest concepte com a <em>overwriting</em>. La diferència pot ser
+subtil, però existeix. Es diu que quelcom <em>overwrites</em> una altra cosa quan la
+reemplaça completament de manera que ja deixi d'existir la reemplaçada. Podríem
+fer servir com a sinònim el terme <em>reemplaça</em>. Quan la substitució d'una cosa
+per una altra té només efecte en alguns casos i no en tots (és a dir, hi ha
+casos en que encara es podria fer servir l'anterior) llavors es parla d'
+<em>overriding</em>. En el cas concret en que una subclasse redefineix un mètode que
+hereda de la superclasse, la definició original del mètode de la superclasse
+encara és usable per altres subclasses que no l'hagin redefinit.</p>
+<p class="last">Com a traducció podríem fer servir <em>sobreescriure</em> per <em>overwrite</em> i
+i <em>anteposar</em> per <em>override</em>.</p>
+</td></tr>
+</tbody>
+</table>
 <table class="docutils footnote" frame="void" id="javainterfaces" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td><p class="first">Java no ofereix herència múltiple per evitar
+<tr><td class="label"><a class="fn-backref" href="#id1">[3]</a></td><td><p class="first">Java no ofereix herència múltiple per evitar
 certs problemes que hi apareixen quan es permet heredar de
 múltiples superclasses. Els curiosos podeu cercar el concepte del
 <em>Deadly Diamond of Death</em> per exemple a
@@ -606,20 +625,20 @@ fonts.</p>
 <table class="docutils footnote" frame="void" id="ornitorinc" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td>Foto obtinguda de <a class="reference external" href="http://commons.wikimedia.org">Wikimedia commons</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>Foto obtinguda de <a class="reference external" href="http://commons.wikimedia.org">Wikimedia commons</a></td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="excepcions" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td>Si encara no coneixes les excepcions, no t'amoïnis,
+<tr><td class="label"><a class="fn-backref" href="#id7">[5]</a></td><td>Si encara no coneixes les excepcions, no t'amoïnis,
 que arribaran aviat.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="polimorfisme" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Estudiarem més endavant, el concepte de polimorfisme.
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td>Estudiarem més endavant, el concepte de polimorfisme.
 En poques paraules, és la possibilitat de fer servir una instància
 considerant-la d'un tipus diferent del que és (per exemple, com la
 seva superclasse)</td></tr>
@@ -628,7 +647,7 @@ seva superclasse)</td></tr>
 <table class="docutils footnote" frame="void" id="protected" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[6]</a></td><td>Per ser precisos, hereta tots els mèmbres no privats
+<tr><td class="label"><a class="fn-backref" href="#id2">[7]</a></td><td>Per ser precisos, hereta tots els mèmbres no privats
 de la superclasse. Aquesta puntualització tindrà més sentit quan
 coneguem el concepte de <em>visibilitat</em>.</td></tr>
 </tbody>
