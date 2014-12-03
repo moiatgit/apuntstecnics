@@ -573,6 +573,10 @@ table.highlighttable {
     background-color: #f7f7f7;
 }
 
+table.highlighttable tr td:first-child {
+    width: 16px;
+}
+
 td.linenos div.linenodiv pre {
     color:        #9fafaf;
     font-weight:  bold;
@@ -580,11 +584,11 @@ td.linenos div.linenodiv pre {
 }
 
 td.code div.highlight pre {
-    display:      block;
-    padding:      0px;
-    line-height:  18px;
-    font-size:    12px;
-    white-space:  pre;
+    display:        block;
+    padding:        0px;
+    line-height:    18px;
+    font-size:      12px;
+    white-space:    pre;
 }
 
 /* added to show previous and next entries.*/
