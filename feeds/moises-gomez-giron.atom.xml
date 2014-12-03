@@ -5317,13 +5317,11 @@ algun altre objecte.&lt;/p&gt;
 4
 5
 6
-7
-8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;B&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UsaB&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;f&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
         &lt;span class="n"&gt;B&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;   &lt;span class="c1"&gt;// passa al constructor de B una nova instància d&amp;#39;A&lt;/span&gt;
-        &lt;span class="err"&gt;«&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="err"&gt;»&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
