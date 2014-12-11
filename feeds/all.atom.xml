@@ -4474,6 +4474,45 @@ sortida quedi adaptada als sorolls dels ulls. El joc de proves hauria
 de ser vàlid tan per l'entorn que considerava el picarol com per
 l'anterior, sense requerir cap canvi en ambdós programes.&lt;/p&gt;
 &lt;/div&gt;
+&lt;div class="section" id="tot-plegat"&gt;
+&lt;h2&gt;Tot plegat&lt;/h2&gt;
+&lt;p&gt;Respecte les dues relacions que acabem de veure, considerarem que:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;la relació d'agregació es un tipus de relació feble entre dues
+classes.&lt;/p&gt;
+&lt;p&gt;Presenta les següents característiques:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;el component pot ser accedit directament sense que calgui passar
+per la instància que l'agrega.&lt;/li&gt;
+&lt;li&gt;el component pot sobreviure la instància que l'agrega.&lt;/li&gt;
+&lt;li&gt;el mateix component podria ser agregat per més d'una instància&lt;/li&gt;
+&lt;li&gt;la instància que agrega el component normalment no té
+responsabilitats sobre aquest: per exemple, no sol ser
+l'encarregada de crear-lo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;la relació de composició és molt més forta que la d'agregació.&lt;/p&gt;
+&lt;p&gt;Algunes característiques:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;la instància que conté el component, es considera &lt;em&gt;propietària&lt;/em&gt;
+d'aquest.&lt;/li&gt;
+&lt;li&gt;els component són elements (part) del propietari.&lt;/li&gt;
+&lt;li&gt;el component forma part de l'estat del propietari. És a dir, un
+canvi en l'estat del component resulta en un canvi d'estat del
+composat.&lt;/li&gt;
+&lt;li&gt;el component només pot ser accedit a partir del contenidor. Es diu
+que el component està encapsulat pel propietari. Sovint, la classe
+contenidora no ofereix mecanismes per obtenir el component (get),
+especialment quan aquest sigui mutable.&lt;/li&gt;
+&lt;li&gt;el temps de vida del component queda liminat al del propietari. És
+a dir, quan desaparegui la instància del propietari, també ho farà
+la del component.&lt;/li&gt;
+&lt;li&gt;el propietari és responsable dels seus components: per exemple, el
+crea.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 &lt;div class="section" id="exercici-3-ampliacio-la-llista-dinamica-en-java"&gt;
 &lt;h2&gt;Exercici 3. (ampliació) La llista dinàmica en Java&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Atencio&lt;/strong&gt;: Aquest és un exercici d'ampliació. Encara que opcional,
@@ -4529,8 +4568,8 @@ molt similar a:&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-4-challenge-les-urpes-del-gat-renat"&gt;
-&lt;h2&gt;Exercici 4. (&lt;em&gt;Challenge&lt;/em&gt;) Les Urpes del gat Renat&lt;/h2&gt;
+&lt;div class="section" id="exercici-4-repte-les-urpes-del-gat-renat"&gt;
+&lt;h2&gt;Exercici 4. (repte) Les Urpes del gat Renat&lt;/h2&gt;
 &lt;p&gt;Et proposo aquest exercici d'ampliació dels conceptes que hem
 treballat en aquest tema.&lt;/p&gt;
 &lt;p&gt;Atenció: aquest problema és un &lt;strong&gt;repte&lt;/strong&gt;. La part més difícil és, com

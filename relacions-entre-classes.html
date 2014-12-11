@@ -86,6 +86,7 @@
     </a>
             amb el tag:
             <a href="./tag/java.html">java</a> 
+        (Darrera modificació: <b> 2014-12-10 </b>)
 </div>
     <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
@@ -184,6 +185,45 @@ sortida quedi adaptada als sorolls dels ulls. El joc de proves hauria
 de ser vàlid tan per l'entorn que considerava el picarol com per
 l'anterior, sense requerir cap canvi en ambdós programes.</p>
 </div>
+<div class="section" id="tot-plegat">
+<h2>Tot plegat</h2>
+<p>Respecte les dues relacions que acabem de veure, considerarem que:</p>
+<ul>
+<li><p class="first">la relació d'agregació es un tipus de relació feble entre dues
+classes.</p>
+<p>Presenta les següents característiques:</p>
+<ul class="simple">
+<li>el component pot ser accedit directament sense que calgui passar
+per la instància que l'agrega.</li>
+<li>el component pot sobreviure la instància que l'agrega.</li>
+<li>el mateix component podria ser agregat per més d'una instància</li>
+<li>la instància que agrega el component normalment no té
+responsabilitats sobre aquest: per exemple, no sol ser
+l'encarregada de crear-lo.</li>
+</ul>
+</li>
+<li><p class="first">la relació de composició és molt més forta que la d'agregació.</p>
+<p>Algunes característiques:</p>
+<ul class="simple">
+<li>la instància que conté el component, es considera <em>propietària</em>
+d'aquest.</li>
+<li>els component són elements (part) del propietari.</li>
+<li>el component forma part de l'estat del propietari. És a dir, un
+canvi en l'estat del component resulta en un canvi d'estat del
+composat.</li>
+<li>el component només pot ser accedit a partir del contenidor. Es diu
+que el component està encapsulat pel propietari. Sovint, la classe
+contenidora no ofereix mecanismes per obtenir el component (get),
+especialment quan aquest sigui mutable.</li>
+<li>el temps de vida del component queda liminat al del propietari. És
+a dir, quan desaparegui la instància del propietari, també ho farà
+la del component.</li>
+<li>el propietari és responsable dels seus components: per exemple, el
+crea.</li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="exercici-3-ampliacio-la-llista-dinamica-en-java">
 <h2>Exercici 3. (ampliació) La llista dinàmica en Java</h2>
 <p><strong>Atencio</strong>: Aquest és un exercici d'ampliació. Encara que opcional,
@@ -239,8 +279,8 @@ molt similar a:</p>
 </li>
 </ol>
 </div>
-<div class="section" id="exercici-4-challenge-les-urpes-del-gat-renat">
-<h2>Exercici 4. (<em>Challenge</em>) Les Urpes del gat Renat</h2>
+<div class="section" id="exercici-4-repte-les-urpes-del-gat-renat">
+<h2>Exercici 4. (repte) Les Urpes del gat Renat</h2>
 <p>Et proposo aquest exercici d'ampliació dels conceptes que hem
 treballat en aquest tema.</p>
 <p>Atenció: aquest problema és un <strong>repte</strong>. La part més difícil és, com
