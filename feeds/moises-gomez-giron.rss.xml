@@ -6347,12 +6347,13 @@ superclasse no abstracta (concreta)&lt;/p&gt;
 &lt;em&gt;org.estudi_poo.«elteunom».figures&lt;/em&gt; que contindrà diferents
 figures geomètriques. De moment només: cercle (que ja el tens),
 rectangle, quadrat i triangle.&lt;/p&gt;
-&lt;p&gt;Nota: si et passa pel cap, venç la temptació de fer Quadrat una subclasse de Rectangle (recorda el principi de Liskov)&lt;/p&gt;
+&lt;p&gt;Nota: si et passa pel cap, venç la temptació de fer Quadrat una
+subclasse de Rectangle (recorda el principi de Liskov)&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-2-entorn-d-animals-abstractes"&gt;
 &lt;h2&gt;Exercici 2. Entorn d'Animals abstractes&lt;/h2&gt;
 &lt;p&gt;Torna a considerar l'exercici de &lt;em&gt;l'entorn operatiu dels animals&lt;/em&gt; del
-tema de &lt;a class="reference external" href="{{url}}/poo/polimorfisme"&gt;polimorfisme&lt;/a&gt;.&lt;/p&gt;
+tema de &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/polimorfisme.html"&gt;polimorfisme&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Modifica la jerarquia d'animals de manera que ara la classe Animal
 sigui abstracta. Segurament l'únic mètode que necessites construir com
 a &lt;em&gt;abstract&lt;/em&gt; és el de &lt;tt class="docutils literal"&gt;Animal.fesSoroll()&lt;/tt&gt;. Fixa't que ja no et
