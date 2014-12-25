@@ -5905,6 +5905,9 @@ Adéu.
 Renat i Garfield a la llista de gats. Aquests podran ser eliminats com
 qualsevol altre i no s'oferirà a l'usuari la possibilitat d'accedir a
 membres de subclasse que no pertanyin a l'hora a la superclasse.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pista&lt;/strong&gt;: en cas que tinguis problemes per extreure la informació de
+l'entrada de l'usuari, et proposo que facis una ullada a &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/resources/ComandaText.java"&gt;aquest codi&lt;/a&gt;. Estudia el mètode
+&lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; per entendre el seu funcionament.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-4-l-entorn-operatiu-dels-animals"&gt;
 &lt;h2&gt;Exercici 4. L'entorn operatiu dels animals&lt;/h2&gt;
