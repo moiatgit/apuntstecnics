@@ -5856,11 +5856,12 @@ mètode &lt;tt class="docutils literal"&gt;void m()&lt;/tt&gt;.&lt;/blockquote&g
 amics...&lt;/p&gt;
 &lt;p&gt;Modifiquem la classe Gat per què el seu constructor mostri el missatge
 &amp;quot;«nom»: he nascut!&amp;quot; a menys que es crei com a silenciós.&lt;/p&gt;
-&lt;p&gt;Modifica el codi del programa UsaGat que es mostra a la secció
-anterior de manera que afegeixi sempre a Renat i a Garfield a la
-llista. En crearà una instància de gat per cada nom que rebi per línia
-de comandes. En cas que per la línia de comandes es demani al Renat o
-al Garfield, indicarà amb un warning que aquests dos ja hi són a la
+&lt;p&gt;Modifica el codi de la classe UsaGat que inclou l'exercici 1 dels
+continguts d'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/herencia.html"&gt;herència&lt;/a&gt; de
+manera que &lt;em&gt;main()&lt;/em&gt; afegeixi sempre a Renat i a Garfield a la llista.
+En crearà una instància de gat per cada nom que rebi per línia de
+comandes. En cas que per la línia de comandes es demani al Renat o al
+Garfield, indicarà amb un warning que aquests dos ja hi són a la
 gàbia.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-3-l-entorn-operatiu-dels-gats"&gt;
