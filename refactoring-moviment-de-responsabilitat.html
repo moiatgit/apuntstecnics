@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: Moviment de responsabilitat</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: Moviment de responsabilitat             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-temporals-per-crides.html">
+        Refactoring: Temporals per crides
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-eliminacio-de-variables-temporals.html">
+        Refactoring: Eliminació de variables temporals
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: Moviment de responsabilitat</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada relitza un nou pas de refacció conegut com a
+<em>moviment de responsabilitat</em>.</p>
+</div>
+<div class="section" id="moviment-de-responsabilitat">
+<h2>Moviment de responsabilitat</h2>
+<p>De vegades ens trobarem que hem assignat a una classe una
+responsabilitat que no li pertoca. En aquest cas, podem aplicar un pas
+de refacció que col·loqui les coses on toca.</p>
+<div class="section" id="exercici-12-moviment-de-responsabilitat">
+<h3>Exercici 12. Moviment de responsabilitat</h3>
+<p>Considera si el mètode correspon realment a la classe on es troba.
+Mou-lo allà on creguis oportú</p>
+<p>El codi resultant hauria de permetre que <tt class="docutils literal">Client.informe()</tt> funcioni
+amb el següent codi:</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+<span class="lineno"> 2</span>     <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="lineno"> 3</span>     <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="lineno"> 4</span>     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+<span class="lineno"> 5</span>         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+<span class="lineno"> 6</span>         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+<span class="lineno"> 7</span>     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+<span class="lineno"> 8</span> <span class="hll">        <span class="n">bonificacions</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">bonificacions</span><span class="o">();</span>
+</span><span class="lineno"> 9</span>         <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+<span class="lineno">10</span>         <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+<span class="lineno">11</span>             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+<span class="lineno">12</span>             <span class="s">&quot; &quot;</span> <span class="o">+</span>
+<span class="lineno">13</span>             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+<span class="lineno">14</span>             <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+<span class="lineno">15</span>         <span class="n">total</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
+<span class="lineno">16</span>     <span class="o">}</span>
+<span class="lineno">17</span> 
+<span class="lineno">18</span>     <span class="c1">// afegeix informació final</span>
+<span class="lineno">19</span>     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+<span class="lineno">20</span>         <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+<span class="lineno">21</span>     <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+<span class="lineno">22</span> <span class="o">}</span>
+</pre></div>
+<p>Nota: ara no serà tan directe com amb <tt class="docutils literal">quantitat</tt> eliminar la variable
+temporal <tt class="docutils literal">bonificacions</tt>. Paciència.</p>
+</div>
+<div class="section" id="exercici-13-diagrama-de-classes-actualitzat">
+<h3>Exercici 13. Diagrama de classes actualitzat</h3>
+<p>Actualitza el diagrama de classes amb la situació actual.</p>
+</div>
+<div class="section" id="exercici-14-canvis-en-el-diagrama-de-sequencia">
+<h3>Exercici 14. Canvis en el diagrama de seqüència</h3>
+<p>Actualitza el diagrama de seqüència que descriu la crida a
+<tt class="docutils literal">Client.informe()</tt> amb els nous canvis que has introduït.</p>
+<hr class="docutils" />
+<p>Passem a veure com eliminar variables temporals
+&lt;{filename}/dev/refactoring.008.rst&gt;`_</p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-temporals-per-crides.html">
+        Refactoring: Temporals per crides
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-eliminacio-de-variables-temporals.html">
+        Refactoring: Eliminació de variables temporals
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

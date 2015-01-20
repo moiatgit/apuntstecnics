@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Apunts tècnics: Proves unitàries</title>
+<title>Apunts tècnics: Proves unitàries amb JUnit</title>
 <meta name="description" content="">
 <meta name="author" content="Moisès Gómez Girón">
 
 <!-- HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-        <script src="../theme/html5.js"></script>
+        <script src="./theme/html5.js"></script>
     <![endif]-->
 
 <!-- Styles -->
-<link href="../theme/bootstrap.moi.css" rel="stylesheet">
-<link href="../theme/local.css" rel="stylesheet">
-<link href="../theme/pygments.css" rel="stylesheet">
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
 
 <!-- Feeds -->
 <link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
@@ -25,8 +25,8 @@
 <div class="topbar">
     <div class="topbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="../">[Apunts tècnics]
- Proves unitàries             </a>
+            <a class="brand" href="./">[Apunts tècnics]
+ Proves unitàries amb JUnit             </a>
         </div>
     </div>
 </div>
@@ -41,178 +41,67 @@
             -->
             <h3>Categories</h3>
             <ul>
-                <li ><a href="../category/dev.html">dev</a></li>
-                <li ><a href="../category/eines.html">eines</a></li>
-                <li ><a href="../category/poo.html">poo</a></li>
-                <li ><a href="../category/programacio.html">programacio</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="../tag/programari.html">programari</a></li>
-                <li><a href="../tag/c.html">C</a></li>
-                <li><a href="../tag/java.html">java</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
 
     <div class="content">
 <div class='article'>
-    <div class="page-header"><h1>Proves unitàries</h1></div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./validacio-daplicacions.html">
+        Validació d'aplicacions
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./validacio-daplicacions.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>Proves unitàries amb JUnit</h1></div>
 <div class="well small">
     Entrada ubicada a la categoria
-    <a href="../category/misc.html">
-        misc
+    <a href="./category/dev.html">
+        dev
     </a>
             amb els tags: 
-            <a href="../tag/java.html">java</a> 
-            <a href="../tag/test.html">test</a> 
+            <a href="./tag/java.html">java</a> 
+            <a href="./tag/test.html">test</a> 
 </div>
     <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
-<p>Hi ha moltes coses que s'han de tenir en comptes quan dissenyem
-programari: usabilitat i reusabilitat, interfícies ben definides,...
-i, no menys important, que el codi sigui fàcilment <em>testable</em>. El
-nostre codi serà més testable com més ens faciliti la tasca de provar
-el seu funcionament i detectar els errors que contingui, tan ara com
-en un futur quan estigui funcionant en nous contexts.</p>
-</div>
-<div class="section" id="errors">
-<h2>Errors</h2>
-<p>Els errors formen part de la realitat del desenvolupament informàtic
-<a class="footnote-reference" href="#totomerrors" id="id1">[1]</a>. Tots en cometem i ho fem a totes les fases: en
-agafar els requeriments, en analitzar-los i dissenyar les solucions,
-en codificar... Fins i tot, a l'hora de provar el nostre
-desenvolupament!</p>
-<p>Però, perquè hi ha errors?</p>
-<ul class="simple">
-<li>perquè som mals programadors?</li>
-<li>perquè no som prou disciplinats?</li>
-<li>perquè ens demanen desenvolupar massa ràpid</li>
-<li>...</li>
-</ul>
-<p>Bé! és simplement perquè som humans.</p>
-<p>En molts contexts de la nostra vida observarem que la gent intenta
-amagar els seus errors i, sovint, no &quot;destapa&quot; els errors d'altres
-per... bé, diguem per mantenir les bones relacions. A la nostra
-professió hem de fer un esforç i canviar aquesta manera de funcionar.
-El millor que ens pot passar és que trobem l'error abans que el nostre
-client. Creu-me que aquest no tindrà problemes amb les convencions
-socials. Per tant, si una prova ens troba un error abans del
-lliurament ho hem de celebrar (probablement millor després
-d'arreglar-lo).</p>
-<p>En resum: d'errors tots en fem, sempre en tindrem i millor trobar-los
-aviat.</p>
-</div>
-<div class="section" id="les-proves">
-<h2>Les proves</h2>
-<p>Les proves són accions destinades a trobar errors en la nostra
-aplicació. Atenció, fixa't que no he dit, destinades a demostrar que
-la nostra aplicació funciona. Si trobes un error amb una prova és que
-hi era, si no el trobes no vol dir que no hi sigui, potser la prova no
-ha estat prou efectiva.</p>
-<p>Una bona prova té alta probabilitat de trobar un error, presenta
-baixa redundància amb altres proves i minimitza la interacció humana
-(idealment és automatitzable).</p>
-<p>Quan s'està dissenyant o desenvolupant un component, s'ha de tenir al
-cap la idea de facilitar la prova.  Per exemple, se sap que un codi
-amb poques dependències facilita la prova. Per exemple, si el
-funcionament d'una classe és independent (de la BD, la GUI, la xarxa,
-altres classes) serà molt més fàcil dissenyar/realitzar proves per a
-aquesta classe.</p>
-<p>TDD (<a class="reference external" href="http://en.wikipedia.org/wiki/Test-driven_development">Test Driven Development</a>), una
-metodologia de desenvolupament basada en la prova, proposa que
-comencem pensant com provarem el nostre sistema abans de codificar-lo.</p>
-<p>En el moment en que comencem a analitzar els casos d'ús del sistema a
-desenvolupar, ja podem començar a definir com els provarem, el que
-es coneix com a casos de test <a class="footnote-reference" href="#casosdetest" id="id2">[2]</a>.</p>
-</div>
-<div class="section" id="classes-de-proves">
-<h2>Classes de proves</h2>
-<p>Hi ha moltes i molt diferents maneres de provar els sistemes
-informàtics. Tantes que es solen intentar classificar per poder-les
-entendre millor.</p>
-<div class="section" id="perspectives">
-<h3>Perspectives</h3>
-<p>Una de les classificacions habituals, es basa en les diferents
-perspectives de l'aplicació.</p>
-<p>La teva aplicació es pot veure (i s'ha de veure) des de tres
-perspectives: usuaris, testejadors, desenvolupadors.</p>
-<ul>
-<li><p class="first">Els usuaris</p>
-<p>Els usuaris veuen l'aplicació des de fora. És a dir, a partir de la
-seva interfície d'usuari. També, si vols, a partir dels casos
-d'ús. L'aplicació o bé fa el que esperen que faci, o bé no ho fa.</p>
-<p>No se'ls acudirà mirar, per exemple, el contingut de la BD. De fet,
-potser no tenen ni idea de què és ni, en tot cas, gaire interès.</p>
-<p>La majoria de nosaltres som usuaris d'alguna cosa que no comprenem
-per dins, com a mínim no profundament. Pensa en la rentadora, el
-cotxe, o el jersei que ens va fer l'àvia. Què passa quan esperem que
-faci el centrifugat, la nostra rentadora comença a treure escuma per
-tot arreu?, o quan posem primera al cotxe fa un soroll i fa que ens
-xoquem amb el vehicle del darrere?, o quan ens posem el jersei la
-nostra ma surt per l'aixella d'una de les mànigues? La majoria
-simplement direm que això no rutlla.</p>
-<p>Des de la perspectiva d'un usuari, l'aplicació és una <strong>caixa
-negra</strong>: el que hi ha dins del sistema està fora del seu abast.</p>
-</li>
-<li><p class="first">Els testejadors</p>
-<p>Hi ha gent, amb probablement el coneixement tècnic per desenvolupar
-aplicacions, que es dedica a provar aplicacions fetes per altres.
-Normalment no són els usuaris finals de l'aplicació i,
-desitjablement, tampoc són els que l'han desenvolupada.</p>
-<p>Comproven la funcionalitat (com amb la caixa negra) però, a l'hora,
-comproven que per dins, les coses canvien com s'esperava.  Per
-exemple, poden mirar la BD per veure si s'ha emmagatzemat
-correctament l'alta d'una nau industrial.</p>
-<p>Són necessaris especialment per a aquelles aplicacions que no
-permeten veure els resultats fàcilment. Per exemple, les aplicacions
-web sovint maneguen dades entre taules de la bd sense donar una
-sortida que permeti saber si aquestes dades es troben correctament
-emmagatzemades. En aquests casos, cal accedir a la BD juntament amb
-la interfície.</p>
-<p>Es diu que els testejadors veuen l'aplicació com una <strong>caixa grisa</strong>.</p>
-</li>
-<li><p class="first">Els desenvolupadors</p>
-<p>Els desenvolupadors veuen (i viuen en) els detalls d'implementació.
-Es preocupen per coses com ara si les classes tenen un bon disseny,
-si hi ha codi duplicat, si hi ha inconsistències en la representació
-de les dades...</p>
-<p>Es diu que veuen l'aplicació com una <strong>caixa blanca</strong>.</p>
-</li>
-</ul>
-</div>
-<div class="section" id="nivell-de-les-proves">
-<h3>Nivell de les proves</h3>
-<p>Les proves sovint s'agrupen tenint en compte el seu abast. Les
-categories més habituals són proves de sistema, les d'integració i les
-unitàries.</p>
-<p>Les proves de sistema posen tots els elements de l'aplicació en
-conjunt, i sense tenir en compte els detalls de codificació, ens
-enfoquem en les funcionalitats que demanà el client. Sovint són proves
-de <em>caixa negra</em> o <em>grisa</em>.</p>
-<p>Les proves d'integració comproven com les diferents parts del sistema
-treballen quan les posem juntes. A diferència de les de sistema, no
-cal que totes les parts estiguin disponibles. Habitualment són proves
-de <em>caixa grisa</em>.</p>
-<p>Les proves unitàries s'enfoquen en una petita peça de codi aïllada de
-la resta de l'aplicació. Mira de minimitzar dependències amb altres
-parts i de provar tots els possibles camins (ex. totes les branques de
-cada condicional). Aquest tipus de proves és generalment
-automatitzable i, solen considerar-se de <em>caixa blanca</em>.</p>
-</div>
-</div>
-<div class="section" id="junit">
-<h2>JUnit</h2>
 <p>Aquesta secció t'introduirà un dels <em>frameworks</em> més utilitzats per a
-la prova unitària: el JUnit.</p>
-<p>El lloc oficial és <a class="reference external" href="http://www.junit.org">http://www.junit.org</a> i
-pots trobar respostes a diverses qüestions bàsiques com ara, com
-instal·lo a <a class="reference external" href="http://junit.sourceforge.net/doc/faq/faq.htm">http://junit.sourceforge.net/doc/faq/faq.htm</a>.</p>
+la prova unitària: XUnit.</p>
+<p>XUnit és el nom amb el que es coneix una família d'entorns de prova
+unitària amplament coneguda entre els desenvolupadors de programari.
+Aquest nom es deriva de JUnit, el primer d'aquests entorns en ser ben
+conegut. En aquest cas, la <em>J</em> vol dir <em>Java</em>, i és l'entorn que farem
+servir aquí <a class="footnote-reference" href="#articlefowler" id="id1">[1]</a>.</p>
+<p>El lloc oficial de JUnit és <a class="reference external" href="http://www.junit.org">http://www.junit.org</a> i podràs trobar respostes a diverses
+qüestions bàsiques com ara, com instal·lo a
+<a class="reference external" href="http://junit.sourceforge.net/doc/faq/faq.htm">http://junit.sourceforge.net/doc/faq/faq.htm</a>.</p>
 <div class="section" id="installem-el-junit">
 <h3>Instal·lem el JUnit</h3>
 <p>Per a instal·lar junit, cal seguir les passes a la pàgina
 d'instal·lació que es troba a <em>junit.org</em> i descarregar-se la versió
-més recent dels fitxers <tt class="docutils literal">junit.jar</tt> <a class="footnote-reference" href="#versiojunit" id="id3">[3]</a> i (des de la
+més recent dels fitxers <tt class="docutils literal">junit.jar</tt> <a class="footnote-reference" href="#versiojunit" id="id2">[2]</a> i (des de la
 versió 4.11) també <tt class="docutils literal"><span class="pre">hamcrest-core.jar</span></tt> a un directori i afegeix els
 .jar al CLASSPATH.</p>
 <p>Passem a fer la primera prova: que hem fet la instal·lació correcta.</p>
@@ -352,7 +241,7 @@ tingués ja el javac oi?</p>
 <span class="lineno">6</span>     <span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
 <span class="lineno">7</span> <span class="o">}</span>
 </pre></div>
-<p>Copia també el constructor corresponent a Punt <a class="footnote-reference" href="#verbatim" id="id4">[4]</a></p>
+<p>Copia també el constructor corresponent a Punt <a class="footnote-reference" href="#verbatim" id="id3">[3]</a></p>
 <div class="highlight"><pre><span class="kd">public</span> <span class="nf">Punt</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="o">}</span>
 </pre></div>
 <p>En compilar, trobem</p>
@@ -489,7 +378,7 @@ més d'un i més de dos!.</p>
 </div>
 <div class="section" id="exercici-9-la-botiga-de-vins">
 <h3>Exercici 9. La botiga de vins</h3>
-<p>Considera l'exercici 1 de la <a class="reference external" href="../mapes-i.html">botiga de vins</a></p>
+<p>Considera l'exercici 1 de la <a class="reference external" href="./mapes-i.html">botiga de vins</a></p>
 <p>Implementa les proves unitàries que consideris necessàries per poder
 provar exhaustivament la classe Botiga.</p>
 <p><strong>Nota</strong>: tingués en compte la descripció dels diferents membres
@@ -520,32 +409,22 @@ fins al punt que es fa difícil saber què és el que es vol provar.</li>
 </ul>
 <p><em>Happy bug hunting!</em></p>
 </div>
-<hr class="docutils" />
 <div class="section" id="notes">
 <h2>Notes</h2>
-<table class="docutils footnote" frame="void" id="totomerrors" rules="none">
+<table class="docutils footnote" frame="void" id="articlefowler" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>De fet, no només del desenvolupament informàtic.
-Pensa en alguna cosa on no vegis possible que es trobi mai cap
-error. Escriu-la en algun lloc, potser en el futur canviaràs
-d'opinió.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="casosdetest" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Aquest tema s'escapa dels objectius d'aquest
-document. En tot cas, pensa un cas de test com una descripció d'una
-prova sobre un cas d'ús. En el cas de test sovint hi inclourem
-dades realistes, de vegades amb algun error, i indicarem què
-s'espera que generi el sistema a partir d'elles.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Pots trobar més informació a partir
+d'<a class="reference external" href="http://www.martinfowler.com/bliki/Xunit.html">aquest article</a>
+del Martin Fowler. També, com no, a la <a class="reference external" href="http://en.wikipedia.org/wiki/XUnit">Vikipedia</a> on podràs accedir a una
+ampla <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_unit_testing_frameworks">llista d'entorns</a> de
+prova classificats pel llenguatge de programació.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="versiojunit" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Durant la darrera actualització d'aquest document,
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Durant la darrera actualització d'aquest document,
 la versió més actual disponible era la 4.11. Potser en el moment
 que intentis descarregar-la sigui una altra. Amb sort, els
 desenvolupadors del JUnit hauran mantingut la seva filosofia de
@@ -555,18 +434,34 @@ compatibilitat enrere.</td></tr>
 <table class="docutils footnote" frame="void" id="verbatim" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>No facis de <em>debugger</em> i copia-ho <em>verbatim</em>.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>No facis de <em>debugger</em> i copia-ho <em>verbatim</em>.</td></tr>
 </tbody>
 </table>
 </div>
 </div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./validacio-daplicacions.html">
+        Validació d'aplicacions
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./validacio-daplicacions.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
 </div>
 <footer>
   <p>
-  <a href="..">Apunts tècnics</a> 
+  <a href=".">Apunts tècnics</a> 
   &copy; 
   <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
-  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="../images/adressamoi.png">)
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
   amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
   </p>
 </footer>    </div>
