@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apunts tècnics</title><link>http://apuntstecnics.herokuapp.com/</link><description></description><atom:link href="http://apuntstecnics.herokuapp.com/feeds/moises-gomez-giron.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 20 Jan 2015 15:52:07 +0100</lastBuildDate><item><title>Diagrames de seqüència</title><link>http://apuntstecnics.herokuapp.com/diagrames-de-sequencia.html</link><description>&lt;div class="section" id="introduccio"&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Apunts tècnics</title><link>http://apuntstecnics.herokuapp.com/</link><description></description><atom:link href="http://apuntstecnics.herokuapp.com/feeds/moises-gomez-giron.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 22 Jan 2015 00:09:55 +0100</lastBuildDate><item><title>Diagrames de seqüència</title><link>http://apuntstecnics.herokuapp.com/diagrames-de-sequencia.html</link><description>&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
 &lt;p&gt;Aquest document és un guió per la presentació a classe dels diagrames
 de seqüència.&lt;/p&gt;
@@ -16,7 +16,7 @@ Modeling Language, Third Edition&lt;/em&gt; de Martin Fowler.&lt;/p&gt;
 &lt;div class="section" id="exemple-entorn-gat-renat"&gt;
 &lt;h2&gt;Exemple Entorn Gat Renat&lt;/h2&gt;
 &lt;p&gt;Considerant l'entorn operatiu del Gat Renat amb l'ampliació de
-l'exercici 1 de &lt;a class="reference external" href="http://moiatgit.ruhoh.com/poo/relacions/"&gt;Relacions entre classes&lt;/a&gt;&lt;/p&gt;
+l'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/relacions-entre-classes.html"&gt;exercici 1 de Relacions entre classes&lt;/a&gt;&lt;/p&gt;
 &lt;div class="figure align-center"&gt;
 &lt;img alt="entorn Renat" src="http://apuntstecnics.herokuapp.com/images/uml002.img002.exemple_entornrenat.png" /&gt;
 &lt;/div&gt;
@@ -25,13 +25,13 @@ l'exercici 1 de &lt;a class="reference external" href="http://moiatgit.ruhoh.com
 &lt;h2&gt;Exercicis&lt;/h2&gt;
 &lt;div class="section" id="exercici-1-l-activitat-dels-ulls-del-gat-renat"&gt;
 &lt;h3&gt;Exercici 1. L'activitat dels ulls del Gat Renat&lt;/h3&gt;
-&lt;p&gt;Representa el diagrama de seqüència corresponent a l'exercici 2 de
-&lt;a class="reference external" href="http://moiatgit.ruhoh.com/poo/relacions/"&gt;Relacions entre classes&lt;/a&gt;
-de manera que es pugui entendre com interacciona el gat amb els ulls a
+&lt;p&gt;Representa el diagrama de seqüència corresponent a l'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/relacions-entre-classes.html"&gt;exercici 2 de
+Relacions entre classes&lt;/a&gt; de
+manera que es pugui entendre com interacciona el gat amb els ulls a
 partir dels diferents serveis del gat que afecten a l'estat dels ulls.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Tue, 20 Jan 2015 15:52:07 +0100</pubDate><guid>tag:apuntstecnics.herokuapp.com,2015-01-20:diagrames-de-sequencia.html</guid></item><item><title>Diagrames d'estat</title><link>http://apuntstecnics.herokuapp.com/diagrames-destat.html</link><description>&lt;div class="section" id="introduccio"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Thu, 22 Jan 2015 00:09:55 +0100</pubDate><guid>tag:apuntstecnics.herokuapp.com,2015-01-22:diagrames-de-sequencia.html</guid></item><item><title>Diagrames d'estat</title><link>http://apuntstecnics.herokuapp.com/diagrames-destat.html</link><description>&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
 &lt;p&gt;Aquest document és un guió per la presentació a classe dels diagrames
 de màquines d'estat. En el document s'abreujarà per &lt;em&gt;diagrames
@@ -7880,8 +7880,8 @@ del teu &lt;tt class="docutils literal"&gt;CLASSPATH&lt;/tt&gt;.&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;Canvia el missatge del HolaPackage.java de manera que mostri el
 resultat de la crida a:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;System.getProperty(&amp;quot;java.class.path&amp;quot;)
-Recompila i executa. Què es mostra?
 &lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Recompila i executa. Què es mostra?&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Crea la classe Salutator amb el següent contingut i afegeix-la al
 &lt;em&gt;package&lt;/em&gt; org.estudi_poo.«el teu nom»&lt;/p&gt;
