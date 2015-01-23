@@ -8416,8 +8416,8 @@ independència de la posició d'aquestes a l'arbre jeràrquic, fes-ho
 amb una interfície.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-2-la-interficie-d-animals-de-companyia"&gt;
-&lt;h2&gt;Exercici 2. La interfície d'animals de companyia&lt;/h2&gt;
+&lt;div class="section" id="exercici-1-la-interficie-d-animals-de-companyia"&gt;
+&lt;h2&gt;Exercici 1. La interfície d'animals de companyia&lt;/h2&gt;
 &lt;p&gt;Defineix la interfície AnimalDeCompanyia amb els mètodes &lt;tt class="docutils literal"&gt;String
 siguesAmistos()&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;String juga()&lt;/tt&gt;. Fes que Gos i Gat implementin
 la interfície (Canari no cal)&lt;/p&gt;
@@ -9677,18 +9677,16 @@ un informe en el que, per cada opció, indiquis en quins casos d'ús
 &lt;h2&gt;Introducció&lt;/h2&gt;
 &lt;p&gt;Aquests continguts introdueixen el mecanisme de control d'excepcions
 en el llenguatge Java.&lt;/p&gt;
-&lt;p&gt;Els conceptes que es treballen són: control d'errors, excepcions,
-captura d'excepcions (&lt;em&gt;try&lt;/em&gt;/&lt;em&gt;catch&lt;/em&gt;/&lt;em&gt;finally&lt;/em&gt;), llançament
-d'excepcions (&lt;em&gt;throw&lt;/em&gt;), excepcions predefinides, creació d'excepcions
-personalitzades&lt;/p&gt;
+&lt;p&gt;Els conceptes que es treballen són: control d'errors, excepcions, captura
+d'excepcions (&lt;em&gt;try&lt;/em&gt;/&lt;em&gt;catch&lt;/em&gt;/&lt;em&gt;finally&lt;/em&gt;), llançament d'excepcions (&lt;em&gt;throw&lt;/em&gt;),
+excepcions predefinides, creació d'excepcions personalitzades&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="control-d-excepcions"&gt;
 &lt;h2&gt;Control d'excepcions&lt;/h2&gt;
-&lt;p&gt;Una excepció és un esdeveniment (&lt;em&gt;event&lt;/em&gt;) que representa una condició
-anormal en l’execució d’un programa i que atura el flux normal
-d’execució.&lt;/p&gt;
-&lt;p&gt;Les excepcions permeten a les aplicacions detectar i donar resposta
-situacions d’error de manera controlada (sense penjar-se)&lt;/p&gt;
+&lt;p&gt;Una excepció és un esdeveniment (&lt;em&gt;event&lt;/em&gt;) que representa una condició anormal
+en l’execució d’un programa i que atura el flux normal d’execució.&lt;/p&gt;
+&lt;p&gt;Les excepcions permeten a les aplicacions detectar i donar resposta situacions
+d’error de manera controlada (sense penjar-se)&lt;/p&gt;
 &lt;p&gt;Considerem l’exemple de la classe &lt;tt class="docutils literal"&gt;Hora&lt;/tt&gt;&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
@@ -9909,15 +9907,148 @@ la informació del constructor a la API de Java)&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-3-gat-amb-excepcions"&gt;
-&lt;h3&gt;Exercici  3. Gat amb excepcions&lt;/h3&gt;
+&lt;h3&gt;Exercici 3. Gat amb excepcions&lt;/h3&gt;
 &lt;p&gt;Crea una nova versió de la classe la classe Gat de manera que les
 operacions que puguin donar lloc a error (ex. assignar un nombre de
 vides negatiu) disposin d'excepcions. Modifica el programa
 &lt;tt class="docutils literal"&gt;EntornGat&lt;/tt&gt; de manera que tracti aquestes excepcions. Considera si
 cal modificar la classe &lt;tt class="docutils literal"&gt;GatRenat&lt;/tt&gt;.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-4-subclasses-d-exception"&gt;
-&lt;h3&gt;Exercici 4. Subclasses d'Exception&lt;/h3&gt;
+&lt;div class="section" id="exercici-4-excepcions-amb-recursos"&gt;
+&lt;h3&gt;Exercici 4. Excepcions amb recursos&lt;/h3&gt;
+&lt;p&gt;Des de la versió 7 de Java, existeix una variant d'ús del &lt;em&gt;try&lt;/em&gt;. Es
+diu &lt;a class="reference external" href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html"&gt;try amb recursos&lt;/a&gt; i permet especificar recursos com a arguments
+de &lt;em&gt;try&lt;/em&gt;. Quan fem servir aquest format, el compilador de Java afegirà
+el codi necessari per tancar els recursos tant si es produeix excepció
+o no.&lt;/p&gt;
+&lt;p&gt;El format és:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;llista&lt;/span&gt; &lt;span class="n"&gt;de&lt;/span&gt; &lt;span class="n"&gt;recursos&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;processament&lt;/span&gt; &lt;span class="n"&gt;dels&lt;/span&gt; &lt;span class="n"&gt;recursos&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Un recurs és una instància d'una classe que implementi la interfície
+&lt;a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/lang/AutoCloseable.html"&gt;java.lang.AutoCloseable&lt;/a&gt;. Per
+tant, en podem fins i tot crear-ne de nous.&lt;/p&gt;
+&lt;p&gt;El que ens ofereix és la possibilitat de no haver de tancar el recurs.  Amb els
+coneixements que ja hem vist abans, podíem resoldre-ho amb un &lt;em&gt;finally&lt;/em&gt; Això
+equival a&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;obrir&lt;/span&gt; &lt;span class="n"&gt;recurs&lt;/span&gt;
+    &lt;span class="n"&gt;processament&lt;/span&gt; &lt;span class="n"&gt;del&lt;/span&gt; &lt;span class="n"&gt;recurs&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;finally&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;tancar&lt;/span&gt; &lt;span class="n"&gt;recurs&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Considera el següent codi que defineix la nostra versió de la comanda
+&lt;em&gt;cat&lt;/em&gt;:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.BufferedReader&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.FileReader&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.IOException&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.Vector&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CatMeu&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="nf"&gt;llegeix_fitxer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;Vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;linies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;();&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BufferedReader&lt;/span&gt; &lt;span class="n"&gt;br&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;
+                &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;BufferedReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;FileReader&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;)))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;linia&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+            &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;linia&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;br&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;readLine&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;linies&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;linia&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Ops: s&amp;#39;ha produït una excepció: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getMessage&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;linies&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;linies&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;()]);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Indica un o més paràmetres&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="nl"&gt;a:&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;linies&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;llegeix_fitxer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;linia&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;linia&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;linies&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;linia&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Línia [%d]: &amp;#39;%s&amp;#39;\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;linia&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;linies&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;linia&lt;/span&gt;&lt;span class="o"&gt;]);&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Pots executar aquest codi des del mateix directori on tinguis el seu
+codi font, fent:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;java CatMeu fitxerinexistent1 CatMeu.java fitxerinexistent2
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;De manera que puguis veure:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;dos missatges amb excepcions de fitxer o directori no existent&lt;/li&gt;
+&lt;li&gt;el contingut del fitxer CatMeu.java.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="es-demana"&gt;
+&lt;h4&gt;Es demana&lt;/h4&gt;
+&lt;p&gt;Analitza aquest codi fins que et familiaritzis amb el seu
+funcionament. A continuació, desenvolupa un programa anomenat
+&lt;em&gt;MostraImports&lt;/em&gt; tal que:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;processi la llista d'arguments que se li passin&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;ignori sense cap missatge aquells paràmetres que no siguin fitxers
+amb codi font java (per simplicitat, els que no tinguin extensió
+.java)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;per cada fitxer .java, que mostri la llista d'imports que conté o el
+missatge &amp;quot;Cap import&amp;quot; si no conté cap.&lt;/p&gt;
+&lt;p&gt;Per exemple:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;java MostraImports fitxerinexistent CatMeu.java
+CatMeu.java:
+    java.io.BufferedReader
+    java.io.FileReader
+    java.io.IOException
+    java.util.Vector
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Notes:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;fes servir el &lt;em&gt;try&lt;/em&gt; amb recursos.&lt;/li&gt;
+&lt;li&gt;recorda que la classe &lt;a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html"&gt;String&lt;/a&gt; disposa de
+moltes utilitats per a poder consultar i extreure parts d'un string.&lt;/li&gt;
+&lt;li&gt;no cal que consideris el cas &lt;em&gt;import static&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-5-subclasses-d-exception"&gt;
+&lt;h3&gt;Exercici 5. Subclasses d'Exception&lt;/h3&gt;
 &lt;p&gt;Exception no deixa de ser una classe més i com a tal, podem trobar la
 seva documentació a
 &lt;a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html"&gt;http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html&lt;/a&gt;.&lt;/p&gt;
@@ -10023,13 +10154,16 @@ crear de noves.&lt;/p&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Crea una nova classe anomenada &lt;tt class="docutils literal"&gt;Data&lt;/tt&gt; que disposi dels atributs
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;div class="section" id="id1"&gt;
+&lt;h4&gt;Es demana&lt;/h4&gt;
+&lt;p&gt;Crea una nova classe anomenada &lt;tt class="docutils literal"&gt;Data&lt;/tt&gt; que disposi dels atributs
 &lt;tt class="docutils literal"&gt;dia&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;mes&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;any&lt;/tt&gt;, amb els mètodes get/set i constructors que
 assegurin que tota instància creada conté una data correcta. Altrament
 generarà l'excepció &lt;tt class="docutils literal"&gt;DataNoValidaException&lt;/tt&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-5-embolicant-una-excepcio"&gt;
-&lt;h3&gt;Exercici 5. Embolicant una excepció&lt;/h3&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-6-embolicant-una-excepcio"&gt;
+&lt;h3&gt;Exercici 6. Embolicant una excepció&lt;/h3&gt;
 &lt;p&gt;Crea la classe &lt;tt class="docutils literal"&gt;DataHora&lt;/tt&gt; què conté una &lt;tt class="docutils literal"&gt;Data&lt;/tt&gt; i una &lt;tt class="docutils literal"&gt;Hora&lt;/tt&gt; (exercicis
 anteriors) privades.&lt;/p&gt;
 &lt;p&gt;La classe &lt;tt class="docutils literal"&gt;DataHora&lt;/tt&gt; oferirà mètodes per a accedir directament als
