@@ -9933,10 +9933,10 @@ tant, en podem fins i tot crear-ne de nous.&lt;/p&gt;
 coneixements que ja hem vist abans, podíem resoldre-ho amb un &lt;em&gt;finally&lt;/em&gt; Això
 equival a&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;obrir&lt;/span&gt; &lt;span class="n"&gt;recurs&lt;/span&gt;
-    &lt;span class="n"&gt;processament&lt;/span&gt; &lt;span class="n"&gt;del&lt;/span&gt; &lt;span class="n"&gt;recurs&lt;/span&gt;
+    &lt;span class="n"&gt;obrir&lt;/span&gt; &lt;span class="n"&gt;recursos&lt;/span&gt;
+    &lt;span class="n"&gt;processament&lt;/span&gt; &lt;span class="n"&gt;dels&lt;/span&gt; &lt;span class="n"&gt;recursos&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;finally&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="n"&gt;tancar&lt;/span&gt; &lt;span class="n"&gt;recurs&lt;/span&gt;
+    &lt;span class="n"&gt;tancar&lt;/span&gt; &lt;span class="n"&gt;recursos&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Considera el següent codi que defineix la nostra versió de la comanda
