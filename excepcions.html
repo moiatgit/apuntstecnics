@@ -322,13 +322,14 @@ la informació del constructor a la API de Java)</p>
 <div class="highlight"><pre><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">&quot;Exception capturada&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>  <span class="c1">// tornem a llençar l&#39;excepció</span>
 </pre></div>
 </div>
-<div class="section" id="exercici-3-gat-amb-excepcions">
-<h3>Exercici 3. Gat amb excepcions</h3>
-<p>Crea una nova versió de la classe la classe Gat de manera que les
+<div class="section" id="exercici-3-renat-amb-excepcions">
+<h3>Exercici 3. Renat amb excepcions</h3>
+<p>Crea una nova versió de la classe la classe GatRenat de manera que les
 operacions que puguin donar lloc a error (ex. assignar un nombre de
 vides negatiu) disposin d'excepcions. Modifica el programa
-<tt class="docutils literal">EntornGat</tt> de manera que tracti aquestes excepcions. Considera si
-cal modificar la classe <tt class="docutils literal">GatRenat</tt>.</p>
+<tt class="docutils literal">EntornGatRenat</tt> de manera que tracti aquestes excepcions.</p>
+<p>Nota: Fes servir la versió de GatRenat de l'exercici 2 de la secció de
+<a class="reference external" href="./relacions-entre-classes.html">relacions</a>.</p>
 </div>
 <div class="section" id="exercici-4-excepcions-amb-recursos">
 <h3>Exercici 4. Excepcions amb recursos</h3>
@@ -517,17 +518,7 @@ crear de noves.</p>
 29
 30
 31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hora</span> <span class="o">{</span>
+32</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hora</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="kt">int</span> <span class="n">h</span><span class="o">,</span> <span class="n">m</span><span class="o">,</span> <span class="n">s</span><span class="o">;</span>
     <span class="kd">public</span> <span class="nf">Hora</span><span class="o">()</span>                  <span class="o">{</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">m</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="o">}</span>
     <span class="kd">public</span> <span class="nf">Hora</span><span class="o">(</span><span class="kt">int</span> <span class="n">h</span><span class="o">,</span><span class="kt">int</span> <span class="n">m</span><span class="o">,</span> <span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">HoraNoValidaException</span> <span class="o">{</span>
@@ -535,22 +526,12 @@ crear de noves.</p>
         <span class="n">setMinut</span><span class="o">(</span><span class="n">m</span><span class="o">);</span>
         <span class="n">setSegon</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
     <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getHora</span><span class="o">()</span>           <span class="o">{</span> <span class="k">return</span> <span class="n">h</span><span class="o">;</span> <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMinut</span><span class="o">()</span>          <span class="o">{</span> <span class="k">return</span> <span class="n">m</span><span class="o">;</span> <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getSegon</span><span class="o">()</span>          <span class="o">{</span> <span class="k">return</span> <span class="n">s</span><span class="o">;</span> <span class="o">}</span>
+    <span class="err">«</span><span class="o">...</span><span class="err">»</span>   <span class="c1">// altres mètodes</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHora</span><span class="o">(</span><span class="kt">int</span> <span class="n">h</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">HoraNoValidaException</span>  <span class="o">{</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">h</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">h</span><span class="o">&lt;</span><span class="mi">24</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">h</span><span class="o">=</span><span class="n">h</span><span class="o">;</span>
         <span class="k">else</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">HoraNoValidaException</span><span class="o">(</span><span class="s">&quot;Hora.setHora(&quot;</span><span class="o">+</span><span class="n">h</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
     <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMinut</span><span class="o">(</span><span class="kt">int</span> <span class="n">m</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">HoraNoValidaException</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">m</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">m</span><span class="o">&lt;</span><span class="mi">24</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">m</span><span class="o">=</span><span class="n">m</span><span class="o">;</span>
-        <span class="k">else</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">HoraNoValidaException</span><span class="o">(</span><span class="s">&quot;Hora.setMinut(&quot;</span><span class="o">+</span><span class="n">m</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setSegon</span><span class="o">(</span><span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">HoraNoValidaException</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">s</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="o">&lt;</span><span class="mi">24</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">s</span><span class="o">=</span><span class="n">s</span><span class="o">;</span>
-        <span class="k">else</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">HoraNoValidaException</span><span class="o">(</span><span class="s">&quot;Hora.setSegon(&quot;</span><span class="o">+</span><span class="n">s</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span>       <span class="o">{</span> <span class="k">return</span> <span class="n">h</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="n">m</span><span class="o">+</span><span class="s">&quot;:&quot;</span><span class="o">+</span><span class="n">s</span><span class="o">;</span> <span class="o">}</span>
+    <span class="err">«</span><span class="o">...</span><span class="err">»</span>   <span class="c1">// altres mètodes</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
         <span class="k">try</span><span class="o">{</span>
             <span class="kt">int</span> <span class="n">argH</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
@@ -559,9 +540,9 @@ crear de noves.</p>
             <span class="n">Hora</span> <span class="n">h</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Hora</span><span class="o">(</span><span class="n">argH</span><span class="o">,</span> <span class="n">argM</span><span class="o">,</span> <span class="n">argS</span><span class="o">);</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Creada l&#39;hora &quot;</span> <span class="o">+</span> <span class="n">h</span><span class="o">);</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">HoraNoValidaException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;ha capturat una excepció d&#39;hora:: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;ha capturat una excepció d&#39;hora: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;ha capturat una excepció no d&#39;hora:: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;ha capturat una excepció no d&#39;hora: &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="o">);</span>
             <span class="k">throw</span> <span class="n">e</span><span class="o">;</span>  <span class="c1">// tornem a llençar l&#39;excepció</span>
         <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;executa tant si hi ha com si no hi ha excepció&quot;</span><span class="o">);</span>
@@ -588,6 +569,8 @@ En cas que es produeixi alguna excepció específica de <tt class="docutils lite
 <tt class="docutils literal">Hora</tt> en fer servir les classes dels seus atributs, la classe
 <tt class="docutils literal">DataHora</tt> &quot;traduirà&quot; l'excepció a una pròpia <tt class="docutils literal">DataHoraException</tt>
 que permetrà incloure l'excepció original en el seu constructor.</p>
+<p>Inclou un <em>main()</em> similar al de l'exercici anterior, per poder provar
+el funcionament.</p>
 </div>
 </div>
 </div>
