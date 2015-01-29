@@ -8561,7 +8561,7 @@ que no, hi trobes alguna raó per fer servir aquest nom?  ----&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Indica una manera alternativa d'escriure el següent codi a partir
 de Java SE 7&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Box&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Gat&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;gatBox&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Box&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;Box&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Gat&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;gatBox&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Box&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Gat&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;();&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;A la secció &lt;em&gt;Multiple Type Parameters&lt;/em&gt; veiem un exemple
@@ -8733,8 +8733,8 @@ String&amp;gt;&lt;/tt&gt;? Perquè?&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-5-delimitacio-de-parametres-de-tipus"&gt;
-&lt;h3&gt;Exercici 5. Delimitació de paràmetres de tipus&lt;/h3&gt;
+&lt;div class="section" id="exercici-5-opcional-delimitacio-de-parametres-de-tipus"&gt;
+&lt;h3&gt;Exercici 5. (Opcional) Delimitació de paràmetres de tipus&lt;/h3&gt;
 &lt;p&gt;Llegeix el següent article:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/bounded.html"&gt;Bounded Type Parameters&lt;/a&gt;&lt;/li&gt;
@@ -8800,8 +8800,8 @@ manera que funcioni el &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; tal 
 &lt;/ol&gt;
 &lt;!-- private  static &lt;T extends Object&gt; void mostra(ArrayList&lt;T&gt; l) --&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-6-contenidors-amb-herencia"&gt;
-&lt;h3&gt;Exercici 6. Contenidors amb herència&lt;/h3&gt;
+&lt;div class="section" id="exercici-6-opcional-contenidors-amb-herencia"&gt;
+&lt;h3&gt;Exercici 6. (Opcional) Contenidors amb herència&lt;/h3&gt;
 &lt;p&gt;Llegeix el següent article:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/upperBounded.html"&gt;Upper Bounded Wildcards&lt;/a&gt;&lt;/li&gt;
@@ -8876,8 +8876,8 @@ quin avantatge es desprèn de l'ús de &lt;em&gt;wildcards&lt;/em&gt; en aquest 
 &lt;/ol&gt;
 &lt;!-- private static &lt;T extends Animal&gt; void mostra(ArrayList&lt;T&gt; la) { --&gt;
 &lt;/div&gt;
-&lt;div class="section" id="exercici-7-limitacions-dels-generics"&gt;
-&lt;h3&gt;Exercici 7. Limitacions dels genèrics&lt;/h3&gt;
+&lt;div class="section" id="exercici-7-opcional-limitacions-dels-generics"&gt;
+&lt;h3&gt;Exercici 7. (Opcional) Limitacions dels genèrics&lt;/h3&gt;
 &lt;p&gt;Llegeix el següent article:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/generics/restrictions.html"&gt;Restrictions on Generics&lt;/a&gt;&lt;/li&gt;
