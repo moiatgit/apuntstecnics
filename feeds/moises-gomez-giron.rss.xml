@@ -6191,7 +6191,7 @@ del teu &lt;tt class="docutils literal"&gt;CLASSPATH&lt;/tt&gt;.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Canvia el missatge del HolaPackage.java de manera que mostri el
 resultat de la crida a:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;System.getProperty(&amp;quot;java.class.path&amp;quot;)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getProperty&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;java.class.path&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Recompila i executa. Què es mostra?&lt;/p&gt;
 &lt;/li&gt;
@@ -6205,15 +6205,15 @@ resultat de la crida a:&lt;/p&gt;
 6
 7
 8
-9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Salutator&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="kd"&gt;private&lt;/span&gt;   &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varPrivada&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;public&lt;/span&gt;    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varPublica&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;protected&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varProtegida&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-              &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varPackage&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;saluda&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Salutator diu: Hola Món!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-    &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;span class="o"&gt;}&lt;/span&gt;
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Salutator&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+     &lt;span class="kd"&gt;private&lt;/span&gt;   &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varPrivada&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+     &lt;span class="kd"&gt;public&lt;/span&gt;    &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varPublica&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+     &lt;span class="kd"&gt;protected&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varProtegida&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+               &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;varPackage&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+     &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;saluda&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+         &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Salutator diu: Hola Món!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+     &lt;span class="o"&gt;}&lt;/span&gt;
+ &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Des del &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt; de la classe HolaPackage afegeix una crida al
 mètode saluda() de Salutator, i mostra el valor de totes les
@@ -6267,9 +6267,10 @@ la carpeta que conté org/ si has seguit els exemples anteriors)&lt;/p&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;cat META-INF/MANIFEST.MF
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Hauria d'aparèixer quelcom semblant a:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;Manifest-Version: 1.0
+&lt;pre class="literal-block"&gt;
+Manifest-Version: 1.0
 Created-By: 1.6.0_15 (Sun Microsystems Inc.)
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 &lt;p&gt;En un moment veurem per a què serveix aquest fitxer.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Ara, si intentes executar el teu programa veuràs que no es pot&lt;/p&gt;
@@ -6287,10 +6288,11 @@ electrònica. De moment, ens interessarem en indicar la classe
 principal (la que conté el &lt;tt class="docutils literal"&gt;main()&lt;/tt&gt;)&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Edita un fitxer de text (per exemple amb nom manifest.txt) i
-inclou-hi el següent contingut&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;Main-Class: org.estudi_poo.«elteunom».HolaPackage
+inclou-hi el següent contingut:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Main-Class: org.estudi_poo.«elteunom».HolaPackage
                                                     &amp;lt;--- salt de línia
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 &lt;p&gt;Assegura't que el fitxer acaba amb un salt de línia, o no
 interpretarà bé el contingut.&lt;/p&gt;
 &lt;p&gt;Ara construeix el jar amb la comanda (vigila on has posat manifest.txt)&lt;/p&gt;
@@ -6539,7 +6541,8 @@ que es pugui executar el següent codi.&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;En executar-lo, cal que es generi el següent resultat per sortida
 estàndard:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;Fido camina
+&lt;pre class="literal-block"&gt;
+Fido camina
 Fido fa: nyam nyam
 Fido fa: bof bof
 Fido fa: ZZZzzzz
@@ -6555,7 +6558,7 @@ Bonifaci camina
 Bonifaci fa: gram gram
 Bonifaci fa: grrrr
 Bonifaci fa: ZRrrrrr
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;Avís&lt;/strong&gt;: és possible que trobis problemes per a adaptar codi
 d'exercicis previs que aparentment s'assemblen a les classes d'aquest.
 Com que hi ha prou canvis (ex. les instàncies de les classes i
@@ -6792,9 +6795,12 @@ la interfície (Canari no cal)&lt;/p&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;En executar, el codi anterior ha de generar el següent resultat per
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;!-- XXX TODO: elimina el cast del bucle d'animals de companyia si vols
+que la pista 2 tingui algun sentit. --&gt;
+&lt;p&gt;En executar, el codi anterior ha de generar el següent resultat per
 sortida estàndard:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;Fido camina
+&lt;pre class="literal-block"&gt;
+Fido camina
 Fido fa: nyam nyam
 Fido fa: bof bof
 Fido fa: ZZZzzzz
@@ -6814,7 +6820,7 @@ Fido et llepa la cara
 Fido busca una pilota
 Renat es frega amb la teva cama
 Renat esgarrapa el teu sofa
-&lt;/pre&gt;&lt;/div&gt;
+&lt;/pre&gt;
 &lt;div class="section" id="pistes"&gt;
 &lt;h3&gt;Pistes:&lt;/h3&gt;
 &lt;ol class="arabic simple"&gt;
@@ -7497,10 +7503,12 @@ altres pot suposar un alentiment important en l'execució.&lt;/p&gt;
 &lt;p&gt;Per exemple, imagina que ens cal posar en majúscules la inicial d'un
 String. La manera que ens ofereix la classe és crear un nou String a
 partir de dues peces de l'original, per exemple:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;toUpperCase&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;renat&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;paraula&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;toUpperCase&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;o potser una mica millor&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toUpperCase&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;charAt&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;renat&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;paraula&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toUpperCase&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;charAt&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;paraula&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;substring&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;En qualsevol dels dos casos, estem creant dos o més Strings, mentre
 que en C ho hagéssim resolt amb un econòmic:&lt;/p&gt;
@@ -7547,7 +7555,7 @@ per a aquella prova.&lt;/p&gt;
 String des de l'inici (&lt;tt class="docutils literal"&gt;str = &amp;quot;A&amp;quot; + str;&lt;/tt&gt;) i des del final (&lt;tt class="docutils literal"&gt;str =
 str + &amp;quot;A&amp;quot;;&lt;/tt&gt;)&lt;/p&gt;
 &lt;p&gt;Realitza 5 proves de cadascuna de les dues opcions amb mides de 10,
-1000 i 100000. Calcula la mitjana i la desviació tipus i omple
+1000 i 100000. Calcula la mitja i la desviació tipus i omple
 una taula com la següent:&lt;/p&gt;
 &lt;table border="1" class="docutils"&gt;
 &lt;colgroup&gt;
@@ -7576,7 +7584,7 @@ una taula com la següent:&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;On &lt;tt class="docutils literal"&gt;xxxx&lt;/tt&gt; indica la mitjana i &lt;tt class="docutils literal"&gt;(yyyy)&lt;/tt&gt; la desviació tipus.&lt;/p&gt;
+&lt;p&gt;On &lt;tt class="docutils literal"&gt;xxxx&lt;/tt&gt; indica la mitja i &lt;tt class="docutils literal"&gt;(yyyy)&lt;/tt&gt; la desviació tipus.&lt;/p&gt;
 &lt;p&gt;També caldrà que aportis algunes dades de l'equip on executes les
 proves: processador, versió del SO, versió de jre.&lt;/p&gt;
 &lt;p&gt;En un equip GNU/Linux, pots obtenir aquestes dades (i més) amb les
@@ -7593,7 +7601,7 @@ inclogui, com a mínim, si si hi trobes una diferència significativa en
 les dues maneres de composar el String.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Pistes&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;Per calcular la mitjana d'un &lt;tt class="docutils literal"&gt;long[]&lt;/tt&gt; pots fer servir:&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;Per calcular la mitja d'un &lt;tt class="docutils literal"&gt;long[]&lt;/tt&gt; pots fer servir:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -7604,7 +7612,7 @@ les dues maneres de composar el String.&lt;/p&gt;
  8
  9
 10
-11&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;calculaMitjana&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;long&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+11&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="nf"&gt;calculaMitja&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;long&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
@@ -7643,9 +7651,9 @@ les dues maneres de composar el String.&lt;/p&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 
     &lt;span class="kt"&gt;double&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;desviacio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
-    &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;mitjana&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calculaMitjana&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="kt"&gt;double&lt;/span&gt; &lt;span class="n"&gt;mitja&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;calculaMitja&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
     &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;desviacio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-        &lt;span class="n"&gt;desviacio&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;mitjana&lt;/span&gt; &lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;desviacio&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;mitja&lt;/span&gt; &lt;span class="o"&gt;;&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
     &lt;span class="kt"&gt;double&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;quadrats&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="kt"&gt;double&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;resultats&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;];&lt;/span&gt;
     &lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;quadrats&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;

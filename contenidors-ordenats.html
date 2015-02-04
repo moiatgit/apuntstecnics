@@ -116,10 +116,12 @@ altres pot suposar un alentiment important en l'execució.</p>
 <p>Per exemple, imagina que ens cal posar en majúscules la inicial d'un
 String. La manera que ens ofereix la classe és crear un nou String a
 partir de dues peces de l'original, per exemple:</p>
-<div class="highlight"><pre><span class="n">String</span> <span class="n">paraula</span> <span class="o">=</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">).</span><span class="na">toUpperCase</span><span class="o">()</span> <span class="o">+</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">paraula</span> <span class="o">=</span> <span class="s">&quot;renat&quot;</span><span class="o">;</span>
+<span class="n">paraula</span> <span class="o">=</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">).</span><span class="na">toUpperCase</span><span class="o">()</span> <span class="o">+</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
 </pre></div>
 <p>o potser una mica millor</p>
-<div class="highlight"><pre><span class="n">String</span> <span class="n">paraula</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">(</span><span class="n">paraula</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">+</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">paraula</span> <span class="o">=</span> <span class="s">&quot;renat&quot;</span><span class="o">;</span>
+<span class="n">paraula</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">(</span><span class="n">paraula</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">+</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
 </pre></div>
 <p>En qualsevol dels dos casos, estem creant dos o més Strings, mentre
 que en C ho hagéssim resolt amb un econòmic:</p>
@@ -166,7 +168,7 @@ per a aquella prova.</p>
 String des de l'inici (<tt class="docutils literal">str = &quot;A&quot; + str;</tt>) i des del final (<tt class="docutils literal">str =
 str + &quot;A&quot;;</tt>)</p>
 <p>Realitza 5 proves de cadascuna de les dues opcions amb mides de 10,
-1000 i 100000. Calcula la mitjana i la desviació tipus i omple
+1000 i 100000. Calcula la mitja i la desviació tipus i omple
 una taula com la següent:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -195,7 +197,7 @@ una taula com la següent:</p>
 </tr>
 </tbody>
 </table>
-<p>On <tt class="docutils literal">xxxx</tt> indica la mitjana i <tt class="docutils literal">(yyyy)</tt> la desviació tipus.</p>
+<p>On <tt class="docutils literal">xxxx</tt> indica la mitja i <tt class="docutils literal">(yyyy)</tt> la desviació tipus.</p>
 <p>També caldrà que aportis algunes dades de l'equip on executes les
 proves: processador, versió del SO, versió de jre.</p>
 <p>En un equip GNU/Linux, pots obtenir aquestes dades (i més) amb les
@@ -212,7 +214,7 @@ inclogui, com a mínim, si si hi trobes una diferència significativa en
 les dues maneres de composar el String.</p>
 <p><strong>Pistes</strong></p>
 <ul>
-<li><p class="first">Per calcular la mitjana d'un <tt class="docutils literal">long[]</tt> pots fer servir:</p>
+<li><p class="first">Per calcular la mitja d'un <tt class="docutils literal">long[]</tt> pots fer servir:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -223,7 +225,7 @@ les dues maneres de composar el String.</p>
  8
  9
 10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kt">double</span> <span class="nf">calculaMitjana</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">resultats</span><span class="o">)</span> <span class="o">{</span>
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kt">double</span> <span class="nf">calculaMitja</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">resultats</span><span class="o">)</span> <span class="o">{</span>
 
     <span class="k">if</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
     <span class="k">if</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="n">resultats</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
@@ -262,9 +264,9 @@ les dues maneres de composar el String.</p>
     <span class="k">if</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
 
     <span class="kt">double</span><span class="o">[]</span> <span class="n">desviacio</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
-    <span class="kt">double</span> <span class="n">mitjana</span> <span class="o">=</span> <span class="n">calculaMitjana</span><span class="o">(</span><span class="n">resultats</span><span class="o">);</span>
+    <span class="kt">double</span> <span class="n">mitja</span> <span class="o">=</span> <span class="n">calculaMitja</span><span class="o">(</span><span class="n">resultats</span><span class="o">);</span>
     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">desviacio</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-        <span class="n">desviacio</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">resultats</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">-</span> <span class="n">mitjana</span> <span class="o">;</span>
+        <span class="n">desviacio</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">resultats</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">-</span> <span class="n">mitja</span> <span class="o">;</span>
     <span class="o">}</span>
     <span class="kt">double</span><span class="o">[]</span> <span class="n">quadrats</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
     <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">quadrats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
