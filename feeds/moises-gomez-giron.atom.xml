@@ -8426,7 +8426,986 @@ estirat.&lt;/p&gt;
 &lt;p&gt;Realitza el diagrama d'estats i proposa un esquema d'implementació.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary></entry><entry><title>Us bàsic de l'entorn de desenvolupament integrat Eclipse</title><link href="http://apuntstecnics.herokuapp.com/us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html" rel="alternate"></link><updated>2014-10-14T22:46:43+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-10-14:us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html</id><summary type="html">&lt;!-- categories: eines --&gt;
+</summary></entry><entry><title>Interfícies gràfiques amb Java</title><link href="http://apuntstecnics.herokuapp.com/interficies-grafiques-amb-java.html" rel="alternate"></link><updated>2015-01-12T23:59:30+01:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2015-01-12:interficies-grafiques-amb-java.html</id><summary type="html">&lt;!-- XXX TODO: translation to proper rst still unfinished. Check it
+still works for current version of everything. Consider spliting
+in different documents. Check specially the voice problem. Consider
+adding challenge problems. For example, it'd be nice to have a GUI
+version of the Animals system. --&gt;
+&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;La sèrie d'entrades que comença amb aquesta, té com a objectiu
+introduir-te en la programació d'interfícies gràfiques d'usuari (GUI)
+usant el llenguatge de programació Java.&lt;/p&gt;
+&lt;p&gt;Per desenvolupar aplicacions amb GUI, farem servir la biblioteca
+&lt;em&gt;swing&lt;/em&gt; &lt;a class="footnote-reference" href="#guilocal" id="id1"&gt;[1]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;El mecanisme d'introducció serà a partir de la realització de
+diferents programes que presenten un o més conceptes nous o/i reforcen
+conceptes anteriors.&lt;/p&gt;
+&lt;p&gt;Inicialment realitzarem els exercicis sense l'ajut d'eines gràfiques
+que ofereixen alguns IDEs com ara Eclipse o NetBeans. Això ens
+permetrà entendre l'estructura interna d'una GUI de Java. A
+continuació passarem a desenvolupar-los ajudant-nos de les eines
+ofertes per un IDE. En aquest cas s'ha escollit el NetBeans per que no
+requereix de cap instal·lació especial &lt;a class="footnote-reference" href="#altreide" id="id2"&gt;[2]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Un cop assolits els continguts d'aquesta introducció, podràs
+atrevir-te a implementar interfícies gràfiques per les teves
+aplicacions en Java.&lt;/p&gt;
+&lt;p&gt;Comencem com els deus de la programació manen: amb l'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/hola-swing.html"&gt;Hola Swing&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="notes"&gt;
+&lt;h2&gt;Notes&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="guilocal" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id1"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Aquest tema es centra exclusivament en l'ús de la
+biblioteca &lt;em&gt;Swing&lt;/em&gt; per aplicacions d'escriptori.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;!-- XXX TODO: planteja si pots aconseguir passar algun dels exercicis a
+applet i així executar-ho en un navegador! --&gt;
+&lt;table class="docutils footnote" frame="void" id="altreide" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[2]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Si t'estimes més fer servir un altre IDE, o fins i tot
+si prefereixes fer-ho tot manualment (sense suport), és
+perfectament acceptable. Només has de tenir en compte que no rebràs
+suport en aquests materials.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="java"></category></entry><entry><title>Hola Swing</title><link href="http://apuntstecnics.herokuapp.com/hola-swing.html" rel="alternate"></link><updated>2015-01-12T23:58:30+01:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2015-01-12:hola-swing.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;En aquesta entrada tindrem un primer contacte amb la biblioteca
+&lt;em&gt;Swing&lt;/em&gt; de Java.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h2&gt;Hola swing&lt;/h2&gt;
+&lt;p&gt;javax.swing és una biblioteca gràfica per a java. Inclou els elements
+habituals de les aplicacions gràfiques: botons, quadres de text, llistes
+desplegables, i un llarg etcètera.&lt;/p&gt;
+&lt;p&gt;És una ampliació de l'antic model AWT (&lt;em&gt;Abstract Window Toolkit&lt;/em&gt;) que
+millora, entre d'altres coses, amb l'aparença que emula l'aspecte de
+diferents plataformes.&lt;/p&gt;
+&lt;p&gt;Es pot desenvolupar una aplicació gràfica en java seguint les següents
+passes:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;crea un marc (&lt;em&gt;frame&lt;/em&gt;): javax.swing.JFrame&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;JFrame&lt;/span&gt; &lt;span class="n"&gt;marc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;crea un accessori (&lt;em&gt;widget&lt;/em&gt;), per exemple JButton&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;JButton&lt;/span&gt; &lt;span class="n"&gt;boto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;prem-me&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;afegeix l'accessori al marc&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;mostra el marc&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// defineix la mida&lt;/span&gt;
+&lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVisible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// el fa visible&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="section" id="exercici-1-hola-swing"&gt;
+&lt;h3&gt;Exercici 1. Hola Swing&lt;/h3&gt;
+&lt;p&gt;Posa tots els elements en el main d'un programa anomenat &lt;em&gt;SimpleGui&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Per a facilitar el tancament del programa, afegeix la línia:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultCloseOperation&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXIT_ON_CLOSE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;La necessitat d'aquesta línia la trobaràs si executes el programa fora
+d'un IDE (opció recomanada per fer els primers exercicis!)&lt;/p&gt;
+&lt;p&gt;Pista: les classes que fas servir són al package javax.swing.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;p&gt;Amb aquest exemple i depenent de la plataforma on l'executem, disposem
+d'una finestra amb els elements típics (botons de minimització,
+ampliació i tancat; capacitat de redimensionat, etc.) i un botó amb el
+text &amp;quot;prem-me&amp;quot; que omple tot el marc de la finestra.&lt;/p&gt;
+&lt;p&gt;L'aspecte del botó pot resultar decebedor, però ja veurem que podem
+aconseguir altres aspectes amb relativa facilitat.&lt;/p&gt;
+&lt;p&gt;Quan premem el botó, simula l'efecte de pressió i alliberament però no
+sembla que passi res més.&lt;/p&gt;
+&lt;p&gt;Clar, hem de programar el que volem que faci!&lt;/p&gt;
+&lt;p&gt;Per que el botó faci alguna cosa en fer-li clic, ens cal:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;un mètode a cridar en fer clic: el mètode realitzarà l'acció
+que volem que passi quan es premi el botó.&lt;/li&gt;
+&lt;li&gt;una manera de saber quan hem de llençar aquest mètode. És a dir,
+saber quan l'usuari fa clic al botó.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Al nostre exemple, suposem que el que volem que passi és que quan facin
+click al botó canviï el text per &amp;quot;prem-me un altre cop&amp;quot; Per fer-ho,
+sembla que n'hi hauria d'haver prou amb un mètode com ara:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;canviaBoto&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;prem-me un altre cop!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Però, com &lt;em&gt;connectem&lt;/em&gt; aquest mètode amb l'&lt;em&gt;esdeveniment&lt;/em&gt; de clic?&lt;/p&gt;
+&lt;p&gt;Per a fer-ho, cal que ens registrem com a interessats o escoltadors
+(&lt;em&gt;listeners&lt;/em&gt;) en aquest esdeveniment.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Representació del patró observador amb un botó" src="gui.img001.observer_pattern.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Els components GUI de Swing són fonts d'esdeveniments (Event Sources) el
+que implica que són objectes que poden traduir successos de l'entorn en
+esdeveniments.&lt;/p&gt;
+&lt;p&gt;Un esdeveniment en Java (cap sorpresa) és tradueix en un objecte.&lt;/p&gt;
+&lt;p&gt;Mira el package java.awt.event i trobaràs un munt de classes
+d'esdeveniments. És fàcil distingir-les perquè totes porten &lt;em&gt;event&lt;/em&gt; al
+nom: MouseEvent, KeyEvent, WindowEvent, ActionEvent...&lt;/p&gt;
+&lt;p&gt;Un event source com ara un botó, crea una nova instància d'esdeveniment
+quan succeeix quelcom significatiu (ex. l'usuari fa clic a sobre del
+botó)&lt;/p&gt;
+&lt;p&gt;Les classes interessades en aquests esdeveniments, com ara la nostra
+SimpleGui, reben aquests esdeveniments un cop han mostrat el seu
+interès.&lt;/p&gt;
+&lt;p&gt;Cada esdeveniment té una interface associada per a ser implementada per
+a aquells que vulguin seguir l'esdeveniment. Per exemple, si vols seguir
+l'esdeveniment MouseEvent, et caldrà implementar MouseListener.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Representació de la interacció d'EventListener amb un botó" src="gui.img002.event_listener.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Per a obtenir els esdeveniments d'un botó, cal:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;implementar la interface ActionListener&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;La documentació (&lt;a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/awt/event/ActionListener.html"&gt;http://java.sun.com/javase/6/docs/api/java/awt/event/ActionListener.html&lt;/a&gt;)
+descriu que la interface ActionListener requereix la implementació del
+mètode actionPerformed()&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol class="arabic simple" start="2"&gt;
+&lt;li&gt;registrar-se com a &lt;em&gt;listener&lt;/em&gt; del botó&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Considera el següent codi:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.event.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;javax.swing.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SimpleGui&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;ActionListener&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt; &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt; &lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;SimpleGui&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;boto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;prem-me&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addActionListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// ens registrem com a listeners&lt;/span&gt;
+        &lt;span class="n"&gt;del&lt;/span&gt; &lt;span class="n"&gt;bot&lt;/span&gt;&lt;span class="err"&gt;ó&lt;/span&gt;
+            &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultCloseOperation&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXIT_ON_CLOSE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVisible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;SimpleGui&lt;/span&gt; &lt;span class="n"&gt;gui&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SimpleGui&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;actionPerformed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionEvent&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;canviaBoto&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt; &lt;span class="c1"&gt;// la resposta al clic&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;canviaBoto&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;prem-me un altre cop!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-2-simplegui-v1-1"&gt;
+&lt;h3&gt;Exercici 2. SimpleGui v1.1&lt;/h3&gt;
+&lt;p&gt;En aquest exercici ampliarem la nostra aplicació SimpleGui de manera
+que:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;inicialment el text del botó serà &amp;quot;prem-me&amp;quot; (com a la versió 1.0)&lt;/li&gt;
+&lt;li&gt;en clicar per primer cop indicarà &amp;quot;prem-me un altre cop!&amp;quot; (cap
+canvi respecte 1.0)&lt;/li&gt;
+&lt;li&gt;a partir del segon clic, el missatge serà &amp;quot;i ja van «nombre de
+cops» clics&amp;quot; on nombre de cops començarà amb 2 i anirà
+incrementant-se a mida que es registrin clics.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Nota&lt;/strong&gt;: no cal preocupar-se pel fet que l'usuari arribi a sobrepassar
+amb clics el nombre màxim representable per un enter. Confiem en que la
+nostra aplicació no sigui tan addictiva.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-un-grafic-al-marc"&gt;
+&lt;h3&gt;Exercici 3. Un gràfic al marc&lt;/h3&gt;
+&lt;p&gt;Considera la següent classe:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;javax.swing.JPanel&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FiguraPanel&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;JPanel&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;paintComponent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Graphics&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// sobre-escrit de JPanel&lt;/span&gt;
+        &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ORANGE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fillRect&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Crea un programa, &lt;em&gt;molt&lt;/em&gt; semblant al SimpleGui que, en comptes de
+contenir un botó, contingui una Figura.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pista&lt;/strong&gt;: JPanel es pot considerar un accessori, i pot ser afegit al
+marc de la mateixa manera que d'altres accessoris com ara el JButton.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-4-colors-aleatoris-per-la-figura"&gt;
+&lt;h3&gt;Exercici 4. Colors aleatoris per la figura&lt;/h3&gt;
+&lt;p&gt;El mètode JPanel.paintComponent() no el cridarem mai directament. Ho
+farà la màquina virtual cada cop que trobi necessari dibuixar el
+contingut. Podem, però, demanar que es repinti cridant el mètode
+JFrame.repaint()&lt;/p&gt;
+&lt;p&gt;En estendre la classe JPanel, hi podem posar al paintComponent() allò
+que ens interessi.&lt;/p&gt;
+&lt;p&gt;Per altra banda, a un marc hi podem afegir més d'un component (era
+previsible, oi?)&lt;/p&gt;
+&lt;p&gt;Però si simplement afegim els elements amb marc.add(element) la cosa no
+funciona: un oculta l'altre. No cal que em creguis, &lt;strong&gt;prova-ho!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Un marc es divideix en cinc regions&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Àrees en que es divideix un marc" src="gui.img003.frame_areas.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Per defecte, add() afegeix l'element a l'àrea central.&lt;/p&gt;
+&lt;p&gt;És clar, podem demanar al marc que ens afegeixi el nostre element a
+l'àrea que ens interessi. Per exemple,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;SOUTH&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;boto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Per a aquest exercici, substitueix el codi de FiguraPanel anterior pel
+següent&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;javax.swing.JPanel&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FiguraPanel&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;JPanel&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;Color&lt;/span&gt; &lt;span class="nf"&gt;nouColor&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// retorna un nou color aleatori&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;vermell&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;random&lt;/span&gt;&lt;span class="o"&gt;()*&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;verd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;random&lt;/span&gt;&lt;span class="o"&gt;()*&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;blau&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;random&lt;/span&gt;&lt;span class="o"&gt;()*&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;Color&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;vermell&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;verd&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;blau&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;paintComponent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Graphics&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// omple tot l&amp;#39;espai amb color el per defecte (negre)&lt;/span&gt;
+        &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fillRect&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getWidth&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getHeight&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+        &lt;span class="c1"&gt;// defineix un nou color i crea una figura amb aquest&lt;/span&gt;
+        &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nouColor&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+        &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.**&lt;/span&gt;&lt;span class="n"&gt;fillOval&lt;/span&gt;&lt;span class="o"&gt;**(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Crea un nou programa que contingui un FiguraPanel i un JButton a la
+part inferior de la finestra. Quan l'usuari premi el botó, haurà de
+canviar el color de la figura.&lt;/p&gt;
+&lt;p&gt;Pista:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;actionPerformed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionEvent&lt;/span&gt; &lt;span class="n"&gt;arg0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;repaint&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-5-colors-i-formes-aleatories"&gt;
+&lt;h3&gt;Exercici 5. Colors i formes aleatòries&lt;/h3&gt;
+&lt;p&gt;Crea una nova versió de l'exercici anterior, de manera que:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;a cada click, intercali figures entre quadrat i cercle&lt;/li&gt;
+&lt;li&gt;a cada click, les dimensions variïn aleatòriament de manera que mai
+siguin menors que 100 ni més grans que la mida del marc -10.&lt;/li&gt;
+&lt;li&gt;no es pugui repetir el color ni les dimensions anteriors.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-6-gradients-i-formes-aleatories"&gt;
+&lt;h3&gt;Exercici 6. Gradients i formes aleatòries&lt;/h3&gt;
+&lt;p&gt;La instància de la classe Graphics que rep paintComponent() és en
+realitat un Graphics2D (una subclasse de Graphics)&lt;/p&gt;
+&lt;p&gt;Graphics2D disposa d'algunes funcions interessants, com ara la següent:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;paintComponent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Graphics&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;GradientPaint&lt;/span&gt; &lt;span class="n"&gt;rang&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;GradientPaint&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;ORANGE&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;Color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BLUE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fillRect&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getWidth&lt;/span&gt;&lt;span class="o"&gt;(),&lt;/span&gt; &lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getHeight&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;
+    &lt;span class="o"&gt;((&lt;/span&gt;&lt;span class="n"&gt;Graphics2D&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;).&lt;/span&gt;&lt;span class="na"&gt;setPaint&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rang&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fillOval&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Crea una nova versió de l'exercici anterior. Aquest cop es demana que el
+color de la figura sigui un gradient de dos colors aleatoris que no han
+de coincidir.&lt;/p&gt;
+&lt;p&gt;Molt bé, però què passa si necessitem afegir dos botons?&lt;/p&gt;
+&lt;p&gt;Per exemple, imagina que hem de desenvolupar un programa que ofereixi
+una etiqueta amb un valor enter i dos botons que permetin incrementar i
+decrementar el valor en 1.&lt;/p&gt;
+&lt;p&gt;Per crear-los i afegir-los no hi ha gaire problema, oi?&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;creem dues instàncies diferents, i&lt;/li&gt;
+&lt;li&gt;les afegim al marc a àrees diferents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;El codi podria ser quelcom semblant a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.event.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;javax.swing.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ComptadorSimple&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;ActionListener&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt; &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt; &lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt; &lt;span class="n"&gt;decBoto&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JLabel&lt;/span&gt; &lt;span class="n"&gt;etiqueta&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;valor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;ComptadorSimple&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultCloseOperation&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXIT_ON_CLOSE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;incBoto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;+ 1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;decBoto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;- 1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="cm"&gt;/*&lt;/span&gt;
+&lt;span class="cm"&gt;         ens afegim com a listeners dels dos botons d&amp;#39;alguna manera&lt;/span&gt;
+&lt;span class="cm"&gt;        */&lt;/span&gt;
+        &lt;span class="n"&gt;etiqueta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JLabel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;valor&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="n"&gt;SwingConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CENTER&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;WEST&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CENTER&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;etiqueta&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EAST&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decBoto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVisible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;actionPerformed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionEvent&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Que faig?&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;ComptadorSimple&lt;/span&gt; &lt;span class="n"&gt;gui&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ComptadorSimple&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Però, com ens afegim com a listeners dels dos botons. I el que és més
+important, com ens ho fem per a respondre als esdeveniments dels dos
+botons?&lt;/p&gt;
+&lt;p&gt;Per a afegir-nos com a listeners dels dos botons és molt fàcil:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addActionListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;decBoto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addActionListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Per a distingir quin és el botó on han fet clic podem fer ús de la
+informació que porta l'esdeveniment que ens envia el botó.&lt;/p&gt;
+&lt;p&gt;Si mirem la documentació de ActionEvent
+(&lt;a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/awt/event/ActionEvent.html"&gt;http://java.sun.com/javase/6/docs/api/java/awt/event/ActionEvent.html&lt;/a&gt;)
+ens trobem amb el mètode heretat de EventObject, getSource()&lt;/p&gt;
+&lt;p&gt;Segons la documentació: &lt;em&gt;Returns the object on which the Event initially
+occurred.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Per tant, podem simplement:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;actionPerformed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionEvent&lt;/span&gt; &lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(**&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getSource&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;**)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;vol incrementar&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;vol decrementar&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-7-comptador-simple"&gt;
+&lt;h3&gt;Exercici 7. Comptador simple&lt;/h3&gt;
+&lt;p&gt;Completa l'aplicació ComptadorSimple perquè els botons incrementin i
+decrementin correctament el valor.&lt;/p&gt;
+&lt;p&gt;Considera el mètode JLabel.setText()&lt;/p&gt;
+&lt;p&gt;Com que no volem que cap usuari prou pacient ens faci petar l'aplicació,
+ens assegurarem que en cas que arribem al màxim / mínim enter
+representables, que els botons no puguin incrementar / decrementar
+respectivament.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="classes-internes"&gt;
+&lt;h2&gt;Classes internes&lt;/h2&gt;
+&lt;p&gt;La manera de controlar la font dels esdeveniments que hem vist fins ara,
+tot i que funciona, no es massa còmoda. En tot cas, no es considera una
+solució elegant en el món de la POO.&lt;/p&gt;
+&lt;p&gt;Per “elegantitzar-la” però, ens caldrà un concepte que no hem vist
+encara: les classes internes o &lt;em&gt;inner classes&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Java permet definir classes dins d'altres classes. El que anomena
+classes internes o &lt;em&gt;inner classes&lt;/em&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;classeExterna&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;classeInterna&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Una de les característiques de les classes internes és que aquestes
+poden accedir a tots els membres de la classe externa (incloent els
+elements privats!)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ClasseExterna&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ClasseInterna&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;modifica&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt;
+            &lt;span class="o"&gt;}&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Una instància d'una classe interna només pot accedir als membres de la
+instància de la classe externa on ha estat creada.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ClasseExterna&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ClasseInterna&lt;/span&gt; &lt;span class="n"&gt;interna&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClasseInterna&lt;/span&gt;&lt;span class="o"&gt;()**;&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;demostra&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;interna&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;modifica&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;i: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ClasseInterna&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;modifica&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;){&lt;/span&gt;
+        &lt;span class="n"&gt;ClasseExterna&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClasseExterna&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;demostra&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Però, potser et preguntaràs, què passa si em confonc i faig la instància
+de ClasseInterna fora de la de ClasseExterna?&lt;/p&gt;
+&lt;p&gt;La resposta és: no et preocupis, Java t'ho posarà difícil.&lt;/p&gt;
+&lt;p&gt;Per exemple, si intentes fer un&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;ClasseInterna&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClasseInterna&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;des del main() de ClasseExterna et trobaràs amb un missatge similar a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;$&lt;/span&gt; &lt;span class="n"&gt;javac&lt;/span&gt; &lt;span class="n"&gt;ClasseExterna&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;java&lt;/span&gt;
+
+&lt;span class="n"&gt;ClasseExterna&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;java&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;14&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;non&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;variable&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="n"&gt;cannot&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;referenced&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;
+
+&lt;span class="n"&gt;ClasseInterna&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ClasseInterna&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
+&lt;span class="o"&gt;^&lt;/span&gt;
+
+&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;És a dir, que per a fer un new de la &lt;em&gt;inner class&lt;/em&gt; cal fer-ho des del
+codi d'una instància de la &lt;em&gt;outer class&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;De fet, es pot crear una instància d'una classe interna des de fora de
+la classe externa, però et cal una sintaxi especial i, en el cas remot
+que et calgui fer-la servir, ja la cercaràs &lt;a class="footnote-reference" href="#accesinterna" id="id2"&gt;[3]&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Tornant al nostre problema dels dos botons, amb les classes internes la
+cosa es simplifica, no?&lt;/p&gt;
+&lt;p&gt;Podem fer una classe interna per a cada botó i ja està.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.event.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;javax.swing.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ComptadorSimple&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// ja no cal implementar ActionListener&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt; &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt; &lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt; &lt;span class="n"&gt;decBoto&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JLabel&lt;/span&gt; &lt;span class="n"&gt;etiqueta&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;valor&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;IncComptador&lt;/span&gt; &lt;span class="kd"&gt;implements&lt;/span&gt; &lt;span class="n"&gt;ActionListener&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;actionPerformed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionEvent&lt;/span&gt; &lt;span class="n"&gt;arg0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;vol incrementar&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="c1"&gt;// ...&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;ComptadorSimple&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultCloseOperation&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXIT_ON_CLOSE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;incBoto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;+ 1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;decBoto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;- 1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="c1"&gt;//&lt;/span&gt;
+        &lt;span class="n"&gt;IncComptador&lt;/span&gt; &lt;span class="n"&gt;incComptador&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IncComptador&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addActionListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;incComptador&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;decBoto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addActionListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="c1"&gt;// ...);&lt;/span&gt;
+        &lt;span class="c1"&gt;//&lt;/span&gt;
+        &lt;span class="n"&gt;etiqueta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JLabel&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;valor&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="n"&gt;SwingConstants&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CENTER&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;WEST&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;CENTER&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;etiqueta&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;BorderLayout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EAST&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;decBoto&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVisible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;ComptadorSimple&lt;/span&gt; &lt;span class="n"&gt;gui&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ComptadorSimple&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;div class="section" id="exercici-8-comptador-simple-amb-inner-classes"&gt;
+&lt;h3&gt;Exercici 8. Comptador simple amb inner classes&lt;/h3&gt;
+&lt;p&gt;Completa el codi del comptador simple amb classes internes.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;p&gt;Potser t'estaràs dient, quina gràcia haver de crear una classe (ni que
+sigui inner) tot inventant-me un nom diferent per a cada esdeveniment
+al que vulgui donar resposta.&lt;/p&gt;
+&lt;p&gt;Java disposa d'una notació que ens permetrà salvar-nos d'una
+codificació tan tediosa: les &lt;em&gt;classes anònimes&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Segons la secció 3.12 de JAVA in a Nutshell 3&lt;sup&gt;rd&lt;/sup&gt; eddition
+(&lt;a class="reference external" href="http://docstore.mik.ua/orelly/java-ent/jnut/ch03_12.htm"&gt;http://docstore.mik.ua/orelly/java-ent/jnut/ch03_12.htm&lt;/a&gt;)&lt;/p&gt;
+&lt;blockquote&gt;
+An &lt;em&gt;anonymous class&lt;/em&gt; is a local class without a name. An anonymous
+class is defined and instantiated in a single succinct expression
+using the &lt;tt class="docutils literal"&gt;new&lt;/tt&gt; operator. While a local class definition is a
+statement in a block of Java code, an anonymous class definition is
+an expression, which means that it can be included as part of a
+larger expression, such as a method call. &lt;strong&gt;When a local class is
+used only once, consider using anonymous class&lt;/strong&gt; syntax, which
+places the definition and use of the class in exactly the same
+place.&lt;/blockquote&gt;
+&lt;p&gt;Per al que a nosaltres ens ocupa, considera el següent fragment de codi
+del nostre comptador simple:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="n"&gt;incBoto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;+ 1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="n"&gt;decBoto&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JButton&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;- 1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="c1"&gt;//&lt;/span&gt;
+&lt;span class="n"&gt;incBoto&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addActionListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ActionListener&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;actionPerformed&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ActionEvent&lt;/span&gt; &lt;span class="n"&gt;arg0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;vol incrementar&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;});&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Fixa't com simplement s'enuncia un new per a una &lt;em&gt;interface&lt;/em&gt; (!) i tot
+seguit es passa a &lt;em&gt;implementar&lt;/em&gt; els mètodes de la interfície (en aquest
+cas només &lt;em&gt;actionPerformed(ActionEvent)&lt;/em&gt; )&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-9-si-no-cal-anomenar-no-anomenis"&gt;
+&lt;h3&gt;Exercici 9. Si no cal anomenar, no anomenis!&lt;/h3&gt;
+&lt;p&gt;Crea una nova versió del comptador simple ara amb classes anònimes per
+la implementació dels &lt;em&gt;listeners.&lt;/em&gt;&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;p&gt;Les classes internes poden, a banda d'implementar &lt;em&gt;interfaces&lt;/em&gt;,
+pertànyer a una altra posició de la jerarquia de classes que la classe
+externa.&lt;/p&gt;
+&lt;p&gt;Per a entendre la potència d'aquest fet, construirem una aplicació que
+mostri una simple animació.&lt;/p&gt;
+&lt;p&gt;Considera el següent codi:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.awt.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;javax.swing.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SimpleAnimacio&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt; &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;// coordenades de la pilota&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Pilota&lt;/span&gt; &lt;span class="kd"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;JPanel&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;paintComponent&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Graphics&lt;/span&gt; &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setColor&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Color&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;BLUE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;g&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fillOval&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;SimpleAnimacio&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setDefaultCloseOperation&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;JFrame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;EXIT_ON_CLOSE&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;Pilota&lt;/span&gt; &lt;span class="n"&gt;pilota&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Pilota&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pilota&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setSize&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;300&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;marc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setVisible&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mi"&gt;130&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;++)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="o"&gt;++;&lt;/span&gt; &lt;span class="c1"&gt;// recalcula la posicio de la pilota&lt;/span&gt;
+            &lt;span class="n"&gt;pilota&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;repaint&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;espera&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;espera&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="c1"&gt;// s&amp;#39;espera una estona&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;Thread&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;sleep&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;25&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;SimpleAnimacio&lt;/span&gt; &lt;span class="n"&gt;gui&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;SimpleAnimacio&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Com podem veure, hem desenvolupat la classe interna Pilota que és un
+JPanel&lt;/p&gt;
+&lt;p&gt;És clar, l'animació queda una mica lletja pel fet que la pilota va
+deixant rastre. Però ja vam veure com podíem arreglar-lo a l'exemple de
+FiguraPanel. Revisa els teus apunts!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-10-la-pilota-sense-rastre"&gt;
+&lt;h3&gt;Exercici 10. La pilota sense rastre&lt;/h3&gt;
+&lt;p&gt;Modifica el programa SimpleAnimacio de manera que la pilota no deixi
+rastre en moure's.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-11-la-pilota-rebota"&gt;
+&lt;h3&gt;Exercici 11. La pilota rebota&lt;/h3&gt;
+&lt;p&gt;Crea una aplicació que mostri una pilota de 20x20 rebotant per la
+pantalla fins que l'usuari tanqui la finestra.&lt;/p&gt;
+&lt;p&gt;El fons de la pantalla serà blanc i inicialment la pantalla tindrà una
+mida de 300x200&lt;/p&gt;
+&lt;p&gt;Cada cop que la pilota canviï de sentit (horitzontal o vertical)
+canviarà a un color aleatori (excepte el blanc)&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conversors"&gt;
+&lt;h2&gt;Conversors&lt;/h2&gt;
+&lt;p&gt;El NetBeans, com altres IDE, disposa d'un editor gràfic per a ajudar-nos&lt;/p&gt;
+&lt;p&gt;en la composició de les nostres pantalles.&lt;/p&gt;
+&lt;p&gt;Aquesta activitat ens introduirà en la composició de GUI mitjançant el
+NetBeans&lt;/p&gt;
+&lt;div class="section" id="exercici-12-graus-centigrads-a-farenheit"&gt;
+&lt;h3&gt;Exercici 12. Graus centígrads a Farenheit&lt;/h3&gt;
+&lt;p&gt;A aquest exercici desenvoluparàs un programa que permeti convertir els
+graus centígrads a Farenheit.&lt;/p&gt;
+&lt;p&gt;Segueix les passes:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Crea un nou projecte Java&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Crea un nou fitxer de la categoria &lt;em&gt;Swing GUI Forms&lt;/em&gt; i tipus &lt;em&gt;JFrame
+form&lt;/em&gt;, amb el nom ConversorC2F&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;A la finestra de propietats del marc,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;dl class="first docutils"&gt;
+&lt;dt&gt;canvia la propietat títol (&lt;em&gt;title&lt;/em&gt;) per “Centigrads&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first last"&gt;a Farenheit” &lt;a class="footnote-reference" href="#pelspuristes" id="id3"&gt;[4]&lt;/a&gt;&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;a la propietat nom indica “frmConversorC2F”&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;indica que no es permet canviar la mida (&lt;em&gt;resizable&lt;/em&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;De la paleta de components, arrossega una etiqueta (&lt;em&gt;label&lt;/em&gt;) de la
+categoria &lt;em&gt;Swing Controls&lt;/em&gt; sobre l'àrea del marc.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;A la finestra de propietats de l'etiqueta,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;canvia la propietat &lt;em&gt;text&lt;/em&gt; per “Graus centígrads”&lt;/li&gt;
+&lt;li&gt;canvia la propietat de codi &lt;em&gt;Variable Name&lt;/em&gt; per “lblCentigrads”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Afegeix al costat de l'etiqueta un camp de text (&lt;em&gt;text field&lt;/em&gt;). A la
+finestra de propietats:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;canvia &lt;em&gt;text&lt;/em&gt; per “0”&lt;/li&gt;
+&lt;li&gt;canvia &lt;em&gt;tool tip text&lt;/em&gt; per “Escriviu aquí el valor a convertir”&lt;/li&gt;
+&lt;li&gt;a la secció de layout indica una mida horitzontal
+(&lt;em&gt;Horizontal Size&lt;/em&gt;) de 100&lt;/li&gt;
+&lt;li&gt;canvia Variable Name per “txtCentigrads”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;De la mateixa manera, afegeix una etiqueta i un quadre te text per
+als graus Farenheit. Recorda canviar les propietats dels dos controls
+per valors apropiats. Assegura't que marques el quadre de text
+txtFarenheit com a no editable&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Afegeix un botó i anomena'l “btnConvertC2F”&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Executa el que tens. Hauria de veure's quelcom similar a:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Exemple de pantalla amb el conversor de centígrads a Farenheit" src="gui.img004.centigrads2farenheit.png" /&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Considera el codi generat (pestanya &lt;em&gt;source&lt;/em&gt;) Especialment mira el
+codi col·lapsat sota el missatge “Generated Code”. Identifica els
+controls que has creat i els valors dels atributs que has marcat.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Torna a la vista de disseny. Selecciona el botó i fes-hi click dret.
+Selecciona &lt;em&gt;Events -&amp;gt; Mouse -&amp;gt; Mouse Clicked&lt;/em&gt;. Ara ens apareix un
+codi similar a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;btnConvertC2FMouseClicked&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;awt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MouseEvent&lt;/span&gt; &lt;span class="n"&gt;evt&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="c1"&gt;// TODO add your handling code here:&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="n"&gt;btnConvertC2F&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;addMouseListener&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;awt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MouseAdapter&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;mouseClicked&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;awt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MouseEvent&lt;/span&gt; &lt;span class="n"&gt;evt&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;btnConvertC2FMouseClicked&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;evt&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;});&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Afegeix el següent codi&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;btnConvertC2FMouseClicked&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;awt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MouseEvent&lt;/span&gt; &lt;span class="n"&gt;evt&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;centigrads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;txtCentigrads&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getText&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;farenheit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cnvCentigrad2Farenheit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;centigrads&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;txtFarenheit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setText&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;farenheit&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-13-farenheit-a-centigrads-tambe"&gt;
+&lt;h3&gt;Exercici 13. Farenheit a centígrads també&lt;/h3&gt;
+&lt;p&gt;Crea una nova versió de l'aplicació anterior que permeti també convertir
+de Farenheit a Centígrads. La UI serà similar a:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Exemple de pantalla amb el conversor centígrads/Farenheit" src="gui.img005.farenheit22centigrads.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Considera les opcions de refactoring copy-paste pel marc i de duplicació
+pel botó.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-14-farenheit-a-centigrads-sense-botons"&gt;
+&lt;h3&gt;Exercici 14. Farenheit a centígrads sense botons&lt;/h3&gt;
+&lt;p&gt;Fes una nova versió de l'aplicació anterior. Aquest cop considera
+l'esdeveniment keyReleased dels quadre de text per a realitzar les
+conversions en comptes dels botons.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="veu-digital"&gt;
+&lt;h2&gt;Veu digital&lt;/h2&gt;
+&lt;p&gt;En aquesta activitat, aprendrem a incorporar una biblioteca d'un
+tercer. &lt;a class="footnote-reference" href="#donletret" id="id4"&gt;[5]&lt;/a&gt;&lt;/p&gt;
+&lt;div class="section" id="exercici-15-el-sintetitzador-de-veu"&gt;
+&lt;h3&gt;Exercici 15. El sintetitzador de veu&lt;/h3&gt;
+&lt;p&gt;Segueix les passes&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Crea un nou projecte i desenvolupa una interfície amb un marc que
+contingui:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;un àrea de text anomenada txtArea, inicialment sense text, amb un
+text d'ajuda que digui “Text a pronunciar”&lt;/li&gt;
+&lt;li&gt;un botó anomenat btnPronuncia amb el text “Pronuncia”&lt;/li&gt;
+&lt;li&gt;un botó anomenat btnEsborra amb el text “Esborra”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Exemple de pantalla amb el sintetitzador de veu" src="gui.img006.sintetitzador.png" /&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Al costat de la pestanya “Design” hi trobes una sèrie d'icones que
+especifiquen el mode en que estàs treballant. Per defecte tens
+activat el mode selecció (Selection Mode) Aquest cop, selecciona la
+del costat “Connection Mode”&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Fes click sobre el botó btnEsborra i a continuació, fes click sobre
+txtArea. T'apareix un quadre de diàleg anomenat “Connection Wizard”
+que t'ajudarà a crear una connexió entre ambdós controls.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Selecciona Events -&amp;gt; Mouse -&amp;gt; mouseClicked i accepta el nom que
+t'apareix per defecte fent click a següent.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;A la següent pantalla, selecciona la propietat Text de txtArea i fes
+Next&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Selecciona l'opció exclusiva (radi button) etiquetada amb Value però
+no indiquis cap valor. Fixa't a l'espai de sota on diu “Generated
+Parameters Preview” que t'indica que el valor a assignar serà la
+cadena buida. Tot just el que esperem per a un botó que es diu
+esborra, oi?&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Fes Finish i comprova el codi que ha generat automàticament per a
+tu. Bé, en aquest cas és possible que haguéssim acabat abans
+escrivint directament el codi.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Com que no volem fer que btnPronuncia modifiqui res de txtArea, el
+que farem serà crear manualment el codi de resposta (recorda click
+dret -&amp;gt; &lt;em&gt;Events -&amp;gt; Mouse -&amp;gt; mouseClicked&lt;/em&gt;) Aquí hauríem d'afegir el
+codi per a pronunciar el text. Però com ho fem? Posa't ara a
+desenvolupar un sintetitzador de veu! Sort que algú ens l'ha fet per
+nosaltres.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Ves a
+&lt;a class="reference external" href="http://freetts.sourceforge.net/"&gt;http://freetts.sourceforge.net&lt;/a&gt;
+i descarrega't el fitxer bin. N'hi ha d'altres possibilitats, però
+per a les necessitats d'aquest exercici en tindrem prou amb aquest.
+Descomprimeix el zip en algun lloc i localitza el fitxer
+&lt;em&gt;freetts.jar&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;dl class="first docutils"&gt;
+&lt;dt&gt;A la carpeta de biblioteques (&lt;em&gt;Libraries&lt;/em&gt;) del teu projecte, fes&lt;/dt&gt;
+&lt;dd&gt;&lt;p class="first last"&gt;click dret, selecciona &lt;em&gt;Add JAR/Folder,&lt;/em&gt; i afegeix freetts.jar.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Afegeix el següent codi&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;btnPronunciaMouseClicked&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;awt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;event&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;MouseEvent&lt;/span&gt; &lt;span class="n"&gt;evt&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;sText&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;txtArea&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getText&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sText&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;sText&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;trim&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;length&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;VoiceManager&lt;/span&gt; &lt;span class="n"&gt;voiceManager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;Voice&lt;/span&gt; &lt;span class="n"&gt;syntheticVoice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;voiceManager&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;VoiceManager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getInstance&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;syntheticVoice&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;voiceManager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getVoice&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;kevin&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;syntheticVoice&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;allocate&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+            &lt;span class="n"&gt;syntheticVoice&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;speak&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sText&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printStackTrace&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="k"&gt;finally&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;syntheticVoice&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;deallocate&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Executa'l i fes alguna prova amb l'altaveu engegat.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Afegeix el codi necessari perquè quan l'usuari premi btnEsborra es
+senti el text del botó per l'altaveu.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-16-el-conversor-parlat"&gt;
+&lt;h3&gt;Exercici 16. El conversor parlat&lt;/h3&gt;
+&lt;p&gt;Modifica l'aplicació de conversió de centígrads i Farenheit (la versió
+amb dos botons de l'exercici 1.2. Farenheit a centígrads també”) de
+manera que ara, a banda de realitzar la conversió es pronunciarà el
+resultat.&lt;/p&gt;
+&lt;p&gt;Alguns exemples de pronunciació:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;0 degree celsius are 32 degree farenheit.&lt;/li&gt;
+&lt;li&gt;33 degree farenheit are 1 degrees celsius.&lt;/li&gt;
+&lt;li&gt;conversion error&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Nota&lt;/strong&gt;: fitxa't que no és requeriment considerar singular/plural. En
+canvi, és molt recomanable que ho facis en anglès si vols que s'entengui
+una mica.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creacio-d-interficies"&gt;
+&lt;h2&gt;Creació d'interfícies&lt;/h2&gt;
+&lt;div class="section" id="exercici-17-anagram-game"&gt;
+&lt;h3&gt;Exercici 17. Anagram Game&lt;/h3&gt;
+&lt;p&gt;Considera l'exemple d'aplicació anomenat Anagram Game.&lt;/p&gt;
+&lt;p&gt;Hi ha alguns elements nous però no t'amoïnis, no cal que l'entenguem
+sencer per a poder realitzar l'exercici.&lt;/p&gt;
+&lt;p&gt;Crea una nova versió del joc de manera que ofereixi un botó anomenat Tip
+que cada cop que es premi mostri una mica més de la paraula a endevinar
+al mateix lloc on apareix la resta dels missatges . La primera vegada
+que es premi per a una paraula, mostrarà el primer caràcter. Quan hagi
+mostrat tota la paraula, la copiarà al quadre de text.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-18-client-editor"&gt;
+&lt;h3&gt;Exercici 18. Client Editor&lt;/h3&gt;
+&lt;p&gt;Considera l'exemple d'aplicació anomenat Client Editor&lt;/p&gt;
+&lt;p&gt;Hi ha un munt d'elements nous però no t'amoïnis, no cal que l'entenguem
+sencer per a poder realitzar l'exercici.&lt;/p&gt;
+&lt;p&gt;Crea una nova versió on els clients disposin d'una nova propietat
+anomenada “docId” de tipus String, que es mostri com a dada personal i
+que el formulari validi el seu valor com ho fa amb altres camps (ex.
+edat) de manera que només siguin vàlids strings de longitud 9 on els
+primers 8 siguin números i el darrer una lletra. No es requereix
+comprovar que la lletra correspongui a la requerida per a un NIF
+correcte.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-19-card-layout"&gt;
+&lt;h3&gt;Exercici 19. Card Layout&lt;/h3&gt;
+&lt;p&gt;Crea una aplicació que disposi d'un grup de botons “radio” amb les
+opcions “gos”, “gat” i “canari”&lt;/p&gt;
+&lt;p&gt;Crea dins del marc principal un panell amb layout tipus Card Layout i
+fica-hi dins tres panells que continguin cadascuna una etiqueta amb el
+nom d'un animal (gat, gos, canari) i una imatge de l'animal (cerca tres
+imatges petites per la web)&lt;/p&gt;
+&lt;p&gt;Quan l'usuari seleccioni una de les opcions, s'haurà de veure la imatge
+corresponent.&lt;/p&gt;
+&lt;p&gt;L'aplicació és molt similar a la que mostra l'exemple
+&lt;a class="reference external" href="http://java.sun.com/docs/books/tutorial/uiswing/components/button.html#radiobutton"&gt;http://java.sun.com/docs/books/tutorial/uiswing/components/button.html#radiobutton&lt;/a&gt;
+però allà només canvia la imatge d'una etiqueta, mentre que aquí es
+mostra un panell diferent sencer.&lt;/p&gt;
+&lt;p&gt;Assegura't que les imatges es troben a un paquet anomenat &lt;em&gt;recursos&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Pista: considera la propietat Card Name des de NetBeans o bé afegeix els
+panells interns amb .add(panell, “nom del panell”) Així, el codi per a
+mostrar un panell o altre seria quelcom similar a:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CardLayout&lt;/span&gt; &lt;span class="n"&gt;layout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CardLayout&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="n"&gt;panellCard&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getLayout&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;layout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;show&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;panellCard&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;nom del panell&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-20-llista-de-pizzes"&gt;
+&lt;h3&gt;Exercici 20. Llista de pizzes&lt;/h3&gt;
+&lt;p&gt;Es demana desenvolupar un programa que tingui la següent interfície&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Interfície de Pizzes" src="gui.img007.pizza.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;L'aplicació disposarà de tres packages anomenats model, vista i
+controlador.&lt;/p&gt;
+&lt;p&gt;Al package model hi haurà dues classes: Pizza i PizzaModel&lt;/p&gt;
+&lt;p&gt;Pizza és una classe regular amb les propietats: nom, mida i nombre
+d'ingredients&lt;/p&gt;
+&lt;p&gt;La mida és un valor enter del 0 al 3 que correspon a “indefinit”,
+“petita”, “mitjana” i “gran”&lt;/p&gt;
+&lt;p&gt;El nombre d'ingredients és un valor enter positiu.&lt;/p&gt;
+&lt;p&gt;El codi de PizzaModel ens el ofereixen tot i que sense cap documentació
+i ni tant sols complet&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="n"&gt;pizza&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;model&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.ArrayList&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;PizzaModel&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;pizzes&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;PizzaModel&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;pizzes&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ArrayList&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;populate&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="nf"&gt;getPizzes&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;[])&lt;/span&gt; &lt;span class="n"&gt;pizzes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;toArray&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;pizzes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;size&lt;/span&gt;&lt;span class="o"&gt;()]);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;populate&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;// crea unes quantes pizzes de prova&lt;/span&gt;
+        &lt;span class="n"&gt;pizzes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Carbonara&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+        &lt;span class="n"&gt;pizzes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Milanessa&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+        &lt;span class="n"&gt;pizzes&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Pizza&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Margarita Gegant&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;quants&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Pizza&lt;/span&gt; &lt;span class="nf"&gt;getElement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pizza&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;remove&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Pizza&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Al package control hi ha com a mínim la classe PizzaControl que
+implementa la interfície javax.swing.ListModel ja que serveix com a
+model per al JList de la interfície. El seu únic constructor té com a
+signatura:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;PizzaControl&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PizzaModel&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Al package vista hi ha com a mínim la classe PizzaVista que estén
+javax.swing.JFrame&lt;/p&gt;
+&lt;p&gt;Com es pot veure al gràfic, conté els següents elements:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;un JList que té com a model una instància de PizzaModel. Els valors
+que hi apareixen són els noms de les pizzes. Inicialment no té cap
+element seleccionat i quan es selecciona un d'ells, els valors de la
+pizza seleccionada són copiats als controls corresponents.&lt;/li&gt;
+&lt;li&gt;un JTextField que conté el nom d'una pizza. Inicialment està buit.&lt;/li&gt;
+&lt;li&gt;un JComboBox que conté els valors dels possibles gruixos de les
+pizzes&lt;/li&gt;
+&lt;li&gt;un altre JTextField que conté el nombre d'ingredients de la pizza.
+Només accepta la introducció de números i inicialment val 0.&lt;/li&gt;
+&lt;li&gt;un JButton que:&lt;ul&gt;
+&lt;li&gt;apareix deshabilitat quan no hi ha cap valor vàlid als camps de
+nom ni nombre d'ingredients&lt;/li&gt;
+&lt;li&gt;quan hi ha valor als camps de nom i nombre d'ingredients queda
+habilitat i mostra el text “Nou” si el nom de la pizza no es troba
+a la llista o bé “Guarda” si existeix ja una pizza amb aquest nom.&lt;/li&gt;
+&lt;li&gt;en prémer el botó, es guarden les dades creant una nova pizza o bé
+modificant els valors d'una existent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;un altre botó que:&lt;ul&gt;
+&lt;li&gt;apareix habilitat només quan el camp amb el nom correspon a una
+pizza de la llista.&lt;/li&gt;
+&lt;li&gt;en prémer el botó, apareix un quadre de diàleg demanant
+confirmació i si confirma, s'elimina l'element de la llista i (és
+clar) del model.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;un botó de cancel·lació que quan es prem, neteja els valors dels
+camps i deixa la llista sense cap element seleccionat.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ampliacio"&gt;
+&lt;h2&gt;Ampliació&lt;/h2&gt;
+&lt;p&gt;Si tens interès per a aprofundir en aquest tema, pots començar pel
+tutorial d'&lt;a class="reference external" href="https://docs.oracle.com/javase/tutorial/uiswing/TOC.html"&gt;introdució a Swing&lt;/a&gt; que
+ofereix Oracle. De fet, aquests apunts es recolzen fortament en els
+continguts d'una versió anterior d'aquest tutoria.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="anotacions"&gt;
+&lt;h2&gt;Anotacions&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="guilocal" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[1]&lt;/td&gt;&lt;td&gt;Aquest tema es centra exclusivament en l'ús de la
+biblioteca &lt;em&gt;Swing&lt;/em&gt; per aplicacions d'escriptori.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="altreide" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;[2]&lt;/td&gt;&lt;td&gt;Si t'estimes més fer servir un altre IDE, o fins i tot
+si prefereixes fer-ho tot manualment (sense suport), és
+perfectament acceptable. Només has de tenir en compte que no rebràs
+suport en aquests materials.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="accesinterna" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[3]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Per als curiosos impacients:
+&lt;tt class="docutils literal"&gt;ClasseExterna.ClasseInterna in = new &lt;span class="pre"&gt;ClasseExterna().new&lt;/span&gt;
+&lt;span class="pre"&gt;ClasseInterna();&lt;/span&gt;&lt;/tt&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="pelspuristes" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[4]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Els més puristes potser voldran posar aquí Celsius en comptes
+de Centígrads.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="donletret" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id4"&gt;[5]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Aquest exercici està adaptat del que apareix al
+capítol 15 del llibre &amp;quot;Pro NetBeansTM IDE 6 Rich Client Platform
+Edition&amp;quot; del Adam Myatt Ed. Apress.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="java"></category></entry><entry><title>Us bàsic de l'entorn de desenvolupament integrat Eclipse</title><link href="http://apuntstecnics.herokuapp.com/us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html" rel="alternate"></link><updated>2014-10-14T22:46:43+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2014-10-14:us-basic-de-lentorn-de-desenvolupament-integrat-eclipse.html</id><summary type="html">&lt;!-- categories: eines --&gt;
 &lt;!-- tags: eclipse --&gt;
 &lt;!-- permalink: '/:categories/eclipse-us-basic' --&gt;
 &lt;div class="section" id="introduccio"&gt;
@@ -11300,4 +12279,223 @@ l'usuari i mostri el resultat de sumar-los.&lt;/p&gt;
 &lt;tt class="docutils literal"&gt;usa_datahora&lt;/tt&gt; de l'exercici 11.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</summary><category term="C"></category></entry></feed>
+</summary><category term="C"></category></entry><entry><title>El patró observador</title><link href="http://apuntstecnics.herokuapp.com/el-patro-observador.html" rel="alternate"></link><updated>2013-06-30T23:59:00+02:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2013-06-30:el-patro-observador.html</id><summary type="html">&lt;!-- XXX TODO: to be converted to current rst for pelican.
+Decide also if it has to appear in this category (it could do in
+the GUI one or even in a new one about patterns) --&gt;
+&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;En aquesta entrada es presenta un patró de disseny anomenat
+&lt;em&gt;patró observador&lt;/em&gt; o &lt;em&gt;observer pattern&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Es tracta d'un patró molt utilitzat en contextos en els que cal
+reaccionar a canvis que es poden produir en algun lloc. La seva
+implementació evita haver de fer mecanismes de &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Polling_%28computer_science%29"&gt;poling&lt;/a&gt; o
+&lt;a class="reference external" href="http://ca.wikipedia.org/wiki/Espera_activa"&gt;espera activa&lt;/a&gt; en els
+que part del codi va comprovant constantment si s'ha produït el canvi
+esperat. No és d'estranyar que aquest patró sigui amplament utilitzat
+en interfícies gràfiques d'usuari (GUI).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h2&gt;El patró &lt;strong&gt;observador&lt;/strong&gt;&lt;/h2&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Com va el patró observador" src="http://apuntstecnics.herokuapp.com/images/poo024.img001.observer.comic.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Observador&lt;/strong&gt; és un patró de disseny de programari format per un
+objecte anomenat &lt;em&gt;subjecte&lt;/em&gt; que genera algun tipus de missatge a un o
+més objectes anomenats &lt;em&gt;observadors&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Els observadors han de mostrar l'interès en rebre el tipus de
+missatges; és a dir, s'han de &lt;em&gt;subscriure&lt;/em&gt;. El subjecte manté la
+llista d'observadors i quan hi ha un missatge per enviar, els envia a
+tots els subscriptors. El patró correctament implementat permet que
+tant el subjecte com l'observador puguin ser quasi completament
+desconeguts entre si. Això ho aconsegueixen implementant unes
+determinades &lt;em&gt;interfaces&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;És tracta d'un model multicast amb un únic enviador i molts receptors.&lt;/p&gt;
+&lt;p&gt;El patró observador es pot trobar a situacions de la vida quotidiana.
+Per exemple, considera com funciona el mon de les revistes o diaris
+per subscripció. Una editorial comença a publicar diaris. A tu
+t'interessa i decideixes subscriure't. Cada cop que l'editorial llença
+una nova edició, a tu te n'arriba una còpia. Quan finalment decideixes
+que ja no t'interessa aquestes publicacions, et desubscrius i
+l'editorial deixa d'enviar-te noves edicions.&lt;/p&gt;
+&lt;div class="section" id="un-exemple-l-estacio-meteorologica"&gt;
+&lt;h3&gt;Un exemple: l'estació meteorològica&lt;/h3&gt;
+&lt;p&gt;El llibre Head First Design patterns ens ofereix el següent exemple
+&lt;a class="footnote-reference" href="#exempleadaptat" id="id2"&gt;[1]&lt;/a&gt; pel patró &lt;em&gt;observador&lt;/em&gt;: l'estació meteorològica.&lt;/p&gt;
+&lt;p&gt;Disposem d'una estació meteorològica capaç de mesurar la
+temperatura, l'humitat i la pressió atmosfèrica. Amb l'estació ens han
+afegit una classe abstracta en java anomenada AbsEstacioMeteorologica
+amb la següent interfície pública:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ javap AbsEstacioMeteorologica
+Compiled from &amp;quot;AbsEstacioMeteorologica.java&amp;quot;
+public abstract class AbsEstacioMeteorologica extends java.lang.Object{
+    public AbsEstacioMeteorologica();
+    public double getTemperatura();
+    public double getHumitat();
+    public double getPressio();
+    public abstract void canviMessures();
+    public static void main(java.lang.String[]);
+    static void access$000(AbsEstacioMeteorologica);
+    static {};
+}
+&lt;/pre&gt;
+&lt;p&gt;Com podem veure, AbsEstacioMeteorologica ens ofereix mètodes per a
+obtenir les dades de la darrera lectura de les tres mesures que pren
+l'estació meteorològica. Ens deixa, però, un mètode &amp;quot;obert&amp;quot;
+(&lt;tt class="docutils literal"&gt;canviMessures()&lt;/tt&gt;) i ens asseguren que el mètode és cridat cada cop
+que una o més mesures han canviat.&lt;/p&gt;
+&lt;p&gt;El nostre objectiu consisteix en crear la classe EstacioMeteorologica
+que estengui AbsEstacioMeteorologica i implementi canviMessures()
+adequadament per a permetre mostrar les mesures a la nostra aplicació.&lt;/p&gt;
+&lt;p&gt;Suposem que volem mostrar les mesures de tres maneres diferents:&lt;/p&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;la primera consisteix en simplement mostrar les dades de les condicions actuals del temps.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;la segona mostraria els estadístics de les darreres 50 lectures:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;temperatura mitja&lt;/li&gt;
+&lt;li&gt;temperatura mínima&lt;/li&gt;
+&lt;li&gt;temperatura màxima&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;finalment la tercera mostrarà una representació gràfica de les dades actuals amb icones tipus núvols, sol, pluja...&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;És important, però, que la nostra solució permeti afegir fàcilment
+altres presentacions de les dades. Exemple, una previsió del temps que
+farà les properes 24 hores.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-1-primera-aproximacio"&gt;
+&lt;h3&gt;Exercici 1: primera aproximació&lt;/h3&gt;
+&lt;p&gt;Una primera solució &lt;em&gt;feble&lt;/em&gt; del problema consistiria en disposar d'una
+instància de les vistes accessible des de EstacioMeteorologica, de
+manera que cada cop que és cridat el mètode canviMessures(), es fan
+les actualitzacions de les vistes.&lt;/p&gt;
+&lt;p&gt;Les vistes podrien estar implementades per les classes
+&lt;tt class="docutils literal"&gt;CondicionsActuals&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;Estadistiques&lt;/tt&gt; i
+&lt;tt class="docutils literal"&gt;GraficaCondicionsActuals&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;Considera el següent diagrama de classes:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Primera aproximació de l'estació meteorològica" src="http://apuntstecnics.herokuapp.com/images/poo024.img002.observer_pattern_sol01.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;El diagrama implica que EstacioMeteorologica disposa d'accés a
+instàncies de les tres classes que mostren les dades.&lt;/p&gt;
+&lt;p&gt;El codi seria quelcom semblant a:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+public void canviMessures() {
+    double temperatura = getTemperatura();
+    double humitat = getHumitat();
+    double pressio = getPressio();
+
+    condicionsActuals.actualitzaValors(temperatura, humitat, pressio);
+    grafCondicionsActuals.actualitzaGrafic(humitat, pressio, temperatura);
+    estadistiques.actualitzaEstats(temperatura, pressio, humitat);
+
+}
+&lt;/pre&gt;
+&lt;p&gt;Implementa la classe EstacioMeteorologica de manera que el
+constructor rebi com a paràmetres instàncies de les tres vistes, i que
+canviMessures() faci una crida per a actualitzar les vistes.&lt;/p&gt;
+&lt;p&gt;Implementa també les classes corresponents a les tres vistes. Els
+mètodes d'actualització, per simplicitat, simplement escriuran per
+sortida estàndard un missatge similar a:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[Vista Estadistiques] temperatura: 32.21º humitat: 60% pressió: 1017,06 hPa
+&lt;/pre&gt;
+&lt;p&gt;Finalment implementa la classe TestEstacioMeteorologica que crei tot
+el sistema i permeti mostrar el funcionament.&lt;/p&gt;
+&lt;p&gt;Ja que és un exercici tan fàcil, afegim un petit anàlisi. Indica
+quines de les següents afirmacions són correctes, quines no i perquè
+t'has decidit pel sí o el no.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;la solució codifica contra implementacions concretes en comptes d'interfícies.&lt;/li&gt;
+&lt;li&gt;hi ha una violació de l'encapsulació de la classe EstacioMeteorologica.&lt;/li&gt;
+&lt;li&gt;cada cop que afegim una nova vista, caldrà modificar el codi d'EstacioMeteorologica.&lt;/li&gt;
+&lt;li&gt;la solució no permet afegir o treure vistes en temps d'execució.&lt;/li&gt;
+&lt;li&gt;les tres vistes no implementen una interfície comuna.&lt;/li&gt;
+&lt;li&gt;EstacioMeteorologica continua sent abstracta.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Nota: no miris el següent exercici fins que no hagis contestat aquest.
+Tindràs temps en cas que vulguis corregir les respostes del teu
+anàlisi abans de lliurar-les. El profe no ho podrà saber. ;)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-2-les-vistes-implementen-una-interficie-comuna"&gt;
+&lt;h3&gt;Exercici 2: Les vistes implementen una interfície comuna&lt;/h3&gt;
+&lt;p&gt;D'acord. La solució anterior presenta un munt de problemes.
+Entre els problemes més incòmodes es troba el fet que les classes
+&lt;em&gt;vista&lt;/em&gt; no implementen una interfície comuna. Això implica que
+EstacioMeteorologica hagi de fer una crida diferent per a cada mètode
+d'actualització.&lt;/p&gt;
+&lt;p&gt;A més de conèixer les classes concretes, EstacioMeteorologica no té
+manera d'oferir un mètode per a afegir noves vistes. Simplement es
+queda amb les que rep amb el constructor, i si en volem afegir més,
+ens toca modificar codi.&lt;/p&gt;
+&lt;p&gt;Considera el diagrama següent que pretén solucionar aquests problemes:&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Segona aproximació de l'estació meteorològica" src="http://apuntstecnics.herokuapp.com/images/poo024.img003.observer_pattern_sol02.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Com podem veure, EstacioMeteorologica encara està composat de les tres
+&lt;em&gt;vistes&lt;/em&gt;, però ara aquestes implementen una interfície comuna.
+Refés el codi de EstacioMeteorologica de manera que en tregui profit
+de la interfície comuna.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Nota&lt;/strong&gt;: Potser tens la temptació de modificar &lt;strong&gt;només&lt;/strong&gt; les crides
+d'actualització de les vistes al mètode &lt;tt class="docutils literal"&gt;canviMessures()&lt;/tt&gt;. Intenta
+vèncer la mandra i fes que totes les vistes estiguin a algun tipus de
+contenidor iterable i treu-ne profit.&lt;/p&gt;
+&lt;p&gt;Finalment, com que el que se't demana en aquest exercici continua sent
+molt senzill, caldrà que facis un petit anàlisi similar al de
+l'exercici anterior. Així, indica quines de les següents afirmacions
+són correctes, quines no i perquè t'has decidit pel sí o el no.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;la solució codifica contra implementacions concretes en comptes d'interfícies.&lt;/li&gt;
+&lt;li&gt;cada cop que afegim una nova vista, caldrà modificar el codi d'EstacioMeteorologica.&lt;/li&gt;
+&lt;li&gt;la solució no permet afegir o treure vistes en temps d'execució.&lt;/li&gt;
+&lt;li&gt;les tres vistes no implementen una interfície comuna.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-el-patro-observador"&gt;
+&lt;h3&gt;Exercici 3: El patró observador&lt;/h3&gt;
+&lt;p&gt;Probablement quan desenvolupaves l'exercici anterior ja havies vist
+com solucionar alguns dels problemes que encara tenia la nova
+implementació. En aquest cas, felicitats!&lt;/p&gt;
+&lt;p&gt;Tant si te n'has adonat com si no, considera el següent diagrama que
+modifica &lt;em&gt;lleugerament&lt;/em&gt; l'anterior. &lt;a class="footnote-reference" href="#id4" id="id3"&gt;[*]&lt;/a&gt;&lt;/p&gt;
+&lt;table class="docutils footnote" frame="void" id="id4" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id3"&gt;[*]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Trobaràs una versió més general d'aquest diagrama a &lt;a class="reference external" href="http://ca.wikipedia.org/wiki/Patr%C3%B3_observador"&gt;http://ca.wikipedia.org/wiki/Patr%C3%B3_observador&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Tercera aproximació de l'estació meteorològica" src="http://apuntstecnics.herokuapp.com/images/poo024.img003.observer_pattern_sol03.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Implementa el nou disseny de solució i indica quines de les següents afirmacions són correctes, quines no i perquè t'has decidit pel sí o el no.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;la solució codifica contra implementacions concretes en comptes d'interfícies.&lt;/li&gt;
+&lt;li&gt;cada cop que afegim una nova vista, caldrà modificar el codi d'EstacioMeteorologica.&lt;/li&gt;
+&lt;li&gt;la solució no permet afegir o treure vistes en temps d'execució.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-4-observable-i-observer"&gt;
+&lt;h3&gt;Exercici 4: Observable i Observer&lt;/h3&gt;
+&lt;p&gt;La API de java ens ofereix unes interfícies per a fer això més
+estàndard. No és que ens aportin gaire nou respecte el que ja em vist,
+però pot ser interessant veure la notació.&lt;/p&gt;
+&lt;p&gt;Troba les interfícies Observable i Observer a la API de java i
+realitza una nova versió de l'aplicació de l'Estació Meteorològica tot
+fent sevir les dues interfícies en comptes de la que ja havíem creat.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="notes"&gt;
+&lt;h2&gt;Notes&lt;/h2&gt;
+&lt;table class="docutils footnote" frame="void" id="exempleadaptat" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id2"&gt;[1]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;L'exemple apareix adaptat als coneixements de POO
+que estem seguint en aquests materials.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+</summary><category term="java"></category></entry></feed>

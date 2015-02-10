@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Hola Swing</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Hola Swing             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./interficies-grafiques-amb-java.html">
+        Interfícies gràfiques amb Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./interficies-grafiques-amb-java.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>Hola Swing</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/gui.html">
+        gui
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada tindrem un primer contacte amb la biblioteca
+<em>Swing</em> de Java.</p>
+</div>
+<div class="section" id="id1">
+<h2>Hola swing</h2>
+<p>javax.swing és una biblioteca gràfica per a java. Inclou els elements
+habituals de les aplicacions gràfiques: botons, quadres de text, llistes
+desplegables, i un llarg etcètera.</p>
+<p>És una ampliació de l'antic model AWT (<em>Abstract Window Toolkit</em>) que
+millora, entre d'altres coses, amb l'aparença que emula l'aspecte de
+diferents plataformes.</p>
+<p>Es pot desenvolupar una aplicació gràfica en java seguint les següents
+passes:</p>
+<ol class="arabic">
+<li><p class="first">crea un marc (<em>frame</em>): javax.swing.JFrame</p>
+<div class="highlight"><pre><span class="n">JFrame</span> <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
+</pre></div>
+</li>
+<li><p class="first">crea un accessori (<em>widget</em>), per exemple JButton</p>
+<div class="highlight"><pre><span class="n">JButton</span> <span class="n">boto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;prem-me&quot;</span><span class="o">);</span>
+</pre></div>
+</li>
+<li><p class="first">afegeix l'accessori al marc</p>
+<div class="highlight"><pre><span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">boto</span><span class="o">);</span>
+</pre></div>
+</li>
+<li><p class="first">mostra el marc</p>
+<div class="highlight"><pre><span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span> <span class="c1">// defineix la mida</span>
+<span class="n">marc</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span> <span class="c1">// el fa visible</span>
+</pre></div>
+</li>
+</ol>
+<div class="section" id="exercici-1-hola-swing">
+<h3>Exercici 1. Hola Swing</h3>
+<p>Posa tots els elements en el main d'un programa anomenat <em>SimpleGui</em>.</p>
+<p>Per a facilitar el tancament del programa, afegeix la línia:</p>
+<div class="highlight"><pre><span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+</pre></div>
+<p>La necessitat d'aquesta línia la trobaràs si executes el programa fora
+d'un IDE (opció recomanada per fer els primers exercicis!)</p>
+<p>Pista: les classes que fas servir són al package javax.swing.</p>
+<hr class="docutils" />
+<p>Amb aquest exemple i depenent de la plataforma on l'executem, disposem
+d'una finestra amb els elements típics (botons de minimització,
+ampliació i tancat; capacitat de redimensionat, etc.) i un botó amb el
+text &quot;prem-me&quot; que omple tot el marc de la finestra.</p>
+<p>L'aspecte del botó pot resultar decebedor, però ja veurem que podem
+aconseguir altres aspectes amb relativa facilitat.</p>
+<p>Quan premem el botó, simula l'efecte de pressió i alliberament però no
+sembla que passi res més.</p>
+<p>Clar, hem de programar el que volem que faci!</p>
+<p>Per que el botó faci alguna cosa en fer-li clic, ens cal:</p>
+<ol class="arabic simple">
+<li>un mètode a cridar en fer clic: el mètode realitzarà l'acció
+que volem que passi quan es premi el botó.</li>
+<li>una manera de saber quan hem de llençar aquest mètode. És a dir,
+saber quan l'usuari fa clic al botó.</li>
+</ol>
+<p>Al nostre exemple, suposem que el que volem que passi és que quan facin
+click al botó canviï el text per &quot;prem-me un altre cop&quot; Per fer-ho,
+sembla que n'hi hauria d'haver prou amb un mètode com ara:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">canviaBoto</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">boto</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;prem-me un altre cop!&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>Però, com <em>connectem</em> aquest mètode amb l'<em>esdeveniment</em> de clic?</p>
+<p>Per a fer-ho, cal que ens registrem com a interessats o escoltadors
+(<em>listeners</em>) en aquest esdeveniment.</p>
+<div class="figure align-center">
+<img alt="Representació del patró observador amb un botó" src="gui.img001.observer_pattern.png" />
+</div>
+<p>Els components GUI de Swing són fonts d'esdeveniments (Event Sources) el
+que implica que són objectes que poden traduir successos de l'entorn en
+esdeveniments.</p>
+<p>Un esdeveniment en Java (cap sorpresa) és tradueix en un objecte.</p>
+<p>Mira el package java.awt.event i trobaràs un munt de classes
+d'esdeveniments. És fàcil distingir-les perquè totes porten <em>event</em> al
+nom: MouseEvent, KeyEvent, WindowEvent, ActionEvent...</p>
+<p>Un event source com ara un botó, crea una nova instància d'esdeveniment
+quan succeeix quelcom significatiu (ex. l'usuari fa clic a sobre del
+botó)</p>
+<p>Les classes interessades en aquests esdeveniments, com ara la nostra
+SimpleGui, reben aquests esdeveniments un cop han mostrat el seu
+interès.</p>
+<p>Cada esdeveniment té una interface associada per a ser implementada per
+a aquells que vulguin seguir l'esdeveniment. Per exemple, si vols seguir
+l'esdeveniment MouseEvent, et caldrà implementar MouseListener.</p>
+<div class="figure align-center">
+<img alt="Representació de la interacció d'EventListener amb un botó" src="gui.img002.event_listener.png" />
+</div>
+<p>Per a obtenir els esdeveniments d'un botó, cal:</p>
+<ol class="arabic">
+<li><p class="first">implementar la interface ActionListener</p>
+<blockquote>
+<p>La documentació (<a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/awt/event/ActionListener.html">http://java.sun.com/javase/6/docs/api/java/awt/event/ActionListener.html</a>)
+descriu que la interface ActionListener requereix la implementació del
+mètode actionPerformed()</p>
+</blockquote>
+</li>
+</ol>
+<ol class="arabic simple" start="2">
+<li>registrar-se com a <em>listener</em> del botó</li>
+</ol>
+<p>Considera el següent codi:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleGui</span> <span class="kd">implements</span> <span class="n">ActionListener</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">marc</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">boto</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">SimpleGui</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
+        <span class="n">boto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;prem-me&quot;</span><span class="o">);</span>
+        <span class="n">boto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span> <span class="c1">// ens registrem com a listeners</span>
+        <span class="n">del</span> <span class="n">bot</span><span class="err">ó</span>
+            <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">boto</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SimpleGui</span> <span class="n">gui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleGui</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">canviaBoto</span><span class="o">();</span> <span class="c1">// la resposta al clic</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">canviaBoto</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">boto</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;prem-me un altre cop!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-2-simplegui-v1-1">
+<h3>Exercici 2. SimpleGui v1.1</h3>
+<p>En aquest exercici ampliarem la nostra aplicació SimpleGui de manera
+que:</p>
+<ol class="arabic simple">
+<li>inicialment el text del botó serà &quot;prem-me&quot; (com a la versió 1.0)</li>
+<li>en clicar per primer cop indicarà &quot;prem-me un altre cop!&quot; (cap
+canvi respecte 1.0)</li>
+<li>a partir del segon clic, el missatge serà &quot;i ja van «nombre de
+cops» clics&quot; on nombre de cops començarà amb 2 i anirà
+incrementant-se a mida que es registrin clics.</li>
+</ol>
+<p><strong>Nota</strong>: no cal preocupar-se pel fet que l'usuari arribi a sobrepassar
+amb clics el nombre màxim representable per un enter. Confiem en que la
+nostra aplicació no sigui tan addictiva.</p>
+</div>
+<div class="section" id="exercici-3-un-grafic-al-marc">
+<h3>Exercici 3. Un gràfic al marc</h3>
+<p>Considera la següent classe:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.JPanel</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FiguraPanel</span> <span class="kd">extends</span> <span class="n">JPanel</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">paintComponent</span><span class="o">(</span><span class="n">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// sobre-escrit de JPanel</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">ORANGE</span><span class="o">);</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">fillRect</span><span class="o">(</span><span class="mi">20</span><span class="o">,</span> <span class="mi">50</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Crea un programa, <em>molt</em> semblant al SimpleGui que, en comptes de
+contenir un botó, contingui una Figura.</p>
+<p><strong>Pista</strong>: JPanel es pot considerar un accessori, i pot ser afegit al
+marc de la mateixa manera que d'altres accessoris com ara el JButton.</p>
+</div>
+<div class="section" id="exercici-4-colors-aleatoris-per-la-figura">
+<h3>Exercici 4. Colors aleatoris per la figura</h3>
+<p>El mètode JPanel.paintComponent() no el cridarem mai directament. Ho
+farà la màquina virtual cada cop que trobi necessari dibuixar el
+contingut. Podem, però, demanar que es repinti cridant el mètode
+JFrame.repaint()</p>
+<p>En estendre la classe JPanel, hi podem posar al paintComponent() allò
+que ens interessi.</p>
+<p>Per altra banda, a un marc hi podem afegir més d'un component (era
+previsible, oi?)</p>
+<p>Però si simplement afegim els elements amb marc.add(element) la cosa no
+funciona: un oculta l'altre. No cal que em creguis, <strong>prova-ho!</strong></p>
+<p>Un marc es divideix en cinc regions</p>
+<div class="figure align-center">
+<img alt="Àrees en que es divideix un marc" src="gui.img003.frame_areas.png" />
+</div>
+<p>Per defecte, add() afegeix l'element a l'àrea central.</p>
+<p>És clar, podem demanar al marc que ens afegeixi el nostre element a
+l'àrea que ens interessi. Per exemple,</p>
+<div class="highlight"><pre><span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">,</span> <span class="n">boto</span><span class="o">);</span>
+</pre></div>
+<p>Per a aquest exercici, substitueix el codi de FiguraPanel anterior pel
+següent</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.JPanel</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FiguraPanel</span> <span class="kd">extends</span> <span class="n">JPanel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Color</span> <span class="nf">nouColor</span><span class="o">()</span> <span class="o">{</span> <span class="c1">// retorna un nou color aleatori</span>
+        <span class="kt">int</span> <span class="n">vermell</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">verd</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">blau</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Color</span><span class="o">(</span><span class="n">vermell</span><span class="o">,</span> <span class="n">verd</span><span class="o">,</span> <span class="n">blau</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">paintComponent</span><span class="o">(</span><span class="n">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// omple tot l&#39;espai amb color el per defecte (negre)</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">fillRect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="k">this</span><span class="o">.</span><span class="na">getHeight</span><span class="o">());</span>
+        <span class="c1">// defineix un nou color i crea una figura amb aquest</span>
+        <span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">nouColor</span><span class="o">());</span>
+        <span class="n">g</span><span class="o">.**</span><span class="n">fillOval</span><span class="o">**(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Crea un nou programa que contingui un FiguraPanel i un JButton a la
+part inferior de la finestra. Quan l'usuari premi el botó, haurà de
+canviar el color de la figura.</p>
+<p>Pista:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">arg0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">marc</span><span class="o">.</span><span class="na">repaint</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-5-colors-i-formes-aleatories">
+<h3>Exercici 5. Colors i formes aleatòries</h3>
+<p>Crea una nova versió de l'exercici anterior, de manera que:</p>
+<ol class="arabic simple">
+<li>a cada click, intercali figures entre quadrat i cercle</li>
+<li>a cada click, les dimensions variïn aleatòriament de manera que mai
+siguin menors que 100 ni més grans que la mida del marc -10.</li>
+<li>no es pugui repetir el color ni les dimensions anteriors.</li>
+</ol>
+</div>
+<div class="section" id="exercici-6-gradients-i-formes-aleatories">
+<h3>Exercici 6. Gradients i formes aleatòries</h3>
+<p>La instància de la classe Graphics que rep paintComponent() és en
+realitat un Graphics2D (una subclasse de Graphics)</p>
+<p>Graphics2D disposa d'algunes funcions interessants, com ara la següent:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">paintComponent</span><span class="o">(</span><span class="n">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">GradientPaint</span> <span class="n">rang</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GradientPaint</span><span class="o">(</span><span class="mi">30</span><span class="o">,</span> <span class="mi">30</span><span class="o">,</span> <span class="n">Color</span><span class="o">.</span><span class="na">ORANGE</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span>
+            <span class="n">Color</span><span class="o">.</span><span class="na">BLUE</span><span class="o">);</span>
+    <span class="n">g</span><span class="o">.</span><span class="na">fillRect</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="k">this</span><span class="o">.</span><span class="na">getHeight</span><span class="o">());</span>
+    <span class="o">((</span><span class="n">Graphics2D</span><span class="o">)</span><span class="n">g</span><span class="o">).</span><span class="na">setPaint</span><span class="o">(</span><span class="n">rang</span><span class="o">);</span>
+    <span class="n">g</span><span class="o">.</span><span class="na">fillOval</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>Crea una nova versió de l'exercici anterior. Aquest cop es demana que el
+color de la figura sigui un gradient de dos colors aleatoris que no han
+de coincidir.</p>
+<p>Molt bé, però què passa si necessitem afegir dos botons?</p>
+<p>Per exemple, imagina que hem de desenvolupar un programa que ofereixi
+una etiqueta amb un valor enter i dos botons que permetin incrementar i
+decrementar el valor en 1.</p>
+<p>Per crear-los i afegir-los no hi ha gaire problema, oi?</p>
+<ul class="simple">
+<li>creem dues instàncies diferents, i</li>
+<li>les afegim al marc a àrees diferents</li>
+</ul>
+<p>El codi podria ser quelcom semblant a:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ComptadorSimple</span> <span class="kd">implements</span> <span class="n">ActionListener</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">marc</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">incBoto</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">decBoto</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JLabel</span> <span class="n">etiqueta</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">valor</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">ComptadorSimple</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="n">incBoto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;+ 1&quot;</span><span class="o">);</span>
+        <span class="n">decBoto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;- 1&quot;</span><span class="o">);</span>
+        <span class="cm">/*</span>
+<span class="cm">         ens afegim com a listeners dels dos botons d&#39;alguna manera</span>
+<span class="cm">        */</span>
+        <span class="n">etiqueta</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JLabel</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">valor</span><span class="o">),</span> <span class="n">SwingConstants</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">,</span> <span class="n">incBoto</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">,</span> <span class="n">etiqueta</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">,</span> <span class="n">decBoto</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Que faig?&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ComptadorSimple</span> <span class="n">gui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComptadorSimple</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Però, com ens afegim com a listeners dels dos botons. I el que és més
+important, com ens ho fem per a respondre als esdeveniments dels dos
+botons?</p>
+<p>Per a afegir-nos com a listeners dels dos botons és molt fàcil:</p>
+<div class="highlight"><pre><span class="n">incBoto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+<span class="n">decBoto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</pre></div>
+<p>Per a distingir quin és el botó on han fet clic podem fer ús de la
+informació que porta l'esdeveniment que ens envia el botó.</p>
+<p>Si mirem la documentació de ActionEvent
+(<a class="reference external" href="http://java.sun.com/javase/6/docs/api/java/awt/event/ActionEvent.html">http://java.sun.com/javase/6/docs/api/java/awt/event/ActionEvent.html</a>)
+ens trobem amb el mètode heretat de EventObject, getSource()</p>
+<p>Segons la documentació: <em>Returns the object on which the Event initially
+occurred.</em></p>
+<p>Per tant, podem simplement:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(**</span><span class="n">event</span><span class="o">.</span><span class="na">getSource</span><span class="o">()</span> <span class="o">==</span> <span class="n">incBoto</span><span class="o">**)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;vol incrementar&quot;</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;vol decrementar&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-7-comptador-simple">
+<h3>Exercici 7. Comptador simple</h3>
+<p>Completa l'aplicació ComptadorSimple perquè els botons incrementin i
+decrementin correctament el valor.</p>
+<p>Considera el mètode JLabel.setText()</p>
+<p>Com que no volem que cap usuari prou pacient ens faci petar l'aplicació,
+ens assegurarem que en cas que arribem al màxim / mínim enter
+representables, que els botons no puguin incrementar / decrementar
+respectivament.</p>
+</div>
+</div>
+<div class="section" id="classes-internes">
+<h2>Classes internes</h2>
+<p>La manera de controlar la font dels esdeveniments que hem vist fins ara,
+tot i que funciona, no es massa còmoda. En tot cas, no es considera una
+solució elegant en el món de la POO.</p>
+<p>Per “elegantitzar-la” però, ens caldrà un concepte que no hem vist
+encara: les classes internes o <em>inner classes</em>.</p>
+<p>Java permet definir classes dins d'altres classes. El que anomena
+classes internes o <em>inner classes</em>.</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">classeExterna</span> <span class="o">{</span>
+    <span class="kd">class</span> <span class="nc">classeInterna</span> <span class="o">{</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Una de les característiques de les classes internes és que aquestes
+poden accedir a tots els membres de la classe externa (incloent els
+elements privats!)</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">ClasseExterna</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kd">class</span> <span class="nc">ClasseInterna</span> <span class="o">{</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">modifica</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">i</span><span class="o">++;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Una instància d'una classe interna només pot accedir als membres de la
+instància de la classe externa on ha estat creada.</p>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">ClasseExterna</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">ClasseInterna</span> <span class="n">interna</span> <span class="o">=</span> <span class="o">**</span><span class="k">new</span> <span class="n">ClasseInterna</span><span class="o">()**;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">demostra</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">interna</span><span class="o">.</span><span class="na">modifica</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;i: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">class</span> <span class="nc">ClasseInterna</span> <span class="o">{</span>
+        <span class="kt">void</span> <span class="nf">modifica</span><span class="o">()</span> <span class="o">{</span> <span class="n">i</span><span class="o">++;</span> <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">){</span>
+        <span class="n">ClasseExterna</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClasseExterna</span><span class="o">();</span>
+        <span class="n">c</span><span class="o">.</span><span class="na">demostra</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Però, potser et preguntaràs, què passa si em confonc i faig la instància
+de ClasseInterna fora de la de ClasseExterna?</p>
+<p>La resposta és: no et preocupis, Java t'ho posarà difícil.</p>
+<p>Per exemple, si intentes fer un</p>
+<div class="highlight"><pre><span class="n">ClasseInterna</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClasseInterna</span><span class="o">()</span>
+</pre></div>
+<p>des del main() de ClasseExterna et trobaràs amb un missatge similar a:</p>
+<div class="highlight"><pre><span class="n">$</span> <span class="n">javac</span> <span class="n">ClasseExterna</span><span class="o">.</span><span class="na">java</span>
+
+<span class="n">ClasseExterna</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span> <span class="n">non</span><span class="o">-</span><span class="kd">static</span> <span class="n">variable</span> <span class="o">**</span><span class="k">this</span><span class="o">**</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">referenced</span> <span class="n">from</span> <span class="n">a</span> <span class="kd">static</span> <span class="n">context</span>
+
+<span class="n">ClasseInterna</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClasseInterna</span><span class="o">();</span>
+
+<span class="o">^</span>
+
+<span class="mi">1</span> <span class="n">error</span>
+</pre></div>
+<p>És a dir, que per a fer un new de la <em>inner class</em> cal fer-ho des del
+codi d'una instància de la <em>outer class</em>.</p>
+<p>De fet, es pot crear una instància d'una classe interna des de fora de
+la classe externa, però et cal una sintaxi especial i, en el cas remot
+que et calgui fer-la servir, ja la cercaràs <a class="footnote-reference" href="#accesinterna" id="id2">[3]</a></p>
+<p>Tornant al nostre problema dels dos botons, amb les classes internes la
+cosa es simplifica, no?</p>
+<p>Podem fer una classe interna per a cada botó i ja està.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ComptadorSimple</span> <span class="o">{</span> <span class="c1">// ja no cal implementar ActionListener</span>
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">marc</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">incBoto</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">decBoto</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JLabel</span> <span class="n">etiqueta</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">valor</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">IncComptador</span> <span class="kd">implements</span> <span class="n">ActionListener</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">arg0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;vol incrementar&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">// ...</span>
+    <span class="kd">public</span> <span class="nf">ComptadorSimple</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="n">incBoto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;+ 1&quot;</span><span class="o">);</span>
+        <span class="n">decBoto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;- 1&quot;</span><span class="o">);</span>
+        <span class="c1">//</span>
+        <span class="n">IncComptador</span> <span class="n">incComptador</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IncComptador</span><span class="o">();</span>
+        <span class="n">incBoto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="n">incComptador</span><span class="o">);</span>
+        <span class="n">decBoto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="c1">// ...);</span>
+        <span class="c1">//</span>
+        <span class="n">etiqueta</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JLabel</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">valor</span><span class="o">),</span> <span class="n">SwingConstants</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">,</span> <span class="n">incBoto</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">,</span> <span class="n">etiqueta</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">,</span> <span class="n">decBoto</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ComptadorSimple</span> <span class="n">gui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComptadorSimple</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<div class="section" id="exercici-8-comptador-simple-amb-inner-classes">
+<h3>Exercici 8. Comptador simple amb inner classes</h3>
+<p>Completa el codi del comptador simple amb classes internes.</p>
+<hr class="docutils" />
+<p>Potser t'estaràs dient, quina gràcia haver de crear una classe (ni que
+sigui inner) tot inventant-me un nom diferent per a cada esdeveniment
+al que vulgui donar resposta.</p>
+<p>Java disposa d'una notació que ens permetrà salvar-nos d'una
+codificació tan tediosa: les <em>classes anònimes</em>.</p>
+<p>Segons la secció 3.12 de JAVA in a Nutshell 3<sup>rd</sup> eddition
+(<a class="reference external" href="http://docstore.mik.ua/orelly/java-ent/jnut/ch03_12.htm">http://docstore.mik.ua/orelly/java-ent/jnut/ch03_12.htm</a>)</p>
+<blockquote>
+An <em>anonymous class</em> is a local class without a name. An anonymous
+class is defined and instantiated in a single succinct expression
+using the <tt class="docutils literal">new</tt> operator. While a local class definition is a
+statement in a block of Java code, an anonymous class definition is
+an expression, which means that it can be included as part of a
+larger expression, such as a method call. <strong>When a local class is
+used only once, consider using anonymous class</strong> syntax, which
+places the definition and use of the class in exactly the same
+place.</blockquote>
+<p>Per al que a nosaltres ens ocupa, considera el següent fragment de codi
+del nostre comptador simple:</p>
+<div class="highlight"><pre><span class="o">...</span>
+<span class="n">incBoto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;+ 1&quot;</span><span class="o">);</span>
+<span class="n">decBoto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;- 1&quot;</span><span class="o">);</span>
+<span class="c1">//</span>
+<span class="n">incBoto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">arg0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;vol incrementar&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+<span class="o">...</span>
+</pre></div>
+<p>Fixa't com simplement s'enuncia un new per a una <em>interface</em> (!) i tot
+seguit es passa a <em>implementar</em> els mètodes de la interfície (en aquest
+cas només <em>actionPerformed(ActionEvent)</em> )</p>
+</div>
+<div class="section" id="exercici-9-si-no-cal-anomenar-no-anomenis">
+<h3>Exercici 9. Si no cal anomenar, no anomenis!</h3>
+<p>Crea una nova versió del comptador simple ara amb classes anònimes per
+la implementació dels <em>listeners.</em></p>
+<hr class="docutils" />
+<p>Les classes internes poden, a banda d'implementar <em>interfaces</em>,
+pertànyer a una altra posició de la jerarquia de classes que la classe
+externa.</p>
+<p>Per a entendre la potència d'aquest fet, construirem una aplicació que
+mostri una simple animació.</p>
+<p>Considera el següent codi:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SimpleAnimacio</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">marc</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="o">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="o">;</span> <span class="c1">// coordenades de la pilota</span>
+    <span class="kd">private</span> <span class="kd">class</span> <span class="nc">Pilota</span> <span class="kd">extends</span> <span class="n">JPanel</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">paintComponent</span><span class="o">(</span><span class="n">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">g</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">BLUE</span><span class="o">);</span>
+            <span class="n">g</span><span class="o">.</span><span class="na">fillOval</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="mi">40</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">SimpleAnimacio</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="n">Pilota</span> <span class="n">pilota</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pilota</span><span class="o">();</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">pilota</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+        <span class="n">marc</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">130</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">x</span><span class="o">++;</span> <span class="n">y</span><span class="o">++;</span> <span class="c1">// recalcula la posicio de la pilota</span>
+            <span class="n">pilota</span><span class="o">.</span><span class="na">repaint</span><span class="o">();</span>
+            <span class="n">espera</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">espera</span><span class="o">()</span> <span class="o">{</span> <span class="c1">// s&#39;espera una estona</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">25</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SimpleAnimacio</span> <span class="n">gui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleAnimacio</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Com podem veure, hem desenvolupat la classe interna Pilota que és un
+JPanel</p>
+<p>És clar, l'animació queda una mica lletja pel fet que la pilota va
+deixant rastre. Però ja vam veure com podíem arreglar-lo a l'exemple de
+FiguraPanel. Revisa els teus apunts!</p>
+</div>
+<div class="section" id="exercici-10-la-pilota-sense-rastre">
+<h3>Exercici 10. La pilota sense rastre</h3>
+<p>Modifica el programa SimpleAnimacio de manera que la pilota no deixi
+rastre en moure's.</p>
+</div>
+<div class="section" id="exercici-11-la-pilota-rebota">
+<h3>Exercici 11. La pilota rebota</h3>
+<p>Crea una aplicació que mostri una pilota de 20x20 rebotant per la
+pantalla fins que l'usuari tanqui la finestra.</p>
+<p>El fons de la pantalla serà blanc i inicialment la pantalla tindrà una
+mida de 300x200</p>
+<p>Cada cop que la pilota canviï de sentit (horitzontal o vertical)
+canviarà a un color aleatori (excepte el blanc)</p>
+</div>
+</div>
+<div class="section" id="conversors">
+<h2>Conversors</h2>
+<p>El NetBeans, com altres IDE, disposa d'un editor gràfic per a ajudar-nos</p>
+<p>en la composició de les nostres pantalles.</p>
+<p>Aquesta activitat ens introduirà en la composició de GUI mitjançant el
+NetBeans</p>
+<div class="section" id="exercici-12-graus-centigrads-a-farenheit">
+<h3>Exercici 12. Graus centígrads a Farenheit</h3>
+<p>A aquest exercici desenvoluparàs un programa que permeti convertir els
+graus centígrads a Farenheit.</p>
+<p>Segueix les passes:</p>
+<ol class="arabic">
+<li><p class="first">Crea un nou projecte Java</p>
+</li>
+<li><p class="first">Crea un nou fitxer de la categoria <em>Swing GUI Forms</em> i tipus <em>JFrame
+form</em>, amb el nom ConversorC2F</p>
+</li>
+<li><p class="first">A la finestra de propietats del marc,</p>
+<ul>
+<li><dl class="first docutils">
+<dt>canvia la propietat títol (<em>title</em>) per “Centigrads</dt>
+<dd><p class="first last">a Farenheit” <a class="footnote-reference" href="#pelspuristes" id="id3">[4]</a></p>
+</dd>
+</dl>
+</li>
+<li><p class="first">a la propietat nom indica “frmConversorC2F”</p>
+</li>
+<li><p class="first">indica que no es permet canviar la mida (<em>resizable</em>)</p>
+</li>
+</ul>
+</li>
+<li><p class="first">De la paleta de components, arrossega una etiqueta (<em>label</em>) de la
+categoria <em>Swing Controls</em> sobre l'àrea del marc.</p>
+</li>
+<li><p class="first">A la finestra de propietats de l'etiqueta,</p>
+<blockquote>
+<ul class="simple">
+<li>canvia la propietat <em>text</em> per “Graus centígrads”</li>
+<li>canvia la propietat de codi <em>Variable Name</em> per “lblCentigrads”</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">Afegeix al costat de l'etiqueta un camp de text (<em>text field</em>). A la
+finestra de propietats:</p>
+<blockquote>
+<ul class="simple">
+<li>canvia <em>text</em> per “0”</li>
+<li>canvia <em>tool tip text</em> per “Escriviu aquí el valor a convertir”</li>
+<li>a la secció de layout indica una mida horitzontal
+(<em>Horizontal Size</em>) de 100</li>
+<li>canvia Variable Name per “txtCentigrads”</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">De la mateixa manera, afegeix una etiqueta i un quadre te text per
+als graus Farenheit. Recorda canviar les propietats dels dos controls
+per valors apropiats. Assegura't que marques el quadre de text
+txtFarenheit com a no editable</p>
+</li>
+<li><p class="first">Afegeix un botó i anomena'l “btnConvertC2F”</p>
+</li>
+<li><p class="first">Executa el que tens. Hauria de veure's quelcom similar a:</p>
+<blockquote>
+<div class="figure align-center">
+<img alt="Exemple de pantalla amb el conversor de centígrads a Farenheit" src="gui.img004.centigrads2farenheit.png" />
+</div>
+</blockquote>
+</li>
+<li><p class="first">Considera el codi generat (pestanya <em>source</em>) Especialment mira el
+codi col·lapsat sota el missatge “Generated Code”. Identifica els
+controls que has creat i els valors dels atributs que has marcat.</p>
+</li>
+<li><p class="first">Torna a la vista de disseny. Selecciona el botó i fes-hi click dret.
+Selecciona <em>Events -&gt; Mouse -&gt; Mouse Clicked</em>. Ara ens apareix un
+codi similar a:</p>
+<div class="highlight"><pre><span class="kd">private</span> <span class="kt">void</span> <span class="nf">btnConvertC2FMouseClicked</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">event</span><span class="o">.</span><span class="na">MouseEvent</span> <span class="n">evt</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// TODO add your handling code here:</span>
+<span class="o">}</span>
+<span class="n">btnConvertC2F</span><span class="o">.</span><span class="na">addMouseListener</span><span class="o">(</span><span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">event</span><span class="o">.</span><span class="na">MouseAdapter</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">mouseClicked</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">event</span><span class="o">.</span><span class="na">MouseEvent</span> <span class="n">evt</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">btnConvertC2FMouseClicked</span><span class="o">(</span><span class="n">evt</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+</li>
+<li><p class="first">Afegeix el següent codi</p>
+<div class="highlight"><pre><span class="kd">private</span> <span class="kt">void</span> <span class="nf">btnConvertC2FMouseClicked</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">event</span><span class="o">.</span><span class="na">MouseEvent</span> <span class="n">evt</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">centigrads</span> <span class="o">=</span> <span class="n">txtCentigrads</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">farenheit</span> <span class="o">=</span> <span class="n">cnvCentigrad2Farenheit</span><span class="o">(</span><span class="n">centigrads</span><span class="o">);</span>
+    <span class="n">txtFarenheit</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">farenheit</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-13-farenheit-a-centigrads-tambe">
+<h3>Exercici 13. Farenheit a centígrads també</h3>
+<p>Crea una nova versió de l'aplicació anterior que permeti també convertir
+de Farenheit a Centígrads. La UI serà similar a:</p>
+<div class="figure align-center">
+<img alt="Exemple de pantalla amb el conversor centígrads/Farenheit" src="gui.img005.farenheit22centigrads.png" />
+</div>
+<p>Considera les opcions de refactoring copy-paste pel marc i de duplicació
+pel botó.</p>
+</div>
+<div class="section" id="exercici-14-farenheit-a-centigrads-sense-botons">
+<h3>Exercici 14. Farenheit a centígrads sense botons</h3>
+<p>Fes una nova versió de l'aplicació anterior. Aquest cop considera
+l'esdeveniment keyReleased dels quadre de text per a realitzar les
+conversions en comptes dels botons.</p>
+</div>
+</div>
+<div class="section" id="veu-digital">
+<h2>Veu digital</h2>
+<p>En aquesta activitat, aprendrem a incorporar una biblioteca d'un
+tercer. <a class="footnote-reference" href="#donletret" id="id4">[5]</a></p>
+<div class="section" id="exercici-15-el-sintetitzador-de-veu">
+<h3>Exercici 15. El sintetitzador de veu</h3>
+<p>Segueix les passes</p>
+<ol class="arabic">
+<li><p class="first">Crea un nou projecte i desenvolupa una interfície amb un marc que
+contingui:</p>
+<blockquote>
+<ul class="simple">
+<li>un àrea de text anomenada txtArea, inicialment sense text, amb un
+text d'ajuda que digui “Text a pronunciar”</li>
+<li>un botó anomenat btnPronuncia amb el text “Pronuncia”</li>
+<li>un botó anomenat btnEsborra amb el text “Esborra”</li>
+</ul>
+<div class="figure align-center">
+<img alt="Exemple de pantalla amb el sintetitzador de veu" src="gui.img006.sintetitzador.png" />
+</div>
+</blockquote>
+</li>
+<li><p class="first">Al costat de la pestanya “Design” hi trobes una sèrie d'icones que
+especifiquen el mode en que estàs treballant. Per defecte tens
+activat el mode selecció (Selection Mode) Aquest cop, selecciona la
+del costat “Connection Mode”</p>
+</li>
+<li><p class="first">Fes click sobre el botó btnEsborra i a continuació, fes click sobre
+txtArea. T'apareix un quadre de diàleg anomenat “Connection Wizard”
+que t'ajudarà a crear una connexió entre ambdós controls.</p>
+</li>
+<li><p class="first">Selecciona Events -&gt; Mouse -&gt; mouseClicked i accepta el nom que
+t'apareix per defecte fent click a següent.</p>
+</li>
+<li><p class="first">A la següent pantalla, selecciona la propietat Text de txtArea i fes
+Next</p>
+</li>
+<li><p class="first">Selecciona l'opció exclusiva (radi button) etiquetada amb Value però
+no indiquis cap valor. Fixa't a l'espai de sota on diu “Generated
+Parameters Preview” que t'indica que el valor a assignar serà la
+cadena buida. Tot just el que esperem per a un botó que es diu
+esborra, oi?</p>
+</li>
+<li><p class="first">Fes Finish i comprova el codi que ha generat automàticament per a
+tu. Bé, en aquest cas és possible que haguéssim acabat abans
+escrivint directament el codi.</p>
+</li>
+<li><p class="first">Com que no volem fer que btnPronuncia modifiqui res de txtArea, el
+que farem serà crear manualment el codi de resposta (recorda click
+dret -&gt; <em>Events -&gt; Mouse -&gt; mouseClicked</em>) Aquí hauríem d'afegir el
+codi per a pronunciar el text. Però com ho fem? Posa't ara a
+desenvolupar un sintetitzador de veu! Sort que algú ens l'ha fet per
+nosaltres.</p>
+</li>
+<li><p class="first">Ves a
+<a class="reference external" href="http://freetts.sourceforge.net/">http://freetts.sourceforge.net</a>
+i descarrega't el fitxer bin. N'hi ha d'altres possibilitats, però
+per a les necessitats d'aquest exercici en tindrem prou amb aquest.
+Descomprimeix el zip en algun lloc i localitza el fitxer
+<em>freetts.jar</em>.</p>
+</li>
+<li><dl class="first docutils">
+<dt>A la carpeta de biblioteques (<em>Libraries</em>) del teu projecte, fes</dt>
+<dd><p class="first last">click dret, selecciona <em>Add JAR/Folder,</em> i afegeix freetts.jar.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Afegeix el següent codi</p>
+<div class="highlight"><pre><span class="kd">private</span> <span class="kt">void</span> <span class="nf">btnPronunciaMouseClicked</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">event</span><span class="o">.</span><span class="na">MouseEvent</span> <span class="n">evt</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">sText</span> <span class="o">=</span> <span class="n">txtArea</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">sText</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">sText</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">VoiceManager</span> <span class="n">voiceManager</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">Voice</span> <span class="n">syntheticVoice</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">voiceManager</span> <span class="o">=</span> <span class="n">VoiceManager</span><span class="o">.</span><span class="na">getInstance</span><span class="o">();</span>
+            <span class="n">syntheticVoice</span> <span class="o">=</span> <span class="n">voiceManager</span><span class="o">.</span><span class="na">getVoice</span><span class="o">(</span><span class="s">&quot;kevin&quot;</span><span class="o">);</span>
+            <span class="n">syntheticVoice</span><span class="o">.</span><span class="na">allocate</span><span class="o">();</span>
+            <span class="n">syntheticVoice</span><span class="o">.</span><span class="na">speak</span><span class="o">(</span><span class="n">sText</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">syntheticVoice</span><span class="o">.</span><span class="na">deallocate</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</li>
+<li><p class="first">Executa'l i fes alguna prova amb l'altaveu engegat.</p>
+</li>
+<li><p class="first">Afegeix el codi necessari perquè quan l'usuari premi btnEsborra es
+senti el text del botó per l'altaveu.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-16-el-conversor-parlat">
+<h3>Exercici 16. El conversor parlat</h3>
+<p>Modifica l'aplicació de conversió de centígrads i Farenheit (la versió
+amb dos botons de l'exercici 1.2. Farenheit a centígrads també”) de
+manera que ara, a banda de realitzar la conversió es pronunciarà el
+resultat.</p>
+<p>Alguns exemples de pronunciació:</p>
+<blockquote>
+<ul class="simple">
+<li>0 degree celsius are 32 degree farenheit.</li>
+<li>33 degree farenheit are 1 degrees celsius.</li>
+<li>conversion error</li>
+</ul>
+</blockquote>
+<p><strong>Nota</strong>: fitxa't que no és requeriment considerar singular/plural. En
+canvi, és molt recomanable que ho facis en anglès si vols que s'entengui
+una mica.</p>
+</div>
+</div>
+<div class="section" id="creacio-d-interficies">
+<h2>Creació d'interfícies</h2>
+<div class="section" id="exercici-17-anagram-game">
+<h3>Exercici 17. Anagram Game</h3>
+<p>Considera l'exemple d'aplicació anomenat Anagram Game.</p>
+<p>Hi ha alguns elements nous però no t'amoïnis, no cal que l'entenguem
+sencer per a poder realitzar l'exercici.</p>
+<p>Crea una nova versió del joc de manera que ofereixi un botó anomenat Tip
+que cada cop que es premi mostri una mica més de la paraula a endevinar
+al mateix lloc on apareix la resta dels missatges . La primera vegada
+que es premi per a una paraula, mostrarà el primer caràcter. Quan hagi
+mostrat tota la paraula, la copiarà al quadre de text.</p>
+</div>
+<div class="section" id="exercici-18-client-editor">
+<h3>Exercici 18. Client Editor</h3>
+<p>Considera l'exemple d'aplicació anomenat Client Editor</p>
+<p>Hi ha un munt d'elements nous però no t'amoïnis, no cal que l'entenguem
+sencer per a poder realitzar l'exercici.</p>
+<p>Crea una nova versió on els clients disposin d'una nova propietat
+anomenada “docId” de tipus String, que es mostri com a dada personal i
+que el formulari validi el seu valor com ho fa amb altres camps (ex.
+edat) de manera que només siguin vàlids strings de longitud 9 on els
+primers 8 siguin números i el darrer una lletra. No es requereix
+comprovar que la lletra correspongui a la requerida per a un NIF
+correcte.</p>
+</div>
+<div class="section" id="exercici-19-card-layout">
+<h3>Exercici 19. Card Layout</h3>
+<p>Crea una aplicació que disposi d'un grup de botons “radio” amb les
+opcions “gos”, “gat” i “canari”</p>
+<p>Crea dins del marc principal un panell amb layout tipus Card Layout i
+fica-hi dins tres panells que continguin cadascuna una etiqueta amb el
+nom d'un animal (gat, gos, canari) i una imatge de l'animal (cerca tres
+imatges petites per la web)</p>
+<p>Quan l'usuari seleccioni una de les opcions, s'haurà de veure la imatge
+corresponent.</p>
+<p>L'aplicació és molt similar a la que mostra l'exemple
+<a class="reference external" href="http://java.sun.com/docs/books/tutorial/uiswing/components/button.html#radiobutton">http://java.sun.com/docs/books/tutorial/uiswing/components/button.html#radiobutton</a>
+però allà només canvia la imatge d'una etiqueta, mentre que aquí es
+mostra un panell diferent sencer.</p>
+<p>Assegura't que les imatges es troben a un paquet anomenat <em>recursos</em>.</p>
+<p>Pista: considera la propietat Card Name des de NetBeans o bé afegeix els
+panells interns amb .add(panell, “nom del panell”) Així, el codi per a
+mostrar un panell o altre seria quelcom similar a:</p>
+<div class="highlight"><pre><span class="n">CardLayout</span> <span class="n">layout</span> <span class="o">=</span> <span class="o">(</span><span class="n">CardLayout</span><span class="o">)</span> <span class="n">panellCard</span><span class="o">.</span><span class="na">getLayout</span><span class="o">();</span>
+<span class="n">layout</span><span class="o">.</span><span class="na">show</span><span class="o">(</span><span class="n">panellCard</span><span class="o">,</span> <span class="s">&quot;nom del panell&quot;</span><span class="o">);</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-20-llista-de-pizzes">
+<h3>Exercici 20. Llista de pizzes</h3>
+<p>Es demana desenvolupar un programa que tingui la següent interfície</p>
+<div class="figure align-center">
+<img alt="Interfície de Pizzes" src="gui.img007.pizza.png" />
+</div>
+<p>L'aplicació disposarà de tres packages anomenats model, vista i
+controlador.</p>
+<p>Al package model hi haurà dues classes: Pizza i PizzaModel</p>
+<p>Pizza és una classe regular amb les propietats: nom, mida i nombre
+d'ingredients</p>
+<p>La mida és un valor enter del 0 al 3 que correspon a “indefinit”,
+“petita”, “mitjana” i “gran”</p>
+<p>El nombre d'ingredients és un valor enter positiu.</p>
+<p>El codi de PizzaModel ens el ofereixen tot i que sense cap documentació
+i ni tant sols complet</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">pizza</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PizzaModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Pizza</span><span class="o">&gt;</span> <span class="n">pizzes</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">PizzaModel</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">pizzes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Pizza</span><span class="o">&gt;();</span>
+        <span class="n">populate</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Pizza</span><span class="o">[]</span> <span class="nf">getPizzes</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">Pizza</span><span class="o">[])</span> <span class="n">pizzes</span><span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="k">new</span> <span class="n">Pizza</span><span class="o">[</span><span class="n">pizzes</span><span class="o">.</span><span class="na">size</span><span class="o">()]);</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">populate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// crea unes quantes pizzes de prova</span>
+        <span class="n">pizzes</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Pizza</span><span class="o">(</span><span class="s">&quot;Carbonara&quot;</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">6</span><span class="o">));</span>
+        <span class="n">pizzes</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Pizza</span><span class="o">(</span><span class="s">&quot;Milanessa&quot;</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">));</span>
+        <span class="n">pizzes</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Pizza</span><span class="o">(</span><span class="s">&quot;Margarita Gegant&quot;</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">quants</span><span class="o">()</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Pizza</span> <span class="nf">getElement</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(</span><span class="n">Pizza</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">(</span><span class="n">Pizza</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Al package control hi ha com a mínim la classe PizzaControl que
+implementa la interfície javax.swing.ListModel ja que serveix com a
+model per al JList de la interfície. El seu únic constructor té com a
+signatura:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="nf">PizzaControl</span><span class="o">(</span><span class="n">PizzaModel</span> <span class="n">model</span><span class="o">)</span>
+</pre></div>
+<p>Al package vista hi ha com a mínim la classe PizzaVista que estén
+javax.swing.JFrame</p>
+<p>Com es pot veure al gràfic, conté els següents elements:</p>
+<ul class="simple">
+<li>un JList que té com a model una instància de PizzaModel. Els valors
+que hi apareixen són els noms de les pizzes. Inicialment no té cap
+element seleccionat i quan es selecciona un d'ells, els valors de la
+pizza seleccionada són copiats als controls corresponents.</li>
+<li>un JTextField que conté el nom d'una pizza. Inicialment està buit.</li>
+<li>un JComboBox que conté els valors dels possibles gruixos de les
+pizzes</li>
+<li>un altre JTextField que conté el nombre d'ingredients de la pizza.
+Només accepta la introducció de números i inicialment val 0.</li>
+<li>un JButton que:<ul>
+<li>apareix deshabilitat quan no hi ha cap valor vàlid als camps de
+nom ni nombre d'ingredients</li>
+<li>quan hi ha valor als camps de nom i nombre d'ingredients queda
+habilitat i mostra el text “Nou” si el nom de la pizza no es troba
+a la llista o bé “Guarda” si existeix ja una pizza amb aquest nom.</li>
+<li>en prémer el botó, es guarden les dades creant una nova pizza o bé
+modificant els valors d'una existent.</li>
+</ul>
+</li>
+<li>un altre botó que:<ul>
+<li>apareix habilitat només quan el camp amb el nom correspon a una
+pizza de la llista.</li>
+<li>en prémer el botó, apareix un quadre de diàleg demanant
+confirmació i si confirma, s'elimina l'element de la llista i (és
+clar) del model.</li>
+</ul>
+</li>
+<li>un botó de cancel·lació que quan es prem, neteja els valors dels
+camps i deixa la llista sense cap element seleccionat.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="ampliacio">
+<h2>Ampliació</h2>
+<p>Si tens interès per a aprofundir en aquest tema, pots començar pel
+tutorial d'<a class="reference external" href="https://docs.oracle.com/javase/tutorial/uiswing/TOC.html">introdució a Swing</a> que
+ofereix Oracle. De fet, aquests apunts es recolzen fortament en els
+continguts d'una versió anterior d'aquest tutoria.</p>
+</div>
+<div class="section" id="anotacions">
+<h2>Anotacions</h2>
+<table class="docutils footnote" frame="void" id="guilocal" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Aquest tema es centra exclusivament en l'ús de la
+biblioteca <em>Swing</em> per aplicacions d'escriptori.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="altreide" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>Si t'estimes més fer servir un altre IDE, o fins i tot
+si prefereixes fer-ho tot manualment (sense suport), és
+perfectament acceptable. Només has de tenir en compte que no rebràs
+suport en aquests materials.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="accesinterna" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[3]</a></td><td>Per als curiosos impacients:
+<tt class="docutils literal">ClasseExterna.ClasseInterna in = new <span class="pre">ClasseExterna().new</span>
+<span class="pre">ClasseInterna();</span></tt></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pelspuristes" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[4]</a></td><td>Els més puristes potser voldran posar aquí Celsius en comptes
+de Centígrads.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="donletret" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[5]</a></td><td>Aquest exercici està adaptat del que apareix al
+capítol 15 del llibre &quot;Pro NetBeansTM IDE 6 Rich Client Platform
+Edition&quot; del Adam Myatt Ed. Apress.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./interficies-grafiques-amb-java.html">
+        Interfícies gràfiques amb Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./interficies-grafiques-amb-java.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
