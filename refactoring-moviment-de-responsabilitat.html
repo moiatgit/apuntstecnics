@@ -41,6 +41,7 @@
             -->
             <h3>Categories</h3>
             <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
                 <li class="active"><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
                 <li ><a href="./category/gui.html">gui</a></li>
@@ -51,11 +52,12 @@
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/c.html">C</a></li>
                 <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
             </ul>
         </div>
     </div>
@@ -109,30 +111,51 @@ de refacció que col·loqui les coses on toca.</p>
 Mou-lo allà on creguis oportú</p>
 <p>El codi resultant hauria de permetre que <tt class="docutils literal">Client.informe()</tt> funcioni
 amb el següent codi:</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno"> 2</span>     <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="lineno"> 3</span>     <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="lineno"> 4</span>     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
-<span class="lineno"> 5</span>         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno"> 6</span>         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-<span class="lineno"> 7</span>     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno"> 8</span> <span class="hll">        <span class="n">bonificacions</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">bonificacions</span><span class="o">();</span>
-</span><span class="lineno"> 9</span>         <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
-<span class="lineno">10</span>         <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
-<span class="lineno">11</span>             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno">12</span>             <span class="s">&quot; &quot;</span> <span class="o">+</span>
-<span class="lineno">13</span>             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
-<span class="lineno">14</span>             <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-<span class="lineno">15</span>         <span class="n">total</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
-<span class="lineno">16</span>     <span class="o">}</span>
-<span class="lineno">17</span> 
-<span class="lineno">18</span>     <span class="c1">// afegeix informació final</span>
-<span class="lineno">19</span>     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
-<span class="lineno">20</span>         <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-<span class="lineno">21</span>     <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
-<span class="lineno">22</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+        <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+        <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+<span class="hll">        <span class="n">bonificacions</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">bonificacions</span><span class="o">();</span>
+</span>        <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+        <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+            <span class="s">&quot; &quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+            <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// afegeix informació final</span>
+    <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+        <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+<span class="o">}</span>
 </pre></div>
-<p>Nota: ara no serà tan directe com amb <tt class="docutils literal">quantitat</tt> eliminar la variable
+</td></tr></table><p>Nota: ara no serà tan directe com amb <tt class="docutils literal">quantitat</tt> eliminar la variable
 temporal <tt class="docutils literal">bonificacions</tt>. Paciència.</p>
 </div>
 <div class="section" id="exercici-13-diagrama-de-classes-actualitzat">

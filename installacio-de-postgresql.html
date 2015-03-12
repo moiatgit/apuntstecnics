@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Instal·lació de PostGreSQL</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Instal·lació de PostGreSQL             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./sgbd-objecte-relacional.html">
+        SGBD Objecte-Relacional
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./sgbd-objecte-relacional.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">
+        Comparació models relacional i objecte-relacionals (primera part)
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Instal·lació de PostGreSQL</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/postgresql.html">postgresql</a> 
+</div>
+    <div><!-- XXX TODO: revisar per adequar a Pelican -->
+<div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquesta guia descriu, pas a pas, una instal·lació bàsica del Sistema
+Gestor de Bases de Dades (SGBD) <em>PostGreSQL</em> sobre una màquina virtual
+amb un servidor Ubuntu.</p>
+<p>Es recomana la instal·lació del servidor de <em>PostGreSQL</em> a una màquina
+independent de la màquina de treball però connectada a aquesta.
+D'aquesta manera les proves que es realitzin s'acostaran més a una
+manera de treballar més <em>real</em>.  Per simplicitat/economia, es proposa
+que el servidor sigui una màquina virtual.</p>
+<p>En aquest document suposarà que disposes d'una màquina Ubuntu que
+hostatjarà la màquina virtual d'un servidor Ubuntu gestionada per
+l'aplicació de virtualització <a class="reference external" href="https://www.virtualbox.org/">*VirtualBox*</a>.</p>
+<p>Pel cas que no coneguis l'aplicació <em>VirtualBox</em> o/i com crear una
+màquina virtual, aquest document et donarà unes breus indicacions per
+a aconseguir configurar quelcom usable.</p>
+<p>En el cas que prefereixis fer servir algun altre sistema operatiu o bé
+una aplicació de virtualització diferent, no hauries de tenir gaires
+problemes per a seguir el principal objectiu d'aquest document: la
+instal·lació d'un servidor <em>PostGreSQL</em>.</p>
+</div>
+<div class="section" id="creacio-de-la-maquina-virtual">
+<h2>Creació de la màquina virtual</h2>
+<p>A continuació es presenta una breu guia per a crear una màquina
+virtual amb el servidor des d'un equip Ubuntu.</p>
+<div class="section" id="installacio-del-virtualbox">
+<h3>Instal·lació del VirtualBox</h3>
+<p>A la pàgina <a class="reference external" href="https://www.virtualbox.org/wiki/Linux_Downloads">Download VirtualBox for Linux Hosts</a> hi trobaràs
+diferents maneres d'instal·lar el <em>VirtualBox</em> a una màquina GNU/Linux.</p>
+<p>Instal·la l'aplicació a la màquina on realitzaràs les pràctiques
+d'aquest document (a partir d'ara <em>amfitrió</em>). Si l'amfitrió és un
+Ubuntu 12.04, les instruccions següents t'ho permetran fàcilment:</p>
+<ol class="arabic">
+<li><p class="first">Afegeix el repositori</p>
+<p>Afegeix la següent línia al final del fitxer
+<tt class="docutils literal">/etc/apt/sources.list</tt></p>
+<div class="highlight"><pre>deb http://download.virtualbox.org/virtualbox/debian precise contrib
+</pre></div>
+</li>
+<li><p class="first">Registra la clau pública d'Oracle:</p>
+<div class="highlight"><pre><span class="nv">$ </span>wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
+</pre></div>
+</li>
+<li><p class="first">Actualitza la base de dades de apt i instal·la l'aplicació:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span>sudo apt-get install virtualbox-4.3
+</pre></div>
+</li>
+<li><p class="first">Arrenca l'aplicació:</p>
+<div class="highlight"><pre><span class="nv">$ </span>VirtualBox &amp;
+</pre></div>
+</li>
+</ol>
+</div>
+<div class="section" id="creacio-del-servidor">
+<h3>Creació del servidor</h3>
+<p>A continuació trobaràs unes instruccions per a crear una màquina
+virtual bàsica i instal·lar-li un servidor d'Ubuntu. Si saps el que
+estàs fent, hauries de poder realitzar-ho d'altres maneres sense que
+això afecti l'objectiu d'aquesta lliçó.</p>
+<p>Ara crearem ara una màquina virtual amb un <em>Ubuntu Server</em>. Segueix
+les passes:</p>
+<ol class="arabic">
+<li><p class="first">Descarrega la imatge amb l'instal·lador del servidor d'Ubuntu.</p>
+<p>Descarrega la imatge d'una versió del servidor d'Ubuntu a la pàgina
+<a class="reference external" href="http://www.ubuntu.com/download/server">Download Ubuntu Server</a></p>
+</li>
+<li><p class="first">Crea una nova màquina virtual</p>
+<p>Arrenca <em>VirtualBox</em> i selecciona <em>Màquina-&gt;Nova</em> (o <tt class="docutils literal"><span class="pre">ctrl-N</span></tt>)</p>
+<p>Indica un nom per la màquina (ex. <tt class="docutils literal">Ubuntu PostGreSQL</tt>) de tipus
+<tt class="docutils literal">Linux</tt> i versió <tt class="docutils literal">Ubuntu</tt>. Reserva la memòria recomanada i crea
+un nou disc virtual de tipus VDI, ubicat de forma dinàmica i amb la
+ubicació i mida que se't proposin. És a dir, accepta tots els
+valors que et proposen per defecte.</p>
+</li>
+<li><p class="first">Enllaça la imatge del servidor amb la nova màquina virtual</p>
+<p>Per fer-ho, segueix <em>Màquina-&gt;Paràmetres-&gt;Emmagatzematge</em>, clica
+sobre la icona del CD a l'àrbre d'emmagatzematge i tot seguit a la
+mateixa icona però a la secció d'atributs. Al desplegable,
+selecciona la opció de <em>Selecciona una imatge de CD/DVD virtual</em> i
+navega fins a seleccionar el fitxer amb la imatge que t'has
+descarregat.</p>
+</li>
+<li><p class="first">Arrenca la màquina i instal·la el sistema operatiu.</p>
+<p>Segueix <em>Màquina-&gt;Inicia</em> i segueix les instruccions per instal·lar
+el servidor d'Ubuntu.</p>
+<p>En cas que no tinguis familiaritat amb la instal·lació no gràfica
+d'un sistema operatiu com l'Ubuntu Server, simplement escull idioma
+<a class="footnote-reference" href="#idiomaangles" id="id1">[1]</a> i selecciona <em>Install Ububtu Server</em>. Selecciona
+els valors que consideris adequats (el del teclat potser voldràs
+que te l'intenti detectar l'instal·lador)</p>
+<p>A continuació creat un usuari <em>sudoer</em> i posa-li una contrasenya
+que puguis recordar. Aquí suposarem <em>usuarivm</em>. També et caldrà
+definir un nom de la màquina.  Aquí suposarem <em>vm</em>.</p>
+<p>Continua amb la resta d'opcions fins la creació de les particions.
+Normalment el valor proposat hauria de ser adequat. Amb la secció
+de creació de particions escull la primera opció <em>Guided - use
+entire disk</em> (sense LVM) i accepta la taula de particions que
+t'ofereixi.</p>
+<p>Ara espera a que s'instal·li el sistema operatiu.</p>
+<p>Hi haurà algunes preguntes que requeriran de la teva interacció. La
+major part de les vegades podràs seleccionar l'opció per defecte
+fins que arribis a la instal·lació de paquets de la secció
+<em>Software selection</em>. Si et vols evitar la instal·lació posterior
+del servidor de <em>PostGreSQL</em> i del de SSH (per exemple per fer login
+remotament), pots aprofitar i marcar <em>OpenSSH Server</em> i <em>PostgreSQL
+database</em>.</p>
+<p>No és imprescindible instal·lar el servidor de ssh, però pot
+resultar-te molt més còmode establir sessió des d'una consola a
+l'amfitrió que teclejar directament a la màquina virtual. Com tot,
+va a gustos.  Si no vas marcar el paquet OpenSSH, però t'interessa
+més endavant, el podràs instal·lar amb un:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo apt-get install openssh-server
+</pre></div>
+</li>
+<li><p class="first">Un cop instal·lat el sistema operatiu, torna a arrencar la màquina. Per exemple, amb:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo shutdown -r now
+</pre></div>
+<p>Entra amb el teu usuari <em>sudoer</em> (si has seguit el nom d'aquesta
+guia, serà <em>usuarivm</em>) i actualitza (si tens temps) el programari
+amb:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo apt-get uptdate
+usuarivm@vm:~<span class="nv">$ </span>sudo apt-get upgrade
+</pre></div>
+</li>
+<li><p class="first">Canvia la connexió de la xarxa</p>
+<p>El mode de connexió NAT ens permet accedir a l'exterior (internet)
+des de la màquina virtual. Ens limita, però, l'accés des de la
+màquina host al servidor: precisament el que més ens interessa.</p>
+<p>Per aquesta raó, canviarem el tipus de connexió a un altre que ens
+ajudi al nostre objectiu. Escollirem el mode <em>Adaptador de només
+amfitrió</em> de manera que l'accés a la màquina virtual quedi
+restringit a la nostra màquina i altres possibles màquines virtuals
+que s'executin sobre aquesta.</p>
+<p>Per fer-ho, segueix les següents passes:</p>
+<ol class="arabic simple">
+<li>finalitza l'execució de la màquina virtual</li>
+<li>des de la finestra principal de <em>VirtualBox</em>, selecciona
+<em>Fitxer-&gt;Preferències-&gt;Xarxa-&gt;Xarxes de només amfitrió</em> i fes
+clic al botó lateral (dreta) que apareix amb un '+' (amb
+llegenda <em>Âfegeix xarxa de només anfitrió</em>). Això t'incorporarà
+<em>vboxnet0</em>, un servidor DHCP que ofereix per defecte
+<em>VirtualBox</em>.</li>
+<li>des de la finestra principal de <em>VirtualBox</em>, selecciona
+<em>Màquina-&gt;Paràmetres-&gt;Xarxa</em> i a
+<em>Connectat a:</em> canvia el valor de NAT per <em>Adaptador de només
+amfitrió</em> <a class="footnote-reference" href="#adaptadorpont" id="id2">[2]</a>.</li>
+</ol>
+<p>Cal tenir en compte que en arrencar de nou la màquina virtual
+haurem perdut l'accés cap a l'exterior. Si et cal per algun motiu,
+pots provar, per exemple, d'assignar a la màquina virtual una
+interfície de xarxa addicional amb NAT <a class="footnote-reference" href="#config2interf" id="id3">[3]</a>. Pels
+objectius d'aquest document, no serà necessari.</p>
+<p>Ara, pots consultar la informació de xarxa a la màquina virtual:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 08:00:27:f8:47:05
+          inet addr:192.168.56.101  Bcast:192.168.56.255  Mask:255.255.255.0
+          inet6 addr: fe80::a00:27ff:fef8:4705/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:48 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:46 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:8041 <span class="o">(</span>8.0 KB<span class="o">)</span>  TX bytes:6805 <span class="o">(</span>6.8 KB<span class="o">)</span>
+</pre></div>
+<p>També des de la màquina amfitrió, on comprovarem que <em>VirtualBox</em> ens
+ha creat una nova interfície anomenada <em>vboxnet0</em>:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ifconfig vboxnet0
+vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
+          inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
+          inet6 addr: fe80::800:27ff:fe00:0/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:68 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:11577 <span class="o">(</span>11.5 KB<span class="o">)</span>
+</pre></div>
+<p>Podem ara, per exemple, connectar-nos a la màquina virtual amb una
+sessió <tt class="docutils literal">ssh</tt> des d'una consola de l'amfitrió:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ssh usuarivm@192.168.56.101
+</pre></div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>Instal·lació de PostGreSQL</h2>
+<p>Aquesta secció només considera-la en el cas que no hagis ja instal·lat
+el <em>PostGreSQL</em> com una de les col·leccions d'aplicacions durant la
+instal·lació del SO.</p>
+<p>La instal·lació del servidor de <em>PostGreSQL</em> en la configuració
+proposada no podria ser gaire més senzilla. Assegura't però que ho fas
+a la màquina virtual i no a la amfitriona! :</p>
+<blockquote>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo apt-get install postgresql
+</pre></div>
+</blockquote>
+<p>Segurament no t'instal·larà la darrera versió de <em>PostGreSQL</em>, però al
+menys serà una estable i suficient pels objectius d'aquesta lliçó.</p>
+</div>
+<div class="section" id="configuracio-de-postgresql">
+<h2>Configuració de PostGreSQL</h2>
+<p>En instal·lar <em>PostGreSQL</em>, ens ha creat usuari <em>postgres</em> i la base
+de dades <em>template1</em>.</p>
+<p>En cas que sigui necessari, canviarem la contrasenya de <em>postgres</em>
+amb:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo passwd postgres
+</pre></div>
+<p>Per defecte, PostGreSQL configura l'accés local perquè sigui realitzat
+des d'un usuari del sistema operatiu. Tot i que es pot canviar,
+acceptarem aquest comportament per defecte.</p>
+<p>Així, crearem un nou usuari al sistema. Ho farem sense donar-li
+possibilitats de logar-se:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo useradd -s /sbin/nologin usuaribd
+</pre></div>
+<p>Creem ara un usuari regular i una nova base de dades. Farem:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>su - postgres
+postgres@vm:~<span class="nv">$ </span>psql
+<span class="nv">$ </span>psql
+psql <span class="o">(</span>9.1.8<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
+<span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE USER usuaribd WITH PASSWORD &#39;pass&#39;;</span>
+CREATE ROLE
+<span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE DATABASE testbd;</span>
+CREATE DATABASE
+<span class="nv">postgres</span><span class="o">=</span><span class="c"># GRANT ALL PRIVILEGES ON DATABASE testbd to usuaribd;</span>
+GRANT
+<span class="nv">postgres</span><span class="o">=</span><span class="c">#\q</span>
+postgres@vm:~<span class="nv">$ </span><span class="nb">exit</span>
+<span class="nb">logout</span>
+</pre></div>
+<p>Evidentment pots escollir el nom de la base de dades, el d'usuari i la
+clau que t'agradin. Recorda que si la configuració de xarxa de la
+teva màquina virtual és la que se't proposa en aquest document, només
+es podrà accedir a aquesta des de la teva màquina amfitrió.</p>
+<p>Accedim a la nova base de dades amb el nou usuari fent servir:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>psql -U usuaribd -d testbd -h localhost
+Password <span class="k">for </span>user usuaribd:
+psql <span class="o">(</span>9.1.8<span class="o">)</span>
+SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-SHA, bits: 256<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
+
+<span class="nv">testbd</span><span class="o">=</span>&gt;<span class="se">\q</span>
+</pre></div>
+<p>Per a accedir des d'una màquina fora de la que conté el servidor, per exemple del nostre amfitrió, ens caldrà fer algunes modificacions a la configuració per defecte de <em>PostGreSQL</em>.</p>
+<p>El canvi requereix la modificació de dos fitxers de configuració que
+es trobaran a <tt class="docutils literal"><span class="pre">/etc/postgresql/«X.Y»</span></tt> on «X.Y» correspon a la versió
+que hagis instal·lat de <em>PostGreSQL</em>. En el meu cas la <tt class="docutils literal">9.1</tt>.</p>
+<p>El primer fitxer a modificar és
+<tt class="docutils literal">/etc/postgresql/9.1/main/pg_hba.conf</tt>. Cal localitzar les següents
+línies</p>
+<pre class="literal-block">
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+</pre>
+<p>Tot just a sota, hi afegirem la següent línia</p>
+<pre class="literal-block">
+host    all             all             192.168.56.0/24        md5
+</pre>
+<p>A continuació, modificarem el fitxer <tt class="docutils literal">/etc/postgresql/9.1/main/postgresql.conf</tt>. Hi localitzarem la secció <em>Connection settings</em> i descomentarem la línia que conté</p>
+<pre class="literal-block">
+# listen_addresses = 'localhost'          # what IP address(es) to listen on;
+</pre>
+<p>de manera que aparegui com:</p>
+<pre class="literal-block">
+listen_addresses = '*'          # what IP address(es) to listen on;
+</pre>
+<p>Ara reiniciem el servidor de <em>PostGreSQL</em> amb:</p>
+<div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>sudo service postgresql restart
+</pre></div>
+<p>Finalment provarem la connexió remota. Per simplicitat, farem servir
+la consola de <tt class="docutils literal">psql</tt> des de l'amfitrió.</p>
+<p>A la màquina amfitrió ens
+caldrà probablement instal·lar el client de <em>PostGreSQL</em>. Ho podem fer
+simplement amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install postgresql-client
+</pre></div>
+<p>Ara ja podem fer una prova des de l'amfitrió:</p>
+<div class="highlight"><pre><span class="nv">$ </span>psql -U usuaribd -d testbd -h 192.168.56.101
+Password <span class="k">for </span>user usuaribd:
+psql <span class="o">(</span>9.1.8<span class="o">)</span>
+SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-SHA, bits: 256<span class="o">)</span>
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
+
+<span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\q</span>
+</pre></div>
+<p>Si tot ha anat bé, ja disposem d'un servidor <em>PostGreSQL</em> en
+funcionament amb un usuari i una base de dades amb els que podrem
+estudiar el funcionament d'aquest SGBD.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="idiomaangles" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>En aquest cas, l'idioma és només per
+l'instal·lador. De seguida et demanarà l'idioma del SO. Et recomano
+que mantinguis l'anglés de manera que no hagis de barallar-te amb
+la instal·lació de diferents paquets de traducció.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="adaptadorpont" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Pot ser temptador fer servir l'opció d'<em>Adaptador
+pont</em>. Si et trobes però a una xarxa amb molts equips, tingues en
+compte que aquesta opció consumirà una IP del servidor DHCP. A més,
+les comunicacions entre la màquina virtual i l'amfitrió seran més
+lentes donat que cal que surtin físicament.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="config2interf" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><p class="first">En cas que vulguis configurar més d'una interfície
+de xarxa, és possible que no sigui suficient amb configurar els dos
+adaptadors al <em>VirtualBox</em>. Hauràs de configurar la màquina virtual
+de manera que reconegui la nova interfície. Per fer-ho, considera
+afegir les següents línies al final de
+<tt class="docutils literal">/etc/network/interfaces</tt></p>
+<pre class="last literal-block">
+auto eth1
+iface eth1 inet dhcp
+</pre>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./sgbd-objecte-relacional.html">
+        SGBD Objecte-Relacional
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./sgbd-objecte-relacional.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">
+        Comparació models relacional i objecte-relacionals (primera part)
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

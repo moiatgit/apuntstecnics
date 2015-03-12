@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Comparació models relacional i objecte-relacionals (segona part)</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Comparació models relacional i objecte-relacionals (segona part)             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">
+        Comparació models relacional i objecte-relacionals (primera part)
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./sgbd-objecte-relacional.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>Comparació models relacional i objecte-relacionals (segona part)</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+</div>
+    <div><!-- XXX TODO: revisar per adequar a Pelican -->
+<div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document correspon a la segona part de la comparació entre els
+models relacionals i Objecte-relacional (mira la <a class="reference external" href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">primera part</a>).</p>
+<p>En aquesta segona part, es tracta la perspectiva Objecte-Relacional.</p>
+</div>
+<div class="section" id="model-objecte-relacional">
+<h2>Model Objecte-Relacional</h2>
+<p>A la secció anterior hem fet un petit repàs de les possibilitats que
+PostGreSQL ens ofereix com a SGBD relacional. En aquesta considerarem
+algunes de les possibilitats que ens ofereix com a SGBD
+objecte-relacional.</p>
+<p>Excepte per lleugeres diferències, l'apartat anterior seria comú a
+altres SBGDs que hi ha al mercat, com ara Oracle. A partir d'ara, les
+diferències s'amplifiquen fins a trobar-nos que els diferents SGBDs
+que s'auto denominen Objecte-Relacionals presenten una diversitat
+d'interpretacions que de vegades no tenen ni traducció als altres.</p>
+<div class="section" id="el-model-des-de-la-perspectiva-oo">
+<h3>El model des de la perspectiva OO</h3>
+<p>El següent diagrama de classes UML mostra una possible representació
+del model anterior en forma de classes.</p>
+<div class="figure align-center">
+<img alt="Possible diagrama de classes del cas d'estudi" src="./images/psql003.img002.uml.png" />
+</div>
+<p>Algunes de les diferències més notables són:</p>
+<ul>
+<li><p class="first">En comptes de representar les diferents parts que formen una adreça
+en forma de camps no relacionats dins de diferents taules, el model
+OO agrupa aquestes dades i manega el concepte d'<em>adreça</em>.</p>
+<p>El model relacional ja podria haver fet quelcom similar, tot
+definint una entitat ADRECES i fent que les taules usuàries CLIENTS
+i COMMANDES en fessin referència.</p>
+<p>Amb tot, una adreça ens apareix de manera natural com un tipus de
+dades, encara que compost, com podria ser una data.</p>
+<p>Cada SGBDOR ofereix mecanismes per definir aquests tipus de dades
+definits per l'usuari (<em>UDT</em>: <em>User Defined Type</em>).</p>
+<p>Per altra banda, tot i que el model inicial ens forçava a definir
+tota la informació del carrer en una única línia, de vegades algunes
+adreces són més complicades i requereixen més d'una línia. Una
+llista de línies de carrer ens permetria més comoditat a l'hora de
+d'emmagatzemar aquestes dades. Novament, el model relacional ens
+permetria fer-ho per exemple separant el contingut de cada línia per
+un caràcter especial (ex. <tt class="docutils literal">\n</tt>). Encara que efectiva, no és una
+manera còmoda ni per guardar-la ni per usar-la posteriorment.</p>
+</li>
+<li><p class="first">El cas de la llista de telèfons és un cas similar al de les línies
+d'especificació del carrer, en aquest cas, però, sembla que cada
+element té una mica més d'entitat per separat. Al cap i a la fi,
+normalment voldrem mostrar juntes totes les línies del carrer,
+mentre que cada telèfon podria tenir un ús especial.</p>
+<p>Ho podríem &quot;arreglar&quot; des de la perspectiva purament relacional,
+definint dues noves taules (TELEFONS i TELEFONS_CLIENT) de manera
+que TELEFONS_CLIENT emmagatzemés la relació M:N entre CLIENTS i
+TELEFONS. Complex, oi?</p>
+<p>Una de les crítiques que rep el model relacional és que obliga a
+crear un munt d'entitats que no corresponen a cap concepte de la
+realitat, només per a permetre normalitzar les dades.</p>
+<p>En el model de classes proposat, aprofitant que disposem de la
+classe Telèfon, podem afegir més informació com ara el prefix del
+país i el tipus de telèfon (mòbil, fax, fix, ...)</p>
+</li>
+<li><p class="first">Les dades que formen part del nom del client (tractament, nom i
+cognoms) són un cas similar al de l'adreça i el telèfon.</p>
+<p>Respecte el tractament, ara fa servir un enumerat per controlar la
+validesa  Amb el model relacional hauríem pogut crear una taula amb
+els diferents valors possibles i fer una clau forana des de CLIENTS.
+Tota una taula per poc més de quatre valors...</p>
+</li>
+<li><p class="first">Les entitats principals CLIENTS, COMANDES i PRODUCTES es
+converteixen en classes en un model purament orientat a objectes.
+Malauradament els SGBDORs en general, i PostGreSQL en particular,
+encara no ofereixen mecanismes prou còmodes per implementar
+relacions d'agregació. Per més detalls, considera l'anàlisi de
+<a class="citation-reference" href="#eessaar" id="id1">[Eessaar]</a>.</p>
+<p>Tot plegat, per les entitats principals aquest document no
+considerarà la implementació a la base de dades en forma de UDT sinó
+com a taules estàndard.</p>
+<p>Com a norma general, et proposo que consideris la definició d'un nou
+tipus per a aquells conceptes què puguis voler manipular de la
+manera que ho fas amb un String. Fixa't que amb un String potser
+pots tenir interès en les parts individuals (caràcters) que el
+formen, però probablement no t'interessarà disposar d'una taula amb
+tots els strings que facin servir la resta d'entitats. En tot cas,
+aquesta serà l'aproximació que prenem en aquest document.</p>
+</li>
+<li><p class="first">La taula amb les línies de comanda, és un artifici que sovint ens
+veiem forçats a muntar en el model Relacional per definir relacions
+M:N.</p>
+<p>Potser resultaria molt més natural poder disposar d'una llista de
+línies de comanda <em>dins</em> de cada comanda.</p>
+<p>En aquest cas, ens caldria definir un tipus compost que contindria
+una clau forana a PRODUCTES. El problema està en que, a hores d'ara,
+PostGreSQL no ofereix la possibilitat d'indicar restriccions en els
+UDTs. Per aquesta raó, haurem de mantenir la taula LINIES−COMANDA.</p>
+</li>
+<li><p class="first">El cas dels clients VIP, en un model orientat a objectes es podria
+resoldre amb una relació d'herència. Un client VIP és una extensió
+d'un client estàndard. Amb el model relacional ens havíem vist
+obligats a crear una taula intermèdia per evitar claus foranies
+nul·les en cas de clients estàndard <a class="footnote-reference" href="#nocaliaherencia" id="id2">[1]</a>.</p>
+</li>
+</ul>
+<p>El DER resultant el representa el següent diagrama:</p>
+<div class="figure align-center">
+<img alt="Diagrama d'entitat-relació amb objecte-relacional" src="./images/psql003.img003.der_or.png" />
+</div>
+</div>
+<div class="section" id="l-enumerat-pel-tractament">
+<h3>L'enumerat pel tractament</h3>
+<p>Podem definir l'enumeració Tractament de la següent manera</p>
+<div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TYPE</span> <span class="n">Tractament</span> <span class="k">AS</span> <span class="n">ENUM</span> <span class="p">(</span>
+    <span class="s1">&#39;Sr.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sra.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Srta.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Dr.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Dra.&#39;</span>
+<span class="p">);</span>
+</pre></div>
+<p>Podem consultar els detalls del tipus amb</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span>T+ tractament
+                         List of data types
+ Schema |    Name    | Internal name | Size | Elements | Description
+--------+------------+---------------+------+----------+-------------
+ public | tractament | tractament    | 4    | Sr.     +|
+        |            |               |      | Sra.    +|
+        |            |               |      | Srta.   +|
+        |            |               |      | Dr.     +|
+        |            |               |      | Dra.     |
+<span class="o">(</span>1 row<span class="o">)</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-1-l-enumerat-pel-tipus-de-telefon">
+<h3>Exercici 1. L'enumerat pel tipus de telèfon</h3>
+<p>Et toca a tu definir l'enumerat pels diferents tipus de telèfon.
+Anomena l'enumerat com a <tt class="docutils literal">TipusTelefon</tt>. L'enumerat hauria de
+contenir, com a mínim els valors <tt class="docutils literal">mòbil</tt>, <tt class="docutils literal">fax</tt> i <tt class="docutils literal">fix</tt>.</p>
+</div>
+<div class="section" id="el-tipus-telefon">
+<h3>El tipus Telèfon</h3>
+<p>Podem definir el nou tipus (classe) Telefon fent servir el concepte de
+dades compostes de PostGreSQL, de la següent manera</p>
+<div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TYPE</span> <span class="n">Telefon</span> <span class="k">AS</span> <span class="p">(</span>
+    <span class="n">tipus</span>   <span class="n">TipusTelefon</span><span class="p">,</span>
+    <span class="n">pref</span>    <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+    <span class="n">num</span>     <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+<p>En aquest cas, podem tornar a veure els detalls del nou tipus de la mateixa
+manera que consultàvem els detalls d'una taula:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span> Telefon
+      Composite <span class="nb">type</span> <span class="s2">&quot;public.telefon&quot;</span>
+ Column |         Type          | Modifiers
+--------+-----------------------+-----------
+ tipus  | tipustelefon          |
+ pref   | character varying<span class="o">(</span>4<span class="o">)</span>  |
+ num    | character varying<span class="o">(</span>16<span class="o">)</span> |
+</pre></div>
+<p>Fixa't que estem fent servir <em>TipusTelefon</em> directament com el tipus de
+dades de la propietat <em>tipus</em> de <em>Telefon</em>. Fàcil no?</p>
+</div>
+<div class="section" id="exercici-2-el-tipus-denominacio">
+<h3>Exercici 2. El tipus Denominació</h3>
+<p>Defineix la classe <em>Denominacio</em>. Fixa't que conté un enumerat definit
+per nosaltres.</p>
+</div>
+<div class="section" id="exercici-3-el-tipus-adreca">
+<h3>Exercici 3. El tipus Adreça</h3>
+<p>Defineix la classe <em>Adressa</em>.</p>
+<p>Aquesta classe presenta la particularitat de l'array de strings al
+carrer. Llegeix la següent secció sobre la taula de CLIENTS per
+<em>inspirar-te</em> en com crear el nou tipus.</p>
+</div>
+<div class="section" id="la-taula-clients">
+<h3>La taula CLIENTS</h3>
+<p>Ara que ja disposem dels nous tipus, tornarem a declarar la taula
+CLIENTS de la següent forma:</p>
+<div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">clients</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INTEGER</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">nom</span> <span class="n">Denominacio</span><span class="p">,</span>
+    <span class="n">adr</span> <span class="n">Adressa</span><span class="p">,</span>
+    <span class="n">telefons</span> <span class="n">Telefon</span><span class="p">[]</span>
+<span class="p">);</span>
+</pre></div>
+<p>Fixa't en l'ús dels nous tipus, incloent l'array de telèfons.</p>
+<p>Nota: segurament et serà més còmode eliminar la versió anterior de la
+taula (<tt class="docutils literal">DROP TABLE CLIENTS</tt>) que intentar modificar-la a base de
+<tt class="docutils literal">ALTER TABLE</tt>.</p>
+</div>
+<div class="section" id="exercici-4-la-taula-comandes">
+<h3>Exercici 4. La taula COMANDES</h3>
+<p>Defineix la taula COMANDES de manera que ara disposi dels nous tipus
+que hem creat.</p>
+</div>
+<div class="section" id="exercici-5-la-taula-comercials">
+<h3>Exercici 5. La taula COMERCIALS</h3>
+<p>Defineix la taula COMERCIALS.</p>
+</div>
+<div class="section" id="la-taula-clients-vip">
+<h3>La taula CLIENTS_VIP</h3>
+<p>PostGreSQL ens ofereix la possibilitat d'especificar una relació
+d'herència entre dues entitats amb la clau <em>INHERITS</em>.</p>
+<p>Per implementar l'herència podem fer:</p>
+<div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">CLIENTS_VIP</span> <span class="p">(</span>
+    <span class="n">id_comercial</span> <span class="nb">INTEGER</span> <span class="k">REFERENCES</span> <span class="n">COMERCIALS</span>
+<span class="p">)</span> <span class="k">INHERITS</span> <span class="p">(</span><span class="n">CLIENTS</span><span class="p">);</span>
+</pre></div>
+<p>Fixa't què passa si fas:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span> clients_vip
+       Table <span class="s2">&quot;public.clients_vip&quot;</span>
+    Column    |    Type     | Modifiers
+--------------+-------------+-----------
+ id           | integer     | not null
+ nom          | denominacio |
+ adr          | adressa     |
+ telefons     | telefon<span class="o">[]</span>   |
+ id_comercial | integer     |
+Foreign-key constraints:
+    <span class="s2">&quot;clients_vip_id_comercial_fkey&quot;</span> FOREIGN KEY <span class="o">(</span>id_comercial<span class="o">)</span> REFERENCES comercials<span class="o">(</span>id<span class="o">)</span>
+Inherits: clients
+</pre></div>
+<p>A CLIENTS_VIP els apareix <strong>tots</strong> els camps de CLIENTS.</p>
+<p>Malauradament l'herència a la versió que estem fent servir de
+PostGreSQL no està completament suportada. La taula que estén <strong>no
+hereta</strong> restriccions com ara la clau primària i les claus foranes.
+Això fa que es pugui produir situacions <em>aberrants</em> com que dos
+clients puguin tenir el mateix identificador, o bé que no es pugui
+crear una comanda per un client vip malgrat l'identificador d'aquest
+sembla existir segons les <em>selects</em>. En aquests materials simplement
+ignorarem el problema, però caldrà que el tinguis en compte en cas
+que tinguis interès en fer servir aquesta funcionalitat en producció.</p>
+</div>
+<div class="section" id="inserir-clients">
+<h3>Inserir clients</h3>
+<p>La inserció de clients, com és d'esperar, requerirà alguns canvis.
+Així la inserció tindria un aspecte similar a:</p>
+<div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">CLIENTS</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">10001</span><span class="p">,</span>
+        <span class="k">ROW</span><span class="p">(</span><span class="s1">&#39;Sr.&#39;</span><span class="p">,</span> <span class="s1">&#39;Pepito&#39;</span><span class="p">,</span> <span class="s1">&#39;Grillo&#39;</span><span class="p">),</span>
+        <span class="k">ROW</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;C/ Càspita, nr.1&#39;</span><span class="p">,</span> <span class="s1">&#39;Polígon Industrial Guarapunzo&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;08080&#39;</span><span class="p">,</span> <span class="s1">&#39;Alifardi&#39;</span><span class="p">,</span> <span class="s1">&#39;Guinea Bisau&#39;</span><span class="p">),</span>
+        <span class="k">CAST</span><span class="p">(</span>
+                <span class="nb">ARRAY</span><span class="p">[</span><span class="k">ROW</span><span class="p">(</span><span class="s1">&#39;mòbil&#39;</span><span class="p">,</span><span class="s1">&#39;0034&#39;</span><span class="p">,</span><span class="s1">&#39;933333333&#39;</span><span class="p">),</span>
+                      <span class="k">ROW</span><span class="p">(</span><span class="s1">&#39;fax&#39;</span><span class="p">,</span> <span class="s1">&#39;0034&#39;</span><span class="p">,</span><span class="s1">&#39;933333334&#39;</span><span class="p">)]</span>
+                <span class="k">AS</span> <span class="n">Telefon</span><span class="p">[])</span>
+       <span class="p">);</span>
+</pre></div>
+<p>Fixa't:</p>
+<ul>
+<li><p class="first">per introduir un valor d'un tipus complex, ho farem mitjançant la
+paraula clau <tt class="docutils literal">ROW</tt> seguida, entre parèntesis, dels valors dels
+diferents camps del tipus separats amb coma.</p>
+<p>En molts casos, podem obviar la paraula <tt class="docutils literal">ROW</tt>. Mira la <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/sql-expressions.html#SQL-SYNTAX-ROW-CONSTRUCTORS">secció
+4.2.13 del manual</a>
+per més detalls.</p>
+</li>
+<li><p class="first">de manera similar, per introduir un array farem servir la paraula
+clau <tt class="docutils literal">ARRAY</tt> seguida, entre claudàtors, pels diferents elements
+que conformen l'array tot separant-los amb coma.</p>
+<p>També aquí disposem d'una versió més compacta, expressant els valors
+de l'array entre claus (<tt class="docutils literal">{}</tt>).</p>
+</li>
+<li><p class="first">en el cas de l'array de telèfons, ens caldrà fer un <em>cast</em> per
+indicar a PostGreSQL de quin tipus de dades està format l'array.
+Això ho fem amb <tt class="docutils literal">CAST( <span class="pre">«...»</span> AS <span class="pre">Telefon[])</span></tt>.</p>
+<p>Novament PostGreSQL ens ofereix una manera més compacta
+d'escriure-ho amb l'operador de cast <tt class="docutils literal">::</tt>.</p>
+</li>
+</ul>
+<p>Les possibilitats de compactació que ens ofereix el PostGreSQL fan una
+mica més críptiques les expressions. Això fa que no siguin gaire
+adequades en un primer contacte amb el SGBD.</p>
+</div>
+<div class="section" id="exercici-6-algunes-comandes">
+<h3>Exercici 6. Algunes comandes</h3>
+<p>Insereix les dades necessàries per que quedin enregistrades les
+comandes de tres clients.</p>
+</div>
+<div class="section" id="exercici-7-alguns-comercials">
+<h3>Exercici 7. Alguns comercials</h3>
+<p>Insereix alguns comercials. Ens caldrà al menys un amb l'id 40001.</p>
+</div>
+<div class="section" id="inserir-clients-vip">
+<h3>Inserir clients VIP</h3>
+<p>La inserció de clients VIP, malgrat hem definit la taula com una
+extensió de clients, és molt similar a la inserció a una taula
+<em>convencional</em></p>
+<div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">CLIENTS_VIP</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">10002</span><span class="p">,</span>
+        <span class="k">ROW</span><span class="p">(</span><span class="s1">&#39;Sra.&#39;</span><span class="p">,</span> <span class="s1">&#39;Pepita&#39;</span><span class="p">,</span> <span class="s1">&#39;Grilla&#39;</span><span class="p">),</span>
+        <span class="k">ROW</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;C/ Càspita, nr.2&#39;</span><span class="p">,</span> <span class="s1">&#39;Polígon Industrial Guarapunzo&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;08080&#39;</span><span class="p">,</span> <span class="s1">&#39;Alifardi&#39;</span><span class="p">,</span> <span class="s1">&#39;Guinea Bisau&#39;</span><span class="p">),</span>
+        <span class="nb">ARRAY</span><span class="p">[</span><span class="k">ROW</span><span class="p">(</span><span class="s1">&#39;mòbil&#39;</span><span class="p">,</span><span class="s1">&#39;0034&#39;</span><span class="p">,</span><span class="s1">&#39;933333335&#39;</span><span class="p">),</span>
+              <span class="k">ROW</span><span class="p">(</span><span class="s1">&#39;fax&#39;</span><span class="p">,</span> <span class="s1">&#39;0034&#39;</span><span class="p">,</span><span class="s1">&#39;933333336&#39;</span><span class="p">)]::</span><span class="n">Telefon</span><span class="p">[],</span>
+        <span class="mi">40001</span>
+       <span class="p">);</span>
+</pre></div>
+<p>Un cop disposem d'aquest client VIP, podem comprovar què:</p>
+<ul>
+<li><p class="first">es troba a CLIENTS_VIP</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM CLIENTS_VIP;
+  id   |         nom          |                                            adr                                             |                     telefons                      | id_comercial
+-------+----------------------+--------------------------------------------------------------------------------------------+---------------------------------------------------+--------------
+ 10002 | <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span> | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.2&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span> |        40001
+<span class="o">(</span>1 row<span class="o">)</span>
+</pre></div>
+</li>
+<li><p class="first">es troba a CLIENTS</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM CLIENTS;
+  id   |         nom          |                                            adr                                             |                     telefons
+-------+----------------------+--------------------------------------------------------------------------------------------+---------------------------------------------------
+ 10001 | <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span>  | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.1&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
+ 10002 | <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span> | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.2&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+</li>
+</ul>
+<p>Per cert, si volem saber només els clients que no són VIP, PostGreSQL
+ens ofereix <tt class="docutils literal">ONLY</tt></p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM ONLY CLIENTS;
+  id   |         nom         |                                            adr                                             |                     telefons
+-------+---------------------+--------------------------------------------------------------------------------------------+---------------------------------------------------
+ 10001 | <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span> | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.1&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
+<span class="o">(</span>1 row<span class="o">)</span>
+</pre></div>
+<p>Malauradament, com ja hem comentat, la implementació actual de
+PostGreSQL permet alguns usos no adequats. Per exemple, podrem inserir
+un client vip amb un id ja disponible tant a CLIENTS com a
+CLIENTS_VIP, donat que en realitat no disposem de cap clau primària a
+CLIENTS_VIP. També podríem inserir només els camps de CLIENTS i
+PostGreSQL afegirà automàticament nulls als camps que faltin.</p>
+</div>
+<div class="section" id="exercici-8-alguns-clients-vip">
+<h3>Exercici 8. Alguns clients VIP</h3>
+<p>Insereix un mínim de tres clients VIP.</p>
+</div>
+<div class="section" id="seleccionar-clients">
+<h3>Seleccionar clients</h3>
+<p>Ja hem vist abans que podem accedir als camps de tipus complex i
+d'array com amb qualsevol altre camp. Per exemple</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT nom FROM CLIENTS;
+         nom
+----------------------
+ <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span>
+ <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+<p>Fixa't, però, que els valors dels atributs surten agrupats. Si els
+volem separats, podem fer</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT <span class="o">(</span>nom<span class="o">)</span>.* FROM CLIENTS;
+  tr  |  nom   | cognoms
+------+--------+---------
+ Sr.  | Pepito | Grillo
+ Sra. | Pepita | Grilla
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+<p>De manera individual els seleccionarem indicant el nom de l'atribut</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT <span class="o">(</span>nom<span class="o">)</span>.cognoms <span class="o">||</span> <span class="s1">&#39;, &#39;</span> <span class="o">||</span> <span class="o">(</span>nom<span class="o">)</span>.nom FROM CLIENTS;
+    ?column?
+----------------
+ Grillo, Pepito
+ Grilla, Pepita
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+<p>En el cas dels arrays, podem accedir simplement amb</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT telefons FROM CLIENTS;
+                     telefons
+---------------------------------------------------
+ <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
+ <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+<p>O especificant un rang</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT telefons<span class="o">[</span>1:2<span class="o">]</span> FROM CLIENTS;
+                     telefons
+---------------------------------------------------
+ <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
+ <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+<p>Per defecte, els arrays es defineixen a partir del 1 i no del 0.</p>
+<p>Disposem d'algunes utilitats per saber les dimensions d'un array
+<a class="footnote-reference" href="#dimensions" id="id3">[2]</a></p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; -- la longitut de l<span class="err">&#39;</span>array telèfons per la primera dimensió
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_LENGTH<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS;
+ array_length
+--------------
+            2
+            2
+<span class="o">(</span>2 rows<span class="o">)</span>
+
+<span class="nv">testbd</span><span class="o">=</span>&gt; -- la posició superior per la primera dimensió
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_UPPER<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS;
+ array_upper
+-------------
+           2
+           2
+<span class="o">(</span>2 rows<span class="o">)</span>
+
+<span class="nv">testbd</span><span class="o">=</span>&gt; -- la posició inferior per la primera dimensió
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_LOWER<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS;
+ array_lower
+-------------
+           1
+           1
+<span class="o">(</span>2 rows<span class="o">)</span>
+
+<span class="nv">testbd</span><span class="o">=</span>&gt; -- les dimensions dels arrays
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_DIMS<span class="o">(</span>telefons<span class="o">)</span> FROM CLIENTS;
+ array_dims
+------------
+ <span class="o">[</span>1:2<span class="o">]</span>
+ <span class="o">[</span>1:2<span class="o">]</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
+</pre></div>
+<p>Per exemple, la següent consulta ens retorna tots els clients amb 2 o
+més telèfons</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">CLIENTS</span> <span class="k">WHERE</span> <span class="n">ARRAY_LENGTH</span><span class="p">(</span><span class="n">telefons</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<p>La següent consulta mostra els clients pels que el seu darrer telèfon
+és un fax</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">CLIENTS</span> <span class="k">WHERE</span> <span class="p">(</span><span class="n">telefons</span><span class="p">[</span><span class="n">ARRAY_LENGTH</span><span class="p">(</span><span class="n">telefons</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]).</span><span class="n">tipus</span> <span class="o">=</span> <span class="s1">&#39;fax&#39;</span><span class="p">;</span>
+</pre></div>
+<p>En cas que el que necessitem sigui cercar dins dels valors d'un array,
+podem fer servir la funció <tt class="docutils literal">unnest()</tt> que ens expansiona els valors
+de l'array en un conjunt de registres. Per exemple, la següent
+consulta ens retorna tots aquells clients que tinguin fax</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">id</span>
+<span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="p">(</span><span class="k">UNNEST</span><span class="p">(</span><span class="n">telefons</span><span class="p">)).</span><span class="o">*</span>
+      <span class="k">FROM</span>   <span class="n">CLIENTS</span><span class="p">)</span> <span class="k">AS</span> <span class="n">INTERN</span>
+<span class="k">WHERE</span> <span class="n">tipus</span><span class="o">=</span><span class="s1">&#39;fax&#39;</span><span class="p">;</span>
+</pre></div>
+<p>Fixa't com, en aquest exemple:</p>
+<ul class="simple">
+<li>extraiem els telèfons en files amb <tt class="docutils literal">UNNEST()</tt></li>
+<li>com que els telèfons són de tipus complex, demanem que apareguin els
+atributs com a columnes amb el <tt class="docutils literal"><span class="pre">(«camp»).*</span></tt></li>
+<li>tot plegat ho definim com a l'origen de la consulta, que ara disposa
+de les columnes: id, tipus, pref i num.</li>
+</ul>
+<p>Trobaràs totes les possibilitats que t'ofereix PostGreSQL a la secció
+<a class="reference external" href="http://www.postgresql.org/docs/9.1/static/arrays.html">8.14 Arrays</a>
+i un resum de les funcions i operadors amb arrays a la secció <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/functions-array.html">9-17.
+Array Functions and Operators</a>.</p>
+</div>
+<div class="section" id="modificar-un-valor-d-un-atribut">
+<h3>Modificar un valor d'un atribut</h3>
+<p>Podem modificar els atributs d'un camp complex d'una manera molt
+similar a com els consultem</p>
+<div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">CLIENTS</span> <span class="k">SEt</span> <span class="n">nom</span><span class="p">.</span><span class="n">nom</span> <span class="o">=</span> <span class="s1">&#39;Pepet&#39;</span><span class="p">,</span> <span class="n">nom</span><span class="p">.</span><span class="n">cognoms</span><span class="o">=</span><span class="s1">&#39;Grill&#39;</span> <span class="k">WHERE</span> <span class="n">id</span><span class="o">=</span><span class="mi">10001</span><span class="p">;</span>
+</pre></div>
+<p>Fixat com, en aquest cas, no fem servir parèntesis amb el nom del
+camp.</p>
+</div>
+<div class="section" id="modificar-valors-dins-d-un-array">
+<h3>Modificar valors dins d'un array</h3>
+<p>La modificació d'un dels valors d'un array la podem fer indicant
+l'índex de l'array. Per exemple, la següent comanda modifica la
+primera línia del carrer del client 10001</p>
+<div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">CLIENTS</span> <span class="k">SET</span> <span class="n">adr</span><span class="p">.</span><span class="n">carrer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;C/ Càspita, S/N&#39;</span> <span class="k">WHERE</span> <span class="n">id</span><span class="o">=</span><span class="mi">10001</span><span class="p">;</span>
+</pre></div>
+<p>Imagina, però, que el que vols és afegir un element més a l'array. La
+següent comanda</p>
+<p>Podem afegir al final o al principi d'un array fent servir les funcions
+<tt class="docutils literal">array_append()</tt> i <tt class="docutils literal">array_prepend()</tt>. La comanda següent, afegeix
+una línia nova al final de les línies del carrer d'un client</p>
+<div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">CLIENTS</span>
+<span class="k">SET</span> <span class="n">adr</span><span class="p">.</span><span class="n">carrer</span><span class="o">=</span><span class="n">array_append</span><span class="p">((</span><span class="n">adr</span><span class="p">).</span><span class="n">carrer</span><span class="p">,</span> <span class="s1">&#39;Sector A&#39;</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="n">id</span><span class="o">=</span><span class="mi">10001</span><span class="p">;</span>
+</pre></div>
+<p>Per inserir en un punt intermedi, haurem de composar l'array. Per
+exemple, la següent comanda afegeix nova línia a la segona posició de
+l'array del carrer d'un client</p>
+<div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">CLIENTS</span>
+<span class="k">SET</span> <span class="n">adr</span><span class="p">.</span><span class="n">carrer</span><span class="o">=</span><span class="n">ARRAY_CAT</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[(</span><span class="n">adr</span><span class="p">).</span><span class="n">carrer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;Nau del Pepet&#39;</span><span class="p">],</span>
+                         <span class="p">(</span><span class="n">adr</span><span class="p">).</span><span class="n">carrer</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="n">ARRAY_LENGTH</span><span class="p">((</span><span class="n">adr</span><span class="p">).</span><span class="n">carrer</span><span class="p">,</span><span class="mi">1</span><span class="p">)])</span>
+<span class="k">WHERE</span> <span class="n">id</span><span class="o">=</span><span class="mi">10001</span><span class="p">;</span>
+</pre></div>
+<p>Per eliminar un valor d'un array, procedirem de manera similar. Per
+exemple, eliminarem la primera i darrera línies de carrer d'un client
+amb:</p>
+<div class="highlight"><pre><span class="k">UPDATE</span> <span class="n">CLIENTS</span>
+<span class="k">SET</span> <span class="n">adr</span><span class="p">.</span><span class="n">carrer</span><span class="o">=</span><span class="p">(</span><span class="n">adr</span><span class="p">).</span><span class="n">carrer</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="n">ARRAY_LENGTH</span><span class="p">((</span><span class="n">adr</span><span class="p">).</span><span class="n">carrer</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">WHERE</span> <span class="n">id</span><span class="o">=</span><span class="mi">10001</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-9-un-nou-telefon">
+<h3>Exercici 9. Un nou telèfon</h3>
+<p>Ens informen que el client amb id 10001 té un nou telèfon de tipus
+fix. És el 0034 933100131.</p>
+<p>Escriu les comandes que permetrien:</p>
+<ol class="arabic simple">
+<li>comprovar si aquest client ja disposa d'aquest telèfon. Han de
+coincidir totes les dades per que es considerin iguals.</li>
+<li>inserir el nou telèfon al començament de la llista</li>
+<li>inserir el nou telèfon al final de la llista</li>
+<li>inserir el nou telèfon al el penúltim de la llista</li>
+<li>reemplaçar tots els telèfons fixos que disposi el client, per
+aquest. No importa l'ordre en què quedin i es pot incloure més
+d'una comanda.</li>
+</ol>
+</div>
+<div class="section" id="exercici-10-canvi-de-codi-postal">
+<h3>Exercici 10. Canvi de codi postal</h3>
+<p>Ens comuniquen que les adreces que apareixien sota el codi postal
+08020 del país Espanya, s'han assignat ara al codi postal 08021.</p>
+<p>Desenvolupa la comanda (o comandes) necessàries per registrar aquesta
+modificació a la nostra base de dades.</p>
+</div>
+<div class="section" id="exercici-11-una-consulta-complexa">
+<h3>Exercici 11. Una consulta complexa</h3>
+<p>Volem saber els clients que han fet comandes a lliurar a la
+mateixa ciutat que la de l'adreça del client, i que hagin comprat un
+mínim de 10 productes amb preu superior a 10€ durant el darrer mes (30
+dies).</p>
+<p>Pista:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT DATE <span class="s1">&#39;2013-04-08&#39;</span> - INTERVAL <span class="s1">&#39;1 month&#39;</span> &lt; DATE <span class="s1">&#39;2013-04-08&#39;</span> AS abans;
+ abans
+-------
+ t
+<span class="o">(</span>1 row<span class="o">)</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-12-comandes-dificils">
+<h3>Exercici 12. Comandes difícils</h3>
+<p>Defineix les especificacions d'un mínim de 5 comandes <strong>no trivials</strong>
+sobre aquest model de dades, proporciona al menys una solució per
+cadascuna i el resultat que et generen.</p>
+<p>Assegurat que totes les comandes que proposes requereixen la
+comprensió d'un o més dels elements Objecte-Relacionals que hem
+treballat en aquest document.</p>
+</div>
+</div>
+<div class="section" id="referencies">
+<h2>Referències</h2>
+<table class="docutils citation" frame="void" id="eessaar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[Eessaar]</a></td><td><p class="first">&quot;<a class="reference external" href="http://www.wseas.us/e-library/conferences/2006cscc/papers/534-523.pdf">Whole-Part Relationships in the Object-Relational Databases</a>&quot;
+de Erki Eessaar</p>
+<p class="last">Anàlisi de diferents maneres d'implementar una relació d'agregació
+en un SGBDOR.</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="nocaliaherencia" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>De fet, en aquest cas, probablement podríem
+eliminar la necessitat de distingir els clients VIP donat que només
+té la referència al comercial, fent que simplement el comercial
+disposi de la llista de clients. Mantindrem, però, l'herència ja
+que ens interessa veure com ho s'implementa en el model OR i, a
+l'hora, volem mantenir la simplicitat de l'exemple.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="dimensions" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>PostGreSQL permet definir arrays multidimensionals.
+Donat que en aquest document només veurem d'unidimensionals, a
+l'argument de dimensió d'algunes de les funcions hi trobaràs sempre
+un 1.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">
+        Comparació models relacional i objecte-relacionals (primera part)
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./sgbd-objecte-relacional.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

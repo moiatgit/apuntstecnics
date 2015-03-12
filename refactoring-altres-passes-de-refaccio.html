@@ -41,6 +41,7 @@
             -->
             <h3>Categories</h3>
             <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
                 <li class="active"><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
                 <li ><a href="./category/gui.html">gui</a></li>
@@ -51,11 +52,12 @@
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/c.html">C</a></li>
                 <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
             </ul>
         </div>
     </div>
@@ -154,16 +156,23 @@ d'entendre que l'original.</p>
 <p>Què vol dir exàctament el <tt class="docutils literal">30</tt> al fragment de codi següent?
 Té el mateix significat que el <tt class="docutils literal">30</tt> que t'apareix a
 <tt class="docutils literal">Client.importTotal()</tt>?</p>
-<div class="highlight"><pre><span class="lineno">1</span>  <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno">2</span>      <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
-<span class="lineno">3</span>      <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
-<span class="lineno">4</span>          <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno">5</span>          <span class="s">&quot; &quot;</span> <span class="o">+</span>
-<span class="lineno">6</span>          <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
-<span class="lineno">7</span> <span class="hll">         <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-</span><span class="lineno">8</span>  <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+     <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+         <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+         <span class="s">&quot; &quot;</span> <span class="o">+</span>
+         <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+<span class="hll">         <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+</span> <span class="o">}</span>
 </pre></div>
-<p>En aquest cas, <tt class="docutils literal">30</tt> és el valor multiplicatiu per a aconseguir
+</td></tr></table><p>En aquest cas, <tt class="docutils literal">30</tt> és el valor multiplicatiu per a aconseguir
 convertir l'import a euros. Per exemple, llogar un vehicle bàsic per
 un dia suposa <tt class="docutils literal">3</tt> unitats de <em>cost</em> mentre que llogar un vehicle
 general també per un dia ens <em>costa</em> <tt class="docutils literal">6</tt>. Si volem saber l'import
@@ -175,26 +184,43 @@ doncs que <tt class="docutils literal">30</tt> és el valor en euros d'una unita
 </pre></div>
 <p>Ara, substituïm totes les aparicions de <tt class="docutils literal">30</tt> per aquesta constant
 com es veu a <tt class="docutils literal">Client.informe()</tt>:</p>
-<div class="highlight"><pre><span class="lineno"> 1</span>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno"> 2</span>      <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
-<span class="lineno"> 3</span>          <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno"> 4</span>          <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-<span class="lineno"> 5</span>      <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno"> 6</span>          <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
-<span class="lineno"> 7</span>          <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
-<span class="lineno"> 8</span>              <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno"> 9</span>              <span class="s">&quot; &quot;</span> <span class="o">+</span>
-<span class="lineno">10</span>              <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
-<span class="lineno">11</span> <span class="hll">             <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="n">EUROS_PER_UNITAT_DE_COST</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-</span><span class="lineno">12</span>      <span class="o">}</span>
-<span class="lineno">13</span> 
-<span class="lineno">14</span>      <span class="c1">// afegeix informació final</span>
-<span class="lineno">15</span>      <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">importTotal</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
-<span class="lineno">16</span>          <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacionsTotals</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-<span class="lineno">17</span>      <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
-<span class="lineno">18</span>  <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre> <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+         <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+         <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+             <span class="s">&quot; &quot;</span> <span class="o">+</span>
+             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+<span class="hll">             <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="n">EUROS_PER_UNITAT_DE_COST</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+</span>     <span class="o">}</span>
+
+     <span class="c1">// afegeix informació final</span>
+     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">importTotal</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+         <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacionsTotals</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+     <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+ <span class="o">}</span>
 </pre></div>
-<p>Amb aquest canvi, el codi guanya en llegibilitat doncs és molt més
+</td></tr></table><p>Amb aquest canvi, el codi guanya en llegibilitat doncs és molt més
 fàcil entendre què vol dir el 30 allà on s'aplica. Si en un futur hem
 de canviar la lògica (ex. el preu per unitat de cost), ens resultarà
 molt més fàcil doncs només haurem de tocar un lloc. Fins i tot,
@@ -209,14 +235,19 @@ si hem trencat alguna cosa.</p>
 <p>Considera ara el fragment de codi que pertany al mètode
 <tt class="docutils literal">Lloguer.quantitat()</tt>. Signifiquen el mateix els tres cops que hi
 apareix el valor <tt class="docutils literal">3</tt>?</p>
-<div class="highlight"><pre><span class="lineno">1</span> <span class="k">case</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">BASIC</span><span class="o">:</span>
-<span class="lineno">2</span>     <span class="n">quantitat</span> <span class="o">+=</span> <span class="mi">3</span><span class="o">;</span>
-<span class="lineno">3</span>     <span class="k">if</span> <span class="o">(</span><span class="n">getDies</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno">4</span>         <span class="n">quantitat</span> <span class="o">+=</span> <span class="o">(</span><span class="n">getDies</span><span class="o">()</span> <span class="o">-</span> <span class="mi">3</span><span class="o">)</span> <span class="o">*</span> <span class="mf">1.5</span><span class="o">;</span>
-<span class="lineno">5</span>     <span class="o">}</span>
-<span class="lineno">6</span>     <span class="k">break</span><span class="o">;</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">case</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">BASIC</span><span class="o">:</span>
+    <span class="n">quantitat</span> <span class="o">+=</span> <span class="mi">3</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">getDies</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">quantitat</span> <span class="o">+=</span> <span class="o">(</span><span class="n">getDies</span><span class="o">()</span> <span class="o">-</span> <span class="mi">3</span><span class="o">)</span> <span class="o">*</span> <span class="mf">1.5</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">break</span><span class="o">;</span>
 </pre></div>
-<p>En aquest cas, veiem que el primer <tt class="docutils literal">3</tt> correspon a la quantitat (o
+</td></tr></table><p>En aquest cas, veiem que el primer <tt class="docutils literal">3</tt> correspon a la quantitat (o
 unitats de cost) que val el lloguer d'un vehicle bàsic entre un i tres
 dies. Els altres dos <tt class="docutils literal">3</tt> en canvi, corresponen a nombre de dies
 inicials amb el mateix preu.</p>

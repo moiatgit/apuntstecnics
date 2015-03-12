@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: SGBD Objecte-Relacional</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ SGBD Objecte-Relacional             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./installacio-de-postgresql.html">
+        Instal·lació de PostGreSQL
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>SGBD Objecte-Relacional</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/postgresql.html">postgresql</a> 
+</div>
+    <div><!-- XXX TODO: revisar per adequar a Pelican -->
+<div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquests continguts ofereixen una introducció als Sistemes Gestors de
+Bases de Dades Objecte-Relacional.</p>
+<p>Hi trobaràs la definició i contextualització d'aquests tipus de SGBDs.</p>
+</div>
+<div class="section" id="sgbd-que">
+<h2>SGBD-<em>què?</em></h2>
+<p>Veiem algunes definicions com a recordatori:</p>
+<ul>
+<li><p class="first"><em>base de dades</em> és una col·lecció de dades organitzada d'una manera
+coherent, de manera que pugui ser accedida per una aplicació.</p>
+</li>
+<li><p class="first">un <em>sistema de gestió de bases de dades</em> (SGBD) és una aplicació que
+permet l'administració de bases de dades, de l'organització de les
+dades i de les dades pròpiament.</p>
+</li>
+<li><p class="first">Una <em>transacció</em> és una operació unitària sobre una base de dades,
+tractada d'una manera coherent, fiable i independent d'altres
+transaccions. Tot i que pot consistir en diverses operacions
+individuals, la transacció ha de ser realitzada completament o bé no
+realitzada. És a dir, no pot ser executada parcialment.</p>
+</li>
+<li><p class="first"><em>ACID</em>, acrònim anglès de les paraules <em>Atomicity</em>, <em>Consistency</em>,
+<em>Isolation</em> i <em>Durability</em> implica un conjunt de propietats que ha
+de complir un SGBD per garantir la fiabilitat de les transaccions.</p>
+<ul class="simple">
+<li>Atomicitat: assegura que una transacció és un <em>tot o res</em>. Una
+transacció o bé finalitza correctament i confirma o bé no deixa
+cap rastre de la seva execució.</li>
+<li>Consistència: garanteix que l'execució de qualsevol transacció
+no violarà cap les regles definides a la base de dades.</li>
+<li>Aïllament: el resultat d'executar transaccions de manera
+concurrent ha de ser el mateix que si l'execució hagués estat
+seqüencial.</li>
+<li>Durabilitat: un cop confirmada una transacció, aquesta propietat
+ens assegura que el seu resultat es mantindrà fins i tot en el
+cas de fallada del sistema.</li>
+</ul>
+</li>
+<li><p class="first">El <em>model relacional</em> és una manera d'estructurar la informació en
+bases de dades basada en lògica de primer ordre, un sistema
+descriptiu formal. L'estructura es basa en <em>tuples</em> (llistes
+ordenades d'elements o <em>camps</em>) agrupades en relacions o <em>taules</em>.
+Sovint ens referim a les tuples com <em>registres</em>.</p>
+<p>Direm SGBDR a un SGBD que gestiona bases de dades definides fent
+servir el model relacional. De fet, en l'actualitat és tan comú que
+es respecti aquest model, que dient SGBD</p>
+</li>
+<li><p class="first">Es coneix com a <em>normalització</em> al procés d'organitzar els camps i
+taules d'una base de dades de manera que es minimitzi redundàncies
+i dependències. Tot i que hi ha més, es considera que una base de
+dades està normalitzada si acompleix les primeres tres formes
+normals:</p>
+<ul class="simple">
+<li>1FN: es diu que una taula està en primera forma normal si
+disposa d'una clau primària no nula que permet identificar cada
+registre <a class="footnote-reference" href="#nfmes" id="id1">[1]</a></li>
+<li>2FN: tots els camps de un registre que no són clau depenen de la
+clau primària en el seu conjunt. És a dir, que no depenen d'altres
+camps que no siguin tots els que formen la clau primària.</li>
+<li>3FN: tot camp que no sigui clau no ha dependre de cap altre camp
+a banda dels que formen la clau primària.</li>
+</ul>
+</li>
+</ul>
+<p>Tot i que un SGBDR és suficient per a moltes (potser <em>la majoria de
+les</em>) necessitats de gestió de dades que puguin tenir les nostres
+aplicacions, presenta algunes febleses.</p>
+<p>Una de les crítiques freqüents que trobarem és: en normalitzar, sovint
+ens trobem forçats a crear taules que no es corresponen amb entitats
+del món real. Per exemple, pensa en com cal implementar les relacions
+M:N.</p>
+<p>Però potser la limitació més <em>incòmoda</em> del model relacional és la
+dificultat que ofereix a comunicar-se amb aplicacions basades en el
+paradigma &quot;de moda&quot;: l'orientació a objectes. És el que es coneix com
+a <em>bretxa</em> o <em>impedance mismatch</em> entre els dos models. Bàsicament:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">El model Orientat a Objectes</th>
+<th class="head">El model relacional</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>transitori (<em>transient</em>)</td>
+<td>persistent</td>
+</tr>
+<tr><td><p class="first">classes</p>
+<p class="last">inclou comportament</p>
+</td>
+<td><p class="first">taules</p>
+<p class="last">només dades</p>
+</td>
+</tr>
+<tr><td><p class="first">jerarquia de classes</p>
+<p class="last">inclou herència</p>
+</td>
+<td><p class="first">esquema de la BD</p>
+<p class="last">inclou claus foranes</p>
+</td>
+</tr>
+<tr><td>herència</td>
+<td>!</td>
+</tr>
+<tr><td>propietats / atributs</td>
+<td>columnes / camps</td>
+</tr>
+<tr><td>instància</td>
+<td>tuples / files / registres</td>
+</tr>
+<tr><td>atribut d'instància</td>
+<td>camp</td>
+</tr>
+<tr><td>identitat implícita (punter)</td>
+<td>identitat explícita (clau primària)</td>
+</tr>
+<tr><td>referències</td>
+<td>claus foranes</td>
+</tr>
+<tr><td>referències unidireccionals</td>
+<td>referències bidireccionals</td>
+</tr>
+<tr><td>amb ordre (seqüèncial)</td>
+<td>sense ordre</td>
+</tr>
+<tr><td>missatges / interfície</td>
+<td>!</td>
+</tr>
+<tr><td>centrat en el comportament</td>
+<td>centrat en les dades</td>
+</tr>
+<tr><td>navegació seguint referències</td>
+<td>operació en conjunt</td>
+</tr>
+<tr><td>agrupació basada en el comportament</td>
+<td>agrupació basada en les dades</td>
+</tr>
+<tr><td>mètodes</td>
+<td><em>stored procedures</em></td>
+</tr>
+<tr><td>dades i comportament fortament acoblats</td>
+<td><em>triggers</em> i restriccions</td>
+</tr>
+<tr><td>ocultació de dades, encapsulació</td>
+<td>!</td>
+</tr>
+</tbody>
+</table>
+<p>A partir d'aquesta bretxa, es van dissenyar bases de dades orientades
+a objecte per incorporar un mecanisme de persistència a les
+aplicacions orientades a objecte.</p>
+<p>Per diferents raons, els SGBDOOs (SGBD Orientats a Objectes) no han
+acabat de quallar en la industria del desenvolupament. Segurament es
+explicable pel fet que el model relacional tingui una sòlida base
+matemàtica i, probablement, la disponibilitat del llenguatge SQL per
+realitzar consultes amb independència del llenguatge de programació.</p>
+<p>Amb tot, les necessitats d'afegir funcionalitats orientades a objecte
+es manté. Així apareix el model <em>objecte-relacional</em> com un pas
+intermedi entre els SGBDR i els SGBDOOs.</p>
+<p>Podem veure el model objecte-relacional com una
+extensió del model relacional amb conceptes del paradigma d'orientació
+a objectes.</p>
+<div class="figure align-center">
+<img alt="Relació entre el model relacional i l'objecte relacional" src="./images/psql001.img001.ordbms_uml.png" />
+</div>
+<p>Un gestor de bases de dades objecte-relacional (SGBDOR) és una
+extensió d'un SGBDR amb el suport de les funcionalitats d'orientació a
+objectes. Algunes d'aquestes funcionalitats són: suport a tipus
+definits per l'usuari (<em>UDT</em>), tipus complexos (agregats),
+col·leccions (arrays) i herència.</p>
+<p>Michael Stonebraker en el seu llibre &quot;Object-Relational DBMSs: The
+Next Great Wave&quot; ens ofereix aquesta taula per aclarir els conceptes:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="31%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">&nbsp;</th>
+<th class="head">dades bàsiques</th>
+<th class="head">dades complexes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><em>amb consultes</em></td>
+<td>SGBDR</td>
+<td>SGBDOR</td>
+</tr>
+<tr><td><em>sense consultes</em></td>
+<td>SF</td>
+<td>SGBDOO</td>
+</tr>
+</tbody>
+</table>
+<p>Al mercat hi ha marques amb prou prestigi com ara Oracle, PostGreSQL,
+Informix i Microsoft SQL Server, que afirmen que els seus SGBDs són
+SGBDORs. Amb tot, les funcionalitats OR no han tingut, de moment, una
+excessiva penetració en el desenvolupament. Una de les raons, de ben
+segur, és la falta de consens entre els fabricants a l'hora de
+desenvolupar aquestes funcionalitats, si tenim en compte que sovint
+les aplicacions cerquen independència del SGBD.</p>
+<p>Amb tot, es d'esperar que amb el temps, aquesta tecnologia acabi
+madurant fins un estat en el que els principals fabricants es posin
+d'acord com (més o menys) ja ho van fer en el seu dia amb la
+implementació del ara estàndard SQL.</p>
+</div>
+<div class="section" id="postgresql">
+<h2>PostGreSQL</h2>
+<p>De entre els SGBDORs que hi ha al mercat, treballarem amb PostGreSQL.</p>
+<p>Com diuen de si mateixos a la seva <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/intro-whatis.html">documentació</a>,
+PostGreSQL és SGBDOR de codi obert que implementa una gran part de
+l'estàndard SQL i ofereix moltes funcionalitats, com ara: consultes
+complexes, claus foranies, triggers, vistes, integritat transaccional,
+control de multiversions concurrents... PostGreSQL pot ser ampliat per
+l'usuari de diferents maneres com per exemple afegint tipus de dades,
+funcions, operadors, mètodes d'indexació, llenguatges procedurals...
+Gràcies a la seva llicència, pot ser usat, modificat i distribuït per
+tothom sense cap cost, per qualsevol propòsit (comercial inclòs). A
+més, disposa d'una extensa i cuidada documentació accessible des de la
+seva web <a class="reference external" href="http://www.postgresql.org/">postgresql.org</a>.</p>
+</div>
+<div class="section" id="primeres-passes">
+<h2>Primeres passes</h2>
+<p>En aquesta secció farem una ràpida in introducció a la consola
+<tt class="docutils literal">psql</tt>, una de les possibles portes de comunicació amb PostGreSQL.</p>
+<p>Si no ho has fet encara, instal·lat el PostGreSQL. Pressuposaré que
+estàs seguint les passes descrites al document <a class="reference external" href="./installacio-de-postgresql.html">d'instal·lació de
+PostGreSQL</a>.</p>
+<p>Segueix les passes:</p>
+<pre class="literal-block">
+# connecta a la base de dades de prova
+$ psql -U usuaribd -d testbd -h 192.168.56.101
+Password for user usuaribd:
+psql (9.1.8)
+SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
+Type &quot;help&quot; for help.
+
+testbd=&gt; -- això és un comentari
+testbd=&gt; -- comprova l'usuari amb el que t'has connectat
+testbd=&gt; SELECT current_user;
+ current_user
+--------------
+ usuaribd
+(1 row)
+
+testbd=&gt; -- no distingeix majúscules
+testbd=&gt; select CURRENT_USER;
+ current_user
+--------------
+ usuaribd
+(1 row)
+
+testbd=&gt; -- un càlcul simple
+SELECT 5 * 2 + 1 AS resultat;
+ resultat
+----------
+       11
+(1 row)
+
+testbd=&gt; -- amb més d'una línia \p mostra la línia introduïda i \g o ; l'executa
+testbd=&gt; SELECT
+5 * 2
+testbd-&gt; \p
+select
+5 * 2
+testbd-&gt; + 1
+testbd-&gt; AS resultat
+testbd-&gt; \p
+select
+5 * 2
++ 1
+AS resultat
+testbd-&gt; \g
+ resultat
+----------
+       11
+(1 row)
+
+testbd=&gt; -- per obtenir ajuda
+testbd=&gt; \?
+General
+  \copyright             show PostgreSQL usage and distribution terms
+  \g [FILE] or ;         execute query (and send results to file or |pipe)
+  \h [NAME]              help on syntax of SQL commands, * for all commands
+  \q                     quit psql
+
+Query Buffer
+  \e [FILE] [LINE]       edit the query buffer (or file) with external editor
+  \ef [FUNCNAME [LINE]]  edit function definition with external editor
+  \p                     show the contents of the query buffer
+  \r                     reset (clear) the query buffer
+  \s [FILE]              display history or save it to file
+  \w FILE                write query buffer to file
+
+Input/Output
+  \copy ...              perform SQL COPY with data stream to the client host
+  \echo [STRING]         write string to standard output
+  \i FILE                execute commands from file
+  \o [FILE]              send all query results to file or |pipe
+  \qecho [STRING]        write string to query output stream (see \o)
+
+Informational
+  (options: S = show system objects, + = additional detail)
+  \d[S+]                 list tables, views, and sequences
+  \d[S+]  NAME           describe table, view, sequence, or index
+«...»
+</pre>
+<p>De vegades ens resultarà més còmode editar les nostres comandes en un
+fitxer i demanar a <tt class="docutils literal">psql</tt> que ens les executi. O podem fer
+interactivament des del propi <tt class="docutils literal">psql</tt> amb <tt class="docutils literal">\i</tt> però també sense que
+calgui entrar.</p>
+<pre class="literal-block">
+$ echo &quot;SELECT current_user;&quot; &gt; currentuser.sql
+$ psql -U usuaribd -d testbd -h 192.168.56.101 -f currentuser.sql
+Password for user usuaribd:
+ current_user
+--------------
+ usuaribd
+(1 row)
+</pre>
+<p>Altres vegades el que ens interessarà serà guardar en un fitxer el
+resultat d'una consulta</p>
+<pre class="literal-block">
+testbd=&gt; SELECT current_user \g /tmp/currentuser.sql
+testbd=&gt; \q
+$ cat /tmp/currentuser.sql
+ current_user
+--------------
+ usuaribd
+(1 row)
+</pre>
+<p>Tot i que hi ha altres eines disponibles, fins i tot gràfiques, que
+t'ajudaran a fer la majoria de les tasques d'administració amb el teu
+PostgreSQL, aconseguir una certa habilitat en l'ús de la consola
+<tt class="docutils literal">psql</tt> de segur et pagarà la pena.</p>
+<div class="section" id="exercici-1-comandes-psql">
+<h3>Exercici 1. Comandes psql</h3>
+<p>Desenvolupa un resum, amb les teves paraules, de les diferents
+comandes que ofereix <cite>psql</cite>. Intenta no fer una traducció literal.</p>
+</div>
+<div class="section" id="exercici-2-funcions-de-sistema">
+<h3>Exercici 2. Funcions de sistema</h3>
+<p>Desenvolupa una taula amb els continguts de la taula <em>9.47 Session
+Information Functions</em> que apareix a <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/functions-info.html">9.3. System Information
+Functions</a> tot
+afegint una nova columna amb el resultat d'executar-ho al teu
+servidor.</p>
+</div>
+<div class="section" id="exercici-3-tipus-basics-de-dades">
+<h3>Exercici 3. Tipus bàsics de dades</h3>
+<p>Desenvolupa una taula amb la descripció dels tipus de dades bàsics que
+apareixen al capítol 8 sobre <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/datatype.html">tipus de dades</a>.</p>
+<p>Només cal que incloguis els tipus bàsics que apareixen sota les
+seccions 8.1 fins la 8.6.
+Evidentment, si tens interès, pots afegir-ne d'altres.</p>
+<p>Afegeix, per cada tipus, una referència al manual (la url) on apareix
+i una descripció amb les teves paraules de les variacions.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="nfmes" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>La formulació original incloïa més característiques com
+ara l'atomicitat dels camps. Com que hi ha certa controvèrsia amb
+les interpretacions, aquí obviarem aquests detalls.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./installacio-de-postgresql.html">
+        Instal·lació de PostGreSQL
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

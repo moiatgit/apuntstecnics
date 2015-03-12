@@ -41,6 +41,7 @@
             -->
             <h3>Categories</h3>
             <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
                 <li class="active"><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
                 <li ><a href="./category/gui.html">gui</a></li>
@@ -51,11 +52,12 @@
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/c.html">C</a></li>
                 <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
             </ul>
         </div>
     </div>
@@ -126,34 +128,56 @@ seguint el principi de TFD (<em>Test First Development</em>), és a dir, primer
 fem la prova i després codifiquem.</p>
 <p>En primer lloc, crearem la classe de test <tt class="docutils literal">TestPunt</tt>. Sí, creem el
 text abans de crear la classe!</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">org.junit.*</span><span class="o">;</span>
-<span class="lineno"> 2</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPunt</span> <span class="o">{</span>
-<span class="lineno"> 3</span>     <span class="nd">@Test</span>
-<span class="lineno"> 4</span>         <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntConstructor</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno"> 5</span>             <span class="c1">// comprova que el constructor Punt() pugui ser cridat</span>
-<span class="lineno"> 6</span>             <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
-<span class="lineno"> 7</span>         <span class="o">}</span>
-<span class="lineno"> 8</span> 
-<span class="lineno"> 9</span>     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
-<span class="lineno">10</span>         <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">runner</span><span class="o">.</span><span class="na">JUnitCore</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="s">&quot;TestPunt&quot;</span><span class="o">);</span>
-<span class="lineno">11</span>     <span class="o">}</span>
-<span class="lineno">12</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">org.junit.*</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPunt</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntConstructor</span><span class="o">()</span> <span class="o">{</span>
+            <span class="c1">// comprova que el constructor Punt() pugui ser cridat</span>
+            <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+        <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">runner</span><span class="o">.</span><span class="na">JUnitCore</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="s">&quot;TestPunt&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
-<p>Ara compilem</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="nv">$ </span>javac TestPunt.java
-<span class="lineno"> 2</span> TestPunt.java:6: error: cannot find symbol
-<span class="lineno"> 3</span>         Punt <span class="nv">p</span> <span class="o">=</span> new Punt<span class="o">()</span>;
-<span class="lineno"> 4</span>         ^
-<span class="lineno"> 5</span>   symbol:   class Punt
-<span class="lineno"> 6</span>   location: class TestPunt
-<span class="lineno"> 7</span> TestPunt.java:6: error: cannot find symbol
-<span class="lineno"> 8</span>         Punt <span class="nv">p</span> <span class="o">=</span> new Punt<span class="o">()</span>;
-<span class="lineno"> 9</span>                      ^
-<span class="lineno">10</span>   symbol:   class Punt
-<span class="lineno">11</span>   location: class TestPunt
-<span class="lineno">12</span> 2 errors
+</td></tr></table><p>Ara compilem</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>javac TestPunt.java
+TestPunt.java:6: error: cannot find symbol
+        Punt <span class="nv">p</span> <span class="o">=</span> new Punt<span class="o">()</span>;
+        ^
+  symbol:   class Punt
+  location: class TestPunt
+TestPunt.java:6: error: cannot find symbol
+        Punt <span class="nv">p</span> <span class="o">=</span> new Punt<span class="o">()</span>;
+                     ^
+  symbol:   class Punt
+  location: class TestPunt
+2 errors
 </pre></div>
-<p>Com era previsible, tenim un error de compilació: no troba la classe
+</td></tr></table><p>Com era previsible, tenim un error de compilació: no troba la classe
 Punt. Recorda que l'objectiu d'una prova és sempre trobar un error.
 Hem fet fallar el nostre primer test. Felicitats!</p>
 <p>Afegim ara la classe Punt, amb el codi <strong>estrictament</strong> necessari per
@@ -173,39 +197,64 @@ impressionant, oi?</p>
 <p>Fem un nou test, ara una mica més sofisticat: mirarem que els atributs
 d'un punt siguin inicialitzats correctament pel constructor per
 defecte. Novament començarem per la prova.</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kn">import</span> <span class="nn">org.junit.*</span><span class="o">;</span>
-<span class="lineno"> 2</span> <span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.*;</span>    <span class="c1">// importa una classe static</span>
-<span class="lineno"> 3</span> 
-<span class="lineno"> 4</span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPunt</span> <span class="o">{</span>
-<span class="lineno"> 5</span>     <span class="nd">@Test</span>
-<span class="lineno"> 6</span>     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntConstructor</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno"> 7</span>         <span class="c1">// comprova que el constructor Punt() pugui ser cridat</span>
-<span class="lineno"> 8</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
-<span class="lineno"> 9</span>     <span class="o">}</span>
-<span class="lineno">10</span> 
-<span class="lineno">11</span>     <span class="nd">@Test</span>
-<span class="lineno">12</span>     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntBuit</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno">13</span>         <span class="c1">// comprova que el constructor Punt() deixi a 0 els valors</span>
-<span class="lineno">14</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
-<span class="lineno">15</span>         <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span> <span class="c1">// Afirma que la coordenada x val 0</span>
-<span class="lineno">16</span>         <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
-<span class="lineno">17</span>     <span class="o">}</span>
-<span class="lineno">18</span> 
-<span class="lineno">19</span>     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
-<span class="lineno">20</span>         <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">runner</span><span class="o">.</span><span class="na">JUnitCore</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="s">&quot;TestPunt&quot;</span><span class="o">);</span>
-<span class="lineno">21</span>     <span class="o">}</span>
-<span class="lineno">22</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">org.junit.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.*;</span>    <span class="c1">// importa una classe static</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestPunt</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntConstructor</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// comprova que el constructor Punt() pugui ser cridat</span>
+        <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntBuit</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// comprova que el constructor Punt() deixi a 0 els valors</span>
+        <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span> <span class="c1">// Afirma que la coordenada x val 0</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">runner</span><span class="o">.</span><span class="na">JUnitCore</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="s">&quot;TestPunt&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
-<p>Com que novament tenim errors de compilació (no troba els membres
+</td></tr></table><p>Com que novament tenim errors de compilació (no troba els membres
 <tt class="docutils literal">getX()</tt> i <tt class="docutils literal">getY()</tt>), completem la classe Punt afegint els
 atributs i mètodes d'accés imprescindibles per a passar el nou test.</p>
-<div class="highlight"><pre><span class="lineno">1</span>  <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="o">{</span>
-<span class="lineno">2</span>      <span class="kd">private</span> <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>   <span class="c1">// coordenades del punt</span>
-<span class="lineno">3</span>      <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getX</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">;</span> <span class="o">}</span>
-<span class="lineno">4</span>      <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getY</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">y</span><span class="o">;</span> <span class="o">}</span>
-<span class="lineno">5</span>  <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="o">{</span>
+     <span class="kd">private</span> <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">;</span>   <span class="c1">// coordenades del punt</span>
+     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getX</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">x</span><span class="o">;</span> <span class="o">}</span>
+     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getY</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">y</span><span class="o">;</span> <span class="o">}</span>
+ <span class="o">}</span>
 </pre></div>
-<p>Passem, ara sí, els dos tests.</p>
+</td></tr></table><p>Passem, ara sí, els dos tests.</p>
 <div class="highlight"><pre><span class="nv">$ </span>javac TestPunt.java <span class="o">&amp;&amp;</span> java TestPunt
 JUnit version 4.11
 ..
@@ -236,60 +285,97 @@ la classe Punt el codi necessari per passar el test.</p>
 compilar. No sembla que JUnit estigui oferint-nos gaire cosa que no
 tingués ja el javac oi?</p>
 <p>Afegeix el següent codi a <tt class="docutils literal">TestPunt.java</tt>:</p>
-<div class="highlight"><pre><span class="lineno">1</span> <span class="nd">@Test</span>
-<span class="lineno">2</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntDefinit</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno">3</span>     <span class="c1">// comprova que el constructor Punt(int,int) deixi els valors correctes</span>
-<span class="lineno">4</span>     <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
-<span class="lineno">5</span>     <span class="n">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span>
-<span class="lineno">6</span>     <span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
-<span class="lineno">7</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testPuntDefinit</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// comprova que el constructor Punt(int,int) deixi els valors correctes</span>
+    <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getX</span><span class="o">());</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">getY</span><span class="o">());</span>
+<span class="o">}</span>
 </pre></div>
-<p>Copia també el constructor corresponent a Punt <a class="footnote-reference" href="#verbatim" id="id3">[3]</a></p>
+</td></tr></table><p>Copia també el constructor corresponent a Punt <a class="footnote-reference" href="#verbatim" id="id3">[3]</a></p>
 <div class="highlight"><pre><span class="kd">public</span> <span class="nf">Punt</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="o">=</span><span class="n">x</span><span class="o">;</span> <span class="o">}</span>
 </pre></div>
 <p>En compilar, trobem</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="n">$</span> <span class="n">javac</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span>
-<span class="lineno"> 2</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">constructor</span> <span class="n">Punt</span> <span class="n">in</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">given</span> <span class="n">types</span><span class="o">;</span>
-<span class="lineno"> 3</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
-<span class="lineno"> 4</span>                  <span class="o">^</span>
-<span class="lineno"> 5</span>   <span class="nl">required:</span> <span class="kt">int</span><span class="o">,</span><span class="kt">int</span>
-<span class="lineno"> 6</span>   <span class="nl">found:</span> <span class="n">no</span> <span class="n">arguments</span>
-<span class="lineno"> 7</span>   <span class="nl">reason:</span> <span class="n">actual</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">argument</span> <span class="n">lists</span> <span class="n">differ</span> <span class="n">in</span> <span class="n">length</span>
-<span class="lineno"> 8</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">constructor</span> <span class="n">Punt</span> <span class="n">in</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">given</span> <span class="n">types</span><span class="o">;</span>
-<span class="lineno"> 9</span>         <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
-<span class="lineno">10</span>                  <span class="o">^</span>
-<span class="lineno">11</span>   <span class="nl">required:</span> <span class="kt">int</span><span class="o">,</span><span class="kt">int</span>
-<span class="lineno">12</span>   <span class="nl">found:</span> <span class="n">no</span> <span class="n">arguments</span>
-<span class="lineno">13</span>   <span class="nl">reason:</span> <span class="n">actual</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">argument</span> <span class="n">lists</span> <span class="n">differ</span> <span class="n">in</span> <span class="n">length</span>
-<span class="lineno">14</span> <span class="mi">2</span> <span class="n">errors</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">$</span> <span class="n">javac</span> <span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span>
+<span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">8</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">constructor</span> <span class="n">Punt</span> <span class="n">in</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">given</span> <span class="n">types</span><span class="o">;</span>
+        <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+                 <span class="o">^</span>
+  <span class="nl">required:</span> <span class="kt">int</span><span class="o">,</span><span class="kt">int</span>
+  <span class="nl">found:</span> <span class="n">no</span> <span class="n">arguments</span>
+  <span class="nl">reason:</span> <span class="n">actual</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">argument</span> <span class="n">lists</span> <span class="n">differ</span> <span class="n">in</span> <span class="n">length</span>
+<span class="n">TestPunt</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span> <span class="nl">error:</span> <span class="n">constructor</span> <span class="n">Punt</span> <span class="n">in</span> <span class="kd">class</span> <span class="nc">Punt</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">given</span> <span class="n">types</span><span class="o">;</span>
+        <span class="n">Punt</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Punt</span><span class="o">();</span>
+                 <span class="o">^</span>
+  <span class="nl">required:</span> <span class="kt">int</span><span class="o">,</span><span class="kt">int</span>
+  <span class="nl">found:</span> <span class="n">no</span> <span class="n">arguments</span>
+  <span class="nl">reason:</span> <span class="n">actual</span> <span class="n">and</span> <span class="n">formal</span> <span class="n">argument</span> <span class="n">lists</span> <span class="n">differ</span> <span class="n">in</span> <span class="n">length</span>
+<span class="mi">2</span> <span class="n">errors</span>
 </pre></div>
-<p>Ops! ens havíem descuidat del constructor per defecte. Sort que el
+</td></tr></table><p>Ops! ens havíem descuidat del constructor per defecte. Sort que el
 primer test de tots estava allà preparat per a ajudar-nos.</p>
 <p>Afegim el constructor per defecte, per exemple:</p>
 <div class="highlight"><pre><span class="kd">public</span> <span class="nf">Punt</span><span class="o">()</span> <span class="o">{</span> <span class="k">this</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">}</span>
 </pre></div>
 <p>En compilar i executar ens trobem el següent (retallat):</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> JUnit version 4.11
-<span class="lineno"> 2</span> ..E..
-<span class="lineno"> 3</span> Time: 0,009
-<span class="lineno"> 4</span> There was 1 failure:
-<span class="lineno"> 5</span> 1<span class="o">)</span> testPuntDefinit<span class="o">(</span>TestPunt<span class="o">)</span>
-<span class="lineno"> 6</span> java.lang.AssertionError: expected:&lt;4&gt; but was:&lt;3&gt;
-<span class="lineno"> 7</span>     at org.junit.Assert.fail<span class="o">(</span>Assert.java:88<span class="o">)</span>
-<span class="lineno"> 8</span>     at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:743<span class="o">)</span>
-<span class="lineno"> 9</span>     at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:118<span class="o">)</span>
-<span class="lineno">10</span>     at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:555<span class="o">)</span>
-<span class="lineno">11</span>     at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:542<span class="o">)</span>
-<span class="lineno">12</span>     at TestPunt.testPuntDefinit<span class="o">(</span>TestPunt.java:34<span class="o">)</span>
-<span class="lineno">13</span>     at sun.reflect.NativeMethodAccessorImpl.invoke0<span class="o">(</span>Native Method<span class="o">)</span>
-<span class="lineno">14</span>     «...»
-<span class="lineno">15</span>     at org.junit.runner.JUnitCore.main<span class="o">(</span>JUnitCore.java:40<span class="o">)</span>
-<span class="lineno">16</span>     at TestPunt.main<span class="o">(</span>TestPunt.java:38<span class="o">)</span>
-<span class="lineno">17</span> 
-<span class="lineno">18</span> FAILURES!!!
-<span class="lineno">19</span> Tests run: 4,  Failures: 1
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre>JUnit version 4.11
+..E..
+Time: 0,009
+There was 1 failure:
+1<span class="o">)</span> testPuntDefinit<span class="o">(</span>TestPunt<span class="o">)</span>
+java.lang.AssertionError: expected:&lt;4&gt; but was:&lt;3&gt;
+    at org.junit.Assert.fail<span class="o">(</span>Assert.java:88<span class="o">)</span>
+    at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:743<span class="o">)</span>
+    at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:118<span class="o">)</span>
+    at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:555<span class="o">)</span>
+    at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:542<span class="o">)</span>
+    at TestPunt.testPuntDefinit<span class="o">(</span>TestPunt.java:34<span class="o">)</span>
+    at sun.reflect.NativeMethodAccessorImpl.invoke0<span class="o">(</span>Native Method<span class="o">)</span>
+    «...»
+    at org.junit.runner.JUnitCore.main<span class="o">(</span>JUnitCore.java:40<span class="o">)</span>
+    at TestPunt.main<span class="o">(</span>TestPunt.java:38<span class="o">)</span>
+
+FAILURES!!!
+Tests run: 4,  Failures: 1
 </pre></div>
-<p>La sortida el primer cop pot resultar una mica angoixant, oi?
+</td></tr></table><p>La sortida el primer cop pot resultar una mica angoixant, oi?
 Analitzem-la.</p>
 <p>En primer lloc, la darrera línia ens diu que de quatre tests, ha
 fallat un. Per un de sol tant de soroll!</p>

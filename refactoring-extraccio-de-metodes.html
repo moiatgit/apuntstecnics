@@ -41,6 +41,7 @@
             -->
             <h3>Categories</h3>
             <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
                 <li class="active"><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
                 <li ><a href="./category/gui.html">gui</a></li>
@@ -51,11 +52,12 @@
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/c.html">C</a></li>
                 <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">postgresql</a></li>
             </ul>
         </div>
     </div>
@@ -105,34 +107,59 @@ l'exemple. En concret, es realitza un pas de refacció conegut com a
 adequada és aconseguir descomposar-lo en mètodes més petits.</p>
 <p>A aquest tipus de refacció li direm <em>extracció de mètode</em>.</p>
 <p>Per exemple, considera el següent codi:</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="cm">/* mostra un missatge amb el mes anterior i el mes següent de</span>
-<span class="lineno"> 2</span> <span class="cm"> * l&#39;especificat per paràmetre.</span>
-<span class="lineno"> 3</span> <span class="cm"> * Pressuposa que mesActual és un valor entre 1 i 12.  */</span>
-<span class="lineno"> 4</span> <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnteriorISeguent</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno"> 5</span>     <span class="c1">// calcula i mostra el mes anterior</span>
-<span class="lineno"> 6</span>     <span class="kt">int</span> <span class="n">mesAnterior</span><span class="o">,</span> <span class="n">anyAnterior</span><span class="o">;</span>
-<span class="lineno"> 7</span>     <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno"> 8</span>         <span class="n">mesAnterior</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
-<span class="lineno"> 9</span>         <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">10</span>     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-<span class="lineno">11</span>         <span class="n">mesAnterior</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">12</span>         <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
-<span class="lineno">13</span>     <span class="o">}</span>
-<span class="lineno">14</span>     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes anterior: &quot;</span> <span class="o">+</span> <span class="n">mesAnterior</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anyAnterior</span><span class="o">);</span>
-<span class="lineno">15</span> 
-<span class="lineno">16</span>     <span class="c1">// calcula i mostra el mes següent</span>
-<span class="lineno">17</span>     <span class="kt">int</span> <span class="n">mesSeguent</span><span class="o">,</span> <span class="n">anySeguent</span><span class="o">;</span>
-<span class="lineno">18</span>     <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">12</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno">19</span>         <span class="n">mesSeguent</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">20</span>         <span class="n">anySeguent</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">21</span>     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-<span class="lineno">22</span>         <span class="n">mesSeguent</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">23</span>         <span class="n">anySeguent</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
-<span class="lineno">24</span>     <span class="o">}</span>
-<span class="lineno">25</span>     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes següent: &quot;</span> <span class="o">+</span> <span class="n">mesSeguent</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anySeguent</span><span class="o">);</span>
-<span class="lineno">26</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* mostra un missatge amb el mes anterior i el mes següent de</span>
+<span class="cm"> * l&#39;especificat per paràmetre.</span>
+<span class="cm"> * Pressuposa que mesActual és un valor entre 1 i 12.  */</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnteriorISeguent</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// calcula i mostra el mes anterior</span>
+    <span class="kt">int</span> <span class="n">mesAnterior</span><span class="o">,</span> <span class="n">anyAnterior</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes anterior: &quot;</span> <span class="o">+</span> <span class="n">mesAnterior</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anyAnterior</span><span class="o">);</span>
+
+    <span class="c1">// calcula i mostra el mes següent</span>
+    <span class="kt">int</span> <span class="n">mesSeguent</span><span class="o">,</span> <span class="n">anySeguent</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">12</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mesSeguent</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anySeguent</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">mesSeguent</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anySeguent</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes següent: &quot;</span> <span class="o">+</span> <span class="n">mesSeguent</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anySeguent</span><span class="o">);</span>
+<span class="o">}</span>
 </pre></div>
-<p>Aquest codi realitza dues coses diferents:</p>
+</td></tr></table><p>Aquest codi realitza dues coses diferents:</p>
 <ol class="arabic simple">
 <li>calcula i mostra el mes anterior</li>
 <li>calcula i mostra el mes següent</li>
@@ -142,27 +169,45 @@ adequada és aconseguir descomposar-lo en mètodes més petits.</p>
 la llegibilitat i el reaprofitament.</p>
 <p>En aquest exemple, aplicant l'extracció de mètodes aconseguirem el
 següent codi:</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="cm">/* mostra un missatge amb el mes anterior i el mes següent de</span>
-<span class="lineno"> 2</span> <span class="cm"> * l&#39;especificat per paràmetre.</span>
-<span class="lineno"> 3</span> <span class="cm"> * Pressuposa que mesActual és un valor entre 1 i 12.*/</span>
-<span class="lineno"> 4</span> <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnteriorISeguent</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno"> 5</span>     <span class="n">mostraMesAnterior</span><span class="o">(</span><span class="n">mesActual</span><span class="o">,</span> <span class="n">anyActual</span><span class="o">);</span>
-<span class="lineno"> 6</span>     <span class="n">mostraMesSeguent</span><span class="o">(</span><span class="n">mesActual</span><span class="o">,</span> <span class="n">anyActual</span><span class="o">);</span>
-<span class="lineno"> 7</span> <span class="o">}</span>
-<span class="lineno"> 8</span> 
-<span class="lineno"> 9</span> <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnterior</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno">10</span>     <span class="kt">int</span> <span class="n">mesAnterior</span><span class="o">,</span> <span class="n">anyAnterior</span><span class="o">;</span>
-<span class="lineno">11</span>     <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno">12</span>         <span class="n">mesAnterior</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
-<span class="lineno">13</span>         <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">14</span>     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-<span class="lineno">15</span>         <span class="n">mesAnterior</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-<span class="lineno">16</span>         <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
-<span class="lineno">17</span>     <span class="o">}</span>
-<span class="lineno">18</span>     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes anterior: &quot;</span> <span class="o">+</span> <span class="n">mesAnterior</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anyAnterior</span><span class="o">);</span>
-<span class="lineno">19</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* mostra un missatge amb el mes anterior i el mes següent de</span>
+<span class="cm"> * l&#39;especificat per paràmetre.</span>
+<span class="cm"> * Pressuposa que mesActual és un valor entre 1 i 12.*/</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnteriorISeguent</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">mostraMesAnterior</span><span class="o">(</span><span class="n">mesActual</span><span class="o">,</span> <span class="n">anyActual</span><span class="o">);</span>
+    <span class="n">mostraMesSeguent</span><span class="o">(</span><span class="n">mesActual</span><span class="o">,</span> <span class="n">anyActual</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnterior</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">mesAnterior</span><span class="o">,</span> <span class="n">anyAnterior</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes anterior: &quot;</span> <span class="o">+</span> <span class="n">mesAnterior</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anyAnterior</span><span class="o">);</span>
+<span class="o">}</span>
 </pre></div>
-<p>El mètode <tt class="docutils literal">mostraMesSeguent()</tt> te'l deixo per que t'exercitis.</p>
+</td></tr></table><p>El mètode <tt class="docutils literal">mostraMesSeguent()</tt> te'l deixo per que t'exercitis.</p>
 <p>No sempre resultarà tan fàcil fer l'extracció del mètode com en aquest
 exemple. De vegades hi haurà variables compartides o parts de codi
 barrejades.</p>
@@ -183,40 +228,71 @@ s'inicialitza a 0 a cada volta del bucle i se li assigna el valor dins
 del <tt class="docutils literal">switch</tt>, podem simplement assignar-li el valor de retorn del
 nou mètode que estem definint.</p>
 <p>El codi resultant per <tt class="docutils literal">Client.informe()</tt> podria ser el següent:</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
-<span class="lineno"> 2</span>     <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="lineno"> 3</span>     <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-<span class="lineno"> 4</span>     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
-<span class="lineno"> 5</span>         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno"> 6</span>         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-<span class="lineno"> 7</span>     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
-<span class="lineno"> 8</span> <span class="hll">        <span class="kt">double</span> <span class="n">quantitat</span> <span class="o">=</span> <span class="n">quantitatPerLloguer</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
-</span><span class="lineno"> 9</span> 
-<span class="lineno">10</span>         <span class="c1">// afegeix lloguers freqüents</span>
-<span class="lineno">11</span>         <span class="n">bonificacions</span> <span class="o">++;</span>
-<span class="lineno">12</span> 
-<span class="lineno">13</span>         <span class="c1">// afegeix bonificació per dos dies de lloguer de Luxe</span>
-<span class="lineno">14</span>         <span class="k">if</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getCategoria</span><span class="o">()</span> <span class="o">==</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">LUXE</span> <span class="o">&amp;&amp;</span>
-<span class="lineno">15</span>                 <span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()&gt;</span><span class="mi">1</span> <span class="o">)</span> <span class="o">{</span>
-<span class="lineno">16</span>             <span class="n">bonificacions</span> <span class="o">++;</span>
-<span class="lineno">17</span>         <span class="o">}</span>
-<span class="lineno">18</span> 
-<span class="lineno">19</span>         <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
-<span class="lineno">20</span>         <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
-<span class="lineno">21</span>             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
-<span class="lineno">22</span>             <span class="s">&quot; &quot;</span> <span class="o">+</span>
-<span class="lineno">23</span>             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
-<span class="lineno">24</span>             <span class="o">(</span><span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-<span class="lineno">25</span>         <span class="n">total</span> <span class="o">+=</span> <span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
-<span class="lineno">26</span>     <span class="o">}</span>
-<span class="lineno">27</span> 
-<span class="lineno">28</span>     <span class="c1">// afegeix informació final</span>
-<span class="lineno">29</span>     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
-<span class="lineno">30</span>         <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
-<span class="lineno">31</span>     <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
-<span class="lineno">32</span> <span class="o">}</span>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+        <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+        <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+<span class="hll">        <span class="kt">double</span> <span class="n">quantitat</span> <span class="o">=</span> <span class="n">quantitatPerLloguer</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
+</span>
+        <span class="c1">// afegeix lloguers freqüents</span>
+        <span class="n">bonificacions</span> <span class="o">++;</span>
+
+        <span class="c1">// afegeix bonificació per dos dies de lloguer de Luxe</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getCategoria</span><span class="o">()</span> <span class="o">==</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">LUXE</span> <span class="o">&amp;&amp;</span>
+                <span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()&gt;</span><span class="mi">1</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="n">bonificacions</span> <span class="o">++;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+        <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+            <span class="s">&quot; &quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+            <span class="o">(</span><span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// afegeix informació final</span>
+    <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+        <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+<span class="o">}</span>
 </pre></div>
-<div class="section" id="exercici-6-quantitat-per-lloguer">
+</td></tr></table><div class="section" id="exercici-6-quantitat-per-lloguer">
 <h3>Exercici 6: Quantitat per lloguer</h3>
 <p>Implementa el mètode privat <tt class="docutils literal">Client.quantitatPerLloguer()</tt> de manera
 que el codi resultant continuï passant els jocs de prova.</p>
