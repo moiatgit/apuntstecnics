@@ -4437,7 +4437,7 @@ la inicialització, segons es ressalta al codi:&lt;/p&gt;
          &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lloguer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getVehicle&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getCategoria&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;Vehicle&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;LUXE&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;
                  &lt;span class="n"&gt;lloguer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getDies&lt;/span&gt;&lt;span class="o"&gt;()&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;span class="hll"&gt;             &lt;span class="n"&gt;bonificacions&lt;/span&gt; &lt;span class="o"&gt;++;&lt;/span&gt;
-&lt;/span&gt;                 &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;         &lt;span class="o"&gt;}&lt;/span&gt;
 
          &lt;span class="c1"&gt;// composa els resultats d&amp;#39;aquest lloguer&lt;/span&gt;
          &lt;span class="n"&gt;resultat&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;\t&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
@@ -4488,7 +4488,7 @@ al control de versions.&lt;/p&gt;
         &lt;span class="n"&gt;getNom&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
         &lt;span class="s"&gt;&amp;quot; (&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;getNif&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;)\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
     &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Lloguer&lt;/span&gt; &lt;span class="nl"&gt;lloguer:&lt;/span&gt; &lt;span class="n"&gt;lloguers&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-&lt;span class="hll"&gt;        &lt;span class="n"&gt;bonificacions&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;lloguer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;bonificacionsDeLLoguer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lloguer&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="hll"&gt;        &lt;span class="n"&gt;bonificacions&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;bonificacionsDeLLoguer&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lloguer&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 &lt;/span&gt;        &lt;span class="c1"&gt;// composa els resultats d&amp;#39;aquest lloguer&lt;/span&gt;
         &lt;span class="n"&gt;resultat&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;\t&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
             &lt;span class="n"&gt;lloguer&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getVehicle&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;&lt;span class="na"&gt;getMarca&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
@@ -4707,13 +4707,12 @@ el següent aspecte:&lt;/p&gt;
 
      &lt;span class="c1"&gt;// afegeix informació final&lt;/span&gt;
      &lt;span class="n"&gt;resultat&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Import a pagar: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;importTotal&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;€\n&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;
-         &lt;span class="s"&gt;&amp;quot;Punts guanyats: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;bonificacionsTotals&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resultat&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
-&lt;span class="hll"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;span class="hll"&gt;         &lt;span class="s"&gt;&amp;quot;Punts guanyats: &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;bonificacionsTotals&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;/span&gt;     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resultat&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+ &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;hr class="docutils" /&gt;
-&lt;p&gt;Trobem més passes de refacció a la següent entrada
-&amp;lt;{filename}/dev/refactoring.009.rst&amp;gt;`_&lt;/p&gt;
+&lt;p&gt;Trobem més passes de refacció a la següent &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/refactoring-altres-passes-de-refaccio.html"&gt;entrada&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="notes"&gt;
