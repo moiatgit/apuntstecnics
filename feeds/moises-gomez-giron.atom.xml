@@ -4455,7 +4455,7 @@ la inicialització, segons es ressalta al codi:&lt;/p&gt;
  &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Extreu la funcionalitat del càlcul de les bonificacions a un nou
-mètode &lt;tt class="docutils literal"&gt;bonificacioPerLloguer()&lt;/tt&gt; que donat un lloguer retorna la
+mètode &lt;tt class="docutils literal"&gt;bonificacionsDeLloguer()&lt;/tt&gt; que donat un lloguer retorna la
 bonificació corresponent.&lt;/p&gt;
 &lt;p&gt;En fer-ho, assegura't que no has trencat res i que guardes la versió
 al control de versions.&lt;/p&gt;
@@ -4510,18 +4510,20 @@ al control de versions.&lt;/p&gt;
 &lt;/div&gt;
 </summary><category term="programari"></category><category term="java"></category></entry><entry><title>Refactoring: Moviment de responsabilitat</title><link href="http://apuntstecnics.herokuapp.com/refactoring-moviment-de-responsabilitat.html" rel="alternate"></link><updated>2015-02-11T10:22:42+01:00</updated><author><name>Moisès Gómez Girón</name></author><id>tag:apuntstecnics.herokuapp.com,2015-02-11:refactoring-moviment-de-responsabilitat.html</id><summary type="html">&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
-&lt;p&gt;En aquesta entrada relitza un nou pas de refacció conegut com a
-&lt;em&gt;moviment de responsabilitat&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;En aquesta entrada es realitza un nou pas de refacció, tot movent una
+responsabilitat (o servei) assignat inicialment a una classe, cap a
+una altra.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="moviment-de-responsabilitat"&gt;
 &lt;h2&gt;Moviment de responsabilitat&lt;/h2&gt;
 &lt;p&gt;De vegades ens trobarem que hem assignat a una classe una
-responsabilitat que no li pertoca. En aquest cas, podem aplicar un pas
-de refacció que col·loqui les coses on toca.&lt;/p&gt;
-&lt;div class="section" id="exercici-12-moviment-de-responsabilitat"&gt;
-&lt;h3&gt;Exercici 12. Moviment de responsabilitat&lt;/h3&gt;
-&lt;p&gt;Considera si el mètode correspon realment a la classe on es troba.
-Mou-lo allà on creguis oportú&lt;/p&gt;
+responsabilitat que no li pertoca. En aquest cas, podem aplicar el pas
+de refacció &lt;cite&gt;moviment de mètode&lt;/cite&gt; que col·loqui les coses on toca.&lt;/p&gt;
+&lt;div class="section" id="exercici-12-reassignant-responsabilitats"&gt;
+&lt;h3&gt;Exercici 12. Reassignant responsabilitats&lt;/h3&gt;
+&lt;p&gt;Considera si el mètode &lt;cite&gt;bonificacionsDeLLoguer&lt;/cite&gt; que hem creat per
+l'exercici anterior, correspon realment a la classe on es troba.
+Mou-lo allà on creguis oportú fent servir &lt;em&gt;moviment de mètode&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;El codi resultant hauria de permetre que &lt;tt class="docutils literal"&gt;Client.informe()&lt;/tt&gt; funcioni
 amb el següent codi:&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
@@ -4568,8 +4570,8 @@ amb el següent codi:&lt;/p&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;resultat&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Nota: ara no serà tan directe com amb &lt;tt class="docutils literal"&gt;quantitat&lt;/tt&gt; eliminar la variable
-temporal &lt;tt class="docutils literal"&gt;bonificacions&lt;/tt&gt;. Paciència.&lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Nota: ara eliminar la variable temporal &lt;tt class="docutils literal"&gt;bonificacions ``no serà tan
+directe com amb ``quantitat&lt;/tt&gt;. Paciència.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-13-diagrama-de-classes-actualitzat"&gt;
 &lt;h3&gt;Exercici 13. Diagrama de classes actualitzat&lt;/h3&gt;

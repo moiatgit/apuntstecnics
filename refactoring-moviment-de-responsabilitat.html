@@ -97,18 +97,20 @@
 </div>
     <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
-<p>En aquesta entrada relitza un nou pas de refacció conegut com a
-<em>moviment de responsabilitat</em>.</p>
+<p>En aquesta entrada es realitza un nou pas de refacció, tot movent una
+responsabilitat (o servei) assignat inicialment a una classe, cap a
+una altra.</p>
 </div>
 <div class="section" id="moviment-de-responsabilitat">
 <h2>Moviment de responsabilitat</h2>
 <p>De vegades ens trobarem que hem assignat a una classe una
-responsabilitat que no li pertoca. En aquest cas, podem aplicar un pas
-de refacció que col·loqui les coses on toca.</p>
-<div class="section" id="exercici-12-moviment-de-responsabilitat">
-<h3>Exercici 12. Moviment de responsabilitat</h3>
-<p>Considera si el mètode correspon realment a la classe on es troba.
-Mou-lo allà on creguis oportú</p>
+responsabilitat que no li pertoca. En aquest cas, podem aplicar el pas
+de refacció <cite>moviment de mètode</cite> que col·loqui les coses on toca.</p>
+<div class="section" id="exercici-12-reassignant-responsabilitats">
+<h3>Exercici 12. Reassignant responsabilitats</h3>
+<p>Considera si el mètode <cite>bonificacionsDeLLoguer</cite> que hem creat per
+l'exercici anterior, correspon realment a la classe on es troba.
+Mou-lo allà on creguis oportú fent servir <em>moviment de mètode</em>.</p>
 <p>El codi resultant hauria de permetre que <tt class="docutils literal">Client.informe()</tt> funcioni
 amb el següent codi:</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -155,8 +157,8 @@ amb el següent codi:</p>
     <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
 <span class="o">}</span>
 </pre></div>
-</td></tr></table><p>Nota: ara no serà tan directe com amb <tt class="docutils literal">quantitat</tt> eliminar la variable
-temporal <tt class="docutils literal">bonificacions</tt>. Paciència.</p>
+</td></tr></table><p>Nota: ara eliminar la variable temporal <tt class="docutils literal">bonificacions ``no serà tan
+directe com amb ``quantitat</tt>. Paciència.</p>
 </div>
 <div class="section" id="exercici-13-diagrama-de-classes-actualitzat">
 <h3>Exercici 13. Diagrama de classes actualitzat</h3>
