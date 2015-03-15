@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Eliminació de documents</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Eliminació de documents             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./insercio-de-documents.html">
+        Inserció de documents
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./modificacio-de-dades.html">
+        Modificació de dades
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Eliminació de documents</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquest breu article analitzarem les maneres que tenim d'eliminar
+dades de MongoDB.</p>
+</div>
+<div class="section" id="eliminacio-de-dades">
+<h2>Eliminació de dades</h2>
+<p>Com ja hem vist en articles anteriors, eliminem una col·lecció fent:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">drop</span><span class="p">()</span>
+</pre></div>
+<p>Si el que volem, però, és eliminar un element concret, ho farem amb el
+mètode <em>remove</em>.</p>
+<p>Considera la següent seqüència:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">count</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Audi&quot;</span><span class="p">})</span>
+<span class="mi">1</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Audi&quot;</span><span class="p">})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">count</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Audi&quot;</span><span class="p">})</span>
+<span class="mi">0</span>
+</pre></div>
+<p>Com pots observar, abans de cridar <em>remove</em> hi havia un Audi a la
+col·lecció. Un cop cridat <em>remove</em> ja no en queda cap.</p>
+<p>El mètode <em>remove</em> rep un document que descriu els criteris de
+sel·lecció dels elements a eliminar. Realitza la mateixa funció que el
+primer paràmetre del mètode <em>find</em>.</p>
+<p>El mètode <em>remove</em> no ens retorna cap informació de quants elements ha
+esborrat. De fet, no ens diu si ha tingut algun èxit. Així, si
+executem un altre cop l'eliminació d'Audis, ens trobem amb el següent:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Audi&quot;</span><span class="p">})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">count</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Audi&quot;</span><span class="p">})</span>
+<span class="mi">0</span>
+</pre></div>
+<p>A l'exemple anterior, <em>remove</em> només ha eliminat un document. Si la
+cerca hagués donat com a resultat més d'un document, n'hagués eliminat
+tots ells:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">count</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">})</span>
+<span class="mi">2</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">count</span><span class="p">({</span><span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">})</span>
+<span class="mi">0</span>
+</pre></div>
+<p>Podem eliminar tots els elements de la col·lecció amb la següent
+crida:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+</pre></div>
+<p>O equivalentment:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">remove</span><span class="p">({})</span>
+</pre></div>
+<p><strong>Atenció</strong>: malgrat el resultat pot semblar el mateix, no és
+equivalent eliminar la col·lecció amb <em>drop</em>. Si has d'eliminar tots
+els elements d'una col·lecció, sovint serà més eficient eliminar la
+col·lecció <a class="footnote-reference" href="#dropvsremove" id="id1">[1]</a>.</p>
+<p>Finalment, podem eliminar la base de dades sencera fent servir
+el mètode <em>dropDatabase</em>. La següent crida eliminarà la base de dades
+referenciada per <em>db</em> <strong>sense demanar cap confirmació!</strong>.</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span>
+<span class="lineno"> 2</span> <span class="nx">politica</span>    <span class="mf">0.203125</span><span class="nx">GB</span>
+<span class="lineno"> 3</span> <span class="nx">test</span>        <span class="mf">0.203125</span><span class="nx">GB</span>
+<span class="lineno"> 4</span> <span class="o">&gt;</span> <span class="nx">use</span> <span class="nx">politica</span>
+<span class="lineno"> 5</span> <span class="nx">switched</span> <span class="nx">to</span> <span class="nx">db</span> <span class="nx">politica</span>
+<span class="lineno"> 6</span> <span class="o">&gt;</span> <span class="nx">db</span>
+<span class="lineno"> 7</span> <span class="nx">politica</span>
+<span class="lineno"> 8</span> <span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">collections</span>
+<span class="lineno"> 9</span> <span class="nx">politics</span>
+<span class="lineno">10</span> <span class="nx">system</span><span class="p">.</span><span class="nx">indexes</span>
+<span class="lineno">11</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">politics</span><span class="p">.</span><span class="nx">count</span><span class="p">()</span>
+<span class="lineno">12</span> <span class="mi">2394</span>
+<span class="lineno">13</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">dropDatabase</span><span class="p">()</span>
+<span class="lineno">14</span> <span class="p">{</span> <span class="s2">&quot;dropped&quot;</span> <span class="o">:</span> <span class="s2">&quot;politica&quot;</span><span class="p">,</span> <span class="s2">&quot;ok&quot;</span> <span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+<span class="lineno">15</span> <span class="o">&gt;</span> <span class="nx">db</span>
+<span class="lineno">16</span> <span class="nx">politica</span>
+<span class="lineno">17</span> <span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">collections</span>
+<span class="lineno">18</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">politics</span><span class="p">.</span><span class="nx">count</span><span class="p">()</span>
+<span class="lineno">19</span> <span class="mi">0</span>
+<span class="lineno">20</span> <span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">dbs</span>
+<span class="lineno">21</span> <span class="nx">test</span>        <span class="mf">0.203125</span><span class="nx">GB</span>
+</pre></div>
+<p>A la seqüència anterior podem observar què:</p>
+<ul class="simple">
+<li>Fins la línia 12: la base de dades en ús es diu <em>politica</em>, inclou
+la col·lecció <em>politics</em> que conté 2394 entrades.</li>
+<li>A la línia 13 demanem l'eliminació de la base de dades. MongoDB ens
+confirma aquesta eliminació amb la línia 9.</li>
+<li>La resta de línies ens permeten comprovar què, malgrat com és
+habitual MongoDB no es queixa en consultar sobre objectes
+inexistents, ja no tenim cap col·lecció ni documents disponibles a
+la base de dades <em>politica</em>. Fins al punt que <em>politica</em> ni tant
+sols apareix llistada entre les bases de dades del sistema.</li>
+</ul>
+<div class="section" id="exercici-1-eliminant-els-professionals-no-remunerats">
+<h3>Exercici 1. Eliminant els professionals no remunerats</h3>
+<p>Recupera la col·lecció de <em>persones</em> que hem treballat anteriorment.</p>
+<p>Si l'has perduda, pots importar les dades <a class="reference external" href="./resources/persones01.json">d'aquest fitxer</a>.</p>
+<p>Composa una crida que elimini totes les persones sense sou (sou == 0)</p>
+</div>
+<div class="section" id="exercici-2-eliminant-els-vells">
+<h3>Exercici 2. Eliminant els vells</h3>
+<p>Composa una comanda que elimini totes aquelles persones que tinguin 40
+anys o més.</p>
+</div>
+<div class="section" id="exercici-3-acabem-amb-els-pobres-docents">
+<h3>Exercici 3. Acabem amb els pobres docents</h3>
+<p>Elimina tots els docents que cobrin menys de 1500€ de la col·lecció
+<em>persones</em> <a class="footnote-reference" href="#reivindicacio" id="id2">[2]</a>.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="dropvsremove" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">El mètode <em>remove</em> elimina els elements d'un en un.
+MongoDB ha de reindexar per cada eliminació. En canvi, amb <em>drop</em>,
+la col·lecció és eliminada juntament amb els seus índexs.</p>
+<p class="last">Índexs? Bé, per què siguin ràpids de trobar, les dades són
+indexades.  Per defecte, MongoDB crea un índex per <em>_id</em> però es
+poden crear més de manera manual. Si tens interès per aquest tema,
+considera la entrada <a class="reference external" href="http://docs.mongodb.org/manual/core/indexes/">Index Concepts</a> a la documentació
+oficial de MongoDB.</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="reivindicacio" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Sí, ja sé que no és una novetat aquests dies això
+de carregar-se els pobres docents. Confio en la teva
+condescendència amb aquesta petita <em>llicència reivindicativa</em>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./insercio-de-documents.html">
+        Inserció de documents
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./modificacio-de-dades.html">
+        Modificació de dades
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

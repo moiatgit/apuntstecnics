@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Arrays</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Arrays             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./subdocuments.html">
+        Subdocuments
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./disseny-de-colleccions.html">
+        Disseny de col·leccions
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Arrays</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+        (Darrera modificació: <b> 9/4/2014 </b>)
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Hem vist fins ara que els valors que es poden associar a una clau d'un
+document de MongoDB poden ser strings, nombres, altres documents
+(subdocuments). També hi podem afegir una llista (o <em>array</em>) de
+valors.</p>
+<p>En aquest article ens introduïrem a l'ús dels <em>arrays</em> en MongoDB.</p>
+</div>
+<div class="section" id="valors-de-tipus-array">
+<h2>Valors de tipus array</h2>
+<!-- XXX TODO: exemple massa xungo per començar. A més cal fer un
+diagrama per les comandes a l'article d'update -->
+<p>Ja ens ha aparegut algun exemple d'array a articles anteriors. En
+rescatarem un d'ells:</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="p">{</span>
+<span class="lineno"> 2</span>     <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;529a3f2b255c0122ce5280ba&quot;</span><span class="p">),</span>
+<span class="lineno"> 3</span>     <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="s2">&quot;2014/03/21&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>     <span class="s2">&quot;client&quot;</span><span class="o">:</span>  <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>     <span class="s2">&quot;línies&quot;</span><span class="o">:</span> <span class="p">[</span>
+<span class="lineno"> 6</span>         <span class="p">{</span>
+<span class="lineno"> 7</span>             <span class="s2">&quot;quantitat&quot;</span><span class="o">:</span> <span class="mf">3.70</span><span class="p">,</span>
+<span class="lineno"> 8</span>             <span class="s2">&quot;producte&quot;</span><span class="o">:</span> <span class="s2">&quot;Pollastre de corral qtat extra&quot;</span>
+<span class="lineno"> 9</span>         <span class="p">},</span>
+<span class="lineno">10</span>         <span class="p">{</span>
+<span class="lineno">11</span>             <span class="s2">&quot;quantitat&quot;</span><span class="o">:</span> <span class="mf">4.23</span><span class="p">,</span>
+<span class="lineno">12</span>             <span class="s2">&quot;producte&quot;</span><span class="o">:</span> <span class="s2">&quot;Salsitxes casolanes gall dindi&quot;</span>
+<span class="lineno">13</span>         <span class="p">}</span>
+<span class="lineno">14</span>     <span class="p">]</span>
+<span class="lineno">15</span> <span class="p">}</span>
+</pre></div>
+<p>L'element <em>línies</em> conté la llista de línies de comandes de la
+comanda. Aquesta llista apareix emmarcada entre claudàtors '[' i ']'
+entre les línies 5 i 16.</p>
+<p>En el cas de l'exemple, cada element de la llista és, a l'hora un
+document.  Els arrays en MongoDB no tenen perquè contenir tots els
+elements de tipus document. De fet, no cal que els tinguin ni tant
+sols del mateix tipus. Fixa't en el següent exemple (vàlid):</p>
+<div class="highlight"><pre><span class="lineno">1</span> <span class="p">{</span> <span class="s2">&quot;nombres&quot;</span> <span class="o">:</span> <span class="p">[</span>
+<span class="lineno">2</span>     <span class="s2">&quot;un&quot;</span><span class="p">,</span>
+<span class="lineno">3</span>     <span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">2</span> <span class="p">},</span>
+<span class="lineno">4</span>     <span class="mi">3</span><span class="p">,</span>
+<span class="lineno">5</span>     <span class="s2">&quot;quatre&quot;</span><span class="p">,</span>
+<span class="lineno">6</span>     <span class="p">[</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="p">[]</span> <span class="p">],</span>
+<span class="lineno">7</span>     <span class="s2">&quot;set&quot;</span><span class="p">,</span>
+<span class="lineno">8</span>     <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;529a3f2b255c0122ce5280ba&quot;</span><span class="p">)</span>
+<span class="lineno">9</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+<p>A l'exemple hem guardat nombres en diferents formats. Per exemple, a
+la línia 1 hi trobem un string, a la línia 3 un nombre enter, a la 2
+tenim un document (en aquest cas només conté un element). La línia 6
+és interessant donat que conté un nou array (en podem aniuar tants com
+ens calguin) i fixa't que el darrer element d'aquesta llista és []. Es
+tracta de la llista buida que també és un valor vàlid. Finalment, i
+força interessant, a la línia 8 tenim un <em>ObjectID</em>. Això ens serà de
+molta utilitat si ens interessa disposar de referències a documents a
+partir del seu id (equivalent del concepte de <em>foreign key</em> del model
+relacional)</p>
+<div class="section" id="exercici-1-multiples-professions">
+<h3>Exercici 1. Multiples professions</h3>
+<p>Després de tot l'esforç que estàs realitzant, ja va sent hora que
+consti en algun lloc que ets tot/a un/a desenvolupador/a, no creus?
+En aquest exercici ho faràs, encara que sigui a un lloc modest: la
+col·lecció <em>persones</em>.</p>
+<p>Recupera <a class="reference external" href="./resources/persones02.json">el fitxer de persones</a> de l'article anterior.
+Probablement voldràs tornar-lo a importar a MongoDB eliminant els
+canvis que hagis pogut realitzar a la col·lecció.</p>
+<p>Insereix un nou document amb les teves dades. No oblidis, però,
+posar-te com a professió <em>desenvolupador/a</em> i, és clar, <em>estudiant</em>.</p>
+<p>Comprova com queden les teves dades en el document que acabes
+d'inserir (la consulta i el resultat formen part de la resposta
+d'aquest exercici)</p>
+</div>
+<div class="section" id="exercici-2-dades-de-contacte">
+<h3>Exercici 2. Dades de contacte</h3>
+<p>Escull algun company o companya de classe <a class="footnote-reference" href="#oinventatho" id="id1">[1]</a> i insereix
+un document amb les seves dades. Aquest cop, però, caldrà que
+afegeixis una nova clau: <em>contacte</em></p>
+<p>La clau <em>contacte</em> tindrà com a valor diferents maneres de contactar
+amb la persona. Considera els següents exemples:</p>
+<div class="highlight"><pre><span class="p">{</span> <span class="s2">&quot;fix&quot;</span><span class="o">:</span> <span class="s2">&quot;933313233&quot;</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;mòbil&quot;</span><span class="o">:</span> <span class="s2">&quot;933313233&quot;</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;fax&quot;</span><span class="o">:</span> <span class="s2">&quot;933313234&quot;</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="s2">&quot;drodriguezm@generalitat.cat&quot;</span> <span class="p">}</span>
+</pre></div>
+<p>Una persona pot tenir múltiples maneres de contactar amb ella. Per
+exemple, pot tenir dos telèfons i una adreça de correu electrònic,
+mentre que una altra podria només tenir un nr. de mòbil.</p>
+<p>Inclou al menys tres maneres de contactar per la teva companya o
+company. Fes que al menys una d'elles sigui un telèfon mòbil.</p>
+<p>No oblidis comprovar com queda el document que has inserit (la
+consulta i el resultat formen part de la resposta d'aquest exercici)</p>
+</div>
+</div>
+<div class="section" id="consulta-d-arrays">
+<h2>Consulta d'arrays</h2>
+<p>Les consultes amb arrays es poden arribar a complicar una mica fins a
+escapar-se dels objectius d'aquest article. Així que ens quedarem amb
+unes idees bàsiques.</p>
+<p>Si has introduït un document amb el teu nom i com a professions
+<em>desenvolupador/a</em> i <em>estudiant</em> a la col·lecció <em>persones</em>, hauries
+de trobar el teu nom simplement fent:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">})</span>
+</pre></div>
+<p>MongoDB retornarà els documents pels que la clau <em>professió</em> tingui
+com a valor <em>desenvolupador/a</em>, o bé, un array que contingui el valor
+<em>desenvolupador/a</em>.</p>
+<p>En el cas de subdocuments com els de <em>contacte</em> a un exercici
+anterior, podem trobar la persona a partir d'un cert element de contacte (ex.
+l'adreça de correu) amb:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;contacte&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$elemMatch</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="s2">&quot;drodriguezm@generalitat.cat&quot;</span> <span class="p">}}})</span>
+</pre></div>
+<div class="section" id="exercici-3-no-estudiants">
+<h3>Exercici 3. No estudiants</h3>
+<p>Composa una consulta que retorni el nom i la professió de totes les
+persones que no siguin estudiants.</p>
+<p>Pista: no hauria de sortir el teu nom al resultat donat que tu tens,
+entre les teves professions, la d'estudiant.</p>
+</div>
+<div class="section" id="exercici-4-el-telefon-d-un-amic">
+<h3>Exercici 4. El telèfon d'un amic</h3>
+<p>Imagina que has rebut una trucada telefònica des d'un mòbil al teu
+telèfon fix, i vols saber si es tracta d'algú conegut.</p>
+<p>Composa una consulta sobre la col·lecció <em>persones</em> que et retorni el
+nom de la persona que tingui aquest mòbil.</p>
+<p>Per provar que funciona, fes la consulta amb el nr. de mòbil que vas
+indicar del teu company o companya a un exercici anterior.</p>
+</div>
+</div>
+<div class="section" id="modificacio-d-arrays">
+<h2>Modificació d'arrays</h2>
+<p>Com en el cas de les consultes, amb la modificació d'arrays les coses
+també es poden complicar una mica més enllà dels objectius d'aquest
+article. Així que ens quedarem amb:</p>
+<ul class="simple">
+<li>afegir un element a una llista: $push</li>
+<li>afegir un element a una llista si encara no el contenia: $addToSet</li>
+<li>eliminar l'element a l'inici o final d'una llista: $pop</li>
+<li>eliminar elements d'una llista a partir del seu valor: $pull</li>
+</ul>
+<div class="section" id="push">
+<h3>$push</h3>
+<p>Afegirem un element al final de la llista amb l'operador <em>$push</em>
+<a class="footnote-reference" href="#pushpila" id="id2">[2]</a> <a class="footnote-reference" href="#pushmodificadors" id="id3">[3]</a>.</p>
+<p>Considera la següent seqüència de comandes</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno"> 2</span> <span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;arquitècte/a&quot;</span> <span class="p">}</span>
+<span class="lineno"> 3</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">$push</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;estudiant&quot;</span><span class="p">}})</span>
+<span class="lineno"> 4</span> <span class="nx">Cannot</span> <span class="nx">apply</span> <span class="nx">$push</span><span class="o">/</span><span class="nx">$pushAll</span> <span class="nx">modifier</span> <span class="nx">to</span> <span class="nx">non</span><span class="o">-</span><span class="nx">array</span>
+<span class="lineno"> 5</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;arquitècte/a&quot;</span><span class="p">]}})</span>
+<span class="lineno"> 6</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno"> 7</span> <span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="s2">&quot;arquitècte/a&quot;</span> <span class="p">]</span> <span class="p">}</span>
+<span class="lineno"> 8</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">$push</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;estudiant&quot;</span><span class="p">}})</span>
+<span class="lineno"> 9</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno">10</span> <span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;David Rodríguez Mataró&quot;</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="s2">&quot;arquitècte/a&quot;</span><span class="p">,</span>  <span class="s2">&quot;estudiant&quot;</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+<p>Primerament (línia 3) intentem afegir la professió <em>estudiant</em> a una
+de les nostres persones. MongoDB es queixa perquè la clau <em>professió</em>
+per a aquesta persona <strong>no és un array</strong>.</p>
+<p>A la línia 5 arreglem el problema modificant el document de manera que
+la clau <em>professió</em> contingui un array. Així, a la línia 8 tornem a
+intentar afegir la nova professió i comprovem a la 10 que aquest cop
+sí hem tingut èxit.</p>
+</div>
+<div class="section" id="exercici-5-el-teo-treballa-de-cambrer">
+<h3>Exercici 5. El Teo treballa de cambrer</h3>
+<p>Localiza a la col·lecció <em>persones</em> a <em>Teo Ruíz Sánchez</em>. Afegeix-li
+la professió <em>cambrer/a</em> a la que ja té.</p>
+<p>Canvia-li, de pas, el sou. Posa-li un sou adequat per la seva nova
+professió.</p>
+<p>Comprova el resultat (la comprovació, com sempre, forma part de
+l'exercici)</p>
+</div>
+<div class="section" id="exercici-6-repeteixo-el-teo-treballa-de-cambrer">
+<h3>Exercici 6. Repeteixo: el Teo treballa de cambrer</h3>
+<p>Torna a afegir-li al Teo la professió de cambrer. Fixa't com <em>$push</em>
+permet que un valor aparegui repetit a l'array.</p>
+</div>
+<div class="section" id="addtoset">
+<h3>$addToSet</h3>
+<p>Com hem vist a l'exercici anterior, l'operador <em>$push</em> no es preocupa
+de si el valor a incorporar es trobava o no a la llista.</p>
+<p>Sovint ens interessarà que les llistes no continguin valors duplicats.
+Què vol dir que el Teo sigui estudiant, cambrer i... cambrer?</p>
+<p>Per fer això simplement farem servir l'operador <em>$addToSet</em> en comptes
+de <em>push</em>.</p>
+</div>
+<div class="section" id="exercici-7-el-teo-treballa-del-que-li-surt">
+<h3>Exercici 7. El Teo treballa del que li surt</h3>
+<p>Afegeix al Teo les següents professions de manera que no apareguin
+duplicades en cas que hi fossin.</p>
+<ul class="simple">
+<li>pintor</li>
+<li>estudiant</li>
+<li>repartidor</li>
+</ul>
+<p>Comprova el resultat (la comprovació forma part de l'exercici)</p>
+</div>
+<div class="section" id="exercici-8-pagaments-en-detall">
+<h3>Exercici 8. Pagaments en detall</h3>
+<p>Estem interessats en guardar el detall dels pagaments que es realitzen
+a una botiga de llaminadures.</p>
+<p>Un pagament consisteix en:</p>
+<ul class="simple">
+<li>un identificador de pagament. Ex. 2000</li>
+<li>una descripció del producte. Ex. &quot;Haribo Soft Jelly bossa 50uds&quot;.</li>
+<li>un preu total. Ex. 2.95€</li>
+<li>els valors de les monedes amb que ens han pagat (valors positius) i
+les que hem retornat (valors negatius). Ex. 1€, 1€, 0.5€, 0,2€,
+0,1€, 0,1€, 0,1€, -0,05€.</li>
+</ul>
+<p>En aquest exercici se't demana que facis el següent</p>
+<ol class="arabic">
+<li><p class="first">Crea un document amb les dades anteriors <strong>a excepció</strong> de les
+monedes amb que han pagat que, de moment la deixarem com a llista
+buida.</p>
+</li>
+<li><p class="first">Construeix les crides necessàries de manera que vagis inserint les
+següents quantitats en l'ordre que se t'indiquen, i que finalment
+apareguin en l'ordre que es mostren a l'exemple. És a dir: [1,
+1, 0.5, 0.2, 0.1, 0.1, 0.1, -0.05]</p>
+<p>Les entrades són:</p>
+<ul class="simple">
+<li>1</li>
+<li>1</li>
+<li>0.5</li>
+<li>0.2</li>
+<li>0.2</li>
+<li>0.1</li>
+<li>0.1</li>
+<li>1</li>
+<li>0.1</li>
+<li>-0.05</li>
+<li>-0.05</li>
+</ul>
+<p><em>Pistes</em>:</p>
+<ul>
+<li><p class="first">Fixa't que el que se't demana és que creis una crida a <em>update</em>
+per totes i cadascuna de les entrades anteriors i en l'ordre
+donat.  Sí, t'estic demanant que &quot;insereixis&quot; algunes monedes que
+no hauran d'aparèixer a la llista final. Què dolent, oi? Amb tot,
+hauràs de crear crides que les intentin introduir. Va, no et
+queixis que tampoc no t'he presentat tants operadors
+d'inserció...</p>
+</li>
+<li><p class="first">les tres primeres insercions te les dono jo:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">2000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$push</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span> <span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="nx">total</span><span class="o">:</span><span class="mi">1</span><span class="p">}})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">2000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$push</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span> <span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="nx">total</span><span class="o">:</span><span class="mi">2</span><span class="p">}})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">2000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$push</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="mf">0.5</span><span class="p">},</span> <span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="nx">total</span><span class="o">:</span><span class="mf">2.5</span><span class="p">}})</span>
+</pre></div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="pop">
+<h3>$pop</h3>
+<p>Per eliminar elements d'una llista, fem servir l'operador <em>$pop</em>.
+Aquest operador permet indicar si es vol eliminar el primer o el
+darrer element de la llista.</p>
+<p>Considera la següent seqüència de comandes:</p>
+<div class="highlight"><pre><span class="lineno">1</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">1000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">total</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno">2</span> <span class="p">{</span> <span class="s2">&quot;total&quot;</span> <span class="o">:</span> <span class="mf">1.9</span><span class="p">,</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.2</span><span class="p">,</span>  <span class="mi">1</span> <span class="p">]</span> <span class="p">}</span>
+<span class="lineno">3</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">1000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$pop</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span> <span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="nx">total</span><span class="o">:</span><span class="mf">0.9</span><span class="p">}})</span>
+<span class="lineno">4</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">1000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">total</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno">5</span> <span class="p">{</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.2</span> <span class="p">],</span> <span class="s2">&quot;total&quot;</span> <span class="o">:</span> <span class="mf">0.9</span> <span class="p">}</span>
+<span class="lineno">6</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">1000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$pop</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:-</span><span class="mi">1</span><span class="p">},</span> <span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="nx">total</span><span class="o">:</span><span class="mf">0.8</span><span class="p">}})</span>
+<span class="lineno">7</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">1000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">total</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno">8</span> <span class="p">{</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.2</span> <span class="p">],</span> <span class="s2">&quot;total&quot;</span> <span class="o">:</span> <span class="mf">0.8</span> <span class="p">}</span>
+</pre></div>
+<p>Fixa't com la crida de la línia 3 elimina la darrera moneda de la
+llista, mentre que la crida de la línia 6 elimina la primera. La
+diferència es troba en el valor 1 o -1 que li donem al <em>$pop</em>.</p>
+</div>
+<div class="section" id="exercici-9-embolic-de-monedes">
+<h3>Exercici 9. Embolic de monedes</h3>
+<p>Considera que tens la següent informació de pagament</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">3000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;monedes&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+<p>Fent servir només els operadors <em>$push</em>, <em>$addToSet</em> i <em>$pop</em>,
+defineix una seqüència de crides al mètode <em>update</em> de manera que la
+següent crida a <em>find</em> retorni exàctament el resultat que s'indica:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">3000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;monedes&quot;</span><span class="o">:</span> <span class="p">[</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="pull">
+<h3>$pull</h3>
+<p>De vegades ens pot interessar eliminar un determinat valor d'un array,
+sense preocupar-nos de a quina posició es troba ni, de fet, de si el
+valor hi era o no. Per a això disposem de l'operador <em>$pull</em></p>
+<p>Considera la següent seqüència:</p>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno"> 2</span> <span class="p">{</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">0.02</span><span class="p">,</span>  <span class="mf">0.05</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.2</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span> <span class="p">]</span> <span class="p">}</span>
+<span class="lineno"> 3</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$pull</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">}})</span>
+<span class="lineno"> 4</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno"> 5</span> <span class="p">{</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">0.02</span><span class="p">,</span>  <span class="mf">0.05</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.1</span><span class="p">,</span>  <span class="mf">0.2</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mi">2</span> <span class="p">]</span> <span class="p">}</span>
+<span class="lineno"> 6</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$pull</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="p">.</span><span class="mi">1</span><span class="p">}})</span>
+<span class="lineno"> 7</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno"> 8</span> <span class="p">{</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.01</span><span class="p">,</span>  <span class="mf">0.02</span><span class="p">,</span>  <span class="mf">0.05</span><span class="p">,</span>  <span class="mf">0.2</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mi">2</span> <span class="p">]</span> <span class="p">}</span>
+<span class="lineno"> 9</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">$pull</span><span class="o">:</span><span class="p">{</span><span class="nx">monedes</span><span class="o">:</span><span class="p">{</span><span class="nx">$lt</span><span class="o">:</span><span class="mf">0.1</span><span class="p">}}})</span>
+<span class="lineno">10</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">pagaments</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="mi">4000</span><span class="p">},</span> <span class="p">{</span><span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">monedes</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="lineno">11</span> <span class="p">{</span> <span class="s2">&quot;monedes&quot;</span> <span class="o">:</span> <span class="p">[</span>  <span class="mf">0.2</span><span class="p">,</span>  <span class="mf">0.5</span><span class="p">,</span>  <span class="mi">2</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+<p>La crida de la línia 3 elimina la moneda d'un euro. La crida de la
+línia 6, elimina les <strong>dues</strong> monedes de 10 cèntims. Finalment, la
+crida de la línia 10, elimina les <strong>tres</strong> monedes de menys de 10
+cèntims.</p>
+</div>
+<div class="section" id="exercici-10-en-teo-ja-s-ha-titulat">
+<h3>Exercici 10. En Teo ja s'ha titulat</h3>
+<p>Doncs sí, en Teo Ruíz Sánchez que hem vist buscant-se la vida amb
+diferents professions per poder estudiar, ara ja s'ha tret el títol de
+desenvolupador i ha trobat una feina, potser no gaire ben pagada
+(950€) però molt més interessant i amb més perspectives de futur que
+les altres. A més,  li permet continuar estudiant.</p>
+<p>Crea les crides a <em>update</em> que et calguin de manera que, fent servir
+els operadors anteriors (excepte <em>$pop</em>) aconsegueixis actualitzar el
+document que conté les dades del Teo.</p>
+</div>
+<div class="section" id="exercici-11-ampliacio-altres-operadors">
+<h3>Exercici 11. (ampliació) Altres operadors</h3>
+<p>Hi ha <a class="reference external" href="http://docs.mongodb.org/manual/reference/operator/update-array/">més operadors disponibles</a>
+per a modificar arrays amb <em>update</em>.</p>
+<p>Ja que se't veu amb ganes d'aprofundir en el tema (sinó, no t'estaries
+plantejant de fer un exercici d'ampliació), et proposo que investiguis
+una mica i intentis realitzar l'exercici anterior fent servir
+l'operador <em>$pullAll</em>.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="oinventatho" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>És clar, si no tens companys de classe, pots
+inventar-t'ho tot.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pushpila" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>És possible que <em>push</em> et recordi a l'operació per a
+afegir elements a una estructura de tipus pila. La idea és que
+<em>$push</em> tracta l'array com si fos una pila, tot afegint l'element
+al <em>top</em> d'aquesta.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="pushmodificadors" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>L'operador <em>$push</em> disposa d'una varietat
+interessant de modificadors. Consulta la seva <a class="reference external" href="http://docs.mongodb.org/manual/reference/operator/update/push/#up._S_push">documentació oficial</a>
+per més detalls.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./subdocuments.html">
+        Subdocuments
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./disseny-de-colleccions.html">
+        Disseny de col·leccions
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

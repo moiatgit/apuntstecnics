@@ -53,11 +53,12 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
                 <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/postgresql.html">postgresql</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
@@ -79,8 +80,8 @@
     </li>
 
     <li class="navigation-next">
-    <a href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">
-        Comparació models relacional i objecte-relacionals (primera part)
+    <a href="./breu-guia-de-psql.html">
+        Breu guia de <em>psql</em>
     </a>
     </li>
 </ul> 
@@ -92,10 +93,9 @@
         bd
     </a>
             amb el tag:
-            <a href="./tag/postgresql.html">postgresql</a> 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
 </div>
-    <div><!-- XXX TODO: revisar per adequar a Pelican -->
-<div class="section" id="introduccio">
+    <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
 <p>Aquesta guia descriu, pas a pas, una instal·lació bàsica del Sistema
 Gestor de Bases de Dades (SGBD) <em>PostGreSQL</em> sobre una màquina virtual
@@ -313,9 +313,9 @@ possibilitats de logar-se:</p>
 <div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>su - postgres
 postgres@vm:~<span class="nv">$ </span>psql
 <span class="nv">$ </span>psql
-psql <span class="o">(</span>9.1.8<span class="o">)</span>
+psql <span class="o">(</span>9.3.6<span class="o">)</span>
 Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
-<span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE USER usuaribd WITH PASSWORD &#39;pass&#39;;</span>
+<span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE USER usuaribd WITH PASSWORD &#39;toPSikr3t&#39;;</span>
 CREATE ROLE
 <span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE DATABASE testbd;</span>
 CREATE DATABASE
@@ -325,6 +325,13 @@ GRANT
 postgres@vm:~<span class="nv">$ </span><span class="nb">exit</span>
 <span class="nb">logout</span>
 </pre></div>
+<p>Nota: és possible que el primer cop que sortim de <em>psql</em> ens generi un
+missatge com ara:</p>
+<pre class="literal-block">
+could not save history to file
+&quot;/var/lib/postgresql/.psql_history&quot;: No such file or directory
+</pre>
+<p>Si és així, el podem ignorar amb tranquil·litat.</p>
 <p>Evidentment pots escollir el nom de la base de dades, el d'usuari i la
 clau que t'agradin. Recorda que si la configuració de xarxa de la
 teva màquina virtual és la que se't proposa en aquest document, només
@@ -332,28 +339,30 @@ es podrà accedir a aquesta des de la teva màquina amfitrió.</p>
 <p>Accedim a la nova base de dades amb el nou usuari fent servir:</p>
 <div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>psql -U usuaribd -d testbd -h localhost
 Password <span class="k">for </span>user usuaribd:
-psql <span class="o">(</span>9.1.8<span class="o">)</span>
+psql <span class="o">(</span>9.3.6<span class="o">)</span>
 SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-SHA, bits: 256<span class="o">)</span>
 Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
 
 <span class="nv">testbd</span><span class="o">=</span>&gt;<span class="se">\q</span>
 </pre></div>
-<p>Per a accedir des d'una màquina fora de la que conté el servidor, per exemple del nostre amfitrió, ens caldrà fer algunes modificacions a la configuració per defecte de <em>PostGreSQL</em>.</p>
+<p>Per a accedir des d'una màquina fora de la que conté el servidor, per
+exemple del nostre amfitrió <a class="footnote-reference" href="#nossh" id="id5">[4]</a>, ens caldrà fer algunes
+modificacions a la configuració per defecte de <em>PostGreSQL</em>.</p>
 <p>El canvi requereix la modificació de dos fitxers de configuració que
 es trobaran a <tt class="docutils literal"><span class="pre">/etc/postgresql/«X.Y»</span></tt> on «X.Y» correspon a la versió
-que hagis instal·lat de <em>PostGreSQL</em>. En el meu cas la <tt class="docutils literal">9.1</tt>.</p>
+que hagis instal·lat de <em>PostGreSQL</em>. En el meu cas la <tt class="docutils literal">9.3</tt>.</p>
 <p>El primer fitxer a modificar és
-<tt class="docutils literal">/etc/postgresql/9.1/main/pg_hba.conf</tt>. Cal localitzar les següents
+<tt class="docutils literal">/etc/postgresql/9.3/main/pg_hba.conf</tt>. Cal localitzar les següents
 línies</p>
 <pre class="literal-block">
 # IPv4 local connections:
 host    all             all             127.0.0.1/32            md5
 </pre>
-<p>Tot just a sota, hi afegirem la següent línia</p>
+<p>Tot just a sota, hi afegirem la següent línia <a class="footnote-reference" href="#editordef" id="id6">[5]</a></p>
 <pre class="literal-block">
 host    all             all             192.168.56.0/24        md5
 </pre>
-<p>A continuació, modificarem el fitxer <tt class="docutils literal">/etc/postgresql/9.1/main/postgresql.conf</tt>. Hi localitzarem la secció <em>Connection settings</em> i descomentarem la línia que conté</p>
+<p>A continuació, modificarem el fitxer <tt class="docutils literal">/etc/postgresql/9.3/main/postgresql.conf</tt>. Hi localitzarem la secció <em>Connection settings</em> i descomentarem la línia que conté</p>
 <pre class="literal-block">
 # listen_addresses = 'localhost'          # what IP address(es) to listen on;
 </pre>
@@ -374,8 +383,8 @@ simplement amb:</p>
 <p>Ara ja podem fer una prova des de l'amfitrió:</p>
 <div class="highlight"><pre><span class="nv">$ </span>psql -U usuaribd -d testbd -h 192.168.56.101
 Password <span class="k">for </span>user usuaribd:
-psql <span class="o">(</span>9.1.8<span class="o">)</span>
-SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-SHA, bits: 256<span class="o">)</span>
+psql <span class="o">(</span>9.3.6<span class="o">)</span>
+SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-GCM-SHA384, bits: 256<span class="o">)</span>
 Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
 
 <span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\q</span>
@@ -421,6 +430,24 @@ iface eth1 inet dhcp
 </td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="nossh" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>Per favor, no et confonguis amb el fet d'estar-te
+connectant des d'una sessió <em>ssh</em>. Tot i que la connexió <em>ssh</em>
+l'estàs realitzant des de la màquina anfitriona, la connexió al
+servidor de <em>PostGreSQL</em> l'estàs realitzant des de la màquina
+virtual.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="editordef" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>Per editar, el servidor us ofereix dos editors: el
+<em>vi</em> i el <em>nano</em>. Si no saps manegar-te amb el primer, els ajuts
+del segon t'haurien de ser suficients.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="well small">
@@ -438,8 +465,8 @@ iface eth1 inet dhcp
     </li>
 
     <li class="navigation-next">
-    <a href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">
-        Comparació models relacional i objecte-relacionals (primera part)
+    <a href="./breu-guia-de-psql.html">
+        Breu guia de <em>psql</em>
     </a>
     </li>
 </ul> 

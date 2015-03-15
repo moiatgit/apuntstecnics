@@ -53,11 +53,12 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
                 <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/postgresql.html">postgresql</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
@@ -67,8 +68,8 @@
 <div class="well small">
 <ul id="navigation"> 
     <li class="navigation-prev">
-    <a href="./installacio-de-postgresql.html">
-        Instal·lació de PostGreSQL
+    <a href="./primeres-passes-amb-la-consola-psql.html">
+        Primeres passes amb la consola <em>psql</em>
     </a>
     </li>
 
@@ -91,9 +92,10 @@
     <a href="./category/bd.html">
         bd
     </a>
+            amb el tag:
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
 </div>
-    <div><!-- XXX TODO: revisar per adequar a Pelican -->
-<div class="section" id="introduccio">
+    <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
 <p>Aquest document compara la modelització de dades des de dues
 perspectives:</p>
@@ -121,7 +123,7 @@ taules, fer consultes i inserir, modificar i eliminar-hi elements.</p>
 <p>En aquesta secció es presenten les entitats de que es composa
 l'exemple <a class="footnote-reference" href="#exempleclassic" id="id1">[1]</a> a implementar.</p>
 <div class="figure align-center">
-<img alt="Diagrama d'Entitat Relació del cas d'estudi" src="./images/psql003.img001.der.png" />
+<img alt="Diagrama d'Entitat Relació del cas d'estudi" src="./images/postgresql005.img001.der.png" />
 </div>
 <p>Com ja saps, el model relacional guarda les dades en taules tot
 cercant minimitzar redundàncies.</p>
@@ -130,7 +132,9 @@ COMANDES, LINIES_COMANDA, i PRODUCTES.</p>
 <p>Els atributs de cada entitat formaran les columnes de les diferents
 taules.</p>
 <p>Fixa't que cada part de l'adreça (carrer, codi postal, ciutat,
-país) queda emmagatzemat en la seva pròpia columna.</p>
+país) queda emmagatzemat en la seva pròpia columna. Hi ha adreces a
+les taules de CLIENTS i COMANDES. Per la primera, l'adreça correspon a
+la de facturació. La de COMANDES correspon a la de lliurament.</p>
 <p>En el cas dels telèfons, per tenir-ne més d'un la taula CLIENTS ha de
 disposar d'una columna per cada telèfon. No és massa <em>elegant</em> ja que
 si en tenim menys de telèfons, hem de posar <em>nulls</em>, i si són més hem
@@ -321,13 +325,16 @@ comanda.</p>
 commanda SELECT.</p>
 <p>Alguns exemples:</p>
 <ul class="simple">
-<li>Llista de les quantitats de producte que ha comprat cada client</li>
+<li>Llista de les quantitats de producte que ha comprat els tres clients
+que més n'han comprat:</li>
 </ul>
 <div class="highlight"><pre><span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">nom</span> <span class="k">AS</span> <span class="n">client</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">nom</span> <span class="k">AS</span> <span class="n">producte</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">quantitat</span>
 <span class="k">FROM</span> <span class="n">CLIENTS</span> <span class="k">AS</span> <span class="k">c</span><span class="p">,</span> <span class="n">COMANDES</span> <span class="k">AS</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">PRODUCTES</span> <span class="k">AS</span> <span class="n">p</span><span class="p">,</span> <span class="n">LINIES_COMANDA</span> <span class="k">AS</span> <span class="n">l</span>
 <span class="k">WHERE</span>   <span class="k">c</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_client</span>        <span class="k">AND</span>
         <span class="n">cmd</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">id_comanda</span>   <span class="k">AND</span>
-        <span class="n">l</span><span class="p">.</span><span class="n">id_producte</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+        <span class="n">l</span><span class="p">.</span><span class="n">id_producte</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">l</span><span class="p">.</span><span class="n">quantitat</span> <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="mi">3</span><span class="p">;</span>
 </pre></div>
 <ul class="simple">
 <li>Llista de l'import total que cada client ha comprat</li>
@@ -363,37 +370,104 @@ commanda SELECT.</p>
   <span class="k">AND</span>   <span class="n">COMERCIALS</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">VIP_COMERCIAL</span><span class="p">.</span><span class="n">id_comercial</span><span class="p">;</span>
 </pre></div>
 </div>
-<div class="section" id="exercici-6-el-millor-client">
-<h3>Exercici 6. El millor client</h3>
+<div class="section" id="exercici-6-els-clients-de-barcelona">
+<h3>Exercici 6. Els clients de Barcelona</h3>
+<p>Dissenya una consulta que retorni totes les dades dels clients de la
+ciutat de Barcelona.</p>
+</div>
+<div class="section" id="exercici-7-els-clients-amb-un-segon-telefon">
+<h3>Exercici 7. Els clients amb un segon telèfon</h3>
+<p>Dissenya una consulta que retorni totes les dades dels clients que
+tinguin definit el segon telèfon (camp <em>telefon_2</em>).</p>
+<p><em>Atenció</em>: considerarem que un telèfon no està definit per un de dos
+motius: perquè valgui NULL o pergue valgui la cadena buida ('').</p>
+<p>Pista: <em>IS [NOT] NULL</em></p>
+</div>
+<div class="section" id="exercici-8-adreces-diferents">
+<h3>Exercici 8. Adreces diferents</h3>
+<p>Dissenya una consulta que retorni totes les comandes que tinguin
+l'adreça de lliurament diferent de la de facturació del client
+corresponent.</p>
+<p>La consulta tornarà només els identificadors de client i de comanda.
+El resultat generat reanomenarà els resultats amb <em>client_nr</em> i
+<em>comanda_nr</em>.</p>
+<p>Pista: <em>AS</em></p>
+</div>
+<div class="section" id="exercici-9-el-millor-client">
+<h3>Exercici 9. ★ El millor client</h3>
 <p>Dissenya una consulta que retorni el nom i cognoms del client que ens
 hagi fet més despesa (import total de totes les seves comandes).</p>
+<p>Nota: aquesta consulta és una mica més complexa que les anteriors, eh?</p>
 </div>
-<div class="section" id="exercici-7-el-producte-mes-comprat">
-<h3>Exercici 7. El producte més comprat</h3>
+<div class="section" id="exercici-10-el-producte-mes-comprat">
+<h3>Exercici 10. ★ El producte més comprat</h3>
 <p>Dissenya una consulta que retorni el nom del producte més comprat.</p>
+<p>Nota: aquesta consulta és també una mica més complexa, eh?</p>
 </div>
-<div class="section" id="exercici-8-modifiquem-dades">
-<h3>Exercici 8. Modifiquem dades</h3>
+<div class="section" id="exercici-11-modifiquem-dades">
+<h3>Exercici 11. Modifiquem dades</h3>
 <p>Defineix una comanda que modifiqui el segon telèfon i el codi postal
 del client 20001 a les dades teves.</p>
 <p>Encara que no te'n recordis de la sintaxi concreta, no t'hauria de ser
 difícil de trobar.</p>
 </div>
-<div class="section" id="exercici-9-eliminem-dades">
-<h3>Exercici 9. Eliminem dades</h3>
+<div class="section" id="exercici-12-eliminem-dades">
+<h3>Exercici 12. Eliminem dades</h3>
 <p>Defineix una comanda sql que elimini tots els productes que no
 apareguin a cap comanda i tinguin un preu superior a 10.07.</p>
 <p>Encara que no te'n recordis de la sintaxi concreta, no t'hauria de ser
 difícil de trobar.</p>
 </div>
-<div class="section" id="exercici-10-comandes-dificils">
-<h3>Exercici 10. Comandes difícils</h3>
-<p>Defineix les especificacions d'un mínim de 5 comandes <strong>no trivials</strong>
-sobre aquest model de dades, i proporciona al menys una solució per
-cadascuna i el resultat que et generen.</p>
+<div class="section" id="exercici-13-comandes-dificils">
+<h3>Exercici 13. Comandes difícils</h3>
+<p>Defineix les especificacions d'un mínim de 5 comandes sql <strong>no
+trivials</strong> sobre aquest model de dades, i proporciona al menys una
+solució per cadascuna.</p>
+<p>Crea un informe en el que aparegui el contingut de les diferents
+taules implicades a les teves comandes i, per cadascuna, indica
+quina és la sortida que t'ha donat.</p>
+<p>Et poso exemples d'algunes especificacions de companys anteriors. No
+t'hi has de basar, però potser et serveixen d'inspiració
+<a class="footnote-reference" href="#potserlesteves" id="id5">[5]</a>.</p>
+<ul class="simple">
+<li>id del client que ha comprat més productes diferents (productes amb
+diferent id)</li>
+<li>comptar quantes comandes tenen més d'una linia de comanda.</li>
+<li>Algunes comandes tenen camps de direcció buit i volem completar-los
+per tant caldrà obtenir la informació del client.  Volem el nom,
+cognom i tractament (en un format més llegible) i telefons dels
+clients que tinguin alguna comanda amb algun camp buit, inclourem la
+id de la comanda també.  Cal endreçar els resultats per la id del
+client i en cas de tenir més d'una comanda per client, per la id de
+comanda.</li>
+<li>Mostra el nom del comercial i la suma dels diners gastats pels
+clients de cada comercial durant els últims 30 dies endreçats de mes
+a menys.</li>
+<li>Mostrar els clients (id i ciutat) que hagin comprat menys de 6
+unitats (o cap unitat) de productes que valguin menys de 5€. Cal
+mostrar també aquells clients que no hagin comprat cap unitat de
+productes de menys de 5€.</li>
+<li>Som el responsable de l'empresa. Les nostres ventes estan baixant i
+els plans d'acció que hem aplicat no han donat resultat. Hem de
+començar a pensar en reduir la nostra plantilla de comercials. És
+per això que es demana una query que ens retorni: els comercials (id
+i nom complet) que tinguin clients que que no hagin fet cap compra
+en la darrera setmana, i també els comercials amb clients que hagin
+fet compres en la darrera setmana però l'import total de totes les
+compres no superi els 50€.</li>
+<li>Presentar en dos registros en formato horizontal.  En el primer
+registro mostrar cuantos productos se han vendido con el precio
+mayor que la media de los productos vendidos. En el caso de
+encontrar más de una vez el mismo producto solo se contará una vez.
+En el segundo registro presentar todos los datos de la tabla
+&quot;productes&quot;, de aquellos productos seleccionados en el primer caso.</li>
+</ul>
+</div>
+<div class="section" id="exercici-14-opcional-les-consultes-d-anys-anteriors">
+<h3>Exercici 14. (opcional) Les consultes d'anys anteriors</h3>
+<p>Prova de resoldre les consultes dels companys d'anys anteriors.</p>
 </div>
 </div>
-<hr class="docutils" />
 <div class="section" id="notes">
 <h2>Notes</h2>
 <table class="docutils footnote" frame="void" id="exempleclassic" rules="none">
@@ -417,7 +491,7 @@ de l'entitat (aquest cop en singular i minúscules)</p>
 <p class="last">Trobaràs defensors de diferents convencions, i potser tu ja tens la
 teva manera favorita d'anomenar les coses. Et recomano però que, al
 menys per serguir aquests exemples, facis servir aquestes
-convencions.</p>
+que et proposo.</p>
 </td></tr>
 </tbody>
 </table>
@@ -440,13 +514,22 @@ possible que no funcioni automàticament amb casos menys provats com
 per exemple amb l'herència.</td></tr>
 </tbody>
 </table>
+<table class="docutils footnote" frame="void" id="potserlesteves" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>Potser et pensaràs que són les consultes més
+<em>xungues</em> que em van lliurar. En realitat les he escollides a
+l'atzar! T'imagines mirar d'aquí uns anys aquests materials i
+trobar-te una de les teves consultes?</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="well small">
 <ul id="navigation"> 
     <li class="navigation-prev">
-    <a href="./installacio-de-postgresql.html">
-        Instal·lació de PostGreSQL
+    <a href="./primeres-passes-amb-la-consola-psql.html">
+        Primeres passes amb la consola <em>psql</em>
     </a>
     </li>
 

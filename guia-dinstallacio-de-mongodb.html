@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Guia d'instal·lació de MongoDB</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Guia d'instal·lació de MongoDB             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-al-mongodb.html">
+        Introducció al MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./introduccio-a-la-shell-de-mongodb.html">
+        Introducció a la shell de MongoDB
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Guia d'instal·lació de MongoDB</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquesta guia descriu pas a pas la instal·lació de la darrera versió de
+MongoDB sobre un sistema operatiu Debian o similar.</p>
+<p>Si el teu sistema operatiu és un altre o bé vols fer servir una
+instal·lació més automatitzada, pots seguir les indicacions de la
+<a class="reference external" href="http://docs.mongodb.org/manual/installation/">pàgina oficial</a>.</p>
+<p>Aquestes instruccions no requereixen de permís de superusuari i estan
+orientades a oferir un servidor de MongoDB usable per a realitzar
+proves en local.</p>
+</div>
+<div class="section" id="installacio">
+<h2>Instal·lació</h2>
+<p>Descarrega la darrera versió (<em>Production Release</em>) <a class="footnote-reference" href="#darreraversio" id="id1">[1]</a>
+a <a class="reference external" href="http://www.mongodb.org/downloads">la secció d'instal·lació de MongoDB</a>.  Probablement t'interessarà la
+Linux 64-bit i el pots descarregar a <tt class="docutils literal">~/Baixades</tt></p>
+<p>Desempaqueta el fitxer descarregat (com ara
+mongodb-linux-x86_64-2.4.9.tgz):</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p ~/apps
+<span class="nv">$ </span><span class="nb">cd</span> ~/apps
+<span class="nv">$ </span>tar xzvf ~/Baixades/mongodb-linux-x86_64-2.4.9.tgz
+</pre></div>
+<p>Afegeix-lo a la variable <tt class="docutils literal">PATH</tt> per a poder fer servir els
+programes:</p>
+<div class="highlight"><pre><span class="nv">$ PATH</span><span class="o">=</span><span class="nv">$PATH</span>:~/apps/mongodb-linux-x86_64-2.4.9/bin
+</pre></div>
+<p>Nota: pots afegir-ho al teu ~/.bashrc si vols que es mantingui en
+futures execucions.</p>
+<p>Per defecte, MongoDB espera que existeixin els següents directoris:</p>
+<div class="highlight"><pre>/data
+/data/db
+</pre></div>
+<p>En aquesta instal·lació evitarem <em>embrutar</em> l'arrel del nostre sistema
+de fitxers i, a l'hora, la necessitat de disposar de privilegis
+d'administrador. Així, crearem l'espai per les dades a la carpeta del
+nostre usuari. Evidentment, si no tens cap problema amb l'opció per
+defecte, endavant amb un <tt class="docutils literal">sudo mkdir <span class="pre">-p</span> /data/db</tt>.</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p ~/data/db
+</pre></div>
+<p>Ara ja podem llençar el servidor <a class="footnote-reference" href="#llensador" id="id2">[2]</a></p>
+<div class="highlight"><pre><span class="nv">$ </span>mongod --dbpath ~/data
+</pre></div>
+<p>O, si has creat la carpeta al lloc per defecte, simplement:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongod
+</pre></div>
+<p>Nota: el pots aturar en qualsevol moment, per exemple amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>killall mongod
+</pre></div>
+<p>Per defecte, el servidor escoltarà al port 27017. Et proposo que de
+moment no ho canviïs a menys que tinguis alguna bona raó <a class="footnote-reference" href="#raocanvi" id="id3">[3]</a>.</p>
+<p>Arrencarem ara la shell que ens ofereix MongoDB per provar que
+funciona. Obre una altra consola i simplement escriu:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongo
+</pre></div>
+<p>Si tot ha anat bé, hauries de tenir un nou prompt en forma de <strong>&gt;</strong>
+<a class="footnote-reference" href="#mongoerror" id="id4">[4]</a>:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongo
+MongoDB shell version: 2.4.9
+connecting to: <span class="nb">test</span>
+&gt;
+</pre></div>
+<p>Escriu la següent comanda per saber a quina base de dades s'ha
+connectat:</p>
+<div class="highlight"><pre>&gt; db
+test
+&gt; exit
+bye
+</pre></div>
+<p>Per defecte, la mongo shell es connecta a la base de dades <tt class="docutils literal">test</tt>.
+Així que si has vist aquesta resposta, és que tot ha anat correcte.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="darreraversio" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>En el moment de preparar aquesta guia la darrera
+versió disponible era la 2.4.9.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="llensador" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">És possible que trobis incòmode estar indicant la
+carpeta de les dades cada cop que arrenquis el servidor. Et proposo
+que creis un llençador (potser al mateix mongodb/bin) amb el
+següent contingut:</p>
+<div class="highlight"><pre><span class="lineno">1</span>   <span class="c">#! /bin/bash</span>
+<span class="lineno">2</span>   <span class="nb">echo</span> <span class="s2">&quot;Llençador de mongod&quot;</span>
+<span class="lineno">3</span>   <span class="nv">a</span><span class="o">=</span><span class="s2">&quot;$(pidof mongod)&quot;</span>
+<span class="lineno">4</span>   <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$a&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
+<span class="lineno">5</span>   <span class="k">then</span>
+<span class="lineno">6</span> <span class="k">      </span>mongod --dbpath ~/data/ &amp;
+<span class="lineno">7</span>   <span class="k">else</span>
+<span class="lineno">8</span> <span class="k">      </span><span class="nb">echo</span> <span class="s2">&quot;Ja està en execució amb pid $a&quot;</span>
+<span class="lineno">9</span>   <span class="k">fi</span>
+</pre></div>
+<p class="last">Qui sap? Potser en un futur li vols afegir altres opcions, com ara
+un altre port.</p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="raocanvi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Una bona raó per canviar pot ser perquè estàs
+instal·lant el servidor de MongoDB en una màquina virtual.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="mongoerror" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><p class="first">En cas que no hagis arrencat correctament el
+servidor, trobaràs una resposta similar a la següent:</p>
+<div class="highlight"><pre>$ mongo
+MongoDB shell version: 2.4.9
+connecting to: test
+Fri Jan 31 18:39:53.104 Error: couldn&#39;t connect to server 127.0.0.1:27017 at src/mongo/shell/mongo.js:145
+exception: connect failed
+</pre></div>
+<p class="last">Arrenca el servidor i torna a provar.</p>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-al-mongodb.html">
+        Introducció al MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./introduccio-a-la-shell-de-mongodb.html">
+        Introducció a la shell de MongoDB
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

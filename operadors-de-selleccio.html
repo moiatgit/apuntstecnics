@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Operadors de sel·lecció</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Operadors de sel·lecció             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./seleccio-de-camps.html">
+        Selecció de camps
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./ordre-dels-resultats.html">
+        Ordre dels resultats
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Operadors de sel·lecció</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En els exemples de selecció que hem vist fins ara, fixa't que sempre
+demanàvem que la clau especificada tingués un valor concret.</p>
+<p>Com ens ho podem fer per, per exemple, demanar totes les persones que
+siguin més grans de 21 anys?</p>
+<p>En aquest article veurem com realitzar consultes fent servir els
+<a class="reference external" href="http://docs.mongodb.org/manual/reference/operator/query/">operadors de selecció.</a> més
+habituals.</p>
+</div>
+<div class="section" id="operadors-de-comparacio">
+<h2>Operadors de comparació</h2>
+<p>La següent taula resumeix els operadors de comparació que veurem:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="2%" />
+<col width="89%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>operador</td>
+<td>&nbsp;</td>
+<td>Descripció</td>
+</tr>
+<tr><td>$gt</td>
+<td>&gt;</td>
+<td>Entrades amb el valor <strong>més gran</strong> que l'especificat.</td>
+</tr>
+<tr><td>$gte</td>
+<td>&gt;=</td>
+<td>Entrades amb el valor <strong>més gran o igual</strong> a l'especificat.</td>
+</tr>
+<tr><td>$lt</td>
+<td>&lt;</td>
+<td>Entrades amb el valor <strong>més petit</strong> que l'especificat.</td>
+</tr>
+<tr><td>$lte</td>
+<td>&lt;=</td>
+<td>Entrades amb el valor <strong>més petit o igual</strong> que l'especificat.</td>
+</tr>
+<tr><td>$ne</td>
+<td>!=</td>
+<td>Entrades amb el valor <strong>diferent</strong> de l'especificat.</td>
+</tr>
+</tbody>
+</table>
+<p>Per mantenir l'estructura de documents json, a MongoDB expressem els
+operadors de comparació d'una manera una mica peculiar:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$gt</span><span class="o">:</span><span class="mi">35</span><span class="p">}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530110cb37dd0ec3059698f4&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530110cb37dd0ec3059698f8&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;director/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">120000</span> <span class="p">}</span>
+</pre></div>
+<p>Fixa't que aquesta consulta equivaldria a la de SQL <a class="footnote-reference" href="#sqlmesclar" id="id1">[1]</a>:</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">persones</span> <span class="k">WHERE</span> <span class="n">edat</span> <span class="o">&gt;</span> <span class="mi">35</span><span class="p">;</span>
+</pre></div>
+<div class="section" id="exercici-1-no-volem-els-vells">
+<h3>Exercici 1. No volem els vells</h3>
+<p>Composa una consulta que retorni només les persones menors de 21 anys.</p>
+</div>
+<div class="section" id="exercici-2-be-21-no-es-tan-vell">
+<h3>Exercici 2. Bé, 21 no és tan vell</h3>
+<p>Composa una consulta que retorni només les persones menors o iguals a
+21 anys.</p>
+</div>
+<div class="section" id="exercici-3-un-rang-de-valors">
+<h3>Exercici 3. Un rang de valors</h3>
+<p>Composa una consulta que retorni les persones més grans de 21 anys i
+menors de 35.</p>
+<p>Pista:</p>
+<div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$lt</span><span class="o">:</span><span class="err">«</span><span class="o">?</span><span class="err">»</span><span class="p">,</span> <span class="nx">$gt</span><span class="o">:</span><span class="err">«</span><span class="o">?</span><span class="err">»</span><span class="p">}}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-4-un-altre-rang">
+<h3>Exercici 4. Un altre rang</h3>
+<p>Composa una consulta que retorni les persones més grans de 35 anys i
+menors de 21.</p>
+<p>Pista: hauries de ser capaç de saber el resultat d'aquesta consulta
+sense necessitat d'executar-la, fins i tot si canvien els documents de
+la col·lecció.</p>
+</div>
+<div class="section" id="exercici-5-no-m-agrada-el-34">
+<h3>Exercici 5. No m'agrada el 34</h3>
+<p>Composa una consulta que retorni totes les persones que no tenen 34
+anys.</p>
+</div>
+<div class="section" id="exercici-6-un-rang-menys-un">
+<h3>Exercici 6. Un rang menys un</h3>
+<p>Composa una consulta que retorni totes les persones d'edat entre 21 i
+35 (ambdues incloses) excepte les que tinguin 34 anys.</p>
+</div>
+<div class="section" id="exercici-7-joves-ben-pagats">
+<h3>Exercici 7. Joves ben pagats</h3>
+<p>Composa una consulta que retorni totes les persones fins a com a molt
+25 anys que cobrin com a mínim 2000€. Ah! No ens interessa saber
+l'identificador en aquest cas.</p>
+</div>
+</div>
+<div class="section" id="els-operadors-in-i-nin">
+<h2>Els operadors $in i $nin</h2>
+<p>L'operador <strong>$in</strong> ens permet especificar documents amb un
+valor dins d'una llista.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$in</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;docent&quot;</span><span class="p">]}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5a&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5b&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Marc Hernández Muñoz&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5d&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff60&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+</pre></div>
+<p>Per la seva banda, <strong>$nin</strong> ens permet especificar tot just el
+contrari: documents amb un valor fora d'una llista:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$nin</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;docent&quot;</span><span class="p">]}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff59&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Júlia Galceran Buscart&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">27</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;monjo/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5c&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Fernández Fijo&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;fotògraf/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5e&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;director/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">120000</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5f&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Alexia López Fabrelle&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;equilibrista&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3900</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff61&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Carla Fernández Balló&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;pintor/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2400</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff62&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pau Romero Vilchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;psicòleg/psicòloga&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+</pre></div>
+<div class="section" id="exercici-8-professions-amb-maxim-d-edat">
+<h3>Exercici 8. Professions amb màxim d'edat</h3>
+<p>Composa una consulta que retorni totes les persones de com a màxim 40
+anys, que es dediquin al desenvolupament, a la docència o a la
+fotografia.</p>
+</div>
+<div class="section" id="exercici-9-professions-amb-minim-d-edat">
+<h3>Exercici 9. Professions amb mínim d'edat</h3>
+<p>Composa una consulta que retorni totes les persones de com a mínim 40
+anys, que <strong>no</strong> es dediquin al desenvolupament, a la docència o a la
+fotografia.</p>
+</div>
+</div>
+<div class="section" id="l-operador-or">
+<h2>L'operador $or</h2>
+<p>Ara ja sabem trobar documents amb valors iguals a un donat, o bé dins
+d'un rang. Fins i tot, sabem descartar documents amb un determinat
+valor.  Però, què passaria si volguéssim tenir documents amb rangs
+discontinus o amb més d'un valor descartat?</p>
+<p>La resposta és l'operador <em>$or</em></p>
+<p>El següent exemple, ens mostra com podem consultar les persones que
+siguin pintores o bé equilibristes:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">$or</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;pintor/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;equilibrista&quot;</span><span class="p">}]</span> <span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5f&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Alexia López Fabrelle&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;equilibrista&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3900</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff61&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Carla Fernández Balló&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;pintor/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2400</span> <span class="p">}</span>
+</pre></div>
+<p>Fixa't com s'indiquen les diferents opcions vàlides: dins d'una llista
+de documents emmarcada amb [] i separades per coma.</p>
+<p>Evidentment, podem afegir a la llista tants documents com ens calgui,
+i cada document podria tenir especificades més d'una clau.</p>
+<p>Podríem també aconseguir un rang de valors discontinu. Per exemple,
+imagina que ens interessen les persones menors de 20 anys i les més
+grans de 40.</p>
+<p>Si fem el següent:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">edat</span><span class="o">:</span><span class="p">{</span><span class="nx">$lte</span><span class="o">:</span><span class="mi">21</span><span class="p">},</span> <span class="nx">edat</span><span class="o">:</span><span class="p">{</span><span class="nx">$gte</span><span class="o">:</span><span class="mi">40</span><span class="p">}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5a&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5e&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;director/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">120000</span> <span class="p">}</span>
+</pre></div>
+<p>Ja sabem que en repetir una clau, agafarà la darrera. No ens val.</p>
+<p>En canvi amb <em>$or</em>:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">$or</span><span class="o">:</span><span class="p">[{</span><span class="nx">edat</span><span class="o">:</span><span class="p">{</span><span class="nx">$lte</span><span class="o">:</span><span class="mi">21</span><span class="p">}},</span> <span class="p">{</span><span class="nx">edat</span><span class="o">:</span><span class="p">{</span><span class="nx">$gte</span><span class="o">:</span><span class="mi">40</span><span class="p">}}]})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5a&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5c&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Fernández Fijo&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;fotògraf/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5e&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;director/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">120000</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5f&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Alexia López Fabrelle&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;equilibrista&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3900</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff61&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Carla Fernández Balló&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;pintor/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2400</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff62&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pau Romero Vilchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;psicòleg/psicòloga&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+</pre></div>
+<p>Finalment, imagina que volem totes les persones que no siguin
+desenvolupadores ni directores. Ho farem molt fàcilment amb:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">$or</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$ne</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">}},</span> <span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="p">{</span><span class="nx">$ne</span><span class="o">:</span><span class="s2">&quot;director/a&quot;</span><span class="p">}}]})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff59&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Júlia Galceran Buscart&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">27</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;monjo/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5a&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5b&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Marc Hernández Muñoz&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5c&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Fernández Fijo&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;fotògraf/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5d&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5e&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;director/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">120000</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff5f&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Alexia López Fabrelle&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;equilibrista&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3900</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff60&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff61&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Carla Fernández Balló&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;pintor/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2400</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530a3c8eccf61c71a3e8ff62&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pau Romero Vilchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;psicòleg/psicòloga&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+</pre></div>
+<p>Ops! Què ha passat? Ens ha retornat <strong>totes</strong> les entrades!</p>
+<p>És clar, si una persona és desenvolupadora, no acompleix la primera
+condició, però <strong>sí</strong> la segona.</p>
+<p>Bé, espero que no hagis caigut en la trampa. Evidentment resoldrem
+aquest tipus de consultes amb <strong>$nin</strong> tal i com hem vist a la secció
+anterior.</p>
+<div class="section" id="exercici-10-sou-alt-o-edat-baixa">
+<h3>Exercici 10. Sou alt o edat baixa</h3>
+<p>Composa una consulta que retorni les persones que, o bé tinguin com a
+màxim 21 anys, o bé tinguin un sou com a mínim de 2000€.</p>
+</div>
+<div class="section" id="exercici-11-desenvolupadors-amb-sou-alt-o-joves">
+<h3>Exercici 11. Desenvolupadors amb sou alt o joves</h3>
+<p>Composa una consulta que retorni les persones que, o bé tinguin com a
+màxim 21 anys, o bé es dediquin al desenvolupament amb un sou com a
+mínim de 2000€.</p>
+</div>
+<div class="section" id="exercici-12-no-m-agraden-els-de-44">
+<h3>Exercici 12. No m'agraden els de 44</h3>
+<p>Composa una consulta que retorni les persones que, o bé tinguin com a
+màxim 21 anys, o bé es dediquin al desenvolupament amb un sou com a
+mínim de 2000€. En tot cas, que no aparegui ningú amb 44 anys.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="sqlmesclar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Sí, la versió SQL aquí queda més compacta i llegible.
+En favor de MongoDB cal dir que és coherent amb la resta del seu
+disseny i què, en altres situacions, aquesta notació serà més
+llegible que la corresponent a SQL.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./seleccio-de-camps.html">
+        Selecció de camps
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./ordre-dels-resultats.html">
+        Ordre dels resultats
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

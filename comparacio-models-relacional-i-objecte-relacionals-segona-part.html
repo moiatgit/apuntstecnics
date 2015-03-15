@@ -53,11 +53,12 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
                 <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/postgresql.html">postgresql</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
@@ -86,9 +87,10 @@
     <a href="./category/bd.html">
         bd
     </a>
+            amb el tag:
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
 </div>
-    <div><!-- XXX TODO: revisar per adequar a Pelican -->
-<div class="section" id="introduccio">
+    <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
 <p>Aquest document correspon a la segona part de la comparació entre els
 models relacionals i Objecte-relacional (mira la <a class="reference external" href="./comparacio-models-relacional-i-objecte-relacionals-primera-part.html">primera part</a>).</p>
@@ -97,7 +99,7 @@ models relacionals i Objecte-relacional (mira la <a class="reference external" h
 <div class="section" id="model-objecte-relacional">
 <h2>Model Objecte-Relacional</h2>
 <p>A la secció anterior hem fet un petit repàs de les possibilitats que
-PostGreSQL ens ofereix com a SGBD relacional. En aquesta considerarem
+<em>PostGreSQL</em> ens ofereix com a SGBD relacional. En aquesta considerarem
 algunes de les possibilitats que ens ofereix com a SGBD
 objecte-relacional.</p>
 <p>Excepte per lleugeres diferències, l'apartat anterior seria comú a
@@ -110,7 +112,7 @@ d'interpretacions que de vegades no tenen ni traducció als altres.</p>
 <p>El següent diagrama de classes UML mostra una possible representació
 del model anterior en forma de classes.</p>
 <div class="figure align-center">
-<img alt="Possible diagrama de classes del cas d'estudi" src="./images/psql003.img002.uml.png" />
+<img alt="Possible diagrama de classes del cas d'estudi" src="./images/postgresql005.img002.uml.png" />
 </div>
 <p>Algunes de les diferències més notables són:</p>
 <ul>
@@ -158,7 +160,7 @@ Tota una taula per poc més de quatre valors...</p>
 </li>
 <li><p class="first">Les entitats principals CLIENTS, COMANDES i PRODUCTES es
 converteixen en classes en un model purament orientat a objectes.
-Malauradament els SGBDORs en general, i PostGreSQL en particular,
+Malauradament els SGBDORs en general, i <em>PostGreSQL</em> en particular,
 encara no ofereixen mecanismes prou còmodes per implementar
 relacions d'agregació. Per més detalls, considera l'anàlisi de
 <a class="citation-reference" href="#eessaar" id="id1">[Eessaar]</a>.</p>
@@ -180,7 +182,7 @@ M:N.</p>
 línies de comanda <em>dins</em> de cada comanda.</p>
 <p>En aquest cas, ens caldria definir un tipus compost que contindria
 una clau forana a PRODUCTES. El problema està en que, a hores d'ara,
-PostGreSQL no ofereix la possibilitat d'indicar restriccions en els
+<em>PostGreSQL</em> no ofereix la possibilitat d'indicar restriccions en els
 UDTs. Per aquesta raó, haurem de mantenir la taula LINIES−COMANDA.</p>
 </li>
 <li><p class="first">El cas dels clients VIP, en un model orientat a objectes es podria
@@ -192,7 +194,7 @@ nul·les en cas de clients estàndard <a class="footnote-reference" href="#nocal
 </ul>
 <p>El DER resultant el representa el següent diagrama:</p>
 <div class="figure align-center">
-<img alt="Diagrama d'entitat-relació amb objecte-relacional" src="./images/psql003.img003.der_or.png" />
+<img alt="Diagrama d'entitat-relació amb objecte-relacional" src="./images/postgresql005.img003.der_or.png" />
 </div>
 </div>
 <div class="section" id="l-enumerat-pel-tractament">
@@ -228,7 +230,7 @@ contenir, com a mínim els valors <tt class="docutils literal">mòbil</tt>, <tt 
 <div class="section" id="el-tipus-telefon">
 <h3>El tipus Telèfon</h3>
 <p>Podem definir el nou tipus (classe) Telefon fent servir el concepte de
-dades compostes de PostGreSQL, de la següent manera</p>
+dades compostes de <em>PostGreSQL</em>, de la següent manera</p>
 <div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TYPE</span> <span class="n">Telefon</span> <span class="k">AS</span> <span class="p">(</span>
     <span class="n">tipus</span>   <span class="n">TipusTelefon</span><span class="p">,</span>
     <span class="n">pref</span>    <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
@@ -287,7 +289,7 @@ que hem creat.</p>
 </div>
 <div class="section" id="la-taula-clients-vip">
 <h3>La taula CLIENTS_VIP</h3>
-<p>PostGreSQL ens ofereix la possibilitat d'especificar una relació
+<p><em>PostGreSQL</em> ens ofereix la possibilitat d'especificar una relació
 d'herència entre dues entitats amb la clau <em>INHERITS</em>.</p>
 <p>Per implementar l'herència podem fer:</p>
 <div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">CLIENTS_VIP</span> <span class="p">(</span>
@@ -310,7 +312,7 @@ Inherits: clients
 </pre></div>
 <p>A CLIENTS_VIP els apareix <strong>tots</strong> els camps de CLIENTS.</p>
 <p>Malauradament l'herència a la versió que estem fent servir de
-PostGreSQL no està completament suportada. La taula que estén <strong>no
+<em>PostGreSQL</em> no està completament suportada. La taula que estén <strong>no
 hereta</strong> restriccions com ara la clau primària i les claus foranes.
 Això fa que es pugui produir situacions <em>aberrants</em> com que dos
 clients puguin tenir el mateix identificador, o bé que no es pugui
@@ -350,13 +352,13 @@ que conformen l'array tot separant-los amb coma.</p>
 de l'array entre claus (<tt class="docutils literal">{}</tt>).</p>
 </li>
 <li><p class="first">en el cas de l'array de telèfons, ens caldrà fer un <em>cast</em> per
-indicar a PostGreSQL de quin tipus de dades està format l'array.
+indicar a <em>PostGreSQL</em> de quin tipus de dades està format l'array.
 Això ho fem amb <tt class="docutils literal">CAST( <span class="pre">«...»</span> AS <span class="pre">Telefon[])</span></tt>.</p>
-<p>Novament PostGreSQL ens ofereix una manera més compacta
+<p>Novament <em>PostGreSQL</em> ens ofereix una manera més compacta
 d'escriure-ho amb l'operador de cast <tt class="docutils literal">::</tt>.</p>
 </li>
 </ul>
-<p>Les possibilitats de compactació que ens ofereix el PostGreSQL fan una
+<p>Les possibilitats de compactació que ens ofereix el <em>PostGreSQL</em> fan una
 mica més críptiques les expressions. Això fa que no siguin gaire
 adequades en un primer contacte amb el SGBD.</p>
 </div>
@@ -404,7 +406,7 @@ extensió de clients, és molt similar a la inserció a una taula
 </pre></div>
 </li>
 </ul>
-<p>Per cert, si volem saber només els clients que no són VIP, PostGreSQL
+<p>Per cert, si volem saber només els clients que no són VIP, <em>PostGreSQL</em>
 ens ofereix <tt class="docutils literal">ONLY</tt></p>
 <div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM ONLY CLIENTS;
   id   |         nom         |                                            adr                                             |                     telefons
@@ -413,11 +415,11 @@ ens ofereix <tt class="docutils literal">ONLY</tt></p>
 <span class="o">(</span>1 row<span class="o">)</span>
 </pre></div>
 <p>Malauradament, com ja hem comentat, la implementació actual de
-PostGreSQL permet alguns usos no adequats. Per exemple, podrem inserir
+<em>PostGreSQL</em> permet alguns usos no adequats. Per exemple, podrem inserir
 un client vip amb un id ja disponible tant a CLIENTS com a
 CLIENTS_VIP, donat que en realitat no disposem de cap clau primària a
 CLIENTS_VIP. També podríem inserir només els camps de CLIENTS i
-PostGreSQL afegirà automàticament nulls als camps que faltin.</p>
+<em>PostGreSQL</em> afegirà automàticament nulls als camps que faltin.</p>
 </div>
 <div class="section" id="exercici-8-alguns-clients-vip">
 <h3>Exercici 8. Alguns clients VIP</h3>
@@ -527,7 +529,7 @@ atributs com a columnes amb el <tt class="docutils literal"><span class="pre">(�
 <li>tot plegat ho definim com a l'origen de la consulta, que ara disposa
 de les columnes: id, tipus, pref i num.</li>
 </ul>
-<p>Trobaràs totes les possibilitats que t'ofereix PostGreSQL a la secció
+<p>Trobaràs totes les possibilitats que t'ofereix <em>PostGreSQL</em> a la secció
 <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/arrays.html">8.14 Arrays</a>
 i un resum de les funcions i operadors amb arrays a la secció <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/functions-array.html">9-17.
 Array Functions and Operators</a>.</p>
@@ -612,12 +614,41 @@ dies).</p>
 </div>
 <div class="section" id="exercici-12-comandes-dificils">
 <h3>Exercici 12. Comandes difícils</h3>
-<p>Defineix les especificacions d'un mínim de 5 comandes <strong>no trivials</strong>
-sobre aquest model de dades, proporciona al menys una solució per
-cadascuna i el resultat que et generen.</p>
-<p>Assegurat que totes les comandes que proposes requereixen la
-comprensió d'un o més dels elements Objecte-Relacionals que hem
-treballat en aquest document.</p>
+<p>Defineix les especificacions d'un mínim de 5 comandes sql <strong>no
+trivials</strong> sobre aquest model de dades, i proporciona al menys una
+solució per cadascuna.</p>
+<p>Crea un informe en el que aparegui el contingut de les diferents
+taules implicades a les teves comandes i, per cadascuna, indica
+quina és la sortida que t'ha donat.</p>
+<p><strong>Important</strong>: Assegurat que totes les consultes que proposes
+requereixen la comprensió d'un o més dels elements Objecte-Relacionals
+que hem treballat en aquest document.</p>
+<p>Et poso exemples d'algunes especificacions de companys anteriors. No
+t'hi has de basar, però potser et serveixen d'inspiració.</p>
+<ul class="simple">
+<li>Mostrar en ordre alfabètic els cognoms dels clients que tinguin com
+a mínim un telèfon mòbil</li>
+<li>Cambia el tratamiento por Dr del cliente con codigo postal 08080 que
+mas ha gastado</li>
+<li>Volem saber el nom (en format cognoms+', '+nom) i el/s telèfon/s
+d'aquells clients que gasten de mitjana en les seves comandes per
+sobre de la comanda mitjana.</li>
+<li>Mostrar els id's dels clients (gènere masculí) que hagin gastat més
+de 200€ en els últims 5 mesos que tinguin com a mínim un telèfon
+mòbil de contacte.</li>
+<li>D'entre els clients vip, mostra els Japonesos que s'han gastat més
+de 100 euros en total Mostra el nom, cognoms i tractament dels
+clients, la xifra gastada y el seu comercial associat Comanda:</li>
+<li>Mostra aquelles comandes amb tots els seus camps així com la
+quantitat de carrers que figurin en l'adreça, si es que hi ha que
+han tingut lloc en el darrer lustre i s'ha indicat l'adreça</li>
+<li>Selecionar  los clientes que tengan telefono fijo, no sean de
+Espanya y su teléfono comienze por 93 y termine por 31</li>
+</ul>
+</div>
+<div class="section" id="exercici-13-opcional-les-consultes-d-anys-anteriors">
+<h3>Exercici 13. (opcional) Les consultes d'anys anteriors</h3>
+<p>Prova de resoldre les consultes dels companys d'anys anteriors.</p>
 </div>
 </div>
 <div class="section" id="referencies">
@@ -649,7 +680,7 @@ l'hora, volem mantenir la simplicitat de l'exemple.</td></tr>
 <table class="docutils footnote" frame="void" id="dimensions" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>PostGreSQL permet definir arrays multidimensionals.
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><em>PostGreSQL</em> permet definir arrays multidimensionals.
 Donat que en aquest document només veurem d'unidimensionals, a
 l'argument de dimensió d'algunes de les funcions hi trobaràs sempre
 un 1.</td></tr>

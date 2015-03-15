@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Inserció de documents</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Inserció de documents             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./ordre-dels-resultats.html">
+        Ordre dels resultats
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./eliminacio-de-documents.html">
+        Eliminació de documents
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Inserció de documents</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquesta secció serà breu. Parlarem de com introduir dades a MongoDB.</p>
+<p>Ja hem introduït algunes dades a articles anteriors per a poder
+realitzar les consultes. Amb tot, el tema presenta un punt amb
+identificadors que, sense ser complex, val la pena considerar.</p>
+</div>
+<div class="section" id="id1">
+<h2>Inserció de documents</h2>
+<p>Per inserir el document <em>doc</em> a la col·lecció <em>col</em>, simplement
+farem:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">col</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span><span class="nx">doc</span><span class="p">)</span>
+</pre></div>
+<p>En aquest cas <em>doc</em> pot ser un document en format json com els que hem
+vist fins ara.</p>
+<p>Si la col·lecció no existia dins de la base de dades actual, MongoDB
+la crea sense més.</p>
+<p>Per assegurar-nos que una col·lecció no existeix, ja sabem que podem
+consultar-la a la llista amb:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">show</span> <span class="nx">collections</span>
+</pre></div>
+<p>També hem pogut veure com eliminar una col·lecció:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">col</span><span class="p">.</span><span class="nx">drop</span><span class="p">()</span>
+</pre></div>
+<p>Aquesta comanda ens retornarà <em>true</em> en cas que realment hagi eliminat
+la col·lecció.</p>
+<div class="section" id="exercici-1-companys-de-classe">
+<h3>Exercici 1. Companys de classe</h3>
+<p>Crea la seqüència de comandes necessària per a crear la col·lecció
+<em>companys</em> a la base de dades per defecte.</p>
+<p>Dels companys de classe guardarem el nom, els dos cognoms, l'edat, el
+nr. de telèfon i el correu electrònic (en total cinc claus per
+document)</p>
+<p>Decideix els noms de les claus, i afegeix al menys 5 companys a la
+col·lecció.</p>
+<p>Atenció: pots inventar-te les dades, excepte el nom i cognoms
+<a class="footnote-reference" href="#foradeclasse" id="id2">[1]</a>.</p>
+</div>
+<div class="section" id="identificador">
+<h3>Identificador</h3>
+<p>En el moment que introduïm un document, MongoDB li assigna un
+identificador amb la clau &quot;_id&quot; i de tipus <em>ObjectID</em>.</p>
+<p>De vegades, les nostres dades ja tenen un identificador natural (e.g.
+la matrícula d'un vehicle) i podem voler fer servir aquest
+identificador en comptes d'un altre.</p>
+<p>Considera les diferències al següent exemple:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="s2">&quot;matrícula&quot;</span><span class="o">:</span><span class="s2">&quot;4312DKH&quot;</span><span class="p">,</span> <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">,</span> <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Yaris&quot;</span><span class="p">,</span> <span class="nx">any</span><span class="o">:</span><span class="mi">2007</span><span class="p">})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5311cda6325b3c533aac6508&quot;</span><span class="p">),</span> <span class="s2">&quot;matrícula&quot;</span> <span class="o">:</span> <span class="s2">&quot;4312DKH&quot;</span><span class="p">,</span> <span class="s2">&quot;marca&quot;</span> <span class="o">:</span> <span class="s2">&quot;Toyota&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span> <span class="o">:</span> <span class="s2">&quot;Yaris&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span> <span class="o">:</span> <span class="mi">2007</span> <span class="p">}</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">drop</span><span class="p">()</span>
+<span class="kc">true</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="s2">&quot;4312DKH&quot;</span><span class="p">,</span> <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">,</span> <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Yaris&quot;</span><span class="p">,</span> <span class="nx">any</span><span class="o">:</span><span class="mi">2007</span><span class="p">})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="s2">&quot;4312DKH&quot;</span><span class="p">,</span> <span class="s2">&quot;marca&quot;</span> <span class="o">:</span> <span class="s2">&quot;Toyota&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span> <span class="o">:</span> <span class="s2">&quot;Yaris&quot;</span><span class="p">,</span> <span class="s2">&quot;any&quot;</span> <span class="o">:</span> <span class="mi">2007</span> <span class="p">}</span>
+</pre></div>
+<p>Com pots observar, la segona introducció fa que el document obtingui
+la matrícula com a identificador en comptes del <em>ObjectId</em> que ens ha
+afegit MongoDB a tots els exemples que hem vist fins ara.</p>
+</div>
+<div class="section" id="exercici-2-la-colleccio-d-usuaris">
+<h3>Exercici 2. La col·lecció d'usuaris</h3>
+<p>Crea una nova col·lecció anomenada <em>usuaris</em> que contingui la següent
+informació de cada usuari:</p>
+<ul class="simple">
+<li>nom i cognoms</li>
+<li>nom d'usuari (username)</li>
+<li>correu electrònic</li>
+</ul>
+<p>Inventa't dades per a composar tres documents per a aquesta col·lecció
+i insereix-los-hi.</p>
+<p>Fes que el correu electrònic sigui l'identificador.</p>
+<p>Construeix una consulta que permeti veure el resultat de la inserció.</p>
+<p>Trobes adequat que el correu electrònic sigui identificador? Perquè?</p>
+</div>
+<div class="section" id="l-identificador-es-unic">
+<h3>L'identificador és únic</h3>
+<p>Doncs com probablement t'hauràs pogut imaginar, el valor de la clau
+<em>_id</em> ha de ser únic dins de la col·lecció.</p>
+<p>Potser fins ara no ens havíem adonat ja que la majoria dels exemples
+que hem treballat no especificaven l'identificador, fent que MongoDB
+en generés un automàticament. Però sí, <em>_id</em> ha de contenir un valor
+<strong>únic</strong>.</p>
+<p>El pots considerar com la <em>primary key</em> al model relacional.</p>
+<p>Veiem com MongoDB, que normalment no es queixa ni per afegir
+a una col·lecció inexistent, es queixa en intentar inserir un document
+amb identificador repetit:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="nx">_id</span><span class="o">:</span><span class="s2">&quot;4312DKH&quot;</span><span class="p">,</span> <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">,</span> <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Yaris&quot;</span><span class="p">,</span> <span class="nx">any</span><span class="o">:</span><span class="mi">2007</span><span class="p">})</span>
+<span class="nx">E11000</span> <span class="nx">duplicate</span> <span class="nx">key</span> <span class="nx">error</span> <span class="nx">index</span><span class="o">:</span> <span class="nx">test</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">$_id_</span>  <span class="nx">dup</span> <span class="nx">key</span><span class="o">:</span> <span class="p">{</span> <span class="o">:</span> <span class="s2">&quot;4312DKH&quot;</span> <span class="p">}</span>
+</pre></div>
+<p>Ops! Peta! Bé, com era d'esperar, oi?</p>
+</div>
+<div class="section" id="exercici-3-repetir-un-objectid">
+<h3>Exercici 3. Repetir un ObjectID</h3>
+<p>Acabem de veure com MongoDB es queixa quan intentem afegir un document
+amb la clau _id d'un que ja es troba a la col·lecció. Ho hem fet amb
+una clau que nosaltres hem generat, la matrícula.</p>
+<p>En aquest exercici hauràs de mostrar com fas que MongoDB es queixi de
+clau duplicada amb un valor de <em>_id</em> que hagi generat el propi
+MongoDB.</p>
+<p><em>Pista</em>: simplement escull una col·lecció amb <em>_id</em> generats per
+MongoDB, copia el valor de la clau d'algun dels documents que
+contingui i composa una comanda d'inserció amb un document que tingui
+aquest valor com a <em>_id</em>.</p>
+</div>
+<div class="section" id="inserir-mes-d-un-document">
+<h3>Inserir més d'un document</h3>
+<p>Podem inserir més d'un document amb una sola crida a <em>insert</em>. Ho
+farem aprofitant que les llistes (<em>arrays</em>) també són documents vàlids
+per a MongoDB.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">cotxes</span><span class="p">.</span><span class="nx">insert</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">&quot;matrícula&quot;</span><span class="o">:</span><span class="s2">&quot;4312DKH&quot;</span><span class="p">,</span>   <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">,</span>   <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Yaris&quot;</span><span class="p">,</span>          <span class="nx">any</span><span class="o">:</span><span class="mi">2007</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;matrícula&quot;</span><span class="o">:</span><span class="s2">&quot;3100CID&quot;</span><span class="p">,</span>   <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Seat&quot;</span><span class="p">,</span>     <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Leon&quot;</span><span class="p">,</span>           <span class="nx">any</span><span class="o">:</span><span class="mi">2006</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;matrícula&quot;</span><span class="o">:</span><span class="s2">&quot;0001FOC&quot;</span><span class="p">,</span>   <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Audi&quot;</span><span class="p">,</span>     <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Q3&quot;</span><span class="p">,</span>             <span class="nx">any</span><span class="o">:</span><span class="mi">2014</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;matrícula&quot;</span><span class="o">:</span><span class="s2">&quot;B1234GI&quot;</span><span class="p">,</span>   <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Simca&quot;</span><span class="p">,</span>    <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;1000&quot;</span><span class="p">,</span>           <span class="nx">any</span><span class="o">:</span><span class="mi">1969</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;matrícula&quot;</span><span class="o">:</span><span class="s2">&quot;5656DHA&quot;</span><span class="p">,</span>   <span class="nx">marca</span><span class="o">:</span><span class="s2">&quot;Toyota&quot;</span><span class="p">,</span>   <span class="nx">model</span><span class="o">:</span><span class="s2">&quot;Land Cruiser&quot;</span><span class="p">,</span>   <span class="nx">any</span><span class="o">:</span><span class="mi">2009</span><span class="p">},</span>
+<span class="p">])</span>
+</pre></div>
+<p>Fixa't com els documents apareixen llistats entre claudàtors i
+separats per comes.</p>
+<p>Potser et resultarà curiós que el darrer també porti coma. MongoDB ho
+accepta per facilitar la programació, però compte que no tots els
+drivers disponibles en sabran treure profit.</p>
+</div>
+<div class="section" id="exercici-4-la-colleccio-d-usuaris-un-altre-cop">
+<h3>Exercici 4. La col·lecció d'usuaris un altre cop</h3>
+<p>Torna a realitzar l'exercici de la col·lecció d'usuaris. Aquest cop
+insereix tots els documents amb una única crida al mètode <em>insert</em>.</p>
+<p>Assegura't que no hi ha cap dada abans d'inserir (ja saps, elimina la
+col·lecció) i comprova que els documents s'han inserit correctament.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="foradeclasse" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Si estàs seguint aquests materials pel teu compte,
+sense companys, no et diré res si també t'inventes el nom dels
+companys.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./ordre-dels-resultats.html">
+        Ordre dels resultats
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./eliminacio-de-documents.html">
+        Eliminació de documents
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

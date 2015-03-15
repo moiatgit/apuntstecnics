@@ -53,11 +53,12 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
                 <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/postgresql.html">postgresql</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
@@ -82,14 +83,15 @@
         bd
     </a>
             amb el tag:
-            <a href="./tag/postgresql.html">postgresql</a> 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
 </div>
-    <div><!-- XXX TODO: revisar per adequar a Pelican -->
-<div class="section" id="introduccio">
+    <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
 <p>Aquests continguts ofereixen una introducció als Sistemes Gestors de
 Bases de Dades Objecte-Relacional.</p>
 <p>Hi trobaràs la definició i contextualització d'aquests tipus de SGBDs.</p>
+<p>Al final de l'entrada, et presento el SGBD que farem servir en aquest
+curs.</p>
 </div>
 <div class="section" id="sgbd-que">
 <h2>SGBD-<em>què?</em></h2>
@@ -252,7 +254,7 @@ intermedi entre els SGBDR i els SGBDOOs.</p>
 extensió del model relacional amb conceptes del paradigma d'orientació
 a objectes.</p>
 <div class="figure align-center">
-<img alt="Relació entre el model relacional i l'objecte relacional" src="./images/psql001.img001.ordbms_uml.png" />
+<img alt="Relació entre el model relacional i l'objecte relacional" src="./images/postgresql001.img001.ordbms_uml.png" />
 </div>
 <p>Un gestor de bases de dades objecte-relacional (SGBDOR) és una
 extensió d'un SGBDR amb el suport de les funcionalitats d'orientació a
@@ -310,144 +312,6 @@ Gràcies a la seva llicència, pot ser usat, modificat i distribuït per
 tothom sense cap cost, per qualsevol propòsit (comercial inclòs). A
 més, disposa d'una extensa i cuidada documentació accessible des de la
 seva web <a class="reference external" href="http://www.postgresql.org/">postgresql.org</a>.</p>
-</div>
-<div class="section" id="primeres-passes">
-<h2>Primeres passes</h2>
-<p>En aquesta secció farem una ràpida in introducció a la consola
-<tt class="docutils literal">psql</tt>, una de les possibles portes de comunicació amb PostGreSQL.</p>
-<p>Si no ho has fet encara, instal·lat el PostGreSQL. Pressuposaré que
-estàs seguint les passes descrites al document <a class="reference external" href="./installacio-de-postgresql.html">d'instal·lació de
-PostGreSQL</a>.</p>
-<p>Segueix les passes:</p>
-<pre class="literal-block">
-# connecta a la base de dades de prova
-$ psql -U usuaribd -d testbd -h 192.168.56.101
-Password for user usuaribd:
-psql (9.1.8)
-SSL connection (cipher: DHE-RSA-AES256-SHA, bits: 256)
-Type &quot;help&quot; for help.
-
-testbd=&gt; -- això és un comentari
-testbd=&gt; -- comprova l'usuari amb el que t'has connectat
-testbd=&gt; SELECT current_user;
- current_user
---------------
- usuaribd
-(1 row)
-
-testbd=&gt; -- no distingeix majúscules
-testbd=&gt; select CURRENT_USER;
- current_user
---------------
- usuaribd
-(1 row)
-
-testbd=&gt; -- un càlcul simple
-SELECT 5 * 2 + 1 AS resultat;
- resultat
-----------
-       11
-(1 row)
-
-testbd=&gt; -- amb més d'una línia \p mostra la línia introduïda i \g o ; l'executa
-testbd=&gt; SELECT
-5 * 2
-testbd-&gt; \p
-select
-5 * 2
-testbd-&gt; + 1
-testbd-&gt; AS resultat
-testbd-&gt; \p
-select
-5 * 2
-+ 1
-AS resultat
-testbd-&gt; \g
- resultat
-----------
-       11
-(1 row)
-
-testbd=&gt; -- per obtenir ajuda
-testbd=&gt; \?
-General
-  \copyright             show PostgreSQL usage and distribution terms
-  \g [FILE] or ;         execute query (and send results to file or |pipe)
-  \h [NAME]              help on syntax of SQL commands, * for all commands
-  \q                     quit psql
-
-Query Buffer
-  \e [FILE] [LINE]       edit the query buffer (or file) with external editor
-  \ef [FUNCNAME [LINE]]  edit function definition with external editor
-  \p                     show the contents of the query buffer
-  \r                     reset (clear) the query buffer
-  \s [FILE]              display history or save it to file
-  \w FILE                write query buffer to file
-
-Input/Output
-  \copy ...              perform SQL COPY with data stream to the client host
-  \echo [STRING]         write string to standard output
-  \i FILE                execute commands from file
-  \o [FILE]              send all query results to file or |pipe
-  \qecho [STRING]        write string to query output stream (see \o)
-
-Informational
-  (options: S = show system objects, + = additional detail)
-  \d[S+]                 list tables, views, and sequences
-  \d[S+]  NAME           describe table, view, sequence, or index
-«...»
-</pre>
-<p>De vegades ens resultarà més còmode editar les nostres comandes en un
-fitxer i demanar a <tt class="docutils literal">psql</tt> que ens les executi. O podem fer
-interactivament des del propi <tt class="docutils literal">psql</tt> amb <tt class="docutils literal">\i</tt> però també sense que
-calgui entrar.</p>
-<pre class="literal-block">
-$ echo &quot;SELECT current_user;&quot; &gt; currentuser.sql
-$ psql -U usuaribd -d testbd -h 192.168.56.101 -f currentuser.sql
-Password for user usuaribd:
- current_user
---------------
- usuaribd
-(1 row)
-</pre>
-<p>Altres vegades el que ens interessarà serà guardar en un fitxer el
-resultat d'una consulta</p>
-<pre class="literal-block">
-testbd=&gt; SELECT current_user \g /tmp/currentuser.sql
-testbd=&gt; \q
-$ cat /tmp/currentuser.sql
- current_user
---------------
- usuaribd
-(1 row)
-</pre>
-<p>Tot i que hi ha altres eines disponibles, fins i tot gràfiques, que
-t'ajudaran a fer la majoria de les tasques d'administració amb el teu
-PostgreSQL, aconseguir una certa habilitat en l'ús de la consola
-<tt class="docutils literal">psql</tt> de segur et pagarà la pena.</p>
-<div class="section" id="exercici-1-comandes-psql">
-<h3>Exercici 1. Comandes psql</h3>
-<p>Desenvolupa un resum, amb les teves paraules, de les diferents
-comandes que ofereix <cite>psql</cite>. Intenta no fer una traducció literal.</p>
-</div>
-<div class="section" id="exercici-2-funcions-de-sistema">
-<h3>Exercici 2. Funcions de sistema</h3>
-<p>Desenvolupa una taula amb els continguts de la taula <em>9.47 Session
-Information Functions</em> que apareix a <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/functions-info.html">9.3. System Information
-Functions</a> tot
-afegint una nova columna amb el resultat d'executar-ho al teu
-servidor.</p>
-</div>
-<div class="section" id="exercici-3-tipus-basics-de-dades">
-<h3>Exercici 3. Tipus bàsics de dades</h3>
-<p>Desenvolupa una taula amb la descripció dels tipus de dades bàsics que
-apareixen al capítol 8 sobre <a class="reference external" href="http://www.postgresql.org/docs/9.1/static/datatype.html">tipus de dades</a>.</p>
-<p>Només cal que incloguis els tipus bàsics que apareixen sota les
-seccions 8.1 fins la 8.6.
-Evidentment, si tens interès, pots afegir-ne d'altres.</p>
-<p>Afegeix, per cada tipus, una referència al manual (la url) on apareix
-i una descripció amb les teves paraules de les variacions.</p>
-</div>
 </div>
 <div class="section" id="notes">
 <h2>Notes</h2>
