@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Empaquetar un repositori de Git</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Empaquetar un repositori de Git             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li class="active"><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Empaquetar un repositori de Git</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/misc.html">
+        misc
+    </a>
+            amb el tag:
+            <a href="./tag/util.html">util</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>De vegades ens pot interessar guardar els continguts d'un repositori
+Git en un paquet. Per exemple, considera el cas que vulguis compartir
+un projecte amb una màquina que no està connectada a la xarxa
+<a class="footnote-reference" href="#casexamen" id="id1">[1]</a>.</p>
+<p>La resposta que t'ofereix Git es diu <em>bundle</em> (aquí traduït com a
+<em>paquet</em>).</p>
+<p>En aquesta entrada podràs veure com es pot guardar tot un repositori
+Git en un paquet per després desempaquetar-ho.</p>
+</div>
+<div class="section" id="creacio-d-un-paquet-git">
+<h2>Creació d'un paquet Git</h2>
+<p>Per crear un paquet Git, farem servir l'opció:</p>
+<pre class="literal-block">
+git bundle create «nomfitxer» «branca»
+</pre>
+<p>Com a exemple, crearem un repositori senzillet a la carpeta temporal
+del nostre equip:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /tmp
+<span class="nv">$ </span>mkdir elmeurepo
+<span class="nv">$ </span><span class="nb">cd </span>elmeurepo
+<span class="nv">$ </span>git init
+Initialized empty Git repository in /tmp/elmeurepo/.git/
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;Repositori de prova&quot;</span> &gt; readme
+<span class="nv">$ </span>git add .
+<span class="nv">$ </span>git commit -am <span class="s2">&quot;primer commit&quot;</span>
+<span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> eb124ef<span class="o">]</span> primer commit
+ 1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 readme
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;Un fitxer amb continguts&quot;</span> &gt; continguts.txt
+<span class="nv">$ </span>git add continguts.txt
+/tmp/elmeurepo<span class="nv">$ </span>git commit -am <span class="s2">&quot;Afegit continguts&quot;</span>
+<span class="o">[</span>master 54da159<span class="o">]</span> Afegit continguts
+ 1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 continguts.txt
+<span class="nv">$ </span>git log
+commit 54da15947ad77315308c21d75c351023773a7bb2
+Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
+Date:   Thu Mar 19 16:25:39 2015 +0100
+
+    Afegit continguts
+
+commit eb124ef136751c60c224070581d94fc588e31fbb
+Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
+Date:   Thu Mar 19 16:24:26 2015 +0100
+
+    primer commit
+</pre></div>
+<p>Si has seguit les passes, ara disposes d'un repositori senzillet amb
+dos fitxers i amb dos <em>commits</em>. Toca crear el paquet:</p>
+<div class="highlight"><pre><span class="nv">$ </span>git bundle create elmeurepo.bundle master
+Counting objects: 6, <span class="k">done</span>.
+Delta compression using up to 4 threads.
+Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span>.
+Writing objects: 100% <span class="o">(</span>6/6<span class="o">)</span>, 497 bytes, <span class="k">done</span>.
+Total 6 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+<span class="nv">$ </span>ls
+continguts.txt  elmeurepo.bundle  readme
+</pre></div>
+<p>Ara ja disposem del fitxer <em>elmeurepo.bundle</em> que podem enviar per
+correu electrònic, amb un <em>pendrive</em> o com sigui, a la màquina on
+volem recuperar el projecte.</p>
+</div>
+<div class="section" id="verificacio-d-un-paquet-git">
+<h2>Verificació d'un paquet Git</h2>
+<p>Quan reps un paquet Git, o bé n'has d'enviar un a algú, potser voldràs
+comprovar que estigui correcte <a class="footnote-reference" href="#siesexer" id="id2">[2]</a>. Git t'ofereix la següent
+manera:</p>
+<pre class="literal-block">
+git bundle verify «nomfitxer»
+</pre>
+<p>A la secció anterior vam crear un fitxer anomenat <em>elmeurepo.bundle</em>.
+Suposem que el tenim a un altre lloc (encara que podria ser a la
+mateixa carpeta on el vam crear). Comprovarem la seva integritat amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>git bundle verify elmeurepo.bundle
+The bundle contains 1 ref
+54da15947ad77315308c21d75c351023773a7bb2 refs/heads/master
+The bundle requires these 0 ref
+elmeurepo.bundle is okay
+</pre></div>
+</div>
+<div class="section" id="extraient-el-contingut-d-un-paquet-git">
+<h2>Extraient el contingut d'un paquet Git</h2>
+<p>Un cop el paquet Git ha arribat a la seva destinació, toca
+desempaquetar-ho. Per fer-ho, podem crear una nova versió del
+repositori a la nova màquina fent servir l'opció <em>-b</em> de <em>clone</em></p>
+<pre class="literal-block">
+git clone -b «branca» «nomfitxer» «nomrepositori»
+</pre>
+<p>Seguint l'exemple que portem:</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone -b master elmeurepo.bundle nourepo
+Cloning into <span class="s1">&#39;nourepo&#39;</span>...
+Receiving objects: 100% <span class="o">(</span>6/6<span class="o">)</span>, <span class="k">done</span>.
+Resolving deltas: 100% <span class="o">(</span>1/1<span class="o">)</span>, <span class="k">done</span>.
+<span class="nv">$ </span><span class="nb">cd </span>nourepo
+<span class="nv">$ </span>ls
+continguts.txt  readme
+<span class="nv">$ </span>git log
+commit 54da15947ad77315308c21d75c351023773a7bb2
+Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
+Date:   Thu Mar 19 16:25:39 2015 +0100
+
+    Afegit continguts
+
+commit eb124ef136751c60c224070581d94fc588e31fbb
+Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
+Date:   Thu Mar 19 16:24:26 2015 +0100
+
+    primer commit
+</pre></div>
+<p>Com pots veure, el nou repositori conté una còpia de l'original que
+inclou tots els <em>commits</em> de la branca <em>master</em>.</p>
+</div>
+<div class="section" id="mes-informacio">
+<h2>Més informació</h2>
+<p>En aquesta entrada t'he presentat una versió reduïda. Hi ha més
+possibilitats amb els paquets Git. Per exemple, podries fer paquets
+incrementals de manera que es poguessin afegir <em>commits</em> nous entre
+els dos repositoris.</p>
+<p>Si t'has quedat amb les ganes de saber més opcions disponibles
+d'aquesta funcionalitat de Git, pots llegir totes les opcions
+disponibles a:</p>
+<div class="highlight"><pre><span class="nv">$ </span>git <span class="nb">help </span>bundle
+</pre></div>
+<p>O amb més descripció al manual de <a class="reference external" href="http://git-scm.com/docs/git-bundle">Git</a></p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="casexamen" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>O un cas més &quot;remot&quot;: que has de lliurar un projecte a
+un docent per que te l'avalui.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="siesexer" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Aquesta comprovació és important, per exemple, si el
+que estàs és preparant un paquet per enviar-ho a algú que t'ha
+d'avaluar el teu projecte.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

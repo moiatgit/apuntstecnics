@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Introducció al control de versions</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Introducció al control de versions             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li class="active"><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Introducció al control de versions</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/misc.html">
+        misc
+    </a>
+            amb el tag:
+            <a href="./tag/util.html">util</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document és una introducció al control de versions. Està
+orientat especialment a la gestió de versions de programari i escull
+el gestor de versions Git com a concreció.</p>
+<p>Tot i que he composat aquesta introducció a partir de diverses fonts,
+hi ha dues que vull ressaltar:</p>
+<ul class="simple">
+<li>el <a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/">manual oficial de Git</a></li>
+<li>el llibre de Scott Chacon <a class="reference external" href="http://git-scm.com/book">Pro Git</a></li>
+</ul>
+<p>Aquesta introducció suposa que estàs fent servir un sistema compatible
+POSIX (ex. alguna distribució GNU/Linux). Això bàsicament es veurà
+reflectit en la sintaxi que apareixerà a la línia de comandes, i no
+hauria de representar-te cap obstacle si estàs fent servir qualsevol
+dels sistemes operatius que suporten Git.</p>
+</div>
+<div class="section" id="control-de-versions">
+<h2>Control de versions</h2>
+<p>Els documents, com pràcticament tot, canvien al llarg de la seva vida.</p>
+<p>Considerem les següents situacions durant la vida d'una aplicació:</p>
+<ul class="simple">
+<li>A partir d'uns requeriments el creem i comencem a composar-la.
+Normalment serà prou complexa com per què inclogui més d'un fitxer
+de diferents tipus (com ara codi, icones, etc) i
+ens porti uns dies finalitzar-la.</li>
+<li>De tant en tant, alguna prova ens indicarà que hi ha alguna part que
+no acaba d'anar bé i ens caldrà modificar-la.</li>
+<li>Un cop finalitzat i provat, el posarem en producció on, després d'un
+temps apareixeran errors fins llavors no detectats o noves
+funcionalitats a afegir-hi.</li>
+<li>De vegades, alguna de les modificacions que hi afegim, eliminen
+parts del codi que després voldríem recuperar.</li>
+<li>D'altres vegades, una modificació feta sota pressió fa malbé altres
+parts del programa i, a sobre, deixa el codi en un estat que costa
+molt de refer-ho com era abans.</li>
+<li>Altres vegades voldrem provar si el programa suportaria una certa
+modificació, però no voldrem modificar el programa original a menys
+que el resultat ens sigui satisfactori.</li>
+<li>Fins i tot pot passar que ens trobem amb el nostre programa en
+producció i a l'hora estiguem afegint noves funcionalitats per la
+següent versió del programa, i de sobte ens toqui fer alguna
+modificació en la versió de producció (per exemple, perquè s'ha
+detectat un error). Encara no podem lliurar la versió amb que estem
+treballant potser perquè falta molt per finalitzar-la, i tampoc no
+voldrem modificar només la versió de producció (si tenim la sort de
+guardar una còpia del codi font) perquè els canvis no es veuran a la
+versió en que estem treballant.</li>
+<li>Potser tampoc sempre podrem treballar en la nostra aplicació des del
+mateix equip. De vegades ens trobarem a l'equip de la feina,
+d'altres amb el de casa, amb un portàtil, etc. Quan modifiquem
+alguna cosa en un dels equips, ens trobarem havent d'assegurar-nos
+que passem els canvis a la resta d'equips en els que treballem.</li>
+<li>Encara més, sovint no treballarem sols en la nostra aplicació. Amb
+prou disciplina, podem organitzar-nos els diferents membres de
+l'equip per treballar en parts independents del codi. Però
+segurament ja saps les persones no sempre seguim bé les pautes, i
+tard o d'hora algun company (potser tu!) necessitarà fer un canvi en
+un dels arxius d'un altre, o esborrarà inadvertidament un fitxer del
+que depen la feina d'un altre, etc.</li>
+<li>Un cas cada cop més freqüent el trobem amb treballadors que
+treballen de manera exclusivament telemàtica <a class="footnote-reference" href="#treballtelematic" id="id1">[5]</a> En
+aquest cas, el posar-se d'acord per organitzar les diferents
+aportacions de cada desenvolupador es complica amb la distància.</li>
+</ul>
+<p>Per poc que hagis desenvolupat, intuiràs que aquests escenaris, i
+molts altres de similars, no són pas possibilitats remotes sinó més
+aviat el dia a dia dels desenvolupadors.</p>
+<p>Quan treballes sol i sempre amb el mateix equip, potser guardant unes
+còpies de seguretat de tant en tant i amb molt de
+compte, pots anar tirant si l'aplicació és senzilleta i requereix pocs
+canvis i aquests no són urgents.</p>
+<div class="figure align-center">
+<img alt="local" src="./images/git.intro.img001.local.png" />
+</div>
+<p>Quan comences a afegir més
+complexitat, acabes amb una munió de carpetes, amb sort anomenades amb
+alguna marca de temps (la data de la còpia) o de seqüència (1.0.0.1,
+1.0.0.2, etc.) o pitjor (la_darrera, la_darrera2, ladelamarta,
+ladelamarta_modificadapeljoan, la_que_tracta_els_accents,
+aquesta_si_final, definitiva, definitiva2,
+definitivahojuropersnoopy...) Aquestes carpetes les aniràs guardant en
+diferents suports, enviant per correu a la companya, etc. fins que
+arribarà un moment que no sabreu quina és la versió &quot;actual&quot; amb la
+que treballar, haureu perdut un munt de codi, de temps reprogramant el
+que altres (potser un mateix) ja havia programat abans. Quan la
+situació sigui insostenible, probablement us reunireu tot l'equip,
+guardareu totes les còpies en una carpeta anomenada backup201209 o
+similar, i començareu de nou amb molt bona voluntat i fixant-vos
+alguna pauta d'anomenar versions que en poc temps estarà tan
+descontrolada com la que guardeu a backup201209.</p>
+<div class="section" id="que-es-un-sistema-de-control-de-versions">
+<h3>Què és un sistema de control de versions?</h3>
+<p>Un <em>sistema de control de versions</em> (<em>SCV</em>) o <em>Version Control System</em>
+(<em>VCS</em>) és una aplicació que ofereix mecanismes per gestionar les
+diferents versions d'un o més fitxers de manera que eviti la pèrdua de
+continguts un cop enregistrat i permeti recuperar qualsevol versió un
+cop enregistrada. Alguns també permeten gestionar la complexitat de
+treball en grup i des de diferents equips.</p>
+<p>Un SCV <em>com cal</em> ens haurà de permetre, entre d'altres:</p>
+<ul class="simple">
+<li>recuperar un estat anterior d'arxius concrets o de tot el projecte</li>
+<li>revisar els canvis realitzats al llarg del temps en arxius o grups
+d'arxius.</li>
+<li>recuperar arxius eliminats accidentalment</li>
+<li>comparar diferents versions d'un arxiu</li>
+<li>comprovar si una determinada modificació pot ser útil sense que la
+prova afecti la resta de l'aplicació.</li>
+<li>mantenir simultàniament diferents línies d'un mateix projecte: ex.
+versió de producció i nova versió.</li>
+<li>facilitar la fusió de diferents versions</li>
+<li>facilitar la integració de canvis realitzats per diferents membres
+de l'equip</li>
+<li>fer tot això sense afegir una sobrecàrrega excessiva</li>
+</ul>
+</div>
+<div class="section" id="scv-centralitzats">
+<h3>SCV centralitzats</h3>
+<p>Un dels principals problemes a resoldre pel SCV es troba en la gestió
+de versions produïdes per més d'un desenvolupador o/i en diferents
+equips.</p>
+<div class="figure align-center">
+<img alt="centralitzat" src="./images/git.intro.img002.centralitzat.png" />
+</div>
+<p>Aquests SCV, com ara <a class="reference external" href="http://cvs.nongnu.org/">CVS</a>, <a class="reference external" href="http://subversion.apache.org/">Subversion</a> i <a class="reference external" href="http://www.perforce.com/">Perforce</a>, disposen d'un únic servidor (el
+repositori central) que conté totes les versions registrades. Els
+usuaris es descarreguen la versió que els interessa del servidor als
+seus equips i, quan realitzen modificacions, les envien al servidor.
+L'administrador del repositori disposa normalment de moltes eines per
+controlar qui pot enviar què al servidor, realitzar fusions entre
+versions, etc.</p>
+<p>Un dels problemes obvis amb aquest tipus de SCVs és la seva
+dependència amb un sol punt. Què passa si el servidor deixa d'estar
+disponible una estona? Doncs que durant aquest temps ningú no pot
+treballar amb cap versió diferent de la que tingui al seu equip.
+Encara pitjor, i si el disc del servidor es trenca? Depenem de les
+còpies de seguretat que fes el servidor, donat que les còpies locals
+de cadascun dels usuaris són de versions úniques i, potser,
+modificades.</p>
+</div>
+<div class="section" id="scv-distribuits">
+<h3>SCV distribuïts</h3>
+<p>Alguns dels problemes dels SCV centralitzats els intenten adreçar els
+SCV distribuïts.</p>
+<div class="figure align-center">
+<img alt="distribuït" src="./images/git.intro.img003.distribuit.png" />
+</div>
+<p>En aquest cas, cada usuari disposa d'una còpia de <strong>totes</strong> les
+versions registrades. El servidor &quot;central&quot; pot no existir o haver-ne
+més d'un. En cas que n'hi hagi, es diferenciarà dels equips dels
+usuaris únicament en que no tindrà espai de treball.</p>
+<p>Exemples de SCV distribuïts són <a class="reference external" href="http://git-scm.com/">Git</a>,
+<a class="reference external" href="http://mercurial.selenic.com/">Mercurial</a>, <a class="reference external" href="http://bazaar.canonical.com/en/">Bazaar</a> i Darcs &lt;<a class="reference external" href="http://darcs.net/">http://darcs.net/</a>&gt;`_.</p>
+<p>Entre els avantatges d'aquest tipus de SCVs tenim l'evident que ja no
+hi ha una dependència del servidor per a poder treballar. Si un cau,
+la resta poden continuar treballant (excepte per sincronitzar amb
+l'equip caigut, és clar) A més, donat que cada usuari disposa d'una
+còpia amb tot el repositori de versions, la majoria de les operacions
+més habituals no requereixen comunicació entre equips i, per tant, són
+més ràpides. Per contra tenen el problema de l'espai ocupat pels
+fitxers de totes les versions. Sovint això no representa cap problema
+amb les capacitats d'emmagatzemament i compressió actuals.</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Git</h2>
+<p>Git és un sistema de control de versions distribuït dissenyat per
+gestionar projectes de qualsevol mida. És programari obert i gratuït.</p>
+<p>El funcionament de Git, en breu, és el següent: cada cop que registres
+l'estat del teu projecte, Git guarda una <em>foto</em> (<em>snapshot</em>) del
+contingut de <strong>tots</strong> els fitxers que composen el projecte
+<a class="footnote-reference" href="#gitdiferentdaltres" id="id3">[1]</a>. Per qüestions d'eficiència, en comptes de
+tornar a guardar els fitxers no modificats, simplement en guarda un
+enllaç.</p>
+<div class="figure align-center">
+<img alt="snapshots" src="./images/git.intro.img004.snapshots.png" />
+</div>
+<p>A l'esquema anterior, veiem com els tres fitxers gestionats per al
+projecte representat, van sent emmagatzemats a partir dels canvis que
+apareixen a cada versió guardada. A la versió 1 els fitxers A i C han
+estat modificats i Git guarda els seus nous continguts. En canvi el
+fitxer B no presenta cap canvi i, per tant, només es guarda un enllaç
+al fitxer original.</p>
+<p>Per cada fitxer, Git calcula un valor de hash (checksum) per cada
+fitxer, de manera que no se li escapa cap modificació, tant si l'hem
+feta expressament com si s'ha produït accidentalment. La funció que fa
+servir és diu <a class="reference external" href="http://ca.wikipedia.org/wiki/Secure_Hash_Algorithm">SHA-1</a> que genera un
+string de 40 caràcters hexadecimals [0-9a-f]. Aquests strings
+identifiquen cada (versió de) fitxer dins de Git en comptes del nom.</p>
+<p>La majoria de les accions que permet fer Git afegeixen dades al
+repositori. D'aquesta manera no és fàcil perdre informació i, per
+tant, podem experimentar amb tranquil·litat.</p>
+<p>Per Git, tot fitxer gestionat es troba principalment en un dels
+següents tres estats <a class="footnote-reference" href="#hihamesestats" id="id4">[4]</a>: registrat (<em>commited</em>), modificat i en escena
+(<em>staged</em>) <a class="footnote-reference" href="#terminologiaanglesa" id="id5">[2]</a>.</p>
+<ul class="simple">
+<li><em>commited</em>: tens l'estat actual del fitxer registrat en el
+repositori.</li>
+<li>modificat: has modificat el fitxer i però encara no has indicat
+res sobre els canvis a Git.</li>
+<li><em>staged</em>: has modificat el fitxer i has indicat a Git que registri
+el nou estat al repositori la propera vegada que es guardi l'estat
+del projecte (es faci <em>commit</em>)</li>
+</ul>
+<p>Tenint en comptes aquests estats, els fitxers es troben guardats en
+tres àrees diferents: el directori de treball, l'escenari (àrea
+<em>staging</em>) i el repositori de Git.</p>
+<div class="figure align-center">
+<img alt="estats" src="./images/git.intro.img005.estats.png" />
+</div>
+<p>El repositori és bàsicament un directori amb una estructura particular
+on Git emmagatzema les diferents versions i la meta-informació per
+gestionar-les. Tot plegat es guarda comprimit d'una manera força
+eficient <a class="footnote-reference" href="#fitxerscomprimits" id="id6">[3]</a>.</p>
+<p>El directori de treball és una única versió del projecte. El procés
+d'obtenir una determinada versió del repositori es coneix com a
+<em>checkout</em>.</p>
+<p>Finalment, l'àrea de <em>staging</em> és un fitxer, probablement guardat dins
+del directori de Git, que conté informació sobre el que es registrarà
+el proper <em>commit</em>.</p>
+<p>Habitualment, modificaràs un o més fitxers en l'àrea de treball,
+passaràs els fitxers modificats que t'interessin a l'àrea de <em>staging</em>
+i finalment fas un <em>commit</em> amb el que els canvis registrats a
+<em>staging</em> passen definitivament al repositori.</p>
+</div>
+<div class="section" id="installacio-i-configuracio">
+<h2>Instal·lació i configuració</h2>
+<p>Per la instal·lació de Git, disposes d'una guia força detallada a la
+secció <a class="reference external" href="http://git-scm.com/book/en/Getting-Started-Installing-Git">1.4 de Pro Git</a>.</p>
+<p>Si estàs fent servir Ubuntu, probablement tindràs prou escrivint a una
+consola:</p>
+<pre class="literal-block">
+$ apt-get install git
+</pre>
+<p>Un cop el tinguis instal·lat, cal que facis unes petites tasques de
+configuració. En concret, cal indicar a Git qui ets. Això ho faràs amb
+les següents comandes:</p>
+<pre class="literal-block">
+$ git config --global user.name &quot;Moisès Gómez Girón&quot;
+$ git config --global user.email iesmoises&#64;example.org
+</pre>
+<p>Aquesta informació serà guardada en el teu sistema per al teu usuari.
+Així, altres usuaris poden fer servir Git en el teu equip sense
+problemes.</p>
+<p>Ara que ja tens el Git disponible al teu sistema, pots començar a
+utilitzar-lo.</p>
+</div>
+<div class="section" id="git-en-local">
+<h2>Git en local</h2>
+<p>A aquesta secció hi trobaràs com realitzar les tasques que més
+freqüentment necessitaràs de Git.</p>
+<div class="section" id="obtencio-d-ajuda">
+<h3>Obtenció d'ajuda</h3>
+<p>Git incorpora un sistema raonablement còmode per obtenir ajuda de les
+diferents comandes que ofereix. Per obtenir la llista, simplement
+escriu:</p>
+<pre class="literal-block">
+$ git help
+usage: git [--version] [--exec-path[=&lt;path&gt;]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=&lt;path&gt;] [--work-tree=&lt;path&gt;] [--namespace=&lt;name&gt;]
+           [-c name=value] [--help]
+           &lt;command&gt; [&lt;args&gt;]
+
+The most commonly used git commands are:
+   add        Add file contents to the index
+   bisect     Find by binary search the change that introduced a bug
+   branch     List, create, or delete branches
+   checkout   Checkout a branch or paths to the working tree
+   clone      Clone a repository into a new directory
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   fetch      Download objects and refs from another repository
+   grep       Print lines matching a pattern
+   init       Create an empty git repository or reinitialize an existing one
+   log        Show commit logs
+   merge      Join two or more development histories together
+   mv         Move or rename a file, a directory, or a symlink
+   pull       Fetch from and merge with another repository or a local branch
+   push       Update remote refs along with associated objects
+   rebase     Forward-port local commits to the updated upstream head
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+   show       Show various types of objects
+   status     Show the working tree status
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+See 'git help &lt;command&gt;' for more information on a specific command.
+</pre>
+<p>Com ja indica a la darrera línia, si vols ajuda específica d'una
+determinada comanda, simplement indica-ho, per exemple amb</p>
+<pre class="literal-block">
+$ git help config
+</pre>
+<p>Aquesta comanda t'obrirà el manual de la comanda <tt class="docutils literal"><span class="pre">git-config</span></tt> (que
+realment és la que executes quan fas <tt class="docutils literal">$ git config <span class="pre">«...»</span></tt>.</p>
+<p>Tot i completa, aquesta ajuda requereix estar força encaminat al què
+necessites.</p>
+<p>Per altra banda, vàries de les comandes Git també t'informaran de
+comandes associades que possiblement vulguis fer.</p>
+<p>Si amb tot no en tens prou per trobar com fer alguna cosa, gràcies a
+l'ús extensiu de Git, amb molta seguretat trobaràs resposta al que
+necessitis a partir d'una pregunta adequada al teu cercador web
+preferit.</p>
+</div>
+</div>
+<div class="section" id="us-local-de-git">
+<h2>Ús local de Git</h2>
+<p>En aquesta secció es mostren les comandes més freqüents que faràs
+servir amb Git.</p>
+<p>Si vols seguir aquesta secció com un tutorial pràctic, et proposo que
+et creis un directori i hi afegeixis algun fitxer. Per exemple:</p>
+<pre class="literal-block">
+$ mkdir projecte
+$ cd projecte
+projecte$ echo &quot;hola&quot; &gt; hola.txt
+</pre>
+<div class="section" id="creacio-d-un-repositori-init">
+<h3>Creació d'un repositori: init</h3>
+<p>Poques coses et seran més fàcils que crear un nou repositori Git</p>
+<pre class="literal-block">
+projecte$ git init
+</pre>
+<p>Això et generarà un directori anomenat <tt class="docutils literal">.git</tt> que en sistemes POSIX
+apareixerà ocult. Pots tafanejar dins del directori però, a menys que
+sàpigues molt bé el que fas, millor que no hi toquis res.</p>
+<p>Donat que aquesta secció és queda tan curta, l'amplio dient-te com
+eliminar un repositori git. Simplement elimina el directori <tt class="docutils literal">.git/</tt>
+que t'ha generat <tt class="docutils literal">git init</tt></p>
+<p><em>Nota</em> en cas que el que vulguem crear sigui un repositori sense
+directori de treball, podem fer servir l'opció <tt class="docutils literal"><span class="pre">--bare</span></tt>:</p>
+<pre class="literal-block">
+projecte_bak$ git --bare init
+</pre>
+<p>En aquest cas, només disposarem del directori on git guarda la base
+de dades amb les diferents versions que gestiona.</p>
+</div>
+<div class="section" id="afegir-fitxers-a-la-gestio-add">
+<h3>Afegir fitxers a la gestió: add</h3>
+<p>Un cop has creat el repositori Git, voldràs afegir-hi fitxers. Potser
+són fitxers nous o potser d'existents. Sigui com sigui, quan tinguis
+fitxers per a accedir-hi, faràs servir la comanda <tt class="docutils literal">git add</tt></p>
+<pre class="literal-block">
+projecte$ git add hola.txt
+</pre>
+<p>Amb això simplement hem indicat a Git que la propera vegada que
+registrem els canvis (amb <tt class="docutils literal">commit</tt>) comenci a considerar aquest
+fitxer com a gestionat.</p>
+<p>Podem fer que Git afegeixi el contingut de tot un directori. Per
+exemple, la següent comanda afegirà tots els codis font java del
+directori src</p>
+<pre class="literal-block">
+$ git add src/*.java
+</pre>
+<p>I la següent comanda afegirà tot el contingut de la carpeta actual:</p>
+<pre class="literal-block">
+$ git add .
+</pre>
+</div>
+<div class="section" id="comprovar-l-estat-status">
+<h3>Comprovar l'estat: status</h3>
+<p>Ja hem vist que els fitxers poden estar en diferents estats des de la
+perspectiva de Git.</p>
+<p>Considera el següent diagrama d'estats pels que pot passar un fitxer.</p>
+<div class="figure align-center">
+<img alt="tots els estats" src="./images/git.intro.img006.estatsfull.png" />
+</div>
+<p>Quan crees un nou fitxer en el directori de treball, comença en estat
+<em>no gestionat</em>. Ja hem vist que el podem afegir (i treure) de la
+gestió de Git amb la comanda <tt class="docutils literal">add</tt> (i <tt class="docutils literal">rm</tt>). Un cop està
+gestionat, es considerarà <em>no modificat</em> si el seu contingut
+coincideix amb el darrer registrat (<em>commit</em>). En cas de modificació,
+apareixerà com a <em>modificat</em> (o també <em>unstaged</em>) fins que el passem a
+<em>stage</em>. Finalment, quan registrem els canvis (amb un <em>commit</em>) el
+fitxer torna a estat <em>no modificat</em>.</p>
+<p>En qualsevol moment pots comprovar l'estat del contingut del teu
+directori de treball des de la perspectiva de Git, fent servir la
+comanda <tt class="docutils literal">git status</tt>.</p>
+<pre class="literal-block">
+projecte$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+#
+#   new file:   hola.txt
+#
+</pre>
+<p>En aquest cas ens trobem que Git ens informa que:</p>
+<ul class="simple">
+<li>estem a la branca de desenvolupament <em>master</em> (ja veurem més tard
+que vol dir això)</li>
+<li>tenim a l'àrea de <em>stage</em> el fitxer <tt class="docutils literal">hola.txt</tt> i el podem eliminar
+de <em>stage</em> si fem servir la comanda <tt class="docutils literal">git rm</tt>. Ja t'he dit que les
+comandes Git sovint et donaran pistes de comandes relacionades.</li>
+</ul>
+</div>
+<div class="section" id="guardar-els-canvis-commit">
+<h3>Guardar els canvis: commit</h3>
+<p>Per registrar els canvis fem servir la comanda <tt class="docutils literal">git commit</tt>.</p>
+<p>Ens caldrà indicar un missatge descriptiu dels canvis que registrem.
+Per a això disposem de l'opció <tt class="docutils literal"><span class="pre">-m</span></tt>. Si no ho fem, Git ens obrirà
+l'editor per defecte del sistema (si no l'hem canviat) i ens permetrà
+descriure els nostres canvis.</p>
+<p>Els comentaris que indiquem quan fem un <tt class="docutils literal">commit</tt> ens resultaran molt
+útils quan vulguem recuperar una versió anterior. Així que acostuma't
+a posar-hi sempre quelcom significatiu.</p>
+<p>En l'estat del nostre exemple, donat que és el primer <em>commit</em> podem
+fer simplement:</p>
+<pre class="literal-block">
+projecte$ git commit -m &quot;Registre inicial&quot;
+[master (root-commit) 527a527] Registre inicial
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hola.txt
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)
+</pre>
+<p>La darrera línia de <em>status</em> ens indica que el directori de treball no
+té cap fitxer no gestionat ni modificat.</p>
+<p>Fixa't també en la cadena hexadecimal de la primera línia generada pel
+<em>commit</em>. <tt class="docutils literal">527a527</tt> correspon a la part inicial dels 40 caràcters
+que ens genera la funció SHA-1 per aquest commit. Aquest valor ens
+servirà més endavant per revisar aquest estat concret del nostre
+projecte. No cal que l'apuntis, Git t'ofereix maneres de recuperar-lo.</p>
+</div>
+<div class="section" id="passar-a-stage">
+<h3>Passar a <em>stage</em></h3>
+<p>Per veure com passar canvis a <em>stage</em> ens cal modificar un fitxer.</p>
+<p>Modifiquem el fitxer <tt class="docutils literal">hola.txt</tt> del nostre exemple. Haurem de
+canviar-li realment el contingut, donat que Git no considerarà que
+està modificat si li fas un simple <tt class="docutils literal">touch</tt>:</p>
+<pre class="literal-block">
+projecte$ echo &quot;adéu&quot; &gt;&gt; hola.txt
+projecte$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   modified:   hola.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre>
+<p>Observa com ara, Git t'informa que el contingut del fitxer ha estat
+modificat. També ens informa que podem passar aquest canvis a <em>stage</em>
+fent servir (novament) la comanda <tt class="docutils literal">add</tt>, i que podem recuperar els
+continguts anteriors fent servir <tt class="docutils literal">checkout</tt>.</p>
+<p>Anem a afegir els canvis a <em>stage</em> seguint les indicacions del propi
+Git. És a dir, farem servir un altre cop la comanda <tt class="docutils literal">add</tt> que, en
+aquest cas té un significat lleugerament diferent al que ja coneixíem:
+en comptes d'afegir un nou fitxer, <em>afegeix</em> uns nous continguts.</p>
+<pre class="literal-block">
+projecte$ git add hola.txt
+projecte$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#   modified:   hola.txt
+#
+</pre>
+<p>Veiem que ara <tt class="docutils literal">hola.txt</tt> apareix com a modificat. Git ens suggereix
+com passar a l'estat anterior (abans de <em>stage</em>) fent servir
+<tt class="docutils literal">reset</tt>.</p>
+<p>En aquest cas registrarem els canvis amb</p>
+<pre class="literal-block">
+projecte$ git commit -m &quot;Afegit adéu&quot;
+[master 831889e] Afegit adéu
+ 1 file changed, 1 insertion(+)
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)
+</pre>
+<p>És molt habitual aquest cicle: modifiquem fitxer -&gt; passem a <em>stage</em>
+-&gt; registrem el canvi. Tant, que els desenvolupadors de Git ens
+ofereixen una petita drecera. Considera l'exemple següent i fixa't en
+la nova opció <tt class="docutils literal"><span class="pre">-a</span></tt> pel <tt class="docutils literal">commit</tt></p>
+<pre class="literal-block">
+projecte$ echo &quot;gutbai&quot; &gt;&gt; hola.txt
+projecte$ git commit -am &quot;Afegit adéu en inglish&quot;
+[master b4d88ea] Afegit adéu en inglish
+ 1 file changed, 1 insertion(+)
+</pre>
+</div>
+<div class="section" id="ignorar-fitxers">
+<h3>Ignorar fitxers</h3>
+<p>Sovint hi ha fitxers (i directoris) que no voldrem que Git gestioni.
+Per exemple, els fitxers temporals que ens generen alguns editors
+(normalment acabats en <tt class="docutils literal">~</tt>), o fitxers amb codi objecte o
+executables (ex. fitxers objecte <tt class="docutils literal">.o</tt> de C o els compilats de java
+<tt class="docutils literal">.class</tt>)</p>
+<p>Podem indicar a Git que ignori aquests fitxers creant/modificant el
+fitxer <tt class="docutils literal"><span class="pre">project/.gitignore</span></tt>. Per exemple, el següent fitxer
+indicaria a Git que ignori els fitxers temporals d'edició, els
+resultats de compilació, els comprimits, i el contingut del directori
+on es construeix l'aplicació i el temporal.</p>
+<pre class="literal-block">
+$ cat projecte/.gitignore
+## Fitxers a ignorar pel Git
+
+# Fitxers d'edició
+*~
+
+# Fitxers de compilació
+*.[oa]
+*.class
+
+# paquets i comprimits
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.tar.gz
+*.zip
+
+# contingut de directoris complets
+build/
+tmp/
+</pre>
+<p>Atenció: en cas que ja estiguis registrant fitxers que has marcat per
+ignorar al <tt class="docutils literal">.gitignore</tt>, hauràs d'eliminar-los manualment. Per
+exemple, si ja havies fet <em>commit</em> d'un <tt class="docutils literal">.class</tt> pots eliminar-lo
+amb</p>
+<pre class="literal-block">
+projecte$ git rm --cached *.class
+</pre>
+<p>Ves amb compte perquè aquesta comanda és una de les poques que
+eliminen informació permanentment del repositori de Git!</p>
+<p>Trobaràs informació més completa de com ignorar fitxers a <a class="reference external" href="https://help.github.com/articles/ignoring-files">aquest
+article</a></p>
+</div>
+<div class="section" id="consultar-versions-log">
+<h3>Consultar versions: log</h3>
+<p>Quan portem un temps treballant en un projecte, de vegades ens
+interessarà consultar l'històric de canvis realitzats. Per fer-ho, Git
+ens ofereix <tt class="docutils literal">git log</tt></p>
+<blockquote>
+<p>projecte$ git log
+commit b4d88eabeb77e1d83ca674199810de0c892c7efa
+Author: Moisès Gómez Girón &lt;<a class="reference external" href="mailto:iesmoises&#64;example.org">iesmoises&#64;example.org</a>&gt;
+Date:   Sun Mar 10 12:15:45 2013 +0100</p>
+<blockquote>
+Afegit adéu en inglish</blockquote>
+<p>commit 831889ec9bfd31575b56f220c0a2c67c3a07be58
+Author: Moisès Gómez Girón &lt;<a class="reference external" href="mailto:iesmoises&#64;example.org">iesmoises&#64;example.org</a>&gt;
+Date:   Sun Mar 10 12:15:19 2013 +0100</p>
+<blockquote>
+Afegit adéu</blockquote>
+<p>commit 527a52776b695a05e174b276b75da2a8a9c82ae7
+Author: Moisès Gómez Girón &lt;<a class="reference external" href="mailto:iesmoises&#64;example.org">iesmoises&#64;example.org</a>&gt;
+Date:   Sun Mar 10 12:14:37 2013 +0100</p>
+<blockquote>
+Registre inicial</blockquote>
+</blockquote>
+<p>Fixa't que per cada <em>commit</em> apareix una entrada al llistat amb la
+següent informació:</p>
+<ul class="simple">
+<li>Identificador del <em>commit</em>: són els 40 caràcters que genera la
+funció de hash SHA-1. Els primers 7 caràcters d'aquests strings
+corresponen a la informació que ens apareix quan fem <em>commit</em>.</li>
+<li>L'autor del <em>commit</em>: nom i adreça de correu que hem especificat a
+la configuració.</li>
+<li>La data del <em>commit</em>.</li>
+<li>El comentari que posem a cada <em>commit</em>. Ja et vaig dir que era
+important posar-ne un de significatiu, oi?</li>
+</ul>
+<p>Si vols veure l'historial de canvis d'un fitxer concret, pots
+indicar-li:</p>
+<pre class="literal-block">
+projecte$ git log hola.txt
+</pre>
+<p>Les opcions de la comanda <tt class="docutils literal">log</tt> s'escapen de qualsevol text
+introductori de Git. Pots fer una ullada al manual de <a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/git-log.html">git-log</a></p>
+<p>Per exemple, pots aconseguir que el log sigui més compacte amb:</p>
+<pre class="literal-block">
+projecte$ git log --pretty=format:&quot;%h [%cn]: %s&quot;
+b4d88ea [Moisès Gómez Girón]: Afegit adéu en inglish
+831889e [Moisès Gómez Girón]: Afegit adéu
+527a527 [Moisès Gómez Girón]: Registre inicial
+</pre>
+<p>També existeixen eines gràfiques (ex. <a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/gitk.html">gitk</a>) que et
+permetran navegar més visualment entre l'històric de canvis. Aquesta
+la podràs instal·lar i executar amb:</p>
+<pre class="literal-block">
+$ sudo apt-get install gitk
+«...»
+projecte$ gitk
+</pre>
+</div>
+<div class="section" id="comparar-versions">
+<h3>Comparar versions</h3>
+<p><tt class="docutils literal">status</tt> ens ofereix la informació de quins fitxers han estat
+modificats però de vegades ens interessarà saber quins canvis concrets
+s'ha realitzat en un fitxer.</p>
+<p>Considerem els següents casos:</p>
+<ul>
+<li><p class="first">què he canviat i encara no he passat a <em>stage</em>?</p>
+<p>Segueix les comandes:</p>
+<pre class="literal-block">
+projecte$ echo &quot;ciao&quot; &gt;&gt; hola.txt
+projecte$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   modified:   hola.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+projecte$ git diff hola.txt
+diff --git a/hola.txt b/hola.txt
+index 12a57d6..007493b 100644
+--- a/hola.txt
++++ b/hola.txt
+&#64;&#64; -1,3 +1,4 &#64;&#64;
+ hola
+ adéu
+ gutbay
++ciao
+</pre>
+<p>Fixa't que la utilitat <tt class="docutils literal">diff</tt> ens mostra les diferencies entre la
+versió <em>staged</em> (anomenada <tt class="docutils literal">a/hola.txt</tt>) i l'actual (anomenada
+<tt class="docutils literal">b/hola.txt</tt>) Veiem que la nova conté una línia extra <tt class="docutils literal">ciao</tt>.
+Pots canviar el programa que mostra les diferències per un de més
+visual, per exemple, <tt class="docutils literal">vimdiff</tt> (revisa les opcions de la comanda
+<tt class="docutils literal">global</tt>).</p>
+</li>
+<li><p class="first">quines diferències hi ha entre el que tinc a <em>stage</em> i el darrer
+<em>commit</em>?</p>
+<p>Si el que ens preocupa és quins són els canvis concrets en un
+fitxers que es registraran en el proper <em>commit</em> podem passar
+<tt class="docutils literal">hola.txt</tt> a <em>stage</em> i comprovar les diferències.</p>
+<pre class="literal-block">
+projecte$ git add hola.txt
+projecte$ git diff --staged hola.txt
+diff --git a/hola.txt b/hola.txt
+index 12a57d6..007493b 100644
+--- a/hola.txt
++++ b/hola.txt
+&#64;&#64; -1,3 +1,4 &#64;&#64;
+ hola
+ adéu
+ gutbay
++ciao
+</pre>
+</li>
+<li><p class="first">què ha canviat a cada <em>commit</em> ?</p>
+<p>Per a respondre aquesta pregunta farem servir la comanda <tt class="docutils literal"><span class="pre">-p</span></tt> de
+<tt class="docutils literal">log</tt>. La de l'exemple d'acontinuació fa servir <tt class="docutils literal"><span class="pre">-2</span></tt> per mostrar
+només els dos darrers <em>commits</em>.</p>
+<pre class="literal-block">
+projecte$ git log -2 -p hola.txt
+commit b4d88eabeb77e1d83ca674199810de0c892c7efa
+Author: Moisès Gómez Girón &lt;iesmoises&#64;example.org&gt;
+Date:   Sun Mar 10 12:15:45 2013 +0100
+
+    Afegit adéu en inglish
+
+diff --git a/hola.txt b/hola.txt
+index 3ad6909..db1148d 100644
+--- a/hola.txt
++++ b/hola.txt
+&#64;&#64; -1,2 +1,3 &#64;&#64;
+ hola
+ adéu
++gutbai
+
+commit 831889ec9bfd31575b56f220c0a2c67c3a07be58
+Author: Moisès Gómez Girón &lt;iesmoises&#64;example.org&gt;
+Date:   Sun Mar 10 12:15:19 2013 +0100
+
+    Afegit adéu
+
+diff --git a/hola.txt b/hola.txt
+index 5c1b149..3ad6909 100644
+--- a/hola.txt
++++ b/hola.txt
+&#64;&#64; -1 +1,2 &#64;&#64;
+ hola
++adéu
+</pre>
+</li>
+</ul>
+</div>
+<div class="section" id="eliminar-fitxers">
+<h3>Eliminar fitxers</h3>
+<p>De vegades ens interessarà eliminar fitxers dels nostres projectes.</p>
+<p>Podem fer-ho simplement amb les utilitats del nostre sistema operatiu.
+Per exemple:</p>
+<pre class="literal-block">
+projecte$ rm hola.txt
+projecte$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   deleted:    hola.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+projecte$ git commit -am &quot;Eliminat hola.txt&quot;
+[master 4923494] Eliminat hola.txt
+1 file changed, 2 deletions(-)
+delete mode 100644 hola.txt
+$ git status
+# On branch master
+nothing to commit (working directory clean)
+</pre>
+<p>Consulta <a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/git-rm.html">git rm</a> per
+veure altres opcions d'esborrar que ens ofereix Git.</p>
+</div>
+<div class="section" id="reanomenar-fitxers">
+<h3>Reanomenar fitxers</h3>
+<p>De vegades ens pot interessar canviar el nom d'un fitxer. Git ens
+ofereix aquesta possibilitat fent servir:</p>
+<pre class="literal-block">
+projecte$ git mv hola.txt adeu.txt
+</pre>
+<p>Amb això obtenim quelcom equivalent a si fem directament</p>
+<pre class="literal-block">
+projecte$ mv hola.txt adeu.txt
+projecte$ git add adeu.txt
+</pre>
+<p>Recorda que Git considera canvis en el contingut de fitxers.
+Meta-informació com ara el nom del fitxer o el subdirectori on es
+troba queda guardada de manera independent.</p>
+</div>
+<div class="section" id="tornar-enrere">
+<h3>Tornar enrere</h3>
+<p>Potser la raó fonamental de fer servir un SCV és poder recuperar
+fàcilment una versió anterior.</p>
+<p>Considera els següents escenaris habituals i la manera de resoldre'ls:</p>
+<ul>
+<li><p class="first">modificar el missatge del darrer <em>commit</em></p>
+<p>Potser volíem afegir alguna cosa més a la descripció del darrer
+<em>commit</em> o bé simplement ens hem equivocat amb el missatge. En
+qualsevol cas, podem tornar enrere fàcilment amb l'opció
+<tt class="docutils literal"><span class="pre">--amend</span></tt> si encara no tenim cap canvi a <em>stage</em>.</p>
+<p>Aconsegueix que el teu directori de treball estigui net segons
+<tt class="docutils literal">status</tt></p>
+<pre class="literal-block">
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)
+projecte$ echo &quot;un altre&quot; &gt; adeu.txt
+projecte$ git add adeu.txt
+projecte$ git commit -am &quot;un missatge equivocat&quot;
+[master 6b38844] un missatge equivocat
+ 1 file changed, 1 insertion(+)
+ create mode 100644 adeu.txt
+$ git commit --amend -m &quot;missatge correcte&quot;
+[master 2c942cc] missatge correcte
+ 1 file changed, 1 insertion(+)
+ create mode 100644 adeu.txt
+projecte$ git log -2
+commit 2c942cc4dd691473b1d791d1b82af839d21b4b50
+Author: Moisès Gómez Girón &lt;iesmoises&#64;example.org&gt;
+Date:   Sun Mar 10 13:18:46 2013 +0100
+
+    missatge correcte
+
+commit b4d88eabeb77e1d83ca674199810de0c892c7efa
+Author: Moisès Gómez Girón &lt;iesmoises&#64;example.org&gt;
+Date:   Sun Mar 10 12:15:45 2013 +0100
+
+    afegit adéu en inglish
+</pre>
+<p>Fixa't com a l'històric no queda constància del missatge erroni.</p>
+</li>
+<li><p class="first">afegir/eliminar continguts al darrer <em>commit</em></p>
+<p>De vegades fem el <em>commit</em> massa aviat per després adonar-nos que
+hem comés un petit error i ens veiem obligats a tornar a fer el
+<em>commit</em>. Git ens ofereix un mecanisme senzill tot utilitzant
+novament l'opció <tt class="docutils literal"><span class="pre">--amend</span></tt>:</p>
+<pre class="literal-block">
+projecte$ echo &quot;nou adéu&quot; &gt; adeu.txt
+projecte$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   modified:   adeu.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+projecte$ git commit --amend -am &quot;missatge correcte amb adeu correcte&quot;
+[master ced5a9d] missatge correcte amb adeu correcte
+ 1 file changed, 1 insertion(+)
+ create mode 100644 adeu.txt
+projecte$ git log -2
+commit ced5a9d2161b6206c76f2dbe47a77cc113bdc5c4
+Author: Moisès Gómez Girón &lt;iesmoises&#64;example.org&gt;
+Date:   Sun Mar 10 13:18:46 2013 +0100
+
+    missatge correcte amb adeu correcte
+
+commit b4d88eabeb77e1d83ca674199810de0c892c7efa
+Author: Moisès Gómez Girón &lt;iesmoises&#64;example.org&gt;
+Date:   Sun Mar 10 12:15:45 2013 +0100
+</pre>
+<p>Fixa't com el contingut del fitxer <tt class="docutils literal">adeu.txt</tt> ha canviat però
+queda enregistrat en el mateix <em>commit</em> que abans.</p>
+</li>
+<li><p class="first">recuperar un fitxer segons el darrer <em>commit</em></p>
+<p>Has modificat el contingut d'un fitxer però vols deixar-lo tal i com
+estava el darrer cop que vas fer <em>commit</em>? Només has de seguir les
+indicacions de <tt class="docutils literal">git status</tt></p>
+<pre class="literal-block">
+projecte$ echo &quot;nou hola&quot; &gt; hola.txt
+projecte$ echo &quot;nou adéu&quot; &gt; adeu.txt
+projecte$ git add hola.txt
+projecte$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#   modified:   hola.txt
+#
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   modified:   adeu.txt
+#
+</pre>
+<p>Fixa't que tenim en <em>stage</em> a <tt class="docutils literal">hola.txt</tt> i com a <em>modificat</em> a
+<tt class="docutils literal">adeu.txt</tt>. Recuperem tots dos seguint les indicacions de Git</p>
+<pre class="literal-block">
+$ git reset HEAD hola.txt
+Unstaged changes after reset:
+M   adeu.txt
+M   hola.txt
+projecte$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#   modified:   adeu.txt
+#   modified:   hola.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+projecte$ git checkout -- hola.txt adeu.txt
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+projecte$ cat adeu.txt
+un altre
+</pre>
+<p><strong>Atenció</strong>: fes servir aquestes comandes amb compte. Els canvis que
+reverteixis d'aquesta manera <strong>no</strong> els podràs recuperar amb Git
+donat que no han arribat mai a ser registrats! És preferible que
+facis servir l'opció <tt class="docutils literal"><span class="pre">--amend</span></tt> perquè aquesta ofereix a Git
+possibilitats de <a class="reference external" href="http://git-scm.com/book/en/Git-Internals-Maintenance-and-Data-Recovery">recuperació</a>.</p>
+</li>
+<li><p class="first">recuperar un estat d'un <em>commit</em> de l'històric de canvis</p>
+<p>Per poder fer això ens haurem d'esperar a conèixer el concepte de
+branques. De seguida.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="git-branques">
+<h2>Git branques</h2>
+<p>En diferents ocasions ens pot interessar treballar amb una versió del
+projecte sense que els nostres canvis afectin a la línia principal.
+Per exemple:</p>
+<ul class="simple">
+<li>tenim una versió en producció a la que hem de corregir un error,
+mentre estem ja treballant en una nova versió del projecte que no
+podem/volem lliurar encara al client.</li>
+<li>volem fer un experiment de codi i només fer-lo servir si ens surt
+bé.</li>
+<li>volem fer una nova línia de desenvolupament del projecte tot
+mantenint l'anterior.</li>
+</ul>
+<p>Un cop realitzat els experiments o modificacions, voldrem:</p>
+<ul class="simple">
+<li>deixar-los tal qual</li>
+<li>descartar-los</li>
+<li>fusionar-los amb la línia principal de desenvolupament (o amb alguna
+altra línia)</li>
+</ul>
+<p>La majoria dels SCVs ofereixen algun tipus de mecanismes per a
+aconseguir aquesta funcionalitat. Sovint se li diu <em>branching</em> ja que
+cada nova línia és com una <em>branca</em> de l'arbre (línia principal).</p>
+<p>Git ofereix un mecanisme de <em>branching</em> força lleuger i àgil.</p>
+<p>Per poder entendre el funcionament de les branques de Git, cal
+mirar amb més deteniment com guarda Git la informació.</p>
+<p>Suposa que al nostre projecte tenim tres fitxers (<tt class="docutils literal">fitxerA</tt>,
+<tt class="docutils literal">fitxerB</tt> i <tt class="docutils literal">fitxerC</tt>). Git amb el primer <em>commit</em> guarda el
+contingut dels tres fitxers, crea un nou objecte (li direm <em>arbre</em>)
+que conté una referència al contingut de cadascun dels tres fitxers
+juntament amb meta-informació (com ara el nom de cada fitxer), i crea
+un altre objecte que apunta a l'arbre, i que afegeix la informació del
+<em>commit</em> (entre d'altres l'autor, la data i el missatge descriptiu).
+El directori de Git acaba contenint cinc elements: els tres continguts
+dels fitxers A, B i C; l'objecte que conté la meta-informació dels
+fitxers i l'objecte que conté la informació del <em>commit</em>. De tots cinc
+elements, Git calcula el seu valor hash amb els que els identificarà.</p>
+<div class="figure align-center">
+<img alt="commit" src="./images/git.intro.img007.commit.png" />
+</div>
+<p>Fixa't com cada element es veu identificat pel seu valor de hash.</p>
+<p>Si a continuació modifiquem els continguts dels fitxers A i C, Git
+crea un nou arbre que apunta als fitxers i un nou objecte amb la
+informació del <em>commit</em>.</p>
+<div class="figure align-center">
+<img alt="dos commits" src="./images/git.intro.img008.2commits.png" />
+</div>
+<p>Fixa't com el segon <em>commit</em> fa referència al primer. El diagrama
+també mostra que, donat que <tt class="docutils literal">fitxerB</tt> no ha modificat els seus
+continguts, simplement no es crea un nou objecte per ell sinó que es
+fa servir el del <em>commit</em> anterior (el què té hash 4425b...)</p>
+<p>Després d'uns quants <em>commits</em> i simplificant més el diagrama
+anterior, l'aspecte del repositori es podria representar segons el
+següent diagrama:</p>
+<div class="figure align-center">
+<img alt="master" src="./images/git.intro.img009.master.png" />
+</div>
+<p>Fixa't en el nou node anomenat <em>master</em>. Es tracta d'un simple
+apuntador al darrer <em>commit</em> realitzat. Aquest és el significat de
+<em>master</em> que ens apareix cada cop que fem <em>commit</em>: és bàsicament la
+línia principal o branca mestra de desenvolupament del nostre
+projecte, i de moment la única.</p>
+<div class="section" id="crear-una-branca">
+<h3>Crear una branca</h3>
+<p>La comanda <tt class="docutils literal">branch</tt> ens permet llistar, crear i eliminar branques.</p>
+<p>Per crear una nova branca, farem:</p>
+<pre class="literal-block">
+projecte$ git branch prova
+</pre>
+<p>Aquesta comanda ens crea una nova branca anomenada <tt class="docutils literal">prova</tt>. Podem
+veure les branques disponibles amb:</p>
+<pre class="literal-block">
+projecte$ git branch
+* master
+  prova
+</pre>
+<p>Fixa't com la branca actual (en aquest cas <em>master</em>) apareix
+ressaltada. Per tant, només hem creat la branca, però hem canviat de
+branca!</p>
+<p>L'aspecte del repositori d'ara és:</p>
+<div class="figure align-center">
+<img alt="prova" src="./images/git.intro.img010.prova.png" />
+</div>
+</div>
+<div class="section" id="canviar-de-branca">
+<h3>Canviar de branca</h3>
+<p>Canviem de branca fent servir la comanda <tt class="docutils literal">checkout</tt>:</p>
+<pre class="literal-block">
+projecte$ git checkout prova
+Switched to branch 'prova'
+projecte$ git status
+# On branch prova
+nothing to commit (working directory clean)
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)
+</pre>
+<p>Per saber en quina branca es troba el teu directori de treball, Git fa
+servir un apuntador anomenat <tt class="docutils literal">HEAD</tt>.</p>
+<div class="figure align-center">
+<img alt="head" src="./images/git.intro.img011.head.png" />
+</div>
+<p>En crear una branca, aquesta apareix apuntant a <tt class="docutils literal">HEAD</tt>. Quan fem un
+<em>commit</em> en una branca, les línies de desenvolupament es separen.</p>
+<p>Per exemple, suposa que passes a la branca de proves, modifiques el
+contingut de <tt class="docutils literal">fitxerA</tt> i fas <em>commit</em>. El resultat es pot
+representar segons :</p>
+<div class="figure align-center">
+<img alt="prova del commit" src="./images/git.intro.img012.provacommit.png" />
+</div>
+<p>En codi, podem fer la següent prova:</p>
+<pre class="literal-block">
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)
+projecte$ git checkout prova
+Switched to branch 'prova'
+projecte$ ls
+adeu.txt  hola.txt
+projecte$ echo &quot;canvi afegit a la branca de prova&quot; &gt;&gt; adeu.txt
+projecte$ git commit -am &quot;afegit un text a adeu.txt&quot;
+[prova 653315c] afegit un text a adeu.txt
+ 1 file changed, 1 insertion(+)
+projecte$ cat adeu.txt
+nou adéu
+canvi afegit a la branca de prova
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ cat adeu.txt
+nou adéu
+projecte$ git checkout prova
+Switched to branch 'prova'
+projecte$ cat adeu.txt
+nou adéu
+canvi afegit a la branca de prova
+</pre>
+<p>Fixa't com hem fet un canvi al fitxer <tt class="docutils literal">adeu.txt</tt> mentre estàvem a la
+branca <em>prova</em> i hi hem fet <em>commit</em>. A continuació passem a la
+branca <em>master</em> on comprovem que <tt class="docutils literal">adeu.txt</tt> no conté el canvi que
+hem fet a la branca <em>prova</em>. Finalment tornem a la branca <em>prova</em> on
+comprovem que el canvi fet a <tt class="docutils literal">adeu.txt</tt> continua sent-hi.</p>
+<p>Fins ara tot quedava representat en una única línia de <em>commits</em>
+encara que amb dues branques. Què passaria si tornem a la branca
+<em>master</em> i hi registrem un nou canvi? Doncs que les línies de les dues
+branques divergiran.</p>
+<p>Al següent diagrama veiem el resultat de modificar i fer <em>commit</em> des
+de <em>master</em> a partir de la situació del diagrama anterior.</p>
+<div class="figure align-center">
+<img alt="divergència" src="./images/git.intro.img013.divergencia.png" />
+</div>
+<p>En codi, ho podem reproduir per exemple amb:</p>
+<pre class="literal-block">
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ echo &quot;afegim des de master&quot; &gt;&gt; hola.txt
+projecte$ git commit -am &quot;afegida línia a hola.txt&quot;
+[master 4df1544] afegida línia a hola.txt
+ 1 file changed, 1 insertion(+)
+</pre>
+</div>
+<div class="section" id="fusionar-branques">
+<h3>Fusionar branques</h3>
+<p>Si has seguit l'exemple de codi que hem fet fins ara, disposaràs de
+dues branques <em>master</em> i <em>prova</em> amb continguts diferents. <em>master</em>
+ha registrat un canvi a <tt class="docutils literal">hola.txt</tt> que no està contingut a <em>prova</em>.
+A l'hora, <em>prova</em> ha registrat un canvi a <tt class="docutils literal">adeu.txt</tt> que no està
+registrat a <em>master</em>.</p>
+<pre class="literal-block">
+projecte$ git checkout master
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+afegim des de master
+projecte$ cat adeu.txt
+nou adéu
+projecte$ git checkout prova
+Switched to branch 'prova'
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+projecte$ cat adeu.txt
+nou adéu
+canvi afegit a la branca de prova
+</pre>
+<p>Com ens ho fem per fusionar (<em>merge</em>) aquests canvis? Suposem que
+volem fusionar els canvis a <em>master</em>:</p>
+<pre class="literal-block">
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ git merge prova
+Merge made by the 'recursive' strategy.
+ adeu.txt |    1 +
+ 1 file changed, 1 insertion(+)
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+afegim des de master
+projecte$ cat adeu.txt
+nou adéu
+canvi afegit a la branca de prova
+projecte$ git checkout prova
+Switched to branch 'prova'
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+</pre>
+<p>Fixa't com el resultat és:</p>
+<ul class="simple">
+<li><em>master</em> conté els canvis de <em>prova</em>: el fitxer <tt class="docutils literal">adeu.txt</tt>
+incorpora el canvi realitzat a la branca <em>prova</em></li>
+<li><em>prova</em> no es modifica: el fitxer <tt class="docutils literal">hola.txt</tt> no ha patit cap canvi
+malgrat a <em>master</em> va ser modificat.</li>
+</ul>
+<p>Tot plegat ha creat un nou <em>commit</em> que té com a antecessors els
+<em>commits</em> corresponents a les dues branques fusionades. El següent
+diagrama mostra una representació gràfica:</p>
+<div class="figure align-center">
+<img alt="merge" src="./images/git.intro.img014.merge.png" />
+</div>
+<p>Aquesta fusió no és poca cosa. Com que Git tracta continguts i no
+fitxers, és capaç de fusionar continguts que hagin estat modificats en
+diferents punts d'un mateix fitxer!</p>
+<p>En aquesta demostració introduirem un canvi al començament del fitxer
+<tt class="docutils literal">hola.txt</tt> de la branca <em>prova</em> i farem <em>commit</em>. Fixa't que a
+partir d'aquest moment tant <em>master</em> com <em>prova</em> contenen canvis en el
+mateix fitxer! Què farà Git en demanar-li que fusioni les dues
+branques?</p>
+<pre class="literal-block">
+projecte$ git checkout master
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+afegim des de master
+projecte$ git checkout prova
+Switched to branch 'prova'
+projecte$ cat hola.txt
+hola
+adéu
+gutbai
+projecte$ mv hola.txt tmphola
+projecte$ echo &quot;un canvi introduït des de prova&quot; &gt; hola.txt
+projecte$ cat /tmp/tmphola &gt;&gt; hola.txt
+projecte$ cat hola.txt
+un canvi introduït des de prova
+hola
+adéu
+gutbai
+projecte$ git commit -am &quot;canvi afegit al començament de hola.txt&quot;
+[prova e4f3743] canvi afegit al començament de hola.txt
+ 1 file changed, 1 insertion(+)
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ git merge prova
+Auto-merging hola.txt
+Merge made by the 'recursive' strategy.
+ hola.txt |    1 +
+ 1 file changed, 1 insertion(+)
+projecte$ cat hola.txt
+un canvi introduït des de prova
+hola
+adéu
+gutbai
+afegim des de master
+</pre>
+<p>No sé a tu, però a mi m'ha impressionat!</p>
+<p>Malauradament Git no pot resoldre totes les possibles situacions de
+conflicte en fusionar un fitxer modificat a dues branques. De vegades
+caldrà realitzar fusions manuals. Amb tot, Git t'ajudarà en aquesta
+indesitjable situació.</p>
+<p>Per fer la següent demostració, modificarem el fitxer <tt class="docutils literal">adeu.txt</tt> de
+manera diferent a totes dues branques i intentarem fusionar en
+<em>master</em>.</p>
+<pre class="literal-block">
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ echo &quot;un canvi dràstic des de master&quot; &gt; adeu.txt
+projecte$ git commit -am &quot;canvi dràstic des de master&quot;
+[master 58f8a62] canvi dràstic des de master
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+projecte$ git checkout prova
+M   adeu.txt
+Switched to branch 'prova'
+projecte$ echo &quot;un canvi també dràstic des de prova&quot; &gt; adeu.txt
+projecte$ git commit -am &quot;canvi dràstic des de prova&quot;
+[prova 8de01e1] canvi dràstic des de prova
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+projecte$ git checkout master
+Switched to branch 'master'
+projecte$ git merge prova
+Auto-merging adeu.txt
+CONFLICT (content): Merge conflict in adeu.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</pre>
+<p>Git ens avisa que no ha pogut fer la fusió automàtica. Ens proposa que
+arreglem els conflictes i que tornem a fer <em>commit</em> amb el resultat.</p>
+<p>Si ara demanem l'estat, ens trobem</p>
+<pre class="literal-block">
+projecte$ git status
+# On branch master
+# Unmerged paths:
+#   (use &quot;git add/rm &lt;file&gt;...&quot; as appropriate to mark resolution)
+#
+#   both modified:      adeu.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre>
+<p>És més, Git ens ha afegit unes marques al fitxer <tt class="docutils literal">adeu.txt</tt> de
+manera que ens sigui més fàcil prendre les decisions.</p>
+<pre class="literal-block">
+projecte$ cat adeu.txt
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+un canvi dràstic des de master
+=======
+un canvi també dràstic des de prova
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; prova
+</pre>
+<p>Ara simplement hem d'editar el fitxer, modificar-lo com ens convingui
+i fer un nou <em>commit</em> com ens recomana Git.</p>
+<blockquote>
+projecte$ cat adeu.txt
+un canvi dràstic des de master i també des de prova
+projecte$ git commit -am &quot;corregida la fusió manualment&quot;
+[master f54fbd7] corregida la fusió manualment
+projecte$ git status
+# On branch master
+nothing to commit (working directory clean)</blockquote>
+<p>Amb fitxers binaris com ara imatges, Git no ens podrà ajudar tant amb
+les fusions. Amb tot, els marcarà com a <em>unmerged</em> i esperarà que
+facis <em>commit</em> amb la versió corregida.</p>
+</div>
+<div class="section" id="eliminar-una-branca">
+<h3>Eliminar una branca</h3>
+<p>Quan ja no et cal una branca, pots eliminar-la amb l'opció <tt class="docutils literal"><span class="pre">-d</span></tt> de
+<tt class="docutils literal">branch</tt>:</p>
+<pre class="literal-block">
+$ git branch -d prova
+Deleted branch prova (was 8de01e1).
+</pre>
+<p>Si a la branca a eliminar hi quedaven canvis sense fusionar amb el
+<tt class="docutils literal">HEAD</tt>, Git t'avisarà i et proposarà que facis servir l'opció <tt class="docutils literal"><span class="pre">-D</span></tt>
+en comptes de <tt class="docutils literal"><span class="pre">-d</span></tt> per indicar que no t'importa que es perdin els
+canvis.</p>
+</div>
+<div class="section" id="crear-una-branca-a-partir-d-una-versio-antiga">
+<h3>Crear una branca a partir d'una versió antiga</h3>
+<p>Suposa que vols continuar un desenvolupament des d'un <em>commit</em>
+concret. Troba el seu hash (amb els primers caràcters segurament en tindràs prou) i fes:</p>
+<pre class="literal-block">
+projecte$ git branch tornemhi ced5a9
+projecte$ git checkout tornemhi
+Switched to branch 'tornemhi'
+</pre>
+<p>Ja pots treballar en aquesta branca i, en acabar, realitzar les
+fusions que consideris necessàries.</p>
+</div>
+</div>
+<div class="section" id="git-remot">
+<h2>Git remot</h2>
+<p>Amb el que hem vist fins ara, espero que t'hagi convençut de fer
+servir Git (o algun altre SCV) en tots els teus desenvolupaments. Si
+no ho he aconseguit encara, espera't a veure el que Git et pot oferir
+quan el teu projecte el fas des de diferents màquines o/i amb
+diferents desenvolupadors.</p>
+<div class="section" id="duplicar-o-clonar">
+<h3>duplicar o clonar</h3>
+<p>De vegades voldrem treballar en un repositori existent que no ens
+pertany.</p>
+<p>Per duplicar un repositori farem servir la comanda <tt class="docutils literal">clone</tt></p>
+<pre class="literal-block">
+$ git clone «url» [«noudir»]
+</pre>
+<p>Per exemple, la següent comanda et crearà un directori anomenat
+<tt class="docutils literal">gems</tt> a partir del directori actual i hi duplicarà el repositori
+contingut a la url indicada.</p>
+<pre class="literal-block">
+$ git clone git://github.com/WilliamHackmore/linuxgems.git gems
+Cloning into 'gems'...
+remote: Counting objects: 23, done.
+remote: Compressing objects: 100% (23/23), done.
+remote: Total 23 (delta 6), reused 17 (delta 0)
+Receiving objects: 100% (23/23), 9.54 KiB, done.
+Resolving deltas: 100% (6/6), done.
+$ cd gems/
+gems$ ls
+cheat_sheet.org.sh  to_do.txt
+</pre>
+<p>En cas que no s'especifiqui el nom del directori, la comanda crearà un
+directori amb el mateix nom que l'original.</p>
+<p>Ara podríem començar a treballar en una nova branca del projecte que
+Hackmore tan amablement ens ofereix al <a class="reference external" href="https://github.com/">github</a></p>
+</div>
+<div class="section" id="el-repositori-remot">
+<h3>El repositori remot</h3>
+<p>A partir del repositori clonat a la secció anterior, podem demanar a
+Git que ens digui quin és el repositori remot de la nostra còpia:</p>
+<pre class="literal-block">
+gems$ git remote -v
+origin      git://github.com/WilliamHackmore/linuxgems.git (fetch)
+origin      git://github.com/WilliamHackmore/linuxgems.git (push)
+</pre>
+<p>Aquesta comanda ens està indicant que el repositori té associat un
+repositori remot anomenat <em>origen</em> i quines són les urls que farà
+servir en cas que vulguem recuperar noves versions o enviar les
+nostres.</p>
+<p>La comanda <tt class="docutils literal">remote</tt> ens ofereix la possibilitat de gestionar els
+repositoris remots amb que volem enllaçar el nostre. Amb <em>remot</em> ens
+referirem a qualsevol altre repositori, independentment de si es troba
+a un altre equip accessible per algun protocol (ex. ssh) o muntat
+directament al nostre.</p>
+<p>Per exemple, suposem que volem fer un repositori de còpia de seguretat
+en un disc addicional muntat a <tt class="docutils literal">/mnt/diskbackup/projecte_bak</tt>
+(preferiblement iniciat amb <tt class="docutils literal"><span class="pre">--bare</span></tt>). Podem afegir aquest directori
+com a remot del nostre amb:</p>
+<pre class="literal-block">
+projecte$ git remote add backup /mnt/diskbackup/projecte_bak
+projecte$ git config remote.backup.mirror true
+</pre>
+<p>Amb això, disposem d'un nou repositori remot amb el que ens podrem
+<em>sincronitzar-nos</em> quan vulguem fer còpies.</p>
+</div>
+<div class="section" id="recuperar-els-canvis-remots">
+<h3>recuperar els canvis remots</h3>
+<p>Per recuperar canvis realitzats a un repositori remot, simplement
+farem:</p>
+<pre class="literal-block">
+gems$ git pull origin master
+ * branch            master     -&gt; FETCH_HEAD
+Already up-to-date.
+</pre>
+<p>Donat que el Hackmore no li hem donat temps d'afegir nous canvis, en
+aquest cas ens diu que ja disposem de la darrera versió del projecte.
+Altrament ens hagués descarregat els nous canvis.</p>
+</div>
+<div class="section" id="enviar-canvis-a-remot">
+<h3>enviar canvis a remot</h3>
+<p>Per enviar els nostres canvis al repositori remot ens calen les
+següents coses:</p>
+<ol class="arabic">
+<li><p class="first">haver fet <em>commit</em> dels nostres canvis en local</p>
+</li>
+<li><p class="first">assegurar-nos que tenim la darrera versió del remot (recorda
+<tt class="docutils literal">pull</tt>)</p>
+</li>
+<li><p class="first">tenir permisos per poder enviar els nostres canvis al repositori
+remot (en el cas del projecte del Hackmore no els tenim)</p>
+</li>
+<li><p class="first">enviar els canvis amb la comanda <tt class="docutils literal">push</tt></p>
+<pre class="literal-block">
+gems$ git push origin master
+</pre>
+</li>
+</ol>
+</div>
+<div class="section" id="empaquetament">
+<h3>Empaquetament</h3>
+<p>De vegades no podrem connectar-nos directament a algun repositori
+remot, però ens interessarà sincronitzar-nos. Git ofereix la comanda
+<tt class="docutils literal">bundle</tt> que ens permet empaquetar tot o part del repositori en un
+fitxer i portar-lo allà on ens interessi.</p>
+<p>Per empaquetar el nostre repositori, farem simplement:</p>
+<pre class="literal-block">
+projecte$ git bundle create projecte.bundle --all
+Counting objects: 40, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (28/28), done.
+Writing objects: 100% (40/40), 3.75 KiB, done.
+Total 40 (delta 5), reused 0 (delta 0)
+projecte$ ls
+adeu.txt  hola.txt  projecte.bundle
+</pre>
+<p>Ara copiem el fitxer generat (<tt class="docutils literal">projecte.bundle</tt>) allà on ens
+interessi i el recuperem amb:</p>
+<pre class="literal-block">
+$ git clone project.bundle miproject
+Cloning into 'miproject'...
+Receiving objects: 100% (40/40), done.
+Resolving deltas: 100% (5/5), done.
+$ cd miproject
+miproject$ ls
+adeu.txt  hola.txt
+</pre>
+<p>Ara ja disposem a <tt class="docutils literal">miproject/</tt> d'un duplicat del nostre projecte per
+la branca <em>master</em>.</p>
+</div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-resum-de-comandes">
+<h3>Exercici 1. Resum de comandes</h3>
+<p>Creat un petit resum de les comandes que han aparegut en aquesta
+introducció a Git. Inclou les comandes comentades a partir de
+suggeriments del propi Git, com ara <tt class="docutils literal">reset</tt>.</p>
+<p>Pensa-ho com una <em>xuleta</em> o <em>cheat sheet</em> que serveixi de
+referència ràpida pel Git.</p>
+<p>Probablement un format tabulat sigui el més adequat. Indica la comanda
+(ex. <tt class="docutils literal">commit <span class="pre">-m</span> «comentaris»</tt>), una petita descripció (ex. &quot;registra
+els canvis a <em>stage</em> associant-los un comentari&quot;) i un exemple (ex. &quot;$
+git commit -m &quot;Registre inicial&quot;)</p>
+</div>
+<div class="section" id="exercici-2-una-mica-de-practica">
+<h3>Exercici 2. Una mica de pràctica</h3>
+<p>Per la realització d'aquest exercici hauràs de prendre nota de totes
+les comandes que llencis i continguts de fitxers que toquis.</p>
+<p>Segueix les instruccions i prepara els resultats finals que seran en
+forma de <em>bundle</em> més un document amb les descripcions de les passes i
+les comandes/continguts de fitxer.</p>
+<p>Les instruccions et deixaran lliures alguns elements (ex. noms, alguns
+continguts de fitxers, missatges de <em>commit</em>) És molt recomanable que
+les realitzis sobre un GNU/Linux o, com a mínim, un sistema compatible
+POSIX per facilitar-te la captura.</p>
+<p><strong>Instruccions</strong></p>
+<ol class="arabic simple">
+<li>Personalitza adequadament el teu Git.</li>
+<li>Crea un repositori Git</li>
+<li>Afegeix al directori de treball un fitxer amb un contingut generat
+per la comanda <tt class="docutils literal">ifconfig</tt> (o l'equivalent al teu sistema) des de
+la teva màquina.</li>
+<li>Fes el primer <em>commit</em></li>
+<li>Copia el contingut del teu fitxer de configuració <tt class="docutils literal">.gitconfig</tt> a
+un fitxer dins del directori de treball i afegeix-lo al control de
+versions.</li>
+<li>Crea un nou fitxer on afegeixis la data i hora del sistema
+(<tt class="docutils literal">date</tt>), afegeix-lo a <em>stage</em> i comprova l'estat del projecte.</li>
+<li>Modifica el primer fitxer tot afegint-hi al final la data i hora
+del sistema i comprova l'estat del projecte.</li>
+<li>Registra tots els canvis i torna a comprovar l'estat del projecte.</li>
+<li>Consulta l'historial de canvis fins el moment de tot el projecte.</li>
+<li>Configura el teu projecte de manera que Git no intenti gestionar
+els .class. Realitza les accions que consideris per comprovar que
+no ho està fent.</li>
+<li>Realitza les accions que trobis necessàries per demostrar com es
+pot veure els canvis realitzats al contingut d'un fitxer que
+encara no s'han passat a <em>stage</em>.</li>
+<li>Com al punt anterior, però aquest cop demostra com comprovar
+els canvis realitzats en un fitxer respecte el darrer <em>commit</em>.</li>
+<li>Consulta ara l'històric de canvis d'un dels fitxers incloent les
+diferències de cada versió respecte de l'anterior.</li>
+<li>Realitza les comandes necessàries per demostrar com es pot tornar
+a l'estat del darrer <em>commit</em> d'un determinat fitxer.</li>
+<li>Crea una nova branca, modifica-hi un dels fitxers i registra els
+canvis. Comprova que els canvis hi són a la nova branca però no a
+la branca <em>mestra</em>. Finalment torna a la branca mestra, fusiona
+els canvis de la nova branca i elimina la nova branca. Comprova que
+l'has eliminada.</li>
+<li>Crea una nova branca i realitza els canvis necessaris sobre algun
+dels fitxers, de manera que les dues línies de desenvolupament (la
+nova branca i la mestra) divergeixin. Aconsegueix que en intentar
+fusionar els canvis a la branca mestra algun dels fitxers
+modificats sigui fusionat automàticament però algun altre
+requereixi modificacions manuals. Finalment hauria de quedar tots
+els canvis fusionats a la branca mestra i l'altra branca quedar
+eliminada.</li>
+<li>Guarda tot el contingut de la branca mestra en un paquet.</li>
+</ol>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="gitdiferentdaltres" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>A diferencia d'altres SCV com ara Subversion,
+Git no guarda diferènces entre fitxers individuals sinó de tot el
+conjunt de fitxers que gestiona.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="terminologiaanglesa" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[2]</a></td><td>La traducció al català que et presento no té
+un ús generalitzat. Per tant, continuarem fent servir la
+terminologia en anglès.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="fitxerscomprimits" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[3]</a></td><td>Probablement no et sortirà a compte gestionar
+versions de fitxers comprimits per estalviar espai. Git ja ho fa
+força eficientment per tu.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="hihamesestats" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>Hi ha més estats i els veurem més tard.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="treballtelematic" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[5]</a></td><td>Ja sigui perquè les empreses cerquen reduir
+despeses fixes de lloguer d'espais, o per la localització física
+dels bons professionals i de les empreses, cada cop és més habitual
+tenir els professionals treballant des de casa.
+(Gràcies Alejandro E. per aquesta aportació)</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
