@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Introducció al MongoDB</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Introducció al MongoDB             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./guia-dinstallacio-de-mongodb.html">
+        Guia d'instal·lació de MongoDB
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Introducció al MongoDB</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document ofereix una breu introducció a MongoDB.</p>
+<p>Per a la realització d'alguns dels exercicis, es requereixen
+coneixements de programació en Java i del Model Relacional.</p>
+</div>
+<div class="section" id="mongodb">
+<h2>MongoDB</h2>
+<p>MongoDB a la seva <a class="reference external" href="http://www.mongodb.org/">pàgina principal</a> es
+defineix com una base de dades documental. És programari lliure i està
+escrita en C++. <a class="reference external" href="http://www.mongodb.com/leading-nosql-database">Segons ells mateixos</a>, és el principal
+gestor de bases de dades <em>NoSQL</em> del mercat.</p>
+<p>A la <a class="reference external" href="http://docs.mongodb.org/manual/core/introduction/">introducció a MongoDB</a>, ens detallen
+que MongoDB ens ofereix:</p>
+<ul class="simple">
+<li>alt rendiment: les dades es guarden sovint en el mateix (o molt
+similar) format amb que les manipulen els programes. A més, MongoDB
+ofereix un sistema d'indexació molt flexible per accelerar les
+consultes.</li>
+<li>alta disponibilitat: MongoDB ofereix mecanismes de replicació de les
+dades amb recuperació automàtica de caigudes i redundància de dades.</li>
+<li>escalat automàtic: ens ofereix un mecanisme de distribució de dades
+automatitzat (<em>sharding</em>) que ens permet que les nostres dades
+creixin sense limitacions <a class="footnote-reference" href="#limitacionsharding" id="id1">[2]</a></li>
+</ul>
+<p>A MongoDB, els registres es coneixen com a <em>documents</em>, o també com a
+<em>objectes</em>. Un document és bàsicament un conjunt de parells
+clau-valor, en format <a class="reference external" href="http://json.org/">JSON</a> (JavaScript Object
+Notation), un format lleuger per l'intercanvi de dades <a class="footnote-reference" href="#bson" id="id2">[1]</a>.</p>
+<p>Molt breument, un objecte JSON està composat per una llista de parells
+clau-valor entre claus ('{' i '}'). Cada parell està format per una
+clau de tipus string, el caràcter ':' i el valor associat a la clau.
+Els valors poden ser un string, un número, un booleà (<em>true</em> o
+<em>false</em>), el valor <em>null</em>, una seqüència de valors entre claudàtors
+('[' i ']'), o un altre objecte JSON.</p>
+<p>Però deixem d'imaginar. Veiem ja un exemple concret d'objecte JSON:</p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="s2">&quot;títol&quot;</span><span class="o">:</span> <span class="s2">&quot;Two Suns&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;grup&quot;</span><span class="o">:</span><span class="s2">&quot;Bat for Lashes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="s2">&quot;2009-04-03&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;gèneres&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;Art Rock&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;cantants&quot;</span><span class="o">:</span> <span class="s2">&quot;Natasha Khan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cançons&quot;</span><span class="o">:</span> <span class="p">[</span>    <span class="s2">&quot;Glass&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Sleep Alone&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Moon and Moon&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Daniel&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Peace of Mind&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Siren Song&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Pearl&#39;s Dream&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Good Love&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Two Planets&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Travelling Woman&quot;</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s2">&quot;cançó&quot;</span><span class="o">:</span> <span class="s2">&quot;The Big Sleep&quot;</span><span class="p">,</span> <span class="s2">&quot;cantant&quot;</span><span class="o">:</span><span class="s2">&quot;Scott Walker&quot;</span><span class="p">}</span>
+                <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>Així, &quot;títol&quot;:&quot;Two Suns&quot; és un exemple de clau-valor on &quot;títol&quot; és la
+clau i &quot;Two Suns&quot; el valor. En el cas de la clau &quot;cançons&quot;, el seu
+valor és un <em>array</em>. En aquest cas, tots els valors de l'array són
+strings corresponents als títols de les cançons cantades per la
+cantant del grup (Natasha Khan), excepte la darrera cançó que apareix
+com un altre document JSON on s'especifica tant el nom de la cançó com
+el del cantant que la canta.</p>
+<p>Fixa't també en els elements &quot;gèneres&quot; i &quot;cantants&quot;. Tots dos tenen un
+únic element, malgrat la clau sembla indicar que poden haver-ne més.
+Més endavant veurem que el tipus del valor d'una clau pot canviar molt
+fàcilment. Així, &quot;cantants&quot; podria passar a tenir una llista de
+cantants, mentre que gèneres podria haver passat a ser un únic string
+especificant el gènere.</p>
+<p>Tot plegat, ofereix una gran flexibilitat
+a l'hora de representar dades sense la rigidesa d'estructura que
+imposaria el model relacional.</p>
+<p>A banda, els documents o objectes troben una fàcil correspondència amb
+els tipus de molts llenguatges de programació.</p>
+<div class="section" id="exercici-1-un-altre-album">
+<h3>Exercici 1. Un altre àlbum</h3>
+<p>Crea un document amb l'estructura de l'exemple, amb dades d'algun
+àlbum musical que t'agradi (o detestis)</p>
+</div>
+<div class="section" id="exercici-2-la-classe-album">
+<h3>Exercici 2. La classe Àlbum</h3>
+<p>Defineix la classe <em>Album</em> en Java, que presenti les
+propietats que apareixen al document anterior. Inclou els mètodes
+d'accés.</p>
+<p>Evidentment Java disposa de tipus de dades que poden ser més
+adequats per representar alguns dels valors que apareixen al document
+JSON (ex. la data)</p>
+<p>Podem ignorar el cas de les cançons no cantades per la cantant
+principal, de manera que la propietat &quot;cançons&quot; només guardi els
+títols de les cançons. És clar, si vols filar més prim, pots crear la
+classe Cançó, amb el nom de la cançó i del cantant.</p>
+</div>
+<div class="section" id="exercici-3-els-albums-al-model-relacional">
+<h3>Exercici 3. Els àlbums al model relacional</h3>
+<p>Al model relacional clàssic (no l'anomenat model objecte-relacional),
+no disposem d'arrays als camps. Normalment ho resoldrem amb taules
+addicionals relacionant-les amb 1:N.</p>
+<p>En aquest exercici se't demana que facis una proposta de model
+relacional per a poder guardar les dades de diferents àlbums.</p>
+</div>
+<div class="section" id="exercici-4-un-json-pels-correus-electronics">
+<h3>Exercici 4. Un JSON pels correus electrònics</h3>
+<p>Un correu electrònic (simplificat) està format per les següents dades:</p>
+<ul class="simple">
+<li>un tema (el subject o títol del missatge)</li>
+<li>una data d'enviament</li>
+<li>una adreça origen</li>
+<li>una o més adreces de destinació</li>
+<li>un cos (el text del missatge)</li>
+</ul>
+<p>Inventat unes dades concretes d'un correu electrònic simplificat com
+el descrit anteriorment, i defineix un document JSON que contingui
+aquestes dades.</p>
+</div>
+<div class="section" id="exercici-5-introduccio-de-dades-a-mongodb">
+<h3>Exercici 5. Introducció de dades a MongoDB</h3>
+<p>En aquest exercici introduirem algunes dades a MongoDB.
+Si no tens accés a un servidor de MongoDB, pots
+instal·lar-te'l al teu equip tot seguint aquestes <a class="reference external" href="./guia-dinstallacio-de-mongodb.html">instruccions
+d'instal·lació</a>.</p>
+<p>Atenció: no et preocupis pels detalls de les comandes que et proposa
+aquest exercici. Simplement intenta entendre què estan fent per a tu.
+Més endavant disposaràs d'explicacions més detallades.</p>
+<p>Crea un fitxer de text anomenat <em>albums.js</em> i escriu-hi un mínim de
+dos àlbums (el de l'exemple i el de l'exercici anterior) Comprova
+visualment que els dos documents apareixen complets al fitxer (ex. que
+no falta el darrer claudàtor)</p>
+<p>Incorpora les dades al servidor amb la comanda:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongoimport --jsonArray -d <span class="nb">test</span> -c albums --drop &lt; albums.js
+</pre></div>
+<p>Comprova que has introduït les dades correctament.</p>
+<p>Primer entra a la shell de MongoDB:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongo
+</pre></div>
+<p>A continuació, comprova que s'ha creat la nova col·lecció anomenada
+&quot;albums&quot; amb la comanda:</p>
+<div class="highlight"><pre>&gt; show collections
+</pre></div>
+<p>Hauria d'aparèixer llistada al menys la col·lecció &quot;albums&quot;.</p>
+<p>Consulta ara les dades de la col·lecció &quot;albums&quot; amb la
+comanda:</p>
+<div class="highlight"><pre>&gt; db.albums.find().pretty()
+</pre></div>
+<p>Si estàs veient les dues entrades que has introduït, felicitats. Has
+poblat i consultat les teves primeres dades a MongoDB. Altrament,
+revisa el que has fet per trobar l'error. Probablement és un problema
+amb el contingut del fitxer d'entrada. No tinguis por de tornar a
+llençar la comanda d'importació. L'opció '--drop' netejarà qualsevol
+dada prèvia de la col·lecció.</p>
+</div>
+</div>
+<div class="section" id="articles-d-aquesta-colleccio">
+<h2>Articles d'aquesta col·lecció</h2>
+<p>T'he preparat els següents articles per a facilitar la teva
+introducció a MongoDB.</p>
+<p>Et recomano que els segueixis de manera seqüencial i que realitzis els
+exercicis que hi trobaràs. En general t'haurien de resultar molt
+senzills, tant per realitzar com per comprovar que els has fet
+correctament, doncs estan dissenyats per comprovar que has entès cada
+punt treballat. Si no estàs segur d'alguna cosa, pregunta
+<a class="footnote-reference" href="#iestiguisaclasse" id="id3">[3]</a>.</p>
+<ul>
+<li><p class="first"><a class="reference external" href="./guia-dinstallacio-de-mongodb.html">Guia d'instal·lació</a></p>
+<p>Una breu guia per a orientar-te en la instal·lació de MongoDB</p>
+</li>
+<li><p class="first"><a class="reference external" href="./introduccio-a-la-shell-de-mongodb.html">Introducció a la Shell</a></p>
+<p>MongoDB ofereix un entorn interactiu de comandes (shell). Aquest
+article el presenta.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./consultes-basiques-amb-mongodb.html">Consultes bàsiques</a></p>
+<p>Comença aprenent a realitzar les consultes més elementals amb
+MongoDB.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./consultes-amb-criteri.html">Consultes amb criteri</a></p>
+<p>Amplia els teus recursos per a afinar les consultes.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./comptar-documents.html">Comptar documents</a></p>
+<p>En aquest breu article aprendràs a fer una consulta bàsica per
+conèixer <em>quants</em> documents en comptes de <em>quins</em> documents.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./seleccio-de-camps.html">Selecció de camps</a></p>
+<p>Aconsegueix només la informació dels camps que t'interessin.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./operadors-de-selleccio.html">Operadors de sel·lecció</a></p>
+<p>Aprèn a realitzar consultes més sofisticades com ara, que considerin
+rangs de valors.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./ordre-dels-resultats.html">Ordre dels resultats</a></p>
+<p>En aquest article aprendràs com controlar en quin ordre et lliurarà
+MongoDB els resultats.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./insercio-de-documents.html">Inserció de documents</a></p>
+<p>Més detall sobre la inserció de documents.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./eliminacio-de-documents.html">Eliminació de documents</a></p>
+<p>Com desfer-te dels documents que ja no t'interessen.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./modificacio-de-dades.html">Modificació de dades</a></p>
+<p>Com modificar continguts dels documents enregistrats.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./subdocuments.html">Subdocuments</a></p>
+<p>Els documents poden contenir elements que a l'hora són també
+documents. En aquest article tindràs oportunitat d'entendre tant la
+utilitat com la manera de manegar-ho.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./arrays.html">Arrays</a></p>
+<p>Els documents poden contenir elements que no són un valor únic sinó
+una llista de valors. Aprèn com va això en aquest article.</p>
+</li>
+<li><p class="first"><a class="reference external" href="./disseny-de-colleccions.html">Disseny de col·leccions</a></p>
+<p>Unes pinzellades que t'ajudin a prendre decisions de disseny dels
+teus primers models de dades en MongoDB.</p>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="bson" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Internament, MongoDB emmagatzema les dades en una versió
+ampliada de JSON, anomenada BSON. Pots trobar més informació al
+respecte en l'article <a class="reference external" href="http://www.mongodb.com/json-and-bson">JSON and BSON</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="limitacionsharding" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>Evidentment, no tindras limitacions per crèixer si
+tens un pressupost il·limitat per contractar/muntar nous servidors.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="iestiguisaclasse" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Em temo que aquest oferiment només el puc
+adreçar als meus alumnes i durant el curs actual. Si no és el teu
+cas, sempre pots intentar contactar amb mi (trobaràs el meu correu
+al peu d'aquesta pàgina).  Et demano, però, paciència i comprensió.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./guia-dinstallacio-de-mongodb.html">
+        Guia d'instal·lació de MongoDB
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Tutorial d'instal·lació de Eclipse</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Tutorial d'instal·lació de Eclipse             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./configuracio-declipse-per-cc.html">
+        Configuració d'Eclipse per C/C++
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Tutorial d'instal·lació de Eclipse</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/eines.html">
+        eines
+    </a>
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document descriu una manera d'instal·lar l'IDE Eclipse a un
+sistema Ubuntu. Per les característiques particulars de l'aplicació
+Eclipse, aquestes instruccions haurien de funcionar sense gaires
+canvis a altres sistemes operatius.</p>
+</div>
+<div class="section" id="installacio">
+<h2>Instal·lació</h2>
+<p>Per la realització d'una instal·lació de Eclipse seguirem les següents
+passes des d'una consola:</p>
+<ol class="arabic" start="0">
+<li><p class="first">Abans d'instal·lar Eclipse</p>
+<p>Donat que Eclipse és una aplicació java, caldrà disposar d'una
+màquina virtual (JVM) al nostre sistema per a poder-la executar.</p>
+<p>Tot i que virtualment podríem fer servir altres implementacions
+(ex. OpenJDK o gcj), seguirem el <a class="reference external" href="http://www.eclipse.org/forums/index.php/t/161212/">consell</a> del
+fòrum d'Eclipse i farem servir el JDK d'Oracle.</p>
+<p>Per altra banda, instal·larem la versió 7 de Java, la darrera
+disponible en el moment en que es va elaborar aquesta guia (juliol
+2012)</p>
+<p>Com que la llicència del jdk d'Oracle (abans Sun) va canviant el
+grau d'<em>obertura</em> des de la perspectiva d'algunes distribucions
+(com ara Ubuntu), és possible (de fet probable) que no disposem de
+cap versió instal·lada o que aquesta no sigui la desitjada.</p>
+<p>Per a assegurar-nos que el nostre sistema disposa de la versió del
+JDK que volem, podem fer quelcom similar a:</p>
+<pre class="literal-block">
+$ sudo update-alternatives --config java
+</pre>
+<p>Si ens respon quelcom similar a:</p>
+<pre class="literal-block">
+update-alternatives: error: no alternatives for java.
+</pre>
+<p>o bé quelcom que no inclou la versió desitjada com ara:</p>
+<pre class="literal-block">
+Hi ha 2 possibilitats per a l'alternativa java (que proveeix /usr/bin/java).
+
+  Selecció    Camí                                          Prioritat  Estat
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-6-openjdk-i386/jre/bin/java   1061      mode automàtic
+  1            /usr/lib/jvm/java-6-sun/jre/bin/java            63        mode manual
+</pre>
+<p>caldrà instal·lar java. Trobareu una guia breu per Ubuntu <a class="reference external" href="./tutorial-dinstallacio-del-jdk.html">aquí</a>.</p>
+</li>
+<li><p class="first">Obtenció de l'Eclipse</p>
+<p>Si l'ús que hem de fer d'aquest IDE és molt introductori, podríem
+fer servir la versió d'Eclipse que es troba als repositoris
+d'Ubuntu, malgrat queda molt endarrerida respecte la darrera versió
+que es troba al lloc oficial del IDE:
+<a class="reference external" href="http://www.eclipse.org/downloads/">http://www.eclipse.org/downloads/</a></p>
+<p>En el moment en que es va escriure aquesta guia, la
+darrera versió disponible era la 4.2, mentre que la dels
+repositoris anaven encara per la 3.7.</p>
+<p>Aquesta guia proposa la instal·lació de la darrera versió
+disponible per desenvolupadors de java &quot;Eclipse IDE for Java
+Developers&quot;.</p>
+<p>D'aquesta manera ens trobarem un fitxer anomenat quelcom similar a:
+./eclipse-java-juno-linux-gtk.tar.gz</p>
+</li>
+<li><p class="first">Instal·lació de l'IDE</p>
+<p>L'aplicació Eclipse és una mica particular en relació a d'altres,
+en el sentit que la seva instal·lació consisteix en simplement
+descomprimir el paquet i executar l'IDE.</p>
+<p>Així, escollirem el directori on volem que quedi instal·lada
+l'aplicació. Per exemple, <tt class="docutils literal">~/soft</tt>. Així, podem fer servir
+quelcom similar a:</p>
+<pre class="literal-block">
+$ mkdir -p ~/soft
+$ mv eclipse-java-juno-linux-gtk.tar.gz ~/soft
+$ cd ~/soft
+$ tar xzvf eclipse-java-juno-linux-gtk.tar.gz
+</pre>
+<p>Amb això, ja podem executar eclipse</p>
+<pre class="literal-block">
+~/soft/ $ eclipse/eclipse
+</pre>
+<p>En cas que aparegui un missatge d'error com ara:</p>
+<div class="figure align-center">
+<img alt="Missatge d'error amb la màquina virtual de Java" src="./images/eclipse001.error_jdk.png" />
+</div>
+<p>Vol dir que hi ha algun problema amb la màquina virtual de Java.
+En aquest cas, intentem, si més no, reinstal·lar-la.</p>
+<p>Per comoditat, es pot crear algun llançador. Per exemple, per poder
+executar-ho des de línia de comandes, pot ser còmode:</p>
+<pre class="literal-block">
+    $ cd ~
+    $ mkdir -p bin
+    $ cd bin
+    $ cat &gt; eclipse.sh &lt;&lt; EOF
+    &gt; #! /bin/sh
+    &gt; ~/soft/eclipse/eclipse &amp;
+    &gt; EOF
+    $ chmod u+x eclipse.sh
+
+i, des de qualsevol lloc ::
+
+    $ eclipse.sh
+</pre>
+</li>
+<li><p class="first">Configuració del directori de treball</p>
+<p>En arrancar, Eclipse ens demanarà un lloc on deixar els projectes
+Eclipse amb que treballem (<em>workspace</em>). Escollirem un directori
+que ens sigui còmode.</p>
+<p>Serà aquí on podrem trobar els fitxers que es generin amb els
+nostres projectes.</p>
+</li>
+<li><p class="first">Una prova ràpida</p>
+<p>Per defecte, Eclipse s'instal·la per construir aplicacions en
+java.</p>
+<p>Aprofitant que no hem de fer res especial, farem una primera prova
+de l'entorn creant un &quot;original&quot; programa de salutació al món.</p>
+<p>Anirem a File -&gt; New -&gt; Java Project, definirem el nom del projecte
+(ex. HolaMon) i deixarem la resta d'opcions per defecte. Quan ja ho
+tenim tot, premem <em>Finish</em>.</p>
+<p>Amb això, Eclipse ens ha creat el projecte HolaMon amb diferents
+carpetes i recursos.</p>
+<p>Anem ara a File -&gt; New -&gt; Class, i al quadre de text <tt class="docutils literal">Name:</tt> hi
+introduïm &quot;HolaMon&quot;. Marquem el quadre de selecció <tt class="docutils literal">public static
+void main(String[] args)</tt> de la secció <tt class="docutils literal">Which method stubs would
+you like to create?</tt> i, deixant la resta d'opcions amb els valors
+per defecte premem <em>Finish</em>.</p>
+<p>En aquest moment ens apareixerà una finestra amb un aspecte similar
+al següent:</p>
+<div class="figure align-center">
+<img alt="Aspecte de l'entorn gràfic d'Eclipse" src="./images/eclipse001.img001.holamon.png" />
+</div>
+<p>A la subfinestra més ampla (a la dreta), hi trobem un editor amb el
+codi del nostre projecte. Eclipse ens ha creat un primer esquema de
+la classe HolaMon que hem demanat crear.</p>
+<p>Ara, allà on posa <tt class="docutils literal">// TODO <span class="pre">Auto-generated</span> method stub</tt> escriurem
+<tt class="docutils literal">Sys</tt>. A continuació, farem &lt;ctrl&gt;-&lt;espai&gt; i podrem veure que
+Eclipse ens ofereix una llista de suggeriments per completar la
+paraula que estem escrivint (navegable amb el cursor) juntament amb
+documentació corresponent a la proposta de compleció
+sel·leccionada. Farem &lt;enter&gt; per completar.</p>
+<p>Continuem escrivint un punt <tt class="docutils literal">.</tt> i observem que ens apareix una
+llista de possibilitats per a continuar que podem navegar amb el
+cursor. Si escrivim ara una lletra (ex. <tt class="docutils literal">o</tt>) reduirà les
+propostes a aquelles que comencen amb &quot;o&quot;. Escollirem l'única opció
+disponible (<tt class="docutils literal">out</tt>) i tornarem a escriure un punt. Ens apareix una
+nova llista amb la primera opció <tt class="docutils literal">println(String x)</tt>. Justament
+la funció que ens interessa. L'escollim amb &lt;enter&gt; i ens
+autocompleta a la funció <tt class="docutils literal">System.out.println()</tt> deixant-nos el
+cursor dins dels parèntesis amb el nom d'una variable <tt class="docutils literal">x</tt> i
+informant-nos del possible tipus de dades que hi podem ficar dins.
+Substituirem la <tt class="docutils literal">x</tt> per la cadena <tt class="docutils literal">&quot;Hola <span class="pre">Món!\n&quot;</span></tt> i farem
+&lt;enter&gt;. Eclipse col·loca el cursor al final de la sentència.
+Acabem amb un punt i coma la línia.</p>
+<p>Si tot està correcte (Eclipse ens avisaria en cas contrari) podem
+ja executar el nostre programa. Run -&gt; Run. Eclipse ens demana si
+volem guardar els canvis (ens permet marcar autoguardar si volem).
+En fer <em>OK</em>  ens apareix una nova subfinestra a la part inferior on
+es veu el resultat de l'execució del programa. Eclipse s'ha fet
+càrrec de compilar i executar el nostre codi.</p>
+</li>
+</ol>
+<p>Ja tenim disponible l'Eclipse.</p>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./configuracio-declipse-per-cc.html">
+        Configuració d'Eclipse per C/C++
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

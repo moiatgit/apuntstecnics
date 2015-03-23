@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Introducció a la shell de MongoDB</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Introducció a la shell de MongoDB             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./guia-dinstallacio-de-mongodb.html">
+        Guia d'instal·lació de MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./consultes-basiques-amb-mongodb.html">
+        Consultes bàsiques amb MongoDB
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Introducció a la shell de MongoDB</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>A aquesta guia hi trobaràs la descripció d'ús de la <em>shell</em> de MongoDB
+i altres utilitats d'introducció i bolcat de dades des de línia de
+comanda que ofereix el paquet de MongoDB que vàrem instal·lar a <a class="reference external" href="./guia-dinstallacio-de-mongodb.html">la
+guia anterior</a>.</p>
+<p>Aquest article t'ofereix una guia ràpida per les eines principals que
+farem servir a la resta d'aquesta sèrie d'articles.</p>
+</div>
+<div class="section" id="la-shell-de-mongodb">
+<h2>La <em>shell</em> de MongoDB</h2>
+<p>La <em>shell</em> de MongoDB és un programa que ens ofereix la possibilitat
+de connectar i interaccionar amb un servidor MongoDB.</p>
+<p>Si has arrencar el servidor de MongoDB (mongod) amb les opcions
+indicades a la <a class="reference external" href="./guia-dinstallacio-de-mongodb.html">guia d'instal·lació</a>  pots arrencar la shell
+simplement executant <a class="footnote-reference" href="#opcionsdefecte" id="id1">[1]</a>:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongo
+</pre></div>
+<p>Ara disposes d'un prompt '&gt;'</p>
+<p>Per defecte, mongo es connecta a la base de dades 'test'. Ho pots
+comprovar escrivint:</p>
+<div class="highlight"><pre>&gt; db
+test
+</pre></div>
+<p><em>db</em> és una variable de la shell que conté una referència a la base de
+dades activa.</p>
+<p>Es poden consultar les bases de dades disponibles, amb qualsevol de
+les dues commandes següents:</p>
+<div class="highlight"><pre>&gt; show databases
+&gt; show dbs
+</pre></div>
+<p>Pots canviar de base de dades amb la següent comanda:</p>
+<div class="highlight"><pre>&gt; use unaaltrabd
+</pre></div>
+<p>En cas que unaaltrabd no existeixi, automàticament queda creada!. De
+fet, no és del tot cert això, ja que quedarà permanentment creada a
+partir del moment que hi inserim alguna dada.</p>
+<p>Les bases de dades distribueixen aquestes en <em>col·leccions</em>. Així com
+una base de dades de MongoDB correspon amb força fidelitat amb una
+base de dades del model relacional, una col·lecció es podria traduir
+com a taula.</p>
+<p>Podem consultar la llista de col·leccions de la base de dades actual
+amb la comanda:</p>
+<div class="highlight"><pre>&gt; show collections
+</pre></div>
+<p>Si no et surt cap de col·lecció i et trobes a la base de dades &quot;test&quot;,
+és probable que encara no hagis realitzat tots els exercicis de
+l'article <a class="reference external" href="./introduccio-al-mongodb.html">generalitats</a>.</p>
+<div class="section" id="exercici-1-on-es-la-meva-base-de-dades">
+<h3>Exercici 1. On és la meva base de dades?</h3>
+<p>Des de la shell de MongoDB, següeix les següents instruccions, tot
+guardant les commandes que facis servir a un document de text.</p>
+<ol class="arabic simple">
+<li>mostra la llista de bases de dades</li>
+<li>canvia a la base de dades <em>unabdinexistent</em>. Si ja existia, canvia
+el nom per algun que no existeixi encara.</li>
+<li>comprova que et trobes realment a la nova base de dades</li>
+<li>torna a mostrar la llista de bases de dades</li>
+</ol>
+<p>Finalment, respon a les següents preguntes (inclou pregunta i resposta
+al document de text on has anat guardant les comandes)</p>
+<ol class="arabic simple">
+<li>la nova base de dades es troba a la llista de bases de dades?</li>
+<li>perquè?</li>
+</ol>
+</div>
+<div class="section" id="exercici-2-ajuda">
+<h3>Exercici 2. Ajuda</h3>
+<p>La shell de MongoDB ens ofereix la comanda <em>help</em> que ens dóna una
+visió ràpida de les possibilitats de la interfície.</p>
+<p>Aquest exercici et requereix que investiguis una mica amb aquesta
+comanda per contestar les següents preguntes. No et limitis amb
+respondre (ex. SI o NO), indica la comanda completa que t'ha permet
+arribar a la teva conclusió.</p>
+<ol class="arabic simple">
+<li>Amb quina tecla podem fer autocompleció d'una comanda? (pista: <em>key
+shortcuts</em>)</li>
+<li>Podem accedir a comandes prèvies? (<em>command history</em>)</li>
+<li>Com podem saber el directori des del que s'ha llençat la shell?
+(pista: <em>admin</em>)</li>
+<li>Com podem obtenir la data i hora actual del sistema? (pista:
+<em>miscel·lània</em>)</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-un-interpret-de-javascript">
+<h3>Exercici 3. Un intèrpret de JavaScript</h3>
+<p>La shell de MongoDB inclou un intèrpret de JavaScript!</p>
+<p>Ho podem comprovar de la següent manera:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">print</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+</pre></div>
+<p>D'aquesta manera, podem per exemple introduir dades a una col·lecció.
+Executa el següent codi:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="nx">db</span><span class="p">.</span><span class="nx">prova</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="s2">&quot;val&quot;</span><span class="o">:</span> <span class="nx">i</span><span class="p">});</span> <span class="p">}</span>
+</pre></div>
+<p>Ara comprovarem que s'ha creat la col·lecció <em>prova</em> (recordes la
+comanda?)</p>
+<p>A continuació, mirarem el contingut de la col·lecció amb la comanda:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">prova</span><span class="p">.</span><span class="nx">find</span><span class="p">({},{</span><span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">2</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">3</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">4</span> <span class="p">}</span>
+</pre></div>
+<p>No està malament, oi?</p>
+<p>Vinga, et toca a tu. Crea la col·lecció <em>novaprova</em> i afegeix-hi 10
+documents. Els documents segueixen una sèrie on els tres primers
+presentarien els següents continguts (no et preocupis de l'ordre dels
+elements):</p>
+<div class="highlight"><pre><span class="p">{</span> <span class="s2">&quot;num&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;num&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;num&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span><span class="o">:</span> <span class="mi">9</span><span class="p">}</span>
+</pre></div>
+<p>Recorda registrar totes les comandes i resultats d'aquest exercici en
+un document com a resposta.</p>
+</div>
+</div>
+<div class="section" id="importar-exportar">
+<h2>Importar/exportar</h2>
+<p>El paquet de MongoDB bé amb algunes utilitats per afegir i extreure
+dades de les col·leccions/bases de dades.</p>
+<p>Per importar i exportar les dades d'una col·lecció, disposem de les
+utilitats <a class="footnote-reference" href="#metodesimportacio" id="id2">[3]</a>:</p>
+<ul class="simple">
+<li>$ mongoimport</li>
+<li>$ mongoexport</li>
+</ul>
+<p>Hi ha d'altres utilitats més adients per necessitats com ara còpies de
+seguretat <a class="footnote-reference" href="#metodesbackup" id="id3">[4]</a>. No les tractarem en aquest article.</p>
+<p>La utilitat mongoimport permet importar continguts en format JSON i
+CSV <a class="footnote-reference" href="#tambetsv" id="id4">[2]</a></p>
+<p>Un exemple típic d'ús és:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongoimport --jsonArray -d calaix -c albums --drop &lt; albums.js
+</pre></div>
+<p>En aquest exemple:</p>
+<ul class="simple">
+<li>--jsonArray: permet que mongoimport accepti les dades JSON amb un
+format &quot;maco&quot;, és a dir, indentades per a facilitar la lectura
+humana.</li>
+<li>-d: (o també --database) permet especificar la base de dades. En el
+cas de l'exemple, la base de dades es diu <em>calaix</em>. Si no
+l'especifiquem, per defecte les insereix a <em>test</em>.</li>
+<li>-c: (o també --collection) permet especificar la col·lecció on
+deixar les dades. En el cas de l'exemple la col·lecció és <em>albums</em>.
+Si no especifiquem la col·lecció, el programa es queixa.</li>
+<li>--drop: fa que mongoimport elimini la col·lecció (si ja existia)
+abans d'importar-hi les dades. Això evitarà que hi hagi informació
+duplicada.</li>
+</ul>
+<p>Hi ha altres opcions disponibles. Fes servir la següent comanda per
+una primera ullada o consulta la documentació de MongoDB <a class="reference external" href="http://docs.mongodb.org/manual/reference/program/mongoimport/">al respecte</a>.</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongoimport --help
+</pre></div>
+<p>En cas de que disposis de dades a una col·lecció, les pots extreure
+amb la utilitat <em>mongoexport</em>. Per exemple, les dades importades a
+l'exemple d'ús de la utilitat mongoimport, es podrien exportar amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mongoexport -d calaix -c albums &gt; calaix.albums.js
+</pre></div>
+<div class="section" id="exercici-4-diff-import-js-export-js">
+<h3>Exercici 4. diff import.js export.js</h3>
+<p>Crea un fitxer anomenat import.js amb el següent contingut:</p>
+<div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="o">:</span><span class="s2">&quot;3&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="o">:</span><span class="s2">&quot;5&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="o">:</span><span class="s2">&quot;5&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="o">:</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="o">:</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="o">:</span><span class="s2">&quot;6&quot;</span><span class="p">}</span>
+</pre></div>
+<p>Importa el contingut del fitxer a la base de dades <em>dadesvaluoses</em> i
+la col·lecció <em>imprescindibles</em>.</p>
+<p>Exporta ara les dades acabades d'introduir al fitxer <em>export.js</em> i
+compara el contigut respecte al de <em>import.js</em>.</p>
+<p>Hi ha alguna diferència entre el contingut dels dos fitxers? Quina?</p>
+<p>Prova d'importar el fitxer <em>export.js</em> (fes servir l'opció --drop) i
+torna a treure el contingut de la col·lecció a un altre fitxer (ex.
+<em>nouexport.js</em>) Hi trobes alguna diferència ara entre els continguts
+de <em>export.js</em> i <em>nouexport.js</em>?</p>
+<p>Importa dos cops el contingut de <em>import.js</em> (la primera amb l'opció
+--drop i la segona sense).
+Exporta el contingut a <em>exportduplicat.js</em>. Quants cops apareix un
+document amb el valor de la clau &quot;a&quot; igual a 1?</p>
+<p>Importa ara dos cops el contingut de <em>export.js</em>. Novament, la primera
+vegada fes servir l'opció --drop, metre que la segona vegada no.
+Exporta el contingut a <em>exportnoduplicat.js</em>. Quants cops apareix un
+document amb el valor de la clau &quot;a&quot; igual a 1?</p>
+<p>Si estàs seguint els articles en l'ordre proposat, és probable que
+encara no hagis estudiat el concepte d'identificador de document a
+MongoDB. Amb tot, és possible que puguis fer servir coneixements de
+bases de dades del model relacional. Intenta aventurar una explicació
+als resultats que has trobat en aquest exercici.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="opcionsdefecte" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>En cas que el servidor no estigui al <em>localhost</em>
+o hagis canviat el port, o altres canvis, et caldrà indicar aquesta
+informació a la crida de la shell de MongoDB.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="tambetsv" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td>De fet, també admet el format TSV (Tab Separated
+Values) que és una mena de CSV on la separació es fa amb caràcters
+de tabulació en comptes de comes.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="metodesimportacio" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[3]</a></td><td>Hi trobaràs molta més informació a l'article
+<a class="reference external" href="http://docs.mongodb.org/manual/core/import-export/">Import and Export MongoDB Data</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="metodesbackup" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[4]</a></td><td>Per si tens interés en aprofundir amb els mètodes
+de còpia de seguretat, a la guia oficial de MongoDB hi trobaràs
+l'article <a class="reference external" href="http://docs.mongodb.org/manual/core/backups/">MongoDB Backups Methods</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./guia-dinstallacio-de-mongodb.html">
+        Guia d'instal·lació de MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./consultes-basiques-amb-mongodb.html">
+        Consultes bàsiques amb MongoDB
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

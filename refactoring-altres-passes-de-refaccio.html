@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: altres passes de refacció</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: altres passes de refacció             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-eliminacio-de-variables-temporals.html">
+        Refactoring: Eliminació de variables temporals
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-conclusions.html">
+        Refactoring: conclusions
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: altres passes de refacció</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada finalitzarem la nostra introducció a la refacció
+amb algunes passes finals.</p>
+</div>
+<div class="section" id="altres-passes-de-refaccio">
+<h2>Altres passes de refacció</h2>
+<div class="section" id="exercici-17-cada-metode-fa-una-unica-cosa">
+<h3>Exercici 17. Cada mètode fa una única cosa</h3>
+<p>Encara es podrien fer més passes de refacció. Per exemple, fixa't que
+el mètodes <tt class="docutils literal">Client.informe()</tt> fa tres coses separades: composa la
+capçalera, el detall de cada lloguer i peu de l'informe.</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="c1">// composa capçalera</span>
+    <span class="o">...</span>
+
+    <span class="c1">// composa detalls</span>
+    <span class="o">...</span>
+
+    <span class="c1">// composa peu</span>
+    <span class="o">...</span>
+
+    <span class="k">return</span> <span class="n">resultats</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+<p>Els diferents <em>subblocs</em> es podrien extreure, simplificant encara més
+el codi del mètode. És el que hem anomenat <em>extracció de mètode</em>.</p>
+<p>En general, quan ens trobem un mètode que té comentaris o blocs
+diferents de codi, podem considerar que fa més d'una cosa i plantejar
+l'extracció de mètodes.</p>
+<p>Tornarem a aplicar l'<em>extracció de mètodes</em> de manera que el codi
+següent funcioni:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">composaCapsalera</span><span class="o">()</span> <span class="o">+</span>
+           <span class="n">composaDetall</span><span class="o">()</span> <span class="o">+</span>
+           <span class="n">composaPeu</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+<p>On parem? És a dir, fins quan podem estar intentant reduir un mètode?
+En general, quan en intentar-ho, no aconseguim millorar la
+llegibilitat. Per exemple, podríem reduir el codi anterior a:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">composaCapsalera</span><span class="o">()</span> <span class="o">+</span>
+           <span class="n">composaRestaInforme</span><span class="o">();</span>
+</pre></div>
+<p>Si bé el codi és més reduït (una línia menys), no sembla que hàgim
+guanyat gaire en llegibilitat, oi? Aquí, com a tants altres llocs,
+haurem de fer servir el nostre sentit comú per decidir.</p>
+<p>Encara podries argumentar que <tt class="docutils literal">Client.informe()</tt> continua fent tres
+coses. En aquest cas, podries portar l'argument fins al final i
+continuar pensant que aquest mètode també calcula l'import total dels
+lloguers... En qualsevol cas, confio en que acceptis que, al menys, el
+codi actual de <tt class="docutils literal">Client.informe()</tt> resulta molt més fàcil/ràpid
+d'entendre que l'original.</p>
+</div>
+<div class="section" id="literals-per-constants">
+<h3>Literals per constants</h3>
+<p>Què vol dir exàctament el <tt class="docutils literal">30</tt> al fragment de codi següent?
+Té el mateix significat que el <tt class="docutils literal">30</tt> que t'apareix a
+<tt class="docutils literal">Client.importTotal()</tt>?</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+     <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+         <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+         <span class="s">&quot; &quot;</span> <span class="o">+</span>
+         <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+<span class="hll">         <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+</span> <span class="o">}</span>
+</pre></div>
+</td></tr></table><p>En aquest cas, <tt class="docutils literal">30</tt> és el valor multiplicatiu per a aconseguir
+convertir l'import a euros. Per exemple, llogar un vehicle bàsic per
+un dia suposa <tt class="docutils literal">3</tt> unitats de <em>cost</em> mentre que llogar un vehicle
+general també per un dia ens <em>costa</em> <tt class="docutils literal">6</tt>. Si volem saber l'import
+que correspon, hem de multiplicar per 30 aquestes quantitats tant per
+l'import de cada vehicle com del total. Diríem
+doncs que <tt class="docutils literal">30</tt> és el valor en euros d'una unitat de cost de lloguer.</p>
+<p>Així, podem declarar la constant següent:</p>
+<div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">double</span> <span class="n">EUROS_PER_UNITAT_DE_COST</span> <span class="o">=</span> <span class="mi">30</span><span class="o">;</span>
+</pre></div>
+<p>Ara, substituïm totes les aparicions de <tt class="docutils literal">30</tt> per aquesta constant
+com es veu a <tt class="docutils literal">Client.informe()</tt>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre> <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+         <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+         <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+             <span class="s">&quot; &quot;</span> <span class="o">+</span>
+             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+<span class="hll">             <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">quantitat</span><span class="o">()</span> <span class="o">*</span> <span class="n">EUROS_PER_UNITAT_DE_COST</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+</span>     <span class="o">}</span>
+
+     <span class="c1">// afegeix informació final</span>
+     <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">importTotal</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+         <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacionsTotals</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+     <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+ <span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Amb aquest canvi, el codi guanya en llegibilitat doncs és molt més
+fàcil entendre què vol dir el 30 allà on s'aplica. Si en un futur hem
+de canviar la lògica (ex. el preu per unitat de cost), ens resultarà
+molt més fàcil doncs només haurem de tocar un lloc. Fins i tot,
+podríem arribar a passar la nova constant a una propietat (o
+paràmetre) de manera que la poguéssim modificar sense requerir
+recompilar.</p>
+<p>Atenció: malgrat sembli un canvi senzill, cal executar les proves per
+si hem trencat alguna cosa.</p>
+</div>
+<div class="section" id="exercici-18-mes-constants">
+<h3>Exercici 18. Més constants</h3>
+<p>Considera ara el fragment de codi que pertany al mètode
+<tt class="docutils literal">Lloguer.quantitat()</tt>. Signifiquen el mateix els tres cops que hi
+apareix el valor <tt class="docutils literal">3</tt>?</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">case</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">BASIC</span><span class="o">:</span>
+    <span class="n">quantitat</span> <span class="o">+=</span> <span class="mi">3</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">getDies</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">quantitat</span> <span class="o">+=</span> <span class="o">(</span><span class="n">getDies</span><span class="o">()</span> <span class="o">-</span> <span class="mi">3</span><span class="o">)</span> <span class="o">*</span> <span class="mf">1.5</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="k">break</span><span class="o">;</span>
+</pre></div>
+</td></tr></table><p>En aquest cas, veiem que el primer <tt class="docutils literal">3</tt> correspon a la quantitat (o
+unitats de cost) que val el lloguer d'un vehicle bàsic entre un i tres
+dies. Els altres dos <tt class="docutils literal">3</tt> en canvi, corresponen a nombre de dies
+inicials amb el mateix preu.</p>
+<p>En aquest exercici se't demana que converteixis tots els literals
+numèrics que consideris oportuns del mètode <tt class="docutils literal">Lloguer.quantitat()</tt>,
+en constants.</p>
+<p>Assegura't que esculls noms adequats i que el resultat no trenca el
+funcionament.</p>
+</div>
+<div class="section" id="exercici-19-reanomenament">
+<h3>Exercici 19. Reanomenament</h3>
+<p>Ara que hem aprofundit més en els conceptes que envolten al càlcul de
+l'import del lloguer, ens adonem que el mot <em>quantitat</em> no és
+representatiu del que conté la variable <tt class="docutils literal">quantitat</tt> al mètode
+<tt class="docutils literal">Lloguer.quantitat()</tt>. De fet, el nom del mètode presenta el mateix
+problema!</p>
+<p>És quelcom molt habitual. Quan estàs creant un nou mètode fas servir
+uns noms el més adequats que pots. Després, vists amb més perspectiva,
+te n'adones que els noms inicials no són adequats. Quan no disposes de
+jocs de prova automàtics i, a més, el codi està molt embolicat, és
+comprensible que no t'atreveixis a fer cap canvi. I si trenques alguna
+cosa?</p>
+<p>Però aquí disposes de proves unitàries que es queixaran de seguida.
+Millorar el nom dels elements d'un programa és molt més que
+aconsellable: els noms formen una part significativa de la
+documentació del codi.</p>
+<blockquote>
+Millors noms ⇒ més llegibilitat ⇒ més reusabilitat + modificabilitat</blockquote>
+<p>Atenció: Si el mètode pertany a la interfície pública d'una classe que
+està fent servir molta gent (ex. les de l'API de Java), un canvi en el
+nom pot causar molts problemes <a class="footnote-reference" href="#desenvolupadorsapi" id="id1">[1]</a>.</p>
+<p>En aquest exercici se't demana que trobis un nom més adequat pel
+mètode <tt class="docutils literal">Lloguer.quantitat()</tt> i per la variable <tt class="docutils literal">quantitat</tt>.</p>
+</div>
+<div class="section" id="exercici-20-l-informe-en-html">
+<h3>Exercici 20. L'informe en HTML</h3>
+<p>Ara que <tt class="docutils literal">Client.informe()</tt> només s'encarrega directament de composar
+l'informe, és el moment de fer la versió en HTML.</p>
+<p>Codifica aquest nou mètode de manera que generi un resultat amb la
+següent estructura:</p>
+<div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>Informe de lloguers<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>Informe de lloguers del client <span class="nt">&lt;em&gt;</span>Ken Robinson <span class="nt">&lt;/em&gt;</span> (<span class="nt">&lt;strong&gt;</span>43092837A<span class="nt">&lt;/strong&gt;</span>)<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;table&gt;</span>
+<span class="nt">&lt;tr&gt;&lt;td&gt;&lt;strong&gt;</span>Marca<span class="nt">&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;</span>Model<span class="nt">&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;strong&gt;</span>Import<span class="nt">&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;</span>     <span class="nt">&lt;tr&gt;&lt;td&gt;</span>Tata<span class="nt">&lt;/td&gt;&lt;td&gt;</span>Vista<span class="nt">&lt;/td&gt;&lt;td&gt;</span>90.0€<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;&lt;td&gt;</span>Wolswagen<span class="nt">&lt;/td&gt;&lt;td&gt;</span>Passat<span class="nt">&lt;/td&gt;&lt;td&gt;</span>270.0€<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+    <span class="nt">&lt;tr&gt;&lt;td&gt;</span>Mercedes<span class="nt">&lt;/td&gt;&lt;td&gt;</span>SLK 2.0<span class="nt">&lt;/td&gt;&lt;td&gt;</span>360.0€<span class="nt">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;p&gt;</span>Import a pagar: <span class="nt">&lt;em&gt;</span>720.0€<span class="nt">&lt;/em&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Punts guanyats: <span class="nt">&lt;em&gt;</span>4<span class="nt">&lt;/em&gt;&lt;/p&gt;</span>
+</pre></div>
+<p>Codifica també les proves unitàries corresponents (potser les pots
+intentar construir abans de crear tot el codi!)</p>
+<hr class="docutils" />
+<p>Finalment, passem a veure les <a class="reference external" href="./refactoring-conclusions.html">conclusions</a> d'aquesta introducció</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="desenvolupadorsapi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">Els desenvolupadors de l'API de Java assumeixen
+una responsabilitat molt gran i, tot i que hi deuen dedicar molta
+estona a revisar els noms, hi ha alguns que segur haguessin volgut
+canviar. Normalment, un cop publicada una interfície, només els
+queda l'opció d'afegir un comentari a la documentació, com es pot
+veure al següent comentari trobat a la documentació de la classe
+<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/awt/font/TextAttribute.html">java.font.TextAttribute</a>
+:</p>
+<blockquote class="last">
+Note: This attribute is <strong>unfortunately misnamed</strong>, as it
+specifies the face name and not just the family. Thus values
+such as &quot;Lucida Sans Bold&quot; will select that face if it exists.
+Note, though, that if the requested face does not exist, the
+default will be used with regular weight. The &quot;Bold&quot; in the
+name is part of the face name, not a separate request that the
+font's weight be bold.</blockquote>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-eliminacio-de-variables-temporals.html">
+        Refactoring: Eliminació de variables temporals
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-conclusions.html">
+        Refactoring: conclusions
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

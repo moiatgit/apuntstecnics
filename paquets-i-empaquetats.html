@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Paquets i empaquetats</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Paquets i empaquetats             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./polimorfisme.html">
+        Polimorfisme
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./visibilitat.html">
+        Visibilitat
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Paquets i empaquetats</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document aprofita un senzill joc de paraules per a introduir dos
+conceptes diferents:</p>
+<ul class="simple">
+<li>l'organització de classes en <em>packages</em> pel seu ús en altres
+programes</li>
+<li>l'agrupació de codi en paquets per la seva distribució</li>
+</ul>
+<p>Veuràs que es tracta de dos utilitats del llenguatge. Hi trobaràs un
+exercici per a cadascuna d'elles, i un extra per a practicar-les a
+l'hora.</p>
+</div>
+<div class="section" id="exercici-1-comprensio-dels-packages-en-java">
+<h2>Exercici 1. Comprensió dels <em>packages</em> en Java</h2>
+<p>Els <em>packages</em> en Java permeten organitzar els nostres programes. Es
+corresponen amb els directoris del sistema de fitxers. Entre altres
+coses, ofereixen un mecanisme per a evitar les col·lisions de noms.</p>
+<p>Llegeix la <a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/package/index.html">lliçó sobre packages</a>
+dels tutorials de java, i contesta les següents preguntes en un
+document senzill però llegible.</p>
+<p>Es recomana fer una lectura &quot;guiada&quot; per les preguntes. És a dir,
+primer llegir la primera pregunta, trobar contestació, llegir la
+següent, etc. D'aquesta manera probablement es podrà <em>saltar</em> el
+material de la lliçó pel que encara no estem del tot preparats.</p>
+<ol class="arabic">
+<li><p class="first">Segons el tutorial, per a què tres coses serveix un <em>package</em>?
+Perquè, fins ara, no l'hem hagut de fer servir en la definició de
+les nostres classes?</p>
+</li>
+<li><p class="first">Defineix amb les teves paraules què és un <em>package</em> en Java.</p>
+</li>
+<li><p class="first">En quin <em>package</em> es troben les classes fonamentals de Java, com
+ara <em>String</em>?</p>
+</li>
+<li><p class="first">Com s'indica que una classe pertany a un <em>package</em>? Indica la o les
+sentències necessàries pel <em>package</em> org.estudi_poo.«el teu
+nom» (per exemple, <em>org.estudi_poo.anna</em>).</p>
+</li>
+<li><p class="first">A quants packages pot pertànyer una mateixa classe?</p>
+</li>
+<li><p class="first">Què pot aparèixer abans de les sentències que indiquen el <em>package</em>?</p>
+</li>
+<li><p class="first">Quantes classes públiques poden aparèixer en un mateix fitxer de
+codi?</p>
+</li>
+<li><p class="first">És recomanable incloure més d'una classe en un mateix fitxer de
+codi?</p>
+</li>
+<li><p class="first">Desenvolupa la classe HolaPackage que pertany al <em>package</em> anterior i
+que està formada d'un <tt class="docutils literal">main()</tt> que simplement escriu per sortida
+estàndard el missatge: &quot;Hola des del <em>package</em> «nom del package»&quot;.
+Inclou el codi en aquest document.</p>
+</li>
+<li><p class="first">Quina visibilitat tindrà una classe no declarada com a pública?
+<a class="footnote-reference" href="#packageprivate" id="id1">[1]</a></p>
+</li>
+<li><p class="first">A quin <em>package</em> pertanyen les classes quan no se li declara
+explícitament cap?</p>
+</li>
+<li><p class="first">Quina condició s'ha de complir per a poder utilitzar en un mateix
+codi, dues classes amb exactament el mateix nom?</p>
+</li>
+<li><p class="first">Què ens recomanen per evitar que dos desenvolupadors creïn
+<em>packages</em> amb exactament el mateix nom?</p>
+</li>
+<li><p class="first">De quines tres maneres es pot fer servir un membre públic d'un
+<em>package</em>? Posa un exemple de cada considerant la classe GatRenat
+que es troba al <em>package</em> <tt class="docutils literal">org.gatsdelmon</tt>.</p>
+</li>
+<li><p class="first">Què vol dir que els <em>packages</em> no estan relacionats jeràrquicament?</p>
+</li>
+<li><p class="first">Quin nom recomanen pel fitxer on col·locar el codi font d'una
+classe? En quin directori recomanen col·locar el fitxer?
+Il·lustra-ho amb un exemple considerant la classe GatRenat que
+pertany al <em>package</em> <tt class="docutils literal">org.gatsdelmon</tt></p>
+</li>
+<li><p class="first">Suposa que tens GatRenat.class del <em>package</em> <tt class="docutils literal">org.gatsdelmon</tt> ben
+col·locat al següent directori <tt class="docutils literal">~/estudi/poo/</tt> indica que ha de
+contenir la variable de sistema <tt class="docutils literal">CLASSPATH</tt> perquè puguem
+executar el <tt class="docutils literal">main()</tt> de GatRenat (en cas que en tingués) fent:</p>
+<div class="highlight"><pre><span class="nv">$ </span>java org.gatsdelmon.GatRenat
+</pre></div>
+</li>
+<li><p class="first">L'opció <tt class="docutils literal"><span class="pre">-d</span> «path»</tt> de <tt class="docutils literal">javac</tt> ens permet especificar una
+destinació diferent pels <tt class="docutils literal">.class</tt>. Fent servir aquesta opció,
+col·loca els <tt class="docutils literal">.class</tt> en un directori diferent d'on estan
+els fonts, i canvia convenientment <tt class="docutils literal">CLASSPATH</tt> de manera que es
+pugui executar GatRenat amb la comanda del punt anterior. Indica la
+comanda completa de compilació que has fet servir, i el contingut
+del teu <tt class="docutils literal">CLASSPATH</tt>.</p>
+</li>
+<li><p class="first">Canvia el missatge del HolaPackage.java de manera que mostri el
+resultat de la crida a:</p>
+<div class="highlight"><pre><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;java.class.path&quot;</span><span class="o">);</span>
+</pre></div>
+<p>Recompila i executa. Què es mostra?</p>
+</li>
+<li><p class="first">Crea la classe Salutator amb el següent contingut i afegeix-la al
+<em>package</em> org.estudi_poo.«el teu nom»</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Salutator</span> <span class="o">{</span>
+     <span class="kd">private</span>   <span class="kt">int</span> <span class="n">varPrivada</span>   <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+     <span class="kd">public</span>    <span class="kt">int</span> <span class="n">varPublica</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+     <span class="kd">protected</span> <span class="kt">int</span> <span class="n">varProtegida</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+               <span class="kt">int</span> <span class="n">varPackage</span>   <span class="o">=</span> <span class="mi">4</span><span class="o">;</span>
+     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">saluda</span><span class="o">()</span> <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Salutator diu: Hola Món!&quot;</span><span class="o">);</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Des del <tt class="docutils literal">main()</tt> de la classe HolaPackage afegeix una crida al
+mètode saluda() de Salutator, i mostra el valor de totes les
+propietats de Salutator que es puguin &quot;veure&quot; des de HolaPackage
+(pots fer-ho amb prova i error).
+Indica perquè és possible veure les variables que es poden i perquè
+no es pot les que no es poden. <a class="footnote-reference" href="#packageprivate" id="id2">[1]</a>
+Inclou el codi d'ambdues classes.</p>
+</li>
+<li><p class="first">Crea ara una nova versió de HolaPackage, aquest cop dins del
+<em>package</em> org.estudi_poo.knuth</p>
+<p>Modifica el que calgui perquè pugui accedir a la classe Salutator
+del <em>package</em> org.estudi_poo.«el teu nom»</p>
+<p>Indica perquè es poden/es deixa de poder accedir a membres del teu
+Salutator des de l'HolaPackage del mestre Knuth.</p>
+</li>
+<li><p class="first">Crea una nova versió de Salutator, aquest cop dins del <em>package</em> de
+Knuth i canvia el codi de saluda() per</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">saluda</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Knuth diu: Hola Món!&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>Modifica HolaPackage de Knuth de manera que faci una crida a
+saluda() del Salutator teu i a continuació del Salutator de Knuth.</p>
+<p>Inclou el codi de les dues classes de Knuth.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-2-fitxers-jar">
+<h2>Exercici 2. Fitxers jar</h2>
+<p>Java ens ofereix la possibilitat d'empaquetar el nostre codi en un sol
+fitxer que anomena jar. Empaquetant d'aquesta manera, podem distribuir
+còmodament i eficient la nostra aplicació.</p>
+<p>En aquest problema construirem un fitxer jar de la nostra aplicació
+HolaPackage (la del nostre paquet no la de Knuth) realitzada a
+l'exercici anterior.</p>
+<p>Com que el que realitzarem és molt bàsic, si tens interès en conèixer
+més detalls d'aquesta eina, pots considerar el <a class="reference external" href="http://docs.oracle.com/javase/tutorial/deployment/jar/index.html">tutorial d'oracle pel
+jar</a>.</p>
+<p>En qualsevol cas, segueix les passes:</p>
+<ol class="arabic">
+<li><p class="first">Col·locat al directori que conté la base del teu package (és a dir
+la carpeta que conté org/ si has seguit els exemples anteriors)</p>
+</li>
+<li><p class="first">Executa la següent comanda:</p>
+<div class="highlight"><pre><span class="nv">$ </span>jar cvf elteunom.jar org/estudi_poo/«elteunom»/*.class
+</pre></div>
+</li>
+<li><p class="first">Copia el fitxer resultant a /tmp i fes</p>
+<div class="highlight"><pre><span class="nv">$ </span>unzip elteunom.jar
+<span class="nv">$ </span>cat META-INF/MANIFEST.MF
+</pre></div>
+<p>Hauria d'aparèixer quelcom semblant a:</p>
+<pre class="literal-block">
+Manifest-Version: 1.0
+Created-By: 1.6.0_15 (Sun Microsystems Inc.)
+</pre>
+<p>En un moment veurem per a què serveix aquest fitxer.</p>
+</li>
+<li><p class="first">Ara, si intentes executar el teu programa veuràs que no es pot</p>
+<div class="highlight"><pre><span class="nv">$ </span>java -jar elteunom.jar
+Failed to load Main-Class manifest attribute from
+elteunom.jar
+</pre></div>
+<p>El problema està en que no hem indicat al .jar la classe principal
+de la nostra aplicació. Per fer-ho, hem de completar el fitxer
+<tt class="docutils literal">MANIFEST.MF</tt> que hem vist abans.</p>
+<p>El manifest és un fitxer que conté informació de l'aplicació
+guardada en el fitxer jar. Aquesta informació pot ser molt variada
+com ara control de versió, el classpath, o la signatura
+electrònica. De moment, ens interessarem en indicar la classe
+principal (la que conté el <tt class="docutils literal">main()</tt>)</p>
+</li>
+<li><p class="first">Edita un fitxer de text (per exemple amb nom manifest.txt) i
+inclou-hi el següent contingut:</p>
+<pre class="literal-block">
+Main-Class: org.estudi_poo.«elteunom».HolaPackage
+                                                    &lt;--- salt de línia
+</pre>
+<p>Assegura't que el fitxer acaba amb un salt de línia, o no
+interpretarà bé el contingut.</p>
+<p>Ara construeix el jar amb la comanda (vigila on has posat manifest.txt)</p>
+<div class="highlight"><pre><span class="nv">$ </span>jar cvfm «elteunom».jar «camí al manifest»/manifest.txt org/estudi_poo/«elteunom»/*.class
+</pre></div>
+<p>I executa el teu programa</p>
+<div class="highlight"><pre><span class="nv">$ </span>java -jar «elteunom».jar
+</pre></div>
+</li>
+<li><p class="first">Torna a mirar el contingut del fitxer <tt class="docutils literal"><span class="pre">META-INF/MANIFEST.MF</span></tt> que
+ara hauria de contenir una nova línia</p>
+</li>
+</ol>
+<p>D'aquest exercici no cal que lliuris res!</p>
+</div>
+<div class="section" id="exercici-3-entorn-operatiu-dels-animals-jar">
+<h2>Exercici 3. Entorn operatiu dels animals.jar</h2>
+<p>Modifica l'exercici de l'entorn operatiu dels animals de manera que
+ara totes les classes pertanyin al package
+<tt class="docutils literal"><span class="pre">org.estudi_poo.«elteunom».animals</span></tt>.</p>
+<p>Empaqueta-ho tot a un .jar que permeti executar l'entorn directament.
+Lliura el .jar amb els .class i els fitxers font.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="packageprivate" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Aquesta pregunta pot resultar una mica difícil si
+encara no tens més que nocions del concepte de <em>visibilitat</em> en Java.
+Consell: fes el que puguis ara i, quan ja sàpigues més de visibilitats,
+torna i revisa-ho. El primer intent t'ajudarà a entendre millor la
+visibilitat i els <em>packages</em>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./polimorfisme.html">
+        Polimorfisme
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./visibilitat.html">
+        Visibilitat
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

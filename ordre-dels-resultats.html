@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Ordre dels resultats</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Ordre dels resultats             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./operadors-de-selleccio.html">
+        Operadors de sel·lecció
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./insercio-de-documents.html">
+        Inserció de documents
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Ordre dels resultats</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Fins ara hem vist com consultar dades, amb la possibilitat de
+filtrar-les i només rebre aquelles que volem. No hem parlat gens de en
+quin ordre les volem. Aquesta és la finalitat del mètode <em>sort</em> i
+presentar-te'l ho és d'aquest article.</p>
+</div>
+<div class="section" id="dades-ordenades">
+<h2>Dades ordenades</h2>
+<p>Considera els resultats de la següent consulta:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+</pre></div>
+<p>Tot i que a tu et podrien sortir amb un ordre diferent, fixa't com el
+resultat són els documents requerits però amb un ordre aparentment
+independent de les claus sol·licitades.</p>
+<p>Suposa que ens interessés disposar de les dades en ordre ascendent de
+sou. Fixa't en la següent consulta:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="nx">sou</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+</pre></div>
+<p>El mètode <em>sort</em> rep un document on la clau correspon a claus dels
+documents de la col·lecció consultada, i el valor és:</p>
+<ul class="simple">
+<li>1: per indicar ordre ascendent</li>
+<li>-1: per indicar ordre descendent</li>
+</ul>
+<p>Així, simplement canviant el signe, tenim l'ordre canviat:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="nx">sou</span><span class="o">:-</span><span class="mi">1</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span>     <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span>    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span>   <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+</pre></div>
+<p>Podríem estar interessats en controlar l'ordre d'altres claus. Al
+següent exemple ampliarem la consulta a tots els documents i ordenarem
+primer per sou i després per edat:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span> <span class="p">{</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="o">:</span><span class="kc">false</span><span class="p">}).</span><span class="nx">sort</span><span class="p">({</span><span class="s2">&quot;sou&quot;</span><span class="o">:-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span>  <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">40</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;director/a&quot;</span><span class="p">,</span>          <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">120000</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Alexia López Fabrelle&quot;</span><span class="p">,</span>     <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">19</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;equilibrista/a&quot;</span><span class="p">,</span>      <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3900</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span>        <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">35</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span>    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span>       <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span>    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Carla Fernández Balló&quot;</span><span class="p">,</span>     <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;pintor/a&quot;</span><span class="p">,</span>            <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2400</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Fernández Fijo&quot;</span><span class="p">,</span>       <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;fotògraf/a&quot;</span><span class="p">,</span>          <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pau Romero Vilchez&quot;</span><span class="p">,</span>        <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;psicòleg/psicòloga&quot;</span><span class="p">,</span>  <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span>      <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span>    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Marc Hernández Muñoz&quot;</span><span class="p">,</span>      <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span>              <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1200</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Júlia Galceran Buscart&quot;</span><span class="p">,</span>    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">27</span><span class="p">,</span>  <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;monjo/a&quot;</span><span class="p">,</span>             <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+</pre></div>
+<div class="section" id="exercici-1-primer-els-grans">
+<h3>Exercici 1. Primer els grans</h3>
+<p>Composa una consulta que retorni les persones per ordre d'edat, de
+manera que la primera sigui la més gran i la darrera la més jove.</p>
+<p>Fes que només apareguin el nom i l'edat.</p>
+</div>
+<div class="section" id="exercici-2-primer-els-joves">
+<h3>Exercici 2. Primer els joves</h3>
+<p>Composa una consulta que retorni les persones per ordre d'edat, de
+manera que la primera sigui la més jove i la darrera la més gran.</p>
+<p>Si més d'una persona té la mateixa edat, fes que primer surti la que
+tingui el sou més alt.</p>
+<p>Fes que només apareguin el nom, l'edat i el sou.</p>
+</div>
+</div>
+<div class="section" id="aprofitar-l-ordre-per-filtar">
+<h2>Aprofitar l'ordre per filtar</h2>
+<p>Tot conjugant el <em>sort</em> amb <em>skip</em> i <em>limit</em> ens permet aconseguir
+consultes com ara, &quot;les tres persones amb millor sou&quot; o &quot;les dues
+persones més joves després de la més jove&quot;.</p>
+<p>De seguida et mostraré com fer-les, però et recomano que les intentis
+fer pel teu compte abans de continuar llegint. Et permetrà comprovar
+si estàs agafant la filosofia de MongoDB.</p>
+<div class="section" id="les-tres-persones-amb-millor-sou">
+<h3>Les tres persones amb millor sou</h3>
+<p>Per a aconseguir aquesta consulta simplement cal ordenar per sou
+(primer el més alt) i quedar-te amb només tres.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span><span class="s2">&quot;sou&quot;</span><span class="o">:-</span><span class="mi">1</span><span class="p">}).</span><span class="nx">limit</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-3-les-2-persones-que-cobren-menys">
+<h3>Exercici 3. Les 2 persones que cobren menys</h3>
+<p>Composa una consulta que retorni les dues persones amb el sou més
+baix.</p>
+</div>
+<div class="section" id="exercici-4-les-4-persones-menys-joves">
+<h3>Exercici 4. Les 4 persones menys joves</h3>
+<p>Composa una consulta que retorni només les quatre persones amb més
+edat.</p>
+</div>
+<div class="section" id="les-dues-persones-mes-joves-despres-de-la-mes-jove">
+<h3>Les dues persones més joves després de la més jove</h3>
+<p>Aquesta consulta ens requereix fer servir també el mètode <em>skip</em> amb
+el que ens saltarem la més persona més jove.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">sort</span><span class="p">({</span><span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">}).</span><span class="nx">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">limit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;53038dcd06facaddfaf743a3&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Carla Fernández Balló&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;pintor/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2400</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;53038dcd06facaddfaf7439e&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Fernández Fijo&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;fotògraf/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2200</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-5-skip-limit-o-limit-skip">
+<h3>Exercici 5. skip-limit o limit-skip</h3>
+<p>Comprova què passa si intercanvies l'ordre entre <em>skip</em> i <em>limit</em> a la
+consulta anterior.</p>
+</div>
+<div class="section" id="exercici-6-ordre-dels-metodes">
+<h3>Exercici 6. ordre dels mètodes</h3>
+<p>Comprova que passa si canvies l'ordre de <em>sort</em> a la consulta
+anterior.</p>
+</div>
+<div class="section" id="exercici-7-no-volem-les-mes-joves">
+<h3>Exercici 7. No volem les més joves</h3>
+<p>Composa una consulta que retorni totes les persones excepte les dues
+més joves.</p>
+</div>
+<div class="section" id="exercici-8-ni-docents-ni-el-mes-gran">
+<h3>Exercici 8. Ni docents ni el més gran</h3>
+<p>Composa una consulta que retorni totes les persones que no siguin
+docents. Per cert, no ens interessa la més gran.</p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./operadors-de-selleccio.html">
+        Operadors de sel·lecció
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./insercio-de-documents.html">
+        Inserció de documents
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

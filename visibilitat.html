@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Visibilitat</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Visibilitat             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./paquets-i-empaquetats.html">
+        Paquets i empaquetats
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./classes-abstractes.html">
+        Classes abstractes
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Visibilitat</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>A continuació trobaràs una petita guia per obtenir una visió precisa
+del control d'accés en el llenguatge de programació Java.</p>
+<p>El document consta d'un únic exercici que et dirigirà a una secció del
+tutorial &quot;oficial&quot; de java, i a partir d'una sèrie de preguntes
+concretes, t'ajudarà a plantejar-te els punts més rellevants del
+document, i del tema.</p>
+</div>
+<div class="section" id="exercici-visibilitat">
+<h2>Exercici Visibilitat</h2>
+<p>Llegeix l'article <a class="reference external" href="http://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html">Controlling Access to Members of a Class</a>
+i contesta les preguntes que apareixen a continuació.</p>
+<ol class="arabic simple">
+<li>per a què serveix un modificador de nivell d'accés?</li>
+<li>quants nivells de control d'accés n'hi ha a java. Indica què afecta
+cadascun d'ells</li>
+<li>quins modificadors es poden indicar a la definició d'una classe?</li>
+<li>puc indicar que una classe és privada amb <em>private</em>?</li>
+<li>quins són els modificadors que es poden indicar per una propietat
+d'una classe? i sinó s'indica cap?</li>
+<li>quins són els modificadors que es poden indicar per un mètode d'una
+classe? i sinó s'indica cap?</li>
+<li>suposa que tens una propietat a una superclasse marcada com a
+<em>public</em> i extens la superclasse amb una subclasse que pertany a un
+altre <em>package</em>. Pot un mètode de la subclasse accedir a la
+propietat directament?</li>
+<li>suposa que tens una propietat a una superclasse marcada com a
+protected i extens la superclasse amb una subclasse que pertany a
+un altre <em>package</em>. Pot un mètode de la subclasse accedir a la
+propietat directament?</li>
+<li>suposa que tens una propietat a una superclasse marcada com a
+<em>private</em> i extens la superclasse amb una subclasse que pertany a
+un altre <em>package</em>. Pot un mètode de la subclasse accedir a la
+propietat directament?</li>
+<li>suposa que tens una propietat a una superclasse marcada com a
+<em>package</em> i extens la superclasse amb una subclasse que pertany a
+un altre <em>package</em>. Pot un mètode de la subclasse accedir a la
+propietat directament?</li>
+<li>amb quin modificador es pot evitar que un membre d'una classe no
+pugui accedir a una propietat de la mateixa classe?</li>
+<li>com es podria permetre canviar el valor d'una propietat d'una
+classe marcada com a <em>private</em>, des d'un mètode d'una altra classe
+que no es troba a la jerarquia ni al <em>package</em> de la primera ?</li>
+<li>explica el valor 'Y' de la columna Gamma de l'exemple.</li>
+<li>explica el valor 'N' de la columna Beta de l'exemple.</li>
+<li>quin és el modificador que recomanen usar per defecte a l'article?
+Perquè creus?</li>
+<li>quin és el modificador que recomanen evitar per defecte a
+l'article? Quina raó donen? I llavors, perquè ells mateixos el fan
+servir als seus exemples?</li>
+<li>perquè creus que és segur marcar com a <em>public</em> les constants?</li>
+</ol>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./paquets-i-empaquetats.html">
+        Paquets i empaquetats
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./classes-abstractes.html">
+        Classes abstractes
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

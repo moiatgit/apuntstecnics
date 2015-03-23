@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: Moviment de mètodes</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: Moviment de mètodes             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-extraccio-de-metodes.html">
+        Refactoring: extracció de mètodes
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-temporals-per-crides.html">
+        Refactoring: Temporals per crides
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: Moviment de mètodes</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada relitza un nou pas de refacció conegut com a
+<em>moviment de mètode</em>.</p>
+</div>
+<div class="section" id="moviment-de-metodes">
+<h2>Moviment de mètodes</h2>
+<p>Fixa't ara en el mètode <tt class="docutils literal">Client.quantitatPerLloguer()</tt> que acabes de
+crear. Tot i que agafa informació d'un lloguer i del vehicle associat,
+<strong>no en fa res de la informació del client</strong>.</p>
+<p>Aquest tipus de situacions ens han de fer sospitar que potser, el
+mètode no es troba en el lloc adequat. És a dir, potser no ha de ser
+responsabilitat de Client calcular l'import d'un Lloguer concret.</p>
+<p>Quan ens trobem amb aquesta situació, el que toca fer és el que
+coneixerem com a <em>moviment de mètode</em> que consisteix bàsicament en
+moure un mètode d'una classe a una altra <a class="footnote-reference" href="#movimentpropietat" id="id1">[1]</a>.</p>
+<p>Sovint no resulta gens fàcil decidir de bon començament la classe a la
+que assignar una responsabilitat concreta. Per aquesta raó és freqüent
+que les responsabilitats s'hagin de reassignar amb el temps. Aquest
+pas de refacció (<em>moviment de mètode</em>) pot arribar a resultar, doncs,
+força útil.</p>
+<div class="section" id="exercici-7-quantitatperlloguer-a-la-classe-lloguer">
+<h3>Exercici 7. quantitatPerLloguer() a la classe Lloguer</h3>
+<p>Mou el mètode <tt class="docutils literal">Client.quantitatPerLloguer()</tt> a
+<tt class="docutils literal">Lloguer.quantitat()</tt>.</p>
+<p>Com sempre, assegura't que els canvis no han trencat res (passa els
+jocs de prova)</p>
+<p>Tingues en compte que:</p>
+<ul class="simple">
+<li>ara aquest mètode caldrà que accessible des d'una altra classe
+(visibilitat)</li>
+<li>com que el mètode ara és de Lloguer, el seu nom antic és redundant.
+Per això es proposa reanomenar-lo a <tt class="docutils literal">quantitat()</tt>.</li>
+<li>ara ja no li caldrà rebre el lloguer com a paràmetre. Saps perquè?</li>
+<li>la crida des de <tt class="docutils literal">Client.informe()</tt> serà una mica diferent.</li>
+</ul>
+</div>
+<div class="section" id="exercici-8-canvis-en-el-diagrama-de-classe">
+<h3>Exercici 8. Canvis en el diagrama de classe</h3>
+<p>Dibuixa com queda el diagrama de classes del sistema després d'aquest
+canvi.</p>
+</div>
+<div class="section" id="exercici-9-canvis-en-el-diagrama-de-sequencia">
+<h3>Exercici 9. Canvis en el diagrama de seqüència</h3>
+<p>Actualitza el diagrama de seqüència que descriu la crida a
+<tt class="docutils literal">Client.informe()</tt> amb els nous canvis que has introduït.</p>
+<hr class="docutils" />
+<p>Trobem el següent pas de refacció <a class="reference external" href="./refactoring-temporals-per-crides.html">aquí</a></p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="movimentpropietat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Existeixen altres passos de refacció
+relacionats amb el moviment de responsabilitats. Un de molt evident
+és el moviment de propietats. La idea és similar de la del moviment
+de mètodes: trobes una propietat a una classe quan hauria d'estar a
+una altra. El mecanisme d'aplicació d'aquest pas és molt similar
+que el de moviment de mètodes.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-extraccio-de-metodes.html">
+        Refactoring: extracció de mètodes
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-temporals-per-crides.html">
+        Refactoring: Temporals per crides
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

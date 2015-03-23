@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Tutorial d'instal·lació del JDK</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Tutorial d'instal·lació del JDK             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Tutorial d'instal·lació del JDK</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/eines.html">
+        eines
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document descriu la instal·lació del JDK (Java Development Kit)
+de Oracle a un sistema Ubuntu.</p>
+<p>Tot i que probablement altres implementacions (com ara OpenJDK) i
+altres versions anteriors (ex. la 6) podrien servir perfectament pels
+requeriments del curs, farem servir la versió 7 del JDK d'Oracle.</p>
+</div>
+<div class="section" id="installacio">
+<h2>Instal·lació</h2>
+<p>Les següents instruccions permeten la instal·lació del JDK d'Oracle a
+un Ubuntu 12.04.</p>
+<p>Si penses instal·lar-ho a un sistema diferent, considera seguir les
+instruccions de la <a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads">pàgina oficial</a>.</p>
+<p>Els usuaris d'Ubuntu, disposem d'un repositori on trobem un paquet que
+ens automatitza la instal·lació.</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+You are about to add the following PPA to your system:
+ Oracle Java <span class="o">(</span>JDK<span class="o">)</span> Installer <span class="o">(</span>automatically downloads and installs Oracle JDK7<span class="o">)</span>. There are no actual Java files in this PPA. More info: http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html
+ More info: https://launchpad.net/~webupd8team/+archive/java
+Press <span class="o">[</span>ENTER<span class="o">]</span> to <span class="k">continue</span> or ctrl-c to cancel adding it
+«...»
+<span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span>sudo apt-get install oracle-java7-installer
+</pre></div>
+<p>En aquest moment ja hauríem de tenir instal·lat el jdk 7 a la nostra
+màquina. Pot passar, però, que encara no estigui enllaçada la nova
+versió. Ho comprovarem fent</p>
+<div class="highlight"><pre><span class="nv">$ </span>java -version
+</pre></div>
+<p>Si ens surt quelcom similar a:</p>
+<div class="highlight"><pre>java version &quot;1.7.0_05&quot;
+Java(TM) SE Runtime Environment (build 1.7.0_05-b05)
+Java HotSpot(TM) Server VM (build 23.1-b03, mixed mode)
+</pre></div>
+<p>ja estem. Altrament caldrà seleccionar aquesta versió. És fàcil:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo update-alternatives --config java
+</pre></div>
+<p>Que ens generarà quelcom similar a</p>
+<div class="highlight"><pre>Hi ha 3 possibilitats per a l&#39;alternativa java (que proveeix /usr/bin/java).
+
+  Selecció    Camí                                          Prioritat  Estat
+------------------------------------------------------------
+  0            /usr/lib/jvm/java-7-oracle/jre/bin/java         1062      mode automàtic
+  1            /usr/lib/jvm/java-6-openjdk-i386/jre/bin/java   1061      mode manual
+* 2            /usr/lib/jvm/java-6-sun/jre/bin/java            63        mode manual
+  3            /usr/lib/jvm/java-7-oracle/jre/bin/java         1062      mode manual
+
+Premeu retorn per a mantenir l&#39;opció per defecte[*], o introduïu un número de selecció: 3
+</pre></div>
+<p>En el cas de l'exemple, cal escollir <tt class="docutils literal">0</tt> o <tt class="docutils literal">3</tt> doncs són les
+opcions que apunten a la versió 7 acabada d'instal·lar. Escollirem
+<tt class="docutils literal">0</tt> per deixar al sistema d'alternatives que decideixi l'opció en
+cas que tornem a instal·lar o eliminem algun paquet.</p>
+<p>Ara, hauríem de disposar dels programes <tt class="docutils literal">javac</tt> i <tt class="docutils literal">java</tt> en la
+darrera versió. Podem fer una darrera comprovació amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>javac -version
+javac 1.7.0_45
+<span class="nv">$ </span>java -version
+java version <span class="s2">&quot;1.7.0_45&quot;</span>
+Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.7.0_45-b18<span class="o">)</span>
+Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 24.45-b08, mixed mode<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

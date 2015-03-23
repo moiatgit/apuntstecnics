@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Tipus Abstractes de Dades</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Tipus Abstractes de Dades             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li class="active"><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Tipus Abstractes de Dades</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/programacio.html">
+        programacio
+    </a>
+            amb el tag:
+            <a href="./tag/c.html">C</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquests continguts presenten el concepte de <em>Tipus Abstracte de Dades</em>
+o més conegut com a TAD.</p>
+<p>Els TADs són bàsicament una agrupació de dades i processos que actuen
+sobre aquestes, de manera que l'usuari de les dades (un altre
+programa, és clar) no tingui perquè conèixer la implementació interna
+d'aquestes. Així, en cas que es trobin maneres més eficients de
+codificar les dades, es poden realitzar els canvis sense requerir que
+els usuaris d'aquestes hagin de modificar el seu codi.</p>
+<p>Per introduir-nos als TADs, farem servir un exemple conductor:
+treballarem amb hores. Inicialment farem servir els components d'una
+hora (les hores, minuts i segons) per separat. A continuació
+estudiarem ara la possibilitat d'agrupar aquests components sota
+un mateix identificador. Avançarem amb aquesta idea per crear els
+nostres propis tipus de dades fins a arribar a l'agrupació d'aquestes
+amb operacions que les manipulen: els TADs.</p>
+<p>Amb la complexitat creixent dels nostres programes, començarà a tenir
+sentit separar els programes en fitxers, i de seguida que el nombre de
+fitxers comenci a créixer, ens caldrà algun mecanisme per gestionar la
+compilació. Tot plegat, ho veurem introduït a la part final d'aquest
+tema.</p>
+<p>Els exercicis que apareixen en aquest document estan classificats amb
+zero o més asteriscs. Si disposes de prou temps, ignora les marques i
+realitza els exercicis en l'ordre en que apareixen. En cas contrari
+considera primer els exercicis sense marques. Els exercicis amb un
+asterisc són exercicis per practicar i si has fet els exercicis de que
+depenen, no haurien de resultar-te gaire difícils. Els exercicis amb
+dos asteriscs presenten una complexitat una mica superior, normalment
+de tipus algorísmic.</p>
+</div>
+<div class="section" id="estructures">
+<h2>Estructures</h2>
+<p>De vegades ens trobem que un grup de variables, no necessàriament del
+mateix tipus, estan tan relacionades entre si que ens trobem
+pràcticament sempre declarant-les juntes, passant-les com a paràmetre
+juntes, etc.</p>
+<div class="section" id="exercici-1-un-segon-mes">
+<h3>Exercici 1. Un segon més</h3>
+<p>Desenvolupa un procediment que, donada una hora representada per tres
+enters hora, minut i segon, calculi el resultat d'afegir un segon a
+l'hora.</p>
+<p>Completa el següent codi perquè compili i s'executi sense cap
+missatge. Evidentment, no es val modificar el codi de
+<tt class="docutils literal">valida_resultat()</tt> ni de <tt class="docutils literal">main()</tt></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include&lt;stdio.h&gt;</span>
+
+<span class="cm">/* Donada una hora d&#39;origen formada per tres enters ho, mo i so,</span>
+<span class="cm">   calcula l&#39;hora corresponent a sumar-li un segon a aquesta hora</span>
+<span class="cm">   origen i deixa el resultat en l&#39;hora calculada composada per</span>
+<span class="cm">   les referències a enter hc, mc i sc. Pressuposa que l&#39;hora d&#39;origen</span>
+<span class="cm">   és correcta i apareix en format 24h. */</span>
+<span class="kt">void</span> <span class="nf">incrementa_segon_a_hora</span><span class="p">(</span><span class="kt">int</span> <span class="n">ho</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mo</span><span class="p">,</span> <span class="kt">int</span> <span class="n">so</span><span class="p">,</span>
+                             <span class="kt">int</span> <span class="o">*</span><span class="n">hc</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">mc</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">sc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* Valida el resultat trobat a partir de l&#39;esperat.</span>
+<span class="cm"> * En cas de discrepància, mostra un missatge d&#39;error indicant l&#39;hora esperada</span>
+<span class="cm"> * i l&#39;hora trobada */</span>
+<span class="kt">void</span> <span class="nf">valida_resultat</span><span class="p">(</span><span class="kt">int</span> <span class="n">he</span><span class="p">,</span> <span class="kt">int</span> <span class="n">me</span><span class="p">,</span> <span class="kt">int</span> <span class="n">se</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ht</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mt</span><span class="p">,</span> <span class="kt">int</span> <span class="n">st</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">he</span><span class="o">!=</span><span class="n">ht</span> <span class="o">||</span> <span class="n">me</span><span class="o">!=</span><span class="n">mt</span> <span class="o">||</span> <span class="n">se</span><span class="o">!=</span><span class="n">st</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> esperat %d:%d:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">he</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">se</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> trobat  %d:%d:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ht</span><span class="p">,</span> <span class="n">mt</span><span class="p">,</span> <span class="n">st</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ho</span><span class="p">,</span> <span class="n">mo</span><span class="p">,</span> <span class="n">so</span><span class="p">;</span>     <span class="cm">/* compoments de l&#39;hora origen    */</span>
+    <span class="kt">int</span> <span class="n">he</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">se</span><span class="p">;</span>     <span class="cm">/* compoments de l&#39;hora esperada  */</span>
+    <span class="kt">int</span> <span class="n">hc</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">sc</span><span class="p">;</span>     <span class="cm">/* compoments de l&#39;hora calculada */</span>
+
+    <span class="n">ho</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">mo</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">so</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="n">he</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">me</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">se</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="n">mo</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">sc</span><span class="p">);</span>
+
+    <span class="n">ho</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">mo</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">so</span><span class="o">=</span><span class="mi">59</span><span class="p">;</span>
+    <span class="n">he</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">me</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">se</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="n">mo</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">sc</span><span class="p">);</span>
+
+    <span class="n">ho</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">mo</span><span class="o">=</span><span class="mi">59</span><span class="p">;</span> <span class="n">so</span><span class="o">=</span><span class="mi">59</span><span class="p">;</span>
+    <span class="n">he</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">me</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">se</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="n">mo</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">sc</span><span class="p">);</span>
+
+    <span class="n">ho</span><span class="o">=</span><span class="mi">23</span><span class="p">;</span> <span class="n">mo</span><span class="o">=</span><span class="mi">59</span><span class="p">;</span> <span class="n">so</span><span class="o">=</span><span class="mi">59</span><span class="p">;</span>
+    <span class="n">he</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">me</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">se</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="n">mo</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">me</span><span class="p">,</span> <span class="n">se</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">mc</span><span class="p">,</span> <span class="n">sc</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="agrupacio-en-arrays">
+<h3>Agrupació en arrays</h3>
+<p>T'has fixat quants cops hem de passar a l'hora els diferents elements
+que composen una hora? Està clar que ens cal poder agrupar aquests
+conceptes d'hora, minut i segon.</p>
+<p>Ho podríem fer mitjançant un array d'enters, on la primera posició fos
+l'hora, la segona el minut i la tercera el segon. Això és possible
+perquè els tres components d'una hora són del mateix tipus.</p>
+</div>
+<div class="section" id="exercici-2-incrementa-segons-amb-un-array-d-hora">
+<h3>Exercici 2. Incrementa segons amb un array d'hora</h3>
+<p>Desenvolupa una versió de l'exercici anterior, on els diferents
+components d'una hora apareguin codificats en forma d'array.</p>
+</div>
+<div class="section" id="id1">
+<h3>Estructures</h3>
+<p>Si bé la manera de resoldre el problema amb un array pot ser
+acceptable per a aquest tipus de problemes en que tots els components
+són del mateix tipus, no sempre serà així.</p>
+<p>Per aquesta raó, considera ara el següent codi</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include&lt;stdio.h&gt;</span>
+
+<span class="cm">/* definició de l&#39;estructura Hora */</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">h</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">m</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">s</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Hora</span><span class="p">;</span>
+
+<span class="cm">/* assigna els valors h, m i s als components de la referència a Hora.</span>
+<span class="cm"> * Pressuposa valors correctes. */</span>
+<span class="kt">void</span> <span class="nf">assigna_valors</span><span class="p">(</span><span class="kt">int</span> <span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hora</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">hora</span><span class="o">-&gt;</span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">;</span>
+    <span class="n">hora</span><span class="o">-&gt;</span><span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="p">;</span>
+    <span class="n">hora</span><span class="o">-&gt;</span><span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/* Donada una hora d&#39;origen calcula l&#39;hora corresponent a</span>
+<span class="cm">   sumar-li un segon i deixa el resultat en l&#39;hora calculada.</span>
+<span class="cm">   Pressuposa que l&#39;hora d&#39;origen és correcta i apareix en format 24h. */</span>
+<span class="kt">void</span> <span class="nf">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">ho</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* Valida el resultat trobat a partir de l&#39;esperat.</span>
+<span class="cm"> * En cas de discrepància, mostra un missatge d&#39;error indicant l&#39;hora esperada</span>
+<span class="cm"> * i l&#39;hora trobada */</span>
+<span class="kt">void</span> <span class="nf">valida_resultat</span><span class="p">(</span><span class="n">Hora</span> <span class="n">he</span><span class="p">,</span> <span class="n">Hora</span> <span class="n">ht</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">he</span><span class="p">.</span><span class="n">h</span><span class="o">!=</span><span class="n">ht</span><span class="p">.</span><span class="n">h</span> <span class="o">||</span> <span class="n">he</span><span class="p">.</span><span class="n">m</span><span class="o">!=</span><span class="n">ht</span><span class="p">.</span><span class="n">m</span> <span class="o">||</span> <span class="n">he</span><span class="p">.</span><span class="n">s</span><span class="o">!=</span><span class="n">ht</span><span class="p">.</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> esperat %d:%d:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">he</span><span class="p">.</span><span class="n">h</span><span class="p">,</span> <span class="n">he</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">he</span><span class="p">.</span><span class="n">s</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t</span><span class="s"> trobat  %d:%d:%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ht</span><span class="p">.</span><span class="n">h</span><span class="p">,</span> <span class="n">ht</span><span class="p">.</span><span class="n">m</span><span class="p">,</span> <span class="n">ht</span><span class="p">.</span><span class="n">s</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Hora</span> <span class="n">ho</span><span class="p">,</span> <span class="n">he</span><span class="p">,</span> <span class="n">hc</span><span class="p">;</span> <span class="cm">/* declara les hores origen, esperada i calculada */</span>
+
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ho</span><span class="p">);</span>
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">he</span><span class="p">);</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">hc</span><span class="p">);</span>
+
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">ho</span><span class="p">);</span>
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">he</span><span class="p">);</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">hc</span><span class="p">);</span>
+
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">ho</span><span class="p">);</span>
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">he</span><span class="p">);</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">hc</span><span class="p">);</span>
+
+    <span class="n">assigna_valors</span><span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">ho</span><span class="p">);</span>
+    <span class="n">assigna_valors</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="o">&amp;</span><span class="n">he</span><span class="p">);</span>
+    <span class="n">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">ho</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hc</span><span class="p">);</span>
+    <span class="n">valida_resultat</span><span class="p">(</span><span class="n">he</span><span class="p">,</span> <span class="n">hc</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Fixa't que:</p>
+<ul>
+<li><p class="first">El bloc iniciat a la línia 4 declara un nou tipus de dades anomenat
+<tt class="docutils literal">Hora</tt> que està format per tres <em>camps</em> enters.</p>
+</li>
+<li><p class="first">La línia 37 declara tres variables de tipus <tt class="docutils literal">Hora</tt>.</p>
+</li>
+<li><p class="first">La línia 41 passa dues variables de tipus <tt class="docutils literal">Hora</tt> com arguments de
+la crida a una subrutina. La primera la passa per valor i la segona
+per referència.</p>
+</li>
+<li><p class="first">A la línia 29 es mostra com, a partir del nom d'una variable de
+tipus <tt class="docutils literal">Hora</tt> es pot accedir als valors dels seus camps. La forma
+general és</p>
+<div class="highlight"><pre><span class="n">variable</span><span class="p">.</span><span class="n">nom_camp</span>
+</pre></div>
+</li>
+<li><p class="first">A la línia 13 es mostra com accedir a un camp a partir de la
+referència a una variable de tipus <tt class="docutils literal">Hora</tt>. La forma
+general és</p>
+<div class="highlight"><pre><span class="n">variable</span><span class="o">-&gt;</span><span class="n">nom_camp</span>
+</pre></div>
+<p>És a dir, accedirem als camps de manera diferent si disposem de la
+variable o d'una referència a aquesta.</p>
+<p>De fet, la notació amb fletxeta és en realitat una <em>comoditat</em> que
+ens ofereix el llenguatge. Podem fer servir l'asterisc per
+derreferenciar la variable i accedir directament als seus camps
+mitjançant el punt</p>
+<div class="highlight"><pre><span class="p">(</span><span class="o">*</span><span class="n">hora</span><span class="p">).</span><span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">;</span>
+</pre></div>
+</li>
+</ul>
+<p>Per cert, en aquest cas podem copiar directament els valors dels camps
+d'una Hora en una altra:</p>
+<div class="highlight"><pre><span class="n">he</span><span class="o">=</span><span class="n">ho</span><span class="p">;</span> <span class="n">he</span><span class="p">.</span><span class="n">s</span><span class="o">++</span><span class="p">;</span>
+</pre></div>
+<p>Malauradament no podrem fer el mateix amb la comparació
+(ex. <tt class="docutils literal">if (he != ht) <span class="pre">«...»</span></tt>) En tot cas, no es recomanable que facis
+servir aquesta assignació directa en cas que algun dels camps sigui un
+punter (ex. un string) ja que et trobaràs amb que només es copia
+l'adreça. En resum: millor fes-te un procediment que dupliqui el
+contingut de la teva estructura en una altra.</p>
+</div>
+<div class="section" id="exercici-3-incrementa-l-hora-amb-estructura">
+<h3>Exercici 3. Incrementa l'hora amb estructura</h3>
+<p>Completa el codi anterior de manera que compili i executi sense cap
+missatge.</p>
+</div>
+<div class="section" id="exercici-4-el-tipus-data">
+<h3>Exercici 4**. El tipus Data</h3>
+<p>Implementa un nou tipus de dades anomenat <tt class="docutils literal">Data</tt> que estigui
+composat de tres enters: dia, mes i any.</p>
+<p>Desenvolupa un programa similar al de l'exercici anterior que permeti
+provar una funció anomenada <tt class="docutils literal">incrementa_dia_a_data()</tt> en els
+casos rellevants.</p>
+<p>Nota: sí, has de considerar els diferents dies que té cada mes i els
+anys de traspàs. Serà acceptable que consideris com a any de traspàs
+qualsevol any múltiple de 4. No serà precís però sí ràpid
+d'implementar.</p>
+</div>
+<div class="section" id="exercici-5-el-tipus-persona">
+<h3>Exercici 5*. El tipus Persona</h3>
+<p>No hi ha cap raó per què una estructura no pugui tenir camps amb tipus
+de dades diferents. Fins i tot aquest podria ser un tipus definit per
+nosaltres.</p>
+<p>Defineix el tipus <tt class="docutils literal">Persona</tt> que té un camp nom i un camp data de
+naixement.</p>
+<p>Completa el següent codi de manera que compili i executi sense cap
+missatge</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include&lt;stdio.h&gt;</span>
+<span class="cp">#include&lt;string.h&gt;</span>
+
+<span class="cm">/* definició d&#39;estructura/es */</span>
+<span class="err">«</span><span class="p">...</span><span class="err">»</span>
+
+<span class="cm">/* assigna els valors h, m i s als components de la referència a Hora.</span>
+<span class="cm"> * Pressuposa valors correctes. */</span>
+<span class="kt">void</span> <span class="n">assigna_data</span><span class="p">(</span><span class="kt">int</span> <span class="n">dia</span><span class="p">,</span> <span class="kt">int</span> <span class="n">mes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">any</span><span class="p">,</span> <span class="n">Data</span> <span class="o">*</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* mostra una data per sortida estàndard en format d/m/a */</span>
+<span class="kt">void</span> <span class="n">mostra_data</span><span class="p">(</span><span class="n">Data</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* Donada dues Dates, retorna cert quan les dues coincideixen en dia i mes */</span>
+<span class="kt">int</span> <span class="n">es_aniversari_data</span><span class="p">(</span><span class="n">Data</span> <span class="n">d1</span><span class="p">,</span> <span class="n">Data</span> <span class="n">d2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* Donat un nom i una data, copia els valors a la persona */</span>
+<span class="kt">void</span> <span class="n">assigna_persona</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">nom</span><span class="p">,</span> <span class="n">Data</span> <span class="n">data</span><span class="p">,</span> <span class="n">Persona</span> <span class="o">*</span><span class="n">persona</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* Donada una Persona i una Data, retorna si és l&#39;aniversari de la persona</span>
+<span class="cm"> * en aquesta data. */</span>
+<span class="kt">int</span> <span class="n">es_aniversari_persona</span><span class="p">(</span><span class="n">Persona</span> <span class="n">p</span><span class="p">,</span> <span class="n">Data</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="cm">/* mostra la persona per sortida estàndard</span>
+<span class="cm"> * El format és [nom: «nom», dn: «data naixement»] */</span>
+<span class="kt">void</span> <span class="n">mostra_persona</span><span class="p">(</span><span class="n">Persona</span> <span class="n">persona</span><span class="p">)</span> <span class="p">{</span>
+    <span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Persona</span> <span class="n">persona</span><span class="p">;</span>
+    <span class="n">Data</span> <span class="n">data_naixement</span><span class="p">,</span> <span class="n">data_avui</span><span class="p">;</span>
+
+    <span class="n">assigna_data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2013</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data_naixement</span><span class="p">);</span>
+    <span class="n">data_avui</span> <span class="o">=</span> <span class="n">data_naixement</span><span class="p">;</span>
+    <span class="n">assigna_persona</span><span class="p">(</span><span class="s">&quot;Joan&quot;</span><span class="p">,</span> <span class="n">data_naixement</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">persona</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">es_aniversari_persona</span><span class="p">(</span><span class="n">persona</span><span class="p">,</span> <span class="n">data_avui</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: es_aniversari_persona(&quot;</span><span class="p">);</span>
+        <span class="n">mostra_persona</span><span class="p">(</span><span class="n">persona</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">);</span>
+        <span class="n">mostra_data</span><span class="p">(</span><span class="n">data_avui</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;) retorna fals</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">assigna_data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2013</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data_naixement</span><span class="p">);</span>
+    <span class="n">data_avui</span> <span class="o">=</span> <span class="n">data_naixement</span><span class="p">;</span>
+    <span class="n">data_avui</span><span class="p">.</span><span class="n">d</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">assigna_persona</span><span class="p">(</span><span class="s">&quot;Marta&quot;</span><span class="p">,</span> <span class="n">data_naixement</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">persona</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">es_aniversari_persona</span><span class="p">(</span><span class="n">persona</span><span class="p">,</span> <span class="n">data_avui</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: es_aniversari_persona(&quot;</span><span class="p">);</span>
+        <span class="n">mostra_persona</span><span class="p">(</span><span class="n">persona</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">);</span>
+        <span class="n">mostra_data</span><span class="p">(</span><span class="n">data_avui</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;) retorna cert</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">assigna_data</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2013</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data_naixement</span><span class="p">);</span>
+    <span class="n">data_avui</span> <span class="o">=</span> <span class="n">data_naixement</span><span class="p">;</span>
+    <span class="n">data_avui</span><span class="p">.</span><span class="n">a</span><span class="o">--</span><span class="p">;</span>
+    <span class="n">assigna_persona</span><span class="p">(</span><span class="s">&quot;Pau&quot;</span><span class="p">,</span> <span class="n">data_naixement</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">persona</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="n">es_aniversari_persona</span><span class="p">(</span><span class="n">persona</span><span class="p">,</span> <span class="n">data_avui</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: es_aniversari_persona(&quot;</span><span class="p">);</span>
+        <span class="n">mostra_persona</span><span class="p">(</span><span class="n">persona</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">);</span>
+        <span class="n">mostra_data</span><span class="p">(</span><span class="n">data_avui</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;) retorna fals</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Pista: recorda que l'assignació d'un string no es pot fer directament
+en C. Per això la inclusió de <tt class="docutils literal">string.h</tt>.</p>
+</div>
+<div class="section" id="exercici-6-data-i-hora">
+<h3>Exercici 6*. Data i Hora</h3>
+<p>Defineix ara el tipus <tt class="docutils literal">DataHora</tt> que estarà format per dos camps
+de tipus <tt class="docutils literal">Data</tt> i <tt class="docutils literal">Hora</tt> respectivament.</p>
+<p>Implementa la següent subrutina</p>
+<div class="highlight"><pre><span class="cm">/* Donada una DataHora d&#39;origen calcula el valor corresponent a</span>
+<span class="cm">   sumar-li un segon i deixa el resultat en la DataHora calculada.</span>
+<span class="cm">   Pressuposa que els valors d&#39;origen són correctes. */</span>
+<span class="kt">void</span> <span class="nf">incrementa_segon_a_datahora</span><span class="p">(</span><span class="n">DataHora</span> <span class="n">dho</span><span class="p">,</span> <span class="n">DataHora</span> <span class="o">*</span><span class="n">dhc</span><span class="p">);</span>
+</pre></div>
+<p>Implementa un programa que permeti comprovar el funcionament d'aquesta
+subrutina, incloent totes les comprovacions realitzades a exercicis
+previs d'Hora i de Data.</p>
+</div>
+</div>
+<div class="section" id="tads">
+<h2>TADs</h2>
+<p>És probable que ja t'hagis fixat en que algunes subrutines
+acompanyen als tipus que hem definit. Si és així, felicitats, t'has
+adonat pel teu compte d'un concepte molt important a l'hora de
+reutilitzar codi: l'<em>abstracció</em>.</p>
+<p>El concepte d'abstracció implica la definició de tipus i les
+operacions associades a aquests, de manera que si fem servir sempre
+aquestes operacions no ens haurem de preocupar de la implementació
+interna del tipus.</p>
+<p>Quan el nostre tipus ve acompanyat de les operacions (subrutines) per
+manipular-lo, de manera que es pugui fer servir sense preocupar-se per
+la seva implementació interna, direm que és un <em>Tipus Abstracte de
+Dades</em> o <em>TAD</em>.</p>
+<p>Això ens ofereix almenys els següents avantatges:</p>
+<ol class="arabic">
+<li><p class="first">millora la reutilització de codi</p>
+<p>Si un tipus està tan ben definit que disposem de totes les
+operacions necessàries per manegar-lo, el podrem fer servir en
+altres contexts.</p>
+</li>
+<li><p class="first">facilita el control d'errors.</p>
+<p>Donat que només es pot modificar els valors interns del nostre TAD
+mitjançant les operacions que oferim, sabem que si variables del
+TAD tenen un valor erroni, aquest l'haurem assignat nosaltres des
+de les nostres operacions. No cal cercar tant, oi?</p>
+</li>
+<li><p class="first">independitza de la implementació</p>
+<p>Com que el codi que fa servir aquests tipus abstractes no accedeix
+mai a la implementació interna del tipus, podem canviar aquesta
+implementació amb tranquil·litat de que el codi que abans
+funcionava continuarà fent-ho, si no afegim nous errors i mantenim
+la signatura de les subrutines.</p>
+<p>Per a què podem voler canviar la implementació d'un tipus ja
+definit? doncs per exemple per fer-lo més eficient, o per afegir
+noves funcionalitats.</p>
+</li>
+</ol>
+<div class="section" id="exercici-4-el-tad-hora">
+<h3>Exercici 4. El TAD Hora</h3>
+<p>Les següents subrutines sobre l'estructura Hora podrien permetre un ús
+<em>abstracte</em> d'aquesta, de manera que si canviem la implementació (ex.
+implementem les hores, minuts i segons en array d'enters), no calgui
+modificar els programes que facin servir <em>només</em> les subrutines.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* assigna els valors que composen l&#39;hora.</span>
+<span class="cm"> * Retorna 0 si algun dels valors és incorrecte */</span>
+<span class="kt">int</span> <span class="nf">assigna_valors_a_hora</span><span class="p">(</span><span class="kt">int</span> <span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* assigna el valor de les hores a l&#39;hora.</span>
+<span class="cm"> * Retorna 0 si el valor és incorrecte */</span>
+<span class="kt">int</span> <span class="nf">assigna_hores_a_hora</span><span class="p">(</span><span class="kt">int</span> <span class="n">h</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* assigna el valor dels minuts a l&#39;hora.</span>
+<span class="cm"> * Retorna 0 si el valor és incorrecte */</span>
+<span class="kt">int</span> <span class="nf">assigna_minuts_a_hora</span><span class="p">(</span><span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* assigna el valor dels segons a l&#39;hora.</span>
+<span class="cm"> * Retorna 0 si el valor és incorrecte */</span>
+<span class="kt">int</span> <span class="nf">assigna_segons_a_hora</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* Retorna 0 si hi ha algun error en algun dels valors considerant-los</span>
+<span class="cm"> * components d&#39;una Hora */</span>
+<span class="kt">int</span> <span class="nf">valida_valors_hora</span><span class="p">(</span><span class="kt">int</span> <span class="n">h</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">);</span>
+
+<span class="cm">/* Retorna 0 si hi ha algun error en algun dels valors de l&#39;Hora. */</span>
+<span class="kt">int</span> <span class="nf">valida_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* retorna les hores d&#39;una Hora.</span>
+<span class="cm"> * Pressuposa valors correctes de l&#39;hora */</span>
+<span class="kt">int</span> <span class="nf">obte_hores_de_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* retorna els minuts d&#39;una Hora.</span>
+<span class="cm"> * Pressuposa valors correctes de l&#39;hora */</span>
+<span class="kt">int</span> <span class="nf">obte_minuts_de_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* retorna els segons d&#39;una Hora.</span>
+<span class="cm"> * Pressuposa valors correctes de l&#39;hora */</span>
+<span class="kt">int</span> <span class="nf">obte_segons_de_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">hora</span><span class="p">);</span>
+
+<span class="cm">/* incrementa un segon a l&#39;hora d&#39;origen i deixa el resultat a l&#39;hora</span>
+<span class="cm"> * calculda.</span>
+<span class="cm"> * Pressuposa valors correctes de l&#39;hora d&#39;origen */</span>
+<span class="kt">void</span> <span class="nf">incrementa_segon_a_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">ho</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hc</span><span class="p">);</span>
+
+<span class="cm">/* converteix l&#39;hora en un string amb format h:m:s</span>
+<span class="cm"> * Pressuposa que hi ha prou espai reservat a dest */</span>
+<span class="kt">void</span> <span class="nf">convert_hora_a_string</span><span class="p">(</span><span class="n">Hora</span> <span class="n">hora</span><span class="p">,</span> <span class="kt">char</span> <span class="n">dest</span><span class="p">[]);</span>
+
+<span class="cm">/* compara dues hores. Retorna cert si les dues hores són iguals.</span>
+<span class="cm"> * És a dir, contenen els mateixos valors */</span>
+<span class="kt">int</span> <span class="nf">compara_hores</span><span class="p">(</span><span class="n">Hora</span> <span class="n">h1</span><span class="p">,</span> <span class="n">Hora</span> <span class="n">h2</span><span class="p">);</span>
+
+<span class="cm">/* copia els valors d&#39;una hora en una altra de manera que les dues</span>
+<span class="cm"> * hores siguin iguals. */</span>
+<span class="kt">void</span> <span class="nf">duplica_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">origen</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">desti</span><span class="p">);</span>
+
+<span class="cm">/* incrementa l&#39;hora ho en un segon i deixa el resultat a hd.</span>
+<span class="cm">   En cas que l&#39;hora fos 23:59:59, retorna 1, altrament retorna 0. */</span>
+<span class="kt">int</span> <span class="nf">incr_segon_a_hora</span><span class="p">(</span><span class="n">Hora</span> <span class="n">ho</span><span class="p">,</span> <span class="n">Hora</span> <span class="o">*</span><span class="n">hd</span><span class="p">);</span>
+</pre></div>
+</td></tr></table><p>El codi anterior només inclou la signatura de les subrutines. Algunes
+ja les teníem implementades encara que de manera lleugerament
+diferent. Per exemple, <em>assigna_valors_a_hora()</em> abans es deia
+<em>assigna_valors()</em>, i <em>incr_segon_a_hora()</em> abans no retornava res.</p>
+<p>Completa el codi de totes les funcions i modifica el codi de les
+funcions <tt class="docutils literal">main()</tt> i <tt class="docutils literal">valida_resultat()</tt> de l'exercici 3, de manera
+que faci servir les subrutines anteriors en comptes d'accedir
+directament als camps de l'estructura <em>Hora</em>.</p>
+<p>Nota: fixa't que moltes d'aquestes subrutines no les necessitem per
+aquest <em>main()</em>. Potser en altres aplicacions apareixerà la
+necessitat.</p>
+</div>
+</div>
+<div class="section" id="mes-d-un-fitxer">
+<h2>Més d'un fitxer</h2>
+<p>Ara ja disposem del concepte de TAD. No trobes, però, que és una mica
+incòmode a l'hora de reutilitzar codi? És clar, cada cop que vull fer
+servir el TAD Hora, em cal copiar i enganxar tot el codi en el fitxer
+on tinc el <tt class="docutils literal">main()</tt>. No és gaire àgil, no...</p>
+<p>El que ens cal és trobar una manera de col·locar el codi del TAD en un
+fitxer i demanar al compilador de C que l'<em>inclogui</em> amb el codi del
+nostre programa.</p>
+<div class="section" id="exercici-5-el-tad-hora-amb-mes-d-un-fitxer">
+<h3>Exercici 5. El TAD Hora amb més d'un fitxer</h3>
+<p>Segueix les passes:</p>
+<ol class="arabic">
+<li><p class="first">copia el codi de l'exercici 7 en un nou lloc.</p>
+</li>
+<li><p class="first">crea els fitxers: <tt class="docutils literal">tad_hora.h</tt>, <tt class="docutils literal">tad_hora.c</tt> i <tt class="docutils literal">usa_hora.c</tt>.</p>
+</li>
+<li><p class="first">mou el codi amb la definició del tipus Hora i la signatura de les
+subrutines (incloent comentaris) a <tt class="docutils literal">tad_hora.h</tt>.</p>
+</li>
+<li><p class="first">mou el codi amb el cos de les subrutines a <tt class="docutils literal">tad_hora.c</tt>.</p>
+</li>
+<li><p class="first">mou la resta de subrutines (<tt class="docutils literal">valida_resultat()</tt> i <tt class="docutils literal">main()</tt>) al
+fitxer <tt class="docutils literal">usa_hora.c</tt>.</p>
+</li>
+<li><p class="first">després de la capçalera de <tt class="docutils literal">tad_hora.h</tt> (perquè li has posat una
+capçalera, oi?) afegeix les següents línies:</p>
+<div class="highlight"><pre><span class="cp">#ifndef TAD_HORA_H   </span><span class="cm">/* permet garantir que no s&#39;ha inclós abans */</span><span class="cp"></span>
+<span class="cp">#define TAD_HORA_H</span>
+</pre></div>
+<p>Per altra banda, com a darrera línia afegeix la següent</p>
+<div class="highlight"><pre><span class="cp">#endif    </span><span class="cm">/* ve de ifndef TAD_HORA_H */</span><span class="cp"></span>
+</pre></div>
+<p>Aquestes línies, com diu el comentari, permeten que només es pugui
+incloure un cop. Més endavant veurem què vol dir això.</p>
+</li>
+<li><p class="first">després de la capçalera de <tt class="docutils literal">tad_hora.c</tt>, i abans d'altres
+<em>includes</em>, afegeix la línia</p>
+<div class="highlight"><pre><span class="cp">#include &quot;tad_hora.h&quot;</span>
+</pre></div>
+<p>Fixa't que va amb cometes dobles en comptes dels habituals angles.</p>
+<p>Com que en aquest fitxer hi apareix codi que fa servir, per
+exemple, el <tt class="docutils literal">printf()</tt>, et caldrà afegir els <em>includes</em>
+necessaris.</p>
+<p>Nota també que aquest fitxer no té funció <tt class="docutils literal">main()</tt>.</p>
+</li>
+<li><p class="first">compila <tt class="docutils literal">tad_hora.h</tt> i corregeix els errors que hi puguin haver</p>
+<div class="highlight"><pre><span class="nv">$ </span>gcc -Wall -c tad_hora.h
+</pre></div>
+<p>Fixa't que fem servir l'opció <tt class="docutils literal"><span class="pre">-c</span></tt> que indica a <tt class="docutils literal">gcc</tt> que
+únicament intenti compilar (sense enllaçar).</p>
+</li>
+<li><p class="first">compila <tt class="docutils literal">tad_hora.c</tt> i corregeix els errors que hi puguin haver</p>
+<div class="highlight"><pre><span class="nv">$ </span>gcc -Wall -c tad_hora.c
+</pre></div>
+<p>Sí, novament no volem enllaçar.</p>
+</li>
+<li><p class="first">inclou la capçalera del tad hora en el fitxer amb el <tt class="docutils literal">main()</tt>
+(suposem que es diu «usa_hora.c») i compila'l de la següent manera:</p>
+<div class="highlight"><pre><span class="nv">$ </span>gcc -Wall tad_hora.c usa_hora.c
+</pre></div>
+</li>
+<li><p class="first">executa el fitxer resultant de la manera habitual.</p>
+</li>
+</ol>
+<p>El resultat quedaria representat pel diagrama següent:</p>
+<div class="figure align-center">
+<img alt="El TAD Hora" src="./images/prg016.img001.tad_hora.png" />
+</div>
+</div>
+<div class="section" id="exercici-6-canvi-implementacio-del-tad-hora">
+<h3>Exercici 6. Canvi implementació del tad Hora</h3>
+<p>Comprovem ara que podem canviar la implementació interna d'un tipus
+abstracte sense afectar els programes que el fan servir.</p>
+<p>En concret, modifica el tipus de dades Hora de manera que ara tingui
+el següent aspecte:</p>
+<div class="highlight"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">val</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span> <span class="cm">/* codifica hores, minuts i segons a cada posició */</span>
+<span class="p">}</span> <span class="n">Hora</span><span class="p">;</span>
+</pre></div>
+<p>Modifica el que calgui a <tt class="docutils literal">tad_hora.c</tt>, torna a compilar i executar
+<tt class="docutils literal">usa_hora.c</tt> sense modificar el seu codi.</p>
+<p>Fixa't el que acabes de fer: has modificat completament la
+implementació de Hora però no t'ha calgut modificar el codi que la
+fa servir.</p>
+</div>
+<div class="section" id="exercici-10-el-tad-data">
+<h3>Exercici 10**. El TAD Data</h3>
+<p>Defineix el TAD Data amb operacions similars a les del TAD Hora. Crea
+un <tt class="docutils literal">UsaData.c</tt> similar al <tt class="docutils literal">UsaHora.c</tt>. Probablement ja el tens fet
+en un exercici anterior.</p>
+</div>
+<div class="section" id="exercici-11-el-tad-datahora">
+<h3>Exercici 11*. El TAD DataHora</h3>
+<p>Defineix ara el TAD DataHora.</p>
+<p>Fixa't que el nou TAD oferirà subrutines que simplement cridaran a
+subrutines dels TADs que conté. Per exemple,</p>
+<div class="highlight"><pre><span class="kt">int</span> <span class="nf">obte_hores_de_datahora</span><span class="p">(</span><span class="n">DataHora</span> <span class="n">dh</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">obte_hores_de_hora</span><span class="p">(</span><span class="n">dh</span><span class="p">.</span><span class="n">hora</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<p>Posa especial compte en que DataHora <strong>no</strong> accedeixi directament a
+les implementacions de Data ni d'Hora. Recorda que aquestes podrien
+canviar i no volem haver de modificar més codi de l'imprescindible.</p>
+<p>Afegeix un codi <tt class="docutils literal">usa_datahora.c</tt> que faci quelcom similar a
+<tt class="docutils literal">usa_hora.c</tt>. Probablement ja el tens fet en un exercici anterior.</p>
+</div>
+</div>
+<div class="section" id="la-utilitat-make">
+<h2>La utilitat make **</h2>
+<p>Quan el nombre de fitxers creix, apareix la necessitat de simplificar
+la seva gestió. Per exemple, per generar l'executable, fins ara només
+ens ha calgut fer servir <tt class="docutils literal">gcc</tt> tot indicant-li no més de tres
+fitxers font a compilar. Què passa però quan en comptes de tres en
+tenim trenta, o trescents...?</p>
+<p>Hi ha una utilitat molt habitual en el desenvolupament en C anomenada
+<tt class="docutils literal">make</tt>. De fet, <tt class="docutils literal">make</tt> pot ser utilitzada per gestionar arxius que
+tinguin algun tipus de dependència entre si.</p>
+<p>Si fem <tt class="docutils literal">man make</tt> , ens dirà que es tracta d'una utilitat per a
+mantenir un grup de programes, i que el seu propòsit és determinar
+automàticament quines peces d'un programa gran necessiten ser
+recompilades i llençar les comandes per recompilar-les.</p>
+<p>Un fitxer anomenat <tt class="docutils literal">Makefile</tt> defineix les dependències, de manera
+que només amb <tt class="docutils literal">make</tt> podem tenir l'executable apunt.</p>
+<p>Veiem un petit exemple amb el programa <tt class="docutils literal">usa_hora</tt>. Segueix les
+passes:</p>
+<ol class="arabic simple">
+<li>Crea una nova carpeta i copia-hi els fitxers <tt class="docutils literal">usa_hora.c</tt>,
+<tt class="docutils literal">tad_hora.c</tt> i <tt class="docutils literal">tad_hora.h</tt> desenvolupats a l'exercici 7.</li>
+<li>Crea un fitxer amb el nom <tt class="docutils literal">Makefile</tt> dins del nou directori i
+afegeix el següent contingut. Atenció: assegura't que fas servir un
+tabulador per indentar</li>
+</ol>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp"># Makefile: usa_hora</span>
+<span class="cp"># Descr:    Construeix l&#39;aplicació usa_hora</span>
+
+<span class="n">cflags</span> <span class="o">=</span> <span class="o">-</span><span class="n">Wall</span>
+<span class="n">cc</span> <span class="o">=</span> <span class="n">gcc</span>
+
+<span class="nl">all</span><span class="p">:</span> <span class="n">usa_hora</span>
+
+<span class="nl">usa_hora</span><span class="p">:</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">o</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">o</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">cflags</span><span class="p">)</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">o</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">o</span> <span class="o">-</span><span class="n">o</span> <span class="n">usa_hora</span>
+
+<span class="n">usa_hora</span><span class="p">.</span><span class="nl">o</span><span class="p">:</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">cflags</span><span class="p">)</span> <span class="o">-</span><span class="n">c</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span>
+
+<span class="n">tad_hora</span><span class="p">.</span><span class="nl">o</span><span class="p">:</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">cflags</span><span class="p">)</span> <span class="o">-</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span>
+
+<span class="nl">clean</span><span class="p">:</span>
+    <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="o">*~</span> <span class="o">*</span><span class="p">.</span><span class="n">o</span> <span class="n">usa_hora</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
+
+<span class="nl">tar</span><span class="p">:</span>
+    <span class="n">tar</span> <span class="n">czvf</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="n">Makefile</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span>
+</pre></div>
+</td></tr></table><p>Ara escriu a consola</p>
+<div class="highlight"><pre><span class="nv">$ </span>make
+</pre></div>
+<p>Amb aquesta comanda es llençaran les següents comandes:</p>
+<div class="highlight"><pre>gcc -Wall -c usa_hora.c
+gcc -Wall -c tad_hora.c
+gcc -Wall usa_hora.o tad_hora.o -o usa_hora
+</pre></div>
+<p>Si tornem a executar <tt class="docutils literal">make</tt> ens dirà quelcom similar a</p>
+<div class="highlight"><pre>make: Nothing to be <span class="k">done</span> <span class="k">for</span> <span class="sb">`</span>all<span class="err">&#39;</span>.
+</pre></div>
+<p>Ara modifiquem <tt class="docutils literal">usa_hora.c</tt>, o simplement el podem &quot;tocar&quot; amb</p>
+<div class="highlight"><pre><span class="nv">$ </span>touch usa_hora.c
+</pre></div>
+<p>Si tornem a fer <tt class="docutils literal">make</tt> trobarem que només compila <tt class="docutils literal">usa_hora.c</tt>
+però no <tt class="docutils literal">tad_hora.c</tt> ja que ha detectat que el seu font no ha estat
+modificat</p>
+<div class="highlight"><pre><span class="nv">$ </span>make
+gcc -Wall -c usa_hora.c
+gcc -Wall usa_hora.o tad_hora.o -o usa_hora
+</pre></div>
+<p>D'una manera coherent, <tt class="docutils literal">make</tt> compilarà el que correspongui depenent
+dels fitxers modificats:</p>
+<div class="highlight"><pre><span class="nv">$ </span>touch tad_hora.c
+<span class="nv">$ </span>make
+gcc -Wall -c tad_hora.c
+gcc -Wall usa_hora.o tad_hora.o -o usa_hora
+<span class="nv">$ </span>touch tad_hora.h
+<span class="nv">$ </span>make
+gcc -Wall -c usa_hora.c
+gcc -Wall -c tad_hora.c
+gcc -Wall usa_hora.o tad_hora.o -o usa_hora
+</pre></div>
+<p>Podem llegir el nostre fitxer <tt class="docutils literal">Makefile</tt> de la següent manera:</p>
+<ul class="simple">
+<li>línies 1 i 2: capçalera descriptiva (sí aquí també cal!)</li>
+<li>línies 4 i 5: definició de variables. Per exemple, només ens caldria
+canviar els valors assignats a <tt class="docutils literal">cflags</tt> per a definir noves
+opcions de compilació.</li>
+<li>línia 7: definició de l'objectiu principal <tt class="docutils literal">all</tt> que demana que
+estigui disponible el fitxer <tt class="docutils literal">usa_hora</tt>.</li>
+<li>línia 9: per a aconseguir el fitxer <tt class="docutils literal">usa_hora</tt> ens cal obtenir els
+fitxers <tt class="docutils literal">usa_hora.o</tt> i <tt class="docutils literal">tad_hora.o</tt>. Si <tt class="docutils literal">usa_hora</tt> no existeix
+o bé presenta una data <strong>anterior</strong> a la d'algun d'aquests dos
+fitxers, llavors s'executarà la comanda de la línia 10 (indentada
+amb un tabulador) que en substituir les variables pels seus valors,
+es traduiria per</li>
+</ul>
+<div class="highlight"><pre><span class="nv">$ </span>gcc -Wall usa_hora.o tad_hora.o -o usa_hora
+</pre></div>
+<ul>
+<li><p class="first">línies 11 i 14: indiquen com aconseguir els subobjectius requerits
+per l'objectiu <tt class="docutils literal">usa_hora</tt>. Bàsicament requereix que els fitxers
+objecte (<tt class="docutils literal">.o</tt>)tinguin una data posterior als fitxers font (<tt class="docutils literal">.c</tt>
+i <tt class="docutils literal">.h</tt>)</p>
+</li>
+<li><p class="first">línies 16 i 19: defineixen objectius independents al principal
+(<tt class="docutils literal">all</tt>)</p>
+<p>La utilitat <tt class="docutils literal">make</tt> ens permet disposar d'altres <em>objectius</em> a
+banda del principal. Per exemple, el nostre <tt class="docutils literal">Makefile</tt> disposa de
+l'objectiu <tt class="docutils literal">clean</tt>. Si l'executem ens eliminarà tots els fitxers
+temporals</p>
+</li>
+</ul>
+<div class="highlight"><pre>  <span class="nv">$ </span>make clean
+
+També disposa de l<span class="s1">&#39;opció tar que genera un paquet amb tots els</span>
+<span class="s1">fitxers font de l&#39;</span>aplicació
+</pre></div>
+<div class="highlight"><pre><span class="nv">$ </span>make tar
+</pre></div>
+<p>Hi ha moltes altres possibilitats amb el <tt class="docutils literal">make</tt>.  Amb el que hem
+vist, però, tenim una primera idea de les possibilitats de l'eina. Si
+tens interès en aprofundir-hi més, pots consultar per exemple el
+<a class="reference external" href="http://www.gnu.org/software/make/manual/make.html">manual oficial de make</a>.</p>
+<div class="section" id="exercici-7-makefile-pel-tad-punt">
+<h3>Exercici 7. Makefile pel TAD punt</h3>
+<p>Desenvolupa el TAD d'un punt que permeti manipular punts en dos
+dimensions (x, y). El TAD oferirà operacions per a assignar i obtenir
+cada coordenada i sumar dos punts deixant el resultat en un tercer.
+Crea un <tt class="docutils literal">usa_punt.c</tt> que creï dos punts amb valors demanats a
+l'usuari i mostri el resultat de sumar-los.</p>
+<p>Finalment, crea un Makefile adequat.</p>
+</div>
+<div class="section" id="exercici-13-makefile-pel-tad-data">
+<h3>Exercici 13*. Makefile pel TAD Data</h3>
+<p>Desenvolupa un <tt class="docutils literal">Makefile</tt> adequat pel TAD Data i el programa
+<tt class="docutils literal">usa_data</tt> de l'exercici 10.</p>
+</div>
+<div class="section" id="exercici-14-makefile-pel-tad-datahora">
+<h3>Exercici 14*. Makefile pel TAD DataHora</h3>
+<p>Desenvolupa un <tt class="docutils literal">Makefile</tt> adequat pel TAD DataHora i el programa
+<tt class="docutils literal">usa_datahora</tt> de l'exercici 11.</p>
+</div>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

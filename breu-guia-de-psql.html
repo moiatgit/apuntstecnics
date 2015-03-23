@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Breu guia de <em>psql</em></title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Breu guia de <em>psql</em>             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./installacio-de-postgresql.html">
+        Instal·lació de PostGreSQL
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./sgbd-objecte-relacional.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./primeres-passes-amb-la-consola-psql.html">
+        Primeres passes amb la consola <em>psql</em>
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Breu guia de <em>psql</em></h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada trobaràs una breu guia de les comandes que
+probablement necessitaràs durant aquest curs per fer anar <em>psql</em>.</p>
+<p>Pots venir a mirar aquesta guia cada cop que necessitis fer una
+consulta ràpida. El primer cop, però, et recomano que li facis una
+ullada ràpida i responguis els exercicis, per a tenir una idea de què
+hi pots trobar.</p>
+<p>En la <a class="reference external" href="./primeres-passes-amb-la-consola-psql.html">següent entrada</a> gran part del que
+apareix en aquesta guia cobrarà sentit. Mentrestant, et proposo que
+facis proves pel teu compte. Encara que no tinguis res a la base de
+dades, t'ajudarà a familiaritzar-te amb l'aplicació.</p>
+</div>
+<div class="section" id="guia-basica-de-comandes-de-psql">
+<h2>Guia bàsica de comandes de <em>psql</em></h2>
+<div class="section" id="per-entrar-i-per-sortir">
+<h3>Per entrar i per sortir</h3>
+<p>Ens connectarem a la base de dades <em>testbd</em> que es troba al servidor
+<em>192.168.56.101</em> amb l'usuari <em>usuaribd</em> escrivint al terminal
+<a class="footnote-reference" href="#contrasenya" id="id1">[1]</a> (ens demanarà contrasenya):</p>
+<div class="highlight"><pre><span class="nv">$ </span>psql -U usuaribd -d testbd -h 192.168.56.101
+</pre></div>
+<p>Per sortir de la consola de <em>psql</em>:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\q</span>
+</pre></div>
+</div>
+<div class="section" id="per-aconseguir-ajuda">
+<h3>Per aconseguir ajuda</h3>
+<p>En realitat, amb aquesta secció podria donar per finalitzada aquesta
+breu guia. La consola <em>psql</em> disposa d'un sistema d'ajut molt complet.</p>
+<p>Obtenim ajuda sobre el programa <em>psql</em> amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>psql --help
+</pre></div>
+<p>Obtenim ajuda sobre comandes <em>psql</em> amb:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\?</span>
+</pre></div>
+<p>Obtenim ajuda sobre comandes <em>sql</em> amb:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\h</span>
+</pre></div>
+<p>Si volem una comanda concreta, simplement l'afegim a continuació:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\h</span> SELECT
+</pre></div>
+</div>
+<div class="section" id="per-carregar-el-contingut-d-un-fitxer">
+<h3>Per carregar el contingut d'un fitxer</h3>
+<p>Des de terminal:</p>
+<div class="highlight"><pre><span class="nv">$ </span>psql -U usuaribd -d testbd -h 192.168.56.101 &lt; fitxer.sql
+</pre></div>
+<p>o també</p>
+<div class="highlight"><pre><span class="nv">$ </span>psql -U usuaribd -d testbd -h 192.168.56.101 -f fitxer.sql
+</pre></div>
+<p>Des de consola <em>psql</em>:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\i</span> fitxer.sql
+</pre></div>
+</div>
+<div class="section" id="per-guardar-el-resultat-d-una-consulta-en-un-fitxer">
+<h3>Per guardar el resultat d'una consulta en un fitxer</h3>
+<p>Guardarem la sortida de</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\o</span> fitxer.sql
+</pre></div>
+<p>Per recuperar la sortida en la consola:</p>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\o</span>
+</pre></div>
+</div>
+<div class="section" id="consultar-objectes-de-la-base-de-dades">
+<h3>Consultar objectes de la base de dades</h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>\d</td>
+<td>mostra tables, seqüències, vistes i indexos</td>
+</tr>
+<tr><td>\dt</td>
+<td>mostra les tables</td>
+</tr>
+<tr><td>\dt clients</td>
+<td>mostra els detalls de la taula <em>clients</em></td>
+</tr>
+<tr><td>\dt+ clients</td>
+<td>mostra <strong>més</strong> detalls sobre la taula <em>clients</em></td>
+</tr>
+<tr><td>\dt cl*</td>
+<td>mostra els detalls de les taules que comencen amb <em>cl</em></td>
+</tr>
+<tr><td>\d clients</td>
+<td>mostra la descripció de la taula <em>clients</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-massa-linies">
+<h3>Exercici 1. Massa línies</h3>
+<p>Què passa quan el resultat d'una comanda sobrepassa el nombre de
+línies que tenim disponibles a la finestra des de la que estem
+treballant?</p>
+<p>Pista: fes que la finestra del terminal mostri un màxim de 10 línies i
+demana la llista de totes les comandes <em>sql</em> que enten <em>postgresql</em>.</p>
+</div>
+<div class="section" id="exercici-2-les-taules-vip">
+<h3>Exercici 2. Les taules <em>vip</em></h3>
+<p>Amb quina comanda psql podem veure la llista de les taules que
+el seu nom finalitza amb &quot;vip&quot;.</p>
+<p>La comanda hauria de mostrar taules amb els següents noms:</p>
+<ul class="simple">
+<li>CLIENTS_VIP</li>
+<li>COMANDES_VIP</li>
+<li>TAULAVIP</li>
+</ul>
+</div>
+<div class="section" id="exercici-3-help">
+<h3>Exercici 3. Help!</h3>
+<p>Et toca investigar una mica en l'ajut de <em>psql</em>.</p>
+<p>Indica amb quina <strong>única</strong> comanda podríem executar el contingut del
+fitxer <em>entrada.sql</em> i deixar el resultat en el fitxer <em>sortida.sql</em>.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="contrasenya" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>ens demanarà contrasenya. A l'exemple hem fet servir
+<em>pass</em>. No és gaire segura, però en la configuració que et proposen
+els apunts, no representa un gran problema.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./installacio-de-postgresql.html">
+        Instal·lació de PostGreSQL
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./sgbd-objecte-relacional.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./primeres-passes-amb-la-consola-psql.html">
+        Primeres passes amb la consola <em>psql</em>
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

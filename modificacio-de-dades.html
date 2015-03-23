@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Modificació de dades</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Modificació de dades             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./eliminacio-de-documents.html">
+        Eliminació de documents
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./subdocuments.html">
+        Subdocuments
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Modificació de dades</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+        (Darrera modificació: <b> 9/4/2014 </b>)
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Fins el moment, hem vist com consultar, afegir i eliminar documents
+d'una base de dades MongoDB. Ens queda només una operació bàsica: la
+modificació de dades ja introduïdes.</p>
+<p>Aquest és el tema de l'article que estàs llegint.</p>
+</div>
+<div class="section" id="id1">
+<h2>Modificació de dades</h2>
+<p>El mètode <em>update</em> ens permet realitzar canvis a les dades introduïdes
+a una col·lecció.</p>
+<p>Aquest mètode, tal i com descriuen a la <a class="reference external" href="http://docs.mongodb.org/manual/reference/method/db.collection.update/">documentació oficial</a>,
+ofereix la següent signatura:</p>
+<div class="highlight"><pre>db.«col·lecció».update(
+    «consulta»,
+    «modificació»,
+    «modificadors»
+)
+</pre></div>
+<p>En breu:</p>
+<ul class="simple">
+<li>La <em>consulta</em> és un document que descriu els criteris de sel·lecció
+dels elements a modificar. Realitza la mateixa funció que el primer
+paràmetre del mètode <em>find</em>.</li>
+<li>La <em>modificació</em> és també un document. En aquest cas descriu els
+canvis a realitzar.</li>
+<li>Els <em>modificadors</em> són opcionals i permeten concretar determinats
+aspectes de la modificació.</li>
+</ul>
+<p>Veiem un exemple:</p>
+<div class="highlight"><pre><span class="lineno"> 1 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Marc Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="lineno"> 2 </span><span class="p">{</span>
+<span class="lineno"> 3 </span>    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+<span class="lineno"> 4 </span>    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Marc Hernández Muñoz&quot;</span><span class="p">,</span>
+<span class="lineno"> 5 </span>    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span><span class="p">,</span>
+<span class="lineno"> 6 </span>    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span>
+<span class="lineno"> 7 </span>    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1200</span>
+<span class="lineno"> 8 </span><span class="p">}</span>
+<span class="lineno"> 9 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+<span class="lineno">10 </span>    <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Marc Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">,</span>
+<span class="lineno">11 </span>    <span class="p">{</span>
+<span class="lineno">12 </span>        <span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span>
+<span class="lineno">13 </span>        <span class="nx">edat</span><span class="o">:</span><span class="mi">76</span><span class="p">,</span>
+<span class="lineno">14 </span>        <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;docent&quot;</span><span class="p">,</span>
+<span class="lineno">15 </span>        <span class="nx">sou</span><span class="o">:</span><span class="mi">852</span>
+<span class="lineno">16 </span>    <span class="p">})</span>
+<span class="lineno">17 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="lineno">18 </span><span class="p">{</span>
+<span class="lineno">19 </span>    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+<span class="lineno">20 </span>    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span>
+<span class="lineno">21 </span>    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">76</span><span class="p">,</span>
+<span class="lineno">22 </span>    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span>
+<span class="lineno">23 </span>    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">852</span>
+<span class="lineno">24 </span><span class="p">}</span>
+</pre></div>
+<p>Observa com el document de consulta és el mateix pel <em>find</em> (línia 1)
+que pel <em>update</em> (línia 10).</p>
+<p>El canvi realitzat reflecteix alguns canvis que ha experimentat
+l'antic senyor Marc Hernández:</p>
+<ul class="simple">
+<li>un canvi de nom. Ara es diu <em>Martina</em></li>
+<li>un canvi d'edat. És que el temps passa volant <a class="footnote-reference" href="#edatjubilacio" id="id2">[1]</a>.</li>
+<li>la professió es manté però el sou es redueix.</li>
+</ul>
+<p>La darrera consulta permet comprovar que els canvis s'han realitzat
+correctament. Fixa't que l'identificador del document és el mateix.</p>
+<div class="section" id="exercici-1-els-canvis-del-sr-hernandez">
+<h3>Exercici 1. Els canvis del Sr. Hernández</h3>
+<p>Torna a carregar les dades del fitxer de <a class="reference external" href="./resources/persones01.json">persones</a>, tot eliminant els canvis que
+hagis pogut realitzar en exercicis anteriors. Modifica el document del
+Sr. Hernández tal i com es descriu a l'exemple anterior.</p>
+</div>
+<div class="section" id="exercici-2-la-nostra-religiosa-es-fa-desenvolupadora-web">
+<h3>Exercici 2. La nostra religiosa es fa desenvolupadora web</h3>
+<p>Recupera la col·lecció de <em>persones</em> que hem treballat anteriorment.</p>
+<p>Modifica les dades de la monja Júlia Galceran de manera que
+reflecteixin els següents canvis:</p>
+<ul class="simple">
+<li>el seu 1er cognom, <em>Galceran</em> conté un error. Ha de ser <em>Galcerán</em></li>
+<li>tot just després de registrar-se a la nostra col·lecció, la Júlia es
+va matricular al cicle de Desenvolupament d'Aplicacions Web. Dos
+anys més tard el va finalitzar. Va trobar una feina relativament ben
+pagada (<strong>3200</strong> €) com a desenvolupadora web (per favor, manté la
+forma genèrica &quot;<strong>desenvolupador/a</strong>&quot;) i va penjar els hàbits.</li>
+<li>l'edat d'ara és 29 anys. Sí, ho va aprovar tot a la primera.</li>
+</ul>
+</div>
+<div class="section" id="quan-no-totes-les-claus-pateixen-canvi">
+<h3>Quan no totes les claus pateixen canvi</h3>
+<p>Als exemples anteriors, el segon paràmetre de <em>update</em> inclou <strong>totes</strong>
+les claus del document.</p>
+<p>Has provat què passa si no les especifiques totes? Fixa't en el
+següent exemple:</p>
+<p>Fixa't en el següent exemple:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">76</span><span class="p">,</span>
+    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">852</span>
+<span class="p">}</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+    <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="nx">sou</span><span class="o">:</span> <span class="mi">3250</span> <span class="p">}</span> <span class="p">)</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="kc">null</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">)})</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3250</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>La modificació de la línia 9 intenta reflectir el fet que la Sra.
+Hernández ha decidit deixar la docència i passar a treballar com a
+desenvolupadora amb un sou més competitiu.</p>
+<p>Però quan consultem el seu registre, veiem que alguna cosa no ha anat
+com s'esperava.</p>
+<p>En tornar-la a demanar (línia 12) ens respon amb un <em>null</em>. Amb tot,
+si la demanem per l'identificador <a class="footnote-reference" href="#elteucasseradiferent" id="id3">[2]</a> (línia 14),
+sí que apareix un document amb les dades especificades al <em>update</em>
+pero sense d'altres com ara el nom. De fet, excepte per
+l'identificador, el document de la Sra.  Hernández ha perdut tots els
+camps que no apareixien a la modificació!</p>
+<p>El mètode <em>update</em> considera que el que volem és reemplaçar el
+document original (excepte la clau) pel document que se li proporciona
+al segon paràmetre.</p>
+<p>No sempre ens interessarà haver d'especificar tots els camps per
+modificar-ne només un (imagina si només vols actualitzar l'edat).
+Sortosament, <em>update</em> ens ofereix una alternativa: utilitzar
+<a class="reference external" href="http://docs.mongodb.org/manual/reference/operator/update/">operadors de modificació</a></p>
+<p>Considera la següent seqüència:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">76</span><span class="p">,</span>
+    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;docent&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">852</span>
+<span class="p">}</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span>
+    <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">$set</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="nx">sou</span><span class="o">:</span> <span class="mi">3250</span> <span class="p">}})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">76</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3250</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Inicialment recuperem la &quot;destrossa&quot; feta al registre de la Sra.
+Hernández.</p>
+<p>A partir de la línia 17 llencem la petició de canvi. Aquest cop, però,
+fixa't que no estem indicant directament el document amb els canvis
+com a segon paràmetre de <em>update</em>. En canvi, apareix <em>$set</em>. Es tracta
+d'un operador de canvi que permet indicar la substitució del valor de
+les claus que apareguin al document que el segueix.</p>
+</div>
+<div class="section" id="exercici-3-a-la-julia-li-pugen-el-sou">
+<h3>Exercici 3. A la Júlia li pugen el sou</h3>
+<p>Modifica el sou de Júlia, de manera que ara passi a cobrar 3525€ en
+comptes dels 3200€ anteriors.</p>
+<p>Especifica al segon paràmetre de <em>update</em> només el nou valor del sou.</p>
+</div>
+<div class="section" id="altres-operadors-de-modificacio">
+<h3>Altres operadors de modificació</h3>
+<p>A banda de <em>$set</em> hi ha més operadors de modificació disponibles.
+Podem, per exemple, reanomenar una clau amb <em>$rename</em> o fins i tot
+eliminar-ne la clau amb <em>$unset</em>.</p>
+<p>Un canvi molt habitual que ens pot interessar és el d'incrementar (o
+decrementar) un valor numèric. Per exemple, imagina que volem pujar-li
+el sou de la Sra. Hernández en 200€. Podem consultar el seu sou actual
+amb <em>find</em>, sumar-li 200 (mentalment?) i després fer una crida a
+<em>update</em> especificant amb <em>$set</em> el nou valor per la clau <em>sou</em>. O
+també podem fer el següent:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">$inc</span><span class="o">:</span><span class="p">{</span><span class="s2">&quot;sou&quot;</span><span class="o">:</span> <span class="mi">200</span> <span class="p">}})</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span><span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">}</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5345b1c54882ee6c0e36cefe&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">76</span><span class="p">,</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3450</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Fixa't en l'ús de l'operador <em>$inc</em>: és molt similar al de <em>$set</em>, oi?
+I a l'igual que amb <em>$set</em>, <em>update</em> manté la resta de camps.</p>
+</div>
+<div class="section" id="exercici-4-actualitza-l-edat-de-la-julia">
+<h3>Exercici 4. Actualitza l'edat de la Júlia</h3>
+<p>Ha passat un any. Incrementa l'edat de la Júlia.</p>
+<p><em>Nota</em>: deixa que sigui MongoDB qui se n'encarregui del càlcul de
+l'antiga edat més 1.</p>
+</div>
+<div class="section" id="quants-documents-es-modifiquen">
+<h3>Quants documents es modifiquen?</h3>
+<p>Apa, siguem corporatius: pugem-li el sou 100€ a tots els
+desenvolupadors que tenim a la col·lecció <em>persones</em>.</p>
+<p>La crida seria quelcom similar a:</p>
+<div class="highlight"><pre><span class="lineno"> 1 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sou</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="lineno"> 2 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2500</span> <span class="p">}</span>
+<span class="lineno"> 3 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="lineno"> 4 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+<span class="lineno"> 5 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3450</span> <span class="p">}</span>
+<span class="lineno"> 6 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Júlia Galcerán Buscart&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3200</span> <span class="p">}</span>
+<span class="lineno"> 7 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">$inc</span><span class="o">:</span><span class="p">{</span><span class="nx">sou</span><span class="o">:</span><span class="mi">100</span><span class="p">}})</span>
+<span class="lineno"> 8 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sou</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="lineno"> 9 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+<span class="lineno">10 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1800</span> <span class="p">}</span>
+<span class="lineno">11 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3450</span> <span class="p">}</span>
+<span class="lineno">12 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Júlia Galcerán Buscart&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3200</span> <span class="p">}</span>
+<span class="lineno">13 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2600</span> <span class="p">}</span>
+</pre></div>
+<p>Què ha passat? Sembla que la Irene (línies 2 i 13) ha estat la
+<strong>única</strong> que ha vist pujat el seu sou! <a class="footnote-reference" href="#resultatspodencanviar" id="id4">[3]</a></p>
+<p>No era això el que esperàvem, o com a mínim, el que volíem.</p>
+<p>El mètode <em>update</em>, per defecte, només modifica <strong>un únic</strong> registre
+<a class="footnote-reference" href="#bromesdelsmongodb" id="id5">[4]</a>.  Si vols més, li ho has d'indicar al paràmetre
+<em>modificadors</em> que hem estat ignorant fins ara.</p>
+<div class="highlight"><pre><span class="lineno">1 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">$inc</span><span class="o">:</span><span class="p">{</span><span class="nx">sou</span><span class="o">:</span><span class="mi">100</span><span class="p">}},</span> <span class="p">{</span><span class="nx">multi</span><span class="o">:</span><span class="kc">true</span><span class="p">})</span>
+<span class="lineno">2 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">sou</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="lineno">3 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">1900</span> <span class="p">}</span>
+<span class="lineno">4 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Martina Hernández Muñoz&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3550</span> <span class="p">}</span>
+<span class="lineno">5 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Júlia Galcerán Buscart&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">3300</span> <span class="p">}</span>
+<span class="lineno">6 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2700</span> <span class="p">}</span>
+<span class="lineno">7 </span><span class="p">{</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2900</span> <span class="p">}</span>
+</pre></div>
+<p>Bé, ara sí que ha aplicat els canvis a tothom.</p>
+</div>
+<div class="section" id="exercici-5-corregeix-el-canvi-erroni">
+<h3>Exercici 5. Corregeix el canvi erroni</h3>
+<p>Quan no sabíem de l'existència de <em>multi</em>, hem incrementat el sou d'un
+desenvolupador/a però no de la resta. En el meu cas ha estat la Irene,
+però en el teu podria ser diferent. Després els hem incrementat a tots
+el sou, incloent al primer.</p>
+<p>Com que això no és el que volíem, construeix una crida a <em>update</em> que
+permeti recuperar el sou que li pertoca a aquell que li vas
+incrementar.</p>
+<p><em>Pista</em>: decrementar 100 és com incrementar -100.</p>
+</div>
+<div class="section" id="exercici-6-actualitza-l-edat">
+<h3>Exercici 6. Actualitza l'edat</h3>
+<p>Construeix una crida a <em>update</em> que incrementi l'edat en un any a
+totes les persones.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="edatjubilacio" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>L'edat potser et sembla molt elevada per a un
+docent si estàs llegint aquests materials poc després que els hagi
+publicat. Tal i com van les coses, però, és possible que d'ací uns
+anys ja no sembli tan exagerada.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="elteucasseradiferent" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Recorda que a tu molt probablement et
+sortirà un identificador diferent.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="resultatspodencanviar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td>Atenció: és probable que a la teva prova,
+sigui una altra l'entrada que quedi modificada.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="bromesdelsmongodb" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>Potser estàs pensant que és una mica estrany
+que <em>update</em> no modifiqui tots els documents que acompleixin la
+cerca. Més quan <em>remove</em> sí que té aquest comportament.
+Curiosament, <em>remove</em> disposa d'un paràmetre opcional anomenat
+<em>justOne</em> que permet indicar justament l'oposat al <em>multi</em> de
+<em>update</em>. Bé, jo també m'ho pregunto.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./eliminacio-de-documents.html">
+        Eliminació de documents
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./subdocuments.html">
+        Subdocuments
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
