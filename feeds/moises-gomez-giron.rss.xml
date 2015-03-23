@@ -16419,7 +16419,203 @@ un cop es treballi amb java --&gt;
 Considera també els tutorials que ofereix http://codehero.co/mongodb-desde-cer-operaciones-basicas/
 potser servirà per tenir idees i de checklist. --&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Wed, 29 Jan 2014 16:32:01 +0100</pubDate><guid>tag:apuntstecnics.herokuapp.com,2014-01-29:autenticacio-a-mongodb.html</guid><category>mongoDB</category></item><item><title>Tipus Abstractes de Dades</title><link>http://apuntstecnics.herokuapp.com/tipus-abstractes-de-dades.html</link><description>&lt;div class="section" id="introduccio"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Wed, 29 Jan 2014 16:32:01 +0100</pubDate><guid>tag:apuntstecnics.herokuapp.com,2014-01-29:autenticacio-a-mongodb.html</guid><category>mongoDB</category></item><item><title>Exercicis de repàs de programació</title><link>http://apuntstecnics.herokuapp.com/exercicis-de-repas-de-programacio.html</link><description>&lt;div class="section" id="introduccio"&gt;
+&lt;h2&gt;Introducció&lt;/h2&gt;
+&lt;p&gt;A continuació trobaràs una llista d'exercicis bàsics. Intenta'ls
+realitzar amb qualsevol llenguatge de programació o, fins i tot, amb
+pseudocodi.&lt;/p&gt;
+&lt;p&gt;El valor d'aquests exercicis està en la correcció a classe. Per tant,
+fes un esforç per què les teves respostes siguin llegibles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercicis"&gt;
+&lt;h2&gt;Exercicis&lt;/h2&gt;
+&lt;div class="section" id="exercici-1-la-preso"&gt;
+&lt;h3&gt;Exercici 1. la Presó&lt;/h3&gt;
+&lt;p&gt;Desenvolupa un programa que demani a la usuària els anys que té amb el
+missatge &lt;em&gt;Quants anys té?&lt;/em&gt;. En cas que sigui major d'edat, el programa
+li avisarà dient: &lt;em&gt;Atenció: Vosté pot anar a la presó!&lt;/em&gt;. En qualsevol
+cas, el programa finalitzarà dient: &lt;em&gt;Aneu amb compte&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Nota: en aquest cas acceptarem qualsevol valor enter com a edat vàlida.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-2-mesos"&gt;
+&lt;h3&gt;Exercici 2. Mesos&lt;/h3&gt;
+&lt;p&gt;Desenvolupeu un programa que demani un mes i un any, i escrigui el mes
+anterior i el mes següent.&lt;/p&gt;
+&lt;p&gt;Els missatges de petició de l'entrada seran, respectivament: &lt;em&gt;Mes?&lt;/em&gt; i &lt;em&gt;Any?&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Per exemple, si l’usuari introdueix mes &lt;em&gt;9&lt;/em&gt; i any &lt;em&gt;2009&lt;/em&gt;, el resultat
+serà:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ant: 8/2009
+seg: 10/2009
+&lt;/pre&gt;
+&lt;p&gt;Nota: en aquest cas, suposarem que sempre ens introduiran mesos i anys
+correctes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-ordena-3"&gt;
+&lt;h3&gt;Exercici 3. Ordena 3&lt;/h3&gt;
+&lt;p&gt;Desenvolupeu un programa que demani tres números i
+escrigui els tres números ordenats creixentment (de menor a major).&lt;/p&gt;
+&lt;p&gt;L'entrada es requerirà amb els missatges &lt;em&gt;Primer?&lt;/em&gt;, &lt;em&gt;Segon?&lt;/em&gt; i
+&lt;em&gt;Tercer?&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Per exemple, si els números introduïts són &lt;em&gt;3&lt;/em&gt;, &lt;em&gt;4&lt;/em&gt; i &lt;em&gt;2&lt;/em&gt;, el resultat
+serà:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+2 3 4
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-4-ascensor"&gt;
+&lt;h3&gt;Exercici 4. Ascensor&lt;/h3&gt;
+&lt;p&gt;Considerem un ascensor d’un edifici amb planta baixa
+i dos pisos que tingui els següents botons: ‘pujar 1’, ‘pujar 2’,
+‘baixar 1’ i ‘baixar 2’. L’ascensor es comporta, a partir dels botons
+esmentats, segons el següent diagrama de transició d’estats:&lt;/p&gt;
+&lt;div class="figure align-right"&gt;
+&lt;img alt="Diagrama d'estats de l'ascensor" src="http://apuntstecnics.herokuapp.com/images/poo003.img001.ascensor.png" /&gt;
+&lt;/div&gt;
+&lt;p&gt;Es demana desenvolupar un programa que simuli el funcionament d’aquest
+ascensor. El programa demanarà el pis en que es troba i el botó que es
+prem, i mostrarà el nou pis. En cas que el botó seleccionat a una
+posició determinada de l’ascensor no correspongui amb algun dels
+representats amb el diagrama d’estats, l’ascensor mostra un missatge
+d'error i es queda al lloc en què estava.&lt;/p&gt;
+&lt;p&gt;Els missatges de petició de l'entrada són, respectivament:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Planta? (PB: planta baixa, PP: primer pis, SP: segon pis
+Botó? (P1: puja 1, P2: puja 2, B1: baixa 1, B2: baixa 2
+&lt;/pre&gt;
+&lt;p&gt;Mentre que la sortida s'expressarà simplement indicant la nova planta.&lt;/p&gt;
+&lt;p&gt;Per exemple, si l'entrada és: &lt;tt class="docutils literal"&gt;PB&lt;/tt&gt; i &lt;tt class="docutils literal"&gt;P1&lt;/tt&gt;, la sortida serà:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+PP
+&lt;/pre&gt;
+&lt;p&gt;En cas d'error, caldrà mostrar els següents missatges:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Planta incorrecta
+Botó incorrecte
+&lt;/pre&gt;
+&lt;p&gt;I cal tenir present que si la planta és incorrecta, ja no se li
+demanarà el botó a la usuària.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-5-historic-d-edats"&gt;
+&lt;h3&gt;Exercici 5. Històric d'edats&lt;/h3&gt;
+&lt;p&gt;Desenvolupa un programa que demani el nom de la usuària, l’edat i l’any
+actual. El programa escriurà l’edat que tenia la usuària a cada any des
+del seu naixement i s’acomiadarà. Per exemple, si l’entrada és&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Anna
+5
+2012
+&lt;/pre&gt;
+&lt;p&gt;El programa escriurà&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+El 2007 va nàixer
+El 2008 tenia 1 any
+El 2009 tenia 2 anys
+El 2010 tenia 3 anys
+El 2011 tenia 4 anys
+Adéu Anna
+&lt;/pre&gt;
+&lt;p&gt;El programa no li dirà l'edat que té la usuària en l'any actual, donat
+que aquesta dada forma part de l'entrada. Per exemple, si la usuària
+ha nascut aquest any, simplement s'acomiadarà.&lt;/p&gt;
+&lt;p&gt;Les comprovacions necessàries són: que el nom no estigui buit, que
+l'edat i l'any actual siguin enters positius, i que l'any actual sigui
+un valor més alt que el de l'edat.&lt;/p&gt;
+&lt;p&gt;Es demanaran les dades en l'ordre indicat a l'exemple i, en quan es
+detecti un error, es deixarà de demanar més dades.&lt;/p&gt;
+&lt;p&gt;Els missatges de petició de dades seran:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Nom?
+Edat?
+Any actual?
+&lt;/pre&gt;
+&lt;p&gt;Els missatges d'error seran:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Nom incorrecte
+Edat no pot ser negativa
+Any actual no pot ser negatiu
+Edat o any actual incorrectes
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-6-l-ascensor-continu"&gt;
+&lt;h3&gt;Exercici 6. L'ascensor continu&lt;/h3&gt;
+&lt;p&gt;Ara, el nostre ascensor començarà a la planta baixa i anirà demanant
+un botó per canviar de pis. Es comportarà pràcticament igual que la
+versió anterior. Ara, és clar, ja no li cal demanar a quin pis es troba.&lt;/p&gt;
+&lt;p&gt;Un cop canviat de pis (o indicat l'error) demanarà que premi un nou
+botó. I així es quedarà fins que la usuària indiqui el botó de sortida.&lt;/p&gt;
+&lt;p&gt;Aquesta versió incorpora un missatge molt compacte amb el següent
+aspecte:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[xx] P1: puja 1, P2: puja 2, B1: baixa 1, B2: baixa 2, EX: surt
+&lt;/pre&gt;
+&lt;p&gt;On xx pot ser PB, PP o SP depenent de la planta on es trobi.&lt;/p&gt;
+&lt;p&gt;Quan la usuària demani finalitzar (amb &amp;quot;EX&amp;quot;), es mostrarà el missatge de
+comiat &amp;quot;Adéu&amp;quot; i finalitzarà l'execució.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-7-comptar-a-s"&gt;
+&lt;h3&gt;Exercici 7. Comptar 'A's&lt;/h3&gt;
+&lt;p&gt;Desenvolupa un programa que demani un string (pot ser buit!) i
+mostri el nombre de ‘A’ que apareguin al string. És a dir, si
+l’entrada és ‘XAXAAXAX’ la sortida serà 4.&lt;/p&gt;
+&lt;p&gt;Es demana que es construeixi una funció que, donat el string
+d'entrada, retorni el nombre de caràcters 'A'.&lt;/p&gt;
+&lt;p&gt;Nota: Per simplicitat, considera només majúscules.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-8-comptar-a-s-consecutives"&gt;
+&lt;h3&gt;Exercici 8. Comptar 'A's consecutives&lt;/h3&gt;
+&lt;p&gt;Desenvolupa un programa que demani un string i
+mostri el nombre de ‘A’ consecutives que apareguin a l’string. És considera una 'A' consecutiva si l'anterior també era una 'A'. És a dir, si l’entrada és ‘XXAXXAAXXAAAAX’ la sortida serà 4.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-9-comptar-a-s-no-consecutives"&gt;
+&lt;h3&gt;Exercici 9. Comptar 'A's no consecutives&lt;/h3&gt;
+&lt;p&gt;Com l'exercici anterior, però aquest cop es mostrarà el nombre de 'A's
+no consecutives. És a dir, si l’entrada és ‘XXAXXAAXXAAAX’ la sortida
+serà 3.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-10-triangles"&gt;
+&lt;h3&gt;Exercici 10. Triangles&lt;/h3&gt;
+&lt;p&gt;Desenvolupa un programa que demani un nombre enter positiu i dibuixi
+tants triangles com se li indiqui.&lt;/p&gt;
+&lt;p&gt;Intenta evitar la repetició de codi fent servir subrutines.&lt;/p&gt;
+&lt;p&gt;Per exemple, si l'entrada és &lt;em&gt;2&lt;/em&gt;, el resultat serà&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+.........9.........
+........898........
+.......78987.......
+......6789876......
+.....567898765.....
+....45678987654....
+...3456789876543...
+..234567898765432..
+.12345678987654321.
+0123456789876543210
+.........9.........
+........898........
+.......78987.......
+......6789876......
+.....567898765.....
+....45678987654....
+...3456789876543...
+..234567898765432..
+.12345678987654321.
+0123456789876543210
+&lt;/pre&gt;
+&lt;p&gt;El missatge de petició de l'entrada serà:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Nombre de triangles?
+&lt;/pre&gt;
+&lt;p&gt;El missatge d'error si l'entrada no és correcta serà:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No puc dibuixar n triangles
+&lt;/pre&gt;
+&lt;p&gt;On &lt;em&gt;n&lt;/em&gt; correspon al nombre introduït.&lt;/p&gt;
+&lt;p&gt;Nota: Si tens la temptació de resoldre el problema via
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;printf(&amp;quot;.........9.........&amp;quot;);&lt;/span&gt;&lt;/tt&gt; planteja't que passarà si se't
+requereix que els símbols a escriure s'han de demanar a la usuària.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Fri, 30 Aug 2013 23:57:00 +0200</pubDate><guid>tag:apuntstecnics.herokuapp.com,2013-08-30:exercicis-de-repas-de-programacio.html</guid></item><item><title>Tipus Abstractes de Dades</title><link>http://apuntstecnics.herokuapp.com/tipus-abstractes-de-dades.html</link><description>&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
 &lt;p&gt;Aquests continguts presenten el concepte de &lt;em&gt;Tipus Abstracte de Dades&lt;/em&gt;
 o més conegut com a TAD.&lt;/p&gt;
