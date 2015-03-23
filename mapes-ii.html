@@ -57,7 +57,6 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -307,7 +306,7 @@ java.io.Serializable i java.lang.Comparable.</p>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExempleUsEnum</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// recorrem els valors de Intercanvi com si fossin Codificat</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Codificat</span> <span class="nl">teCodi:</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Codificat</span> <span class="n">teCodi</span><span class="o">:</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
             <span class="kt">int</span> <span class="n">codi</span> <span class="o">=</span> <span class="n">teCodi</span><span class="o">.</span><span class="na">getCodi</span><span class="o">();</span>
             <span class="cm">/* seria més eficient fer el següent codi recorrent els valors</span>
 <span class="cm">             * de Intercanvi amb elements de tipus Intercanvi, però en aquest</span>
@@ -340,7 +339,7 @@ java.io.Serializable i java.lang.Comparable.</p>
 
     <span class="c1">// una manera d&#39;obtenir el valor corresponent a un codi.</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="n">Intercanvi</span> <span class="nf">fromCodi</span><span class="o">(</span><span class="kt">int</span> <span class="n">codi</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Intercanvi</span> <span class="nl">e:</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Intercanvi</span> <span class="n">e</span><span class="o">:</span> <span class="n">Intercanvi</span><span class="o">.</span><span class="na">values</span><span class="o">())</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getCodi</span><span class="o">()</span> <span class="o">==</span> <span class="n">codi</span><span class="o">)</span> <span class="k">return</span> <span class="n">e</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>

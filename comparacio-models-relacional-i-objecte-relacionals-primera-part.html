@@ -57,7 +57,6 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -183,7 +182,7 @@ només ens hauríem de preocupar del camp <em>tractament</em> que contindrà
 valors com ara <em>Sr.</em>, <em>Sra.</em>, etc. Per simplicitat et proposo que ho
 deixem així.</p>
 <p>En el moment que llencis aquesta comanda, PostGreSQL respondrà amb</p>
-<div class="highlight"><pre>NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index <span class="s2">&quot;clients_pkey&quot;</span> <span class="k">for </span>table <span class="s2">&quot;clients&quot;</span>
+<div class="highlight"><pre>NOTICE:  CREATE TABLE / PRIMARY KEY will create implicit index <span class="s2">&quot;clients_pkey&quot;</span> <span class="k">for</span> table <span class="s2">&quot;clients&quot;</span>
 CREATE TABLE
 </pre></div>
 <p>Amb això ens està avisant que ha creat un índex per la taula CLIENTS.
@@ -196,19 +195,19 @@ altres elements que hagi creat per tu <a class="footnote-reference" href="#compt
 has creat, pots fer-ho des de <tt class="docutils literal">psql</tt> amb:</p>
 <div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span> CLIENTS
              Table <span class="s2">&quot;public.clients&quot;</span>
-   Column    |         Type          | Modifiers
+   Column    <span class="p">|</span>         Type          <span class="p">|</span> Modifiers
 -------------+-----------------------+-----------
- id          | integer               | not null
- tractament  | text                  |
- nom         | text                  |
- cognoms     | text                  |
- carrer      | text                  |
- codi_postal | character varying<span class="o">(</span>20<span class="o">)</span> |
- ciutat      | text                  |
- pais        | text                  |
- telefon_1   | character varying<span class="o">(</span>20<span class="o">)</span> |
- telefon_2   | character varying<span class="o">(</span>20<span class="o">)</span> |
- telefon_3   | character varying<span class="o">(</span>20<span class="o">)</span> |
+ id          <span class="p">|</span> integer               <span class="p">|</span> not null
+ tractament  <span class="p">|</span> text                  <span class="p">|</span>
+ nom         <span class="p">|</span> text                  <span class="p">|</span>
+ cognoms     <span class="p">|</span> text                  <span class="p">|</span>
+ carrer      <span class="p">|</span> text                  <span class="p">|</span>
+ codi_postal <span class="p">|</span> character varying<span class="o">(</span>20<span class="o">)</span> <span class="p">|</span>
+ ciutat      <span class="p">|</span> text                  <span class="p">|</span>
+ pais        <span class="p">|</span> text                  <span class="p">|</span>
+ telefon_1   <span class="p">|</span> character varying<span class="o">(</span>20<span class="o">)</span> <span class="p">|</span>
+ telefon_2   <span class="p">|</span> character varying<span class="o">(</span>20<span class="o">)</span> <span class="p">|</span>
+ telefon_3   <span class="p">|</span> character varying<span class="o">(</span>20<span class="o">)</span> <span class="p">|</span>
 Indexes:
     <span class="s2">&quot;clients_pkey&quot;</span> PRIMARY KEY, btree <span class="o">(</span>id<span class="o">)</span>
 </pre></div>

@@ -57,7 +57,6 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -489,13 +488,13 @@ nom! (Pista: constructor)</p>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Provador de gats&quot;</span><span class="o">);</span>
         <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">&gt;</span> <span class="n">llistaDeGats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Gat</span><span class="o">&gt;();</span>
         <span class="c1">// crea la llista de gats passats per paràmetre</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="nl">nom:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">nom</span><span class="o">:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">Gat</span> <span class="n">gat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gat</span><span class="o">(</span><span class="n">nom</span><span class="o">);</span>
             <span class="n">llistaDeGats</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">gat</span><span class="o">);</span>
         <span class="o">}</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hem creat &quot;</span> <span class="o">+</span> <span class="n">llistaDeGats</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">+</span>
                 <span class="o">(</span><span class="n">llistaDeGats</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="s">&quot; gat&quot;</span> <span class="o">:</span> <span class="s">&quot; gats&quot;</span><span class="o">));</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Gat</span> <span class="nl">gat:</span> <span class="n">llistaDeGats</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Gat</span> <span class="n">gat</span><span class="o">:</span> <span class="n">llistaDeGats</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">String</span> <span class="n">nom</span> <span class="o">=</span> <span class="n">gat</span><span class="o">.</span><span class="na">comEtDius</span><span class="o">();</span>
             <span class="n">String</span> <span class="n">estat</span> <span class="o">=</span> <span class="n">gat</span><span class="o">.</span><span class="na">getEstatComString</span><span class="o">();</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat &quot;</span> <span class="o">+</span> <span class="n">nom</span> <span class="o">+</span> <span class="s">&quot; diu que està &quot;</span> <span class="o">+</span> <span class="n">estat</span><span class="o">);</span>

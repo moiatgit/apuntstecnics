@@ -57,7 +57,6 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -182,15 +181,15 @@ versió disponible era la 2.4.9.</td></tr>
 carpeta de les dades cada cop que arrenquis el servidor. Et proposo
 que creis un llençador (potser al mateix mongodb/bin) amb el
 següent contingut:</p>
-<div class="highlight"><pre><span class="lineno">1</span>   <span class="c">#! /bin/bash</span>
-<span class="lineno">2</span>   <span class="nb">echo</span> <span class="s2">&quot;Llençador de mongod&quot;</span>
-<span class="lineno">3</span>   <span class="nv">a</span><span class="o">=</span><span class="s2">&quot;$(pidof mongod)&quot;</span>
-<span class="lineno">4</span>   <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$a&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
-<span class="lineno">5</span>   <span class="k">then</span>
-<span class="lineno">6</span> <span class="k">      </span>mongod --dbpath ~/data/ &amp;
-<span class="lineno">7</span>   <span class="k">else</span>
-<span class="lineno">8</span> <span class="k">      </span><span class="nb">echo</span> <span class="s2">&quot;Ja està en execució amb pid $a&quot;</span>
-<span class="lineno">9</span>   <span class="k">fi</span>
+<div class="highlight"><pre><span class="lineno">1 </span>  <span class="c">#! /bin/bash</span>
+<span class="lineno">2 </span>  <span class="nb">echo</span> <span class="s2">&quot;Llençador de mongod&quot;</span>
+<span class="lineno">3 </span>  <span class="nv">a</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>pidof mongod<span class="k">)</span><span class="s2">&quot;</span>
+<span class="lineno">4 </span>  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$a</span><span class="s2">&quot;</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="o">]</span>
+<span class="lineno">5 </span>  <span class="k">then</span>
+<span class="lineno">6 </span>      mongod --dbpath ~/data/ <span class="p">&amp;</span>
+<span class="lineno">7 </span>  <span class="k">else</span>
+<span class="lineno">8 </span>      <span class="nb">echo</span> <span class="s2">&quot;Ja està en execució amb pid </span><span class="nv">$a</span><span class="s2">&quot;</span>
+<span class="lineno">9 </span>  <span class="k">fi</span>
 </pre></div>
 <p class="last">Qui sap? Potser en un futur li vols afegir altres opcions, com ara
 un altre port.</p>

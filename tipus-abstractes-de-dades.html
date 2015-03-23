@@ -57,7 +57,6 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -932,21 +931,21 @@ tabulador per indentar</li>
 <span class="n">cflags</span> <span class="o">=</span> <span class="o">-</span><span class="n">Wall</span>
 <span class="n">cc</span> <span class="o">=</span> <span class="n">gcc</span>
 
-<span class="nl">all:</span> <span class="n">usa_hora</span>
+<span class="nl">all</span><span class="p">:</span> <span class="n">usa_hora</span>
 
-<span class="nl">usa_hora:</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">o</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">o</span>
+<span class="nl">usa_hora</span><span class="p">:</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">o</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">o</span>
     <span class="err">$</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">cflags</span><span class="p">)</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">o</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">o</span> <span class="o">-</span><span class="n">o</span> <span class="n">usa_hora</span>
 
-<span class="n">usa_hora</span><span class="p">.</span><span class="n">o</span><span class="o">:</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span>
+<span class="n">usa_hora</span><span class="p">.</span><span class="nl">o</span><span class="p">:</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span>
     <span class="err">$</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">cflags</span><span class="p">)</span> <span class="o">-</span><span class="n">c</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span>
 
-<span class="n">tad_hora</span><span class="p">.</span><span class="n">o</span><span class="o">:</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span>
+<span class="n">tad_hora</span><span class="p">.</span><span class="nl">o</span><span class="p">:</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span>
     <span class="err">$</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span> <span class="err">$</span><span class="p">(</span><span class="n">cflags</span><span class="p">)</span> <span class="o">-</span><span class="n">c</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span>
 
-<span class="nl">clean:</span>
+<span class="nl">clean</span><span class="p">:</span>
     <span class="n">rm</span> <span class="o">-</span><span class="n">f</span> <span class="o">*~</span> <span class="o">*</span><span class="p">.</span><span class="n">o</span> <span class="n">usa_hora</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span>
 
-<span class="nl">tar:</span>
+<span class="nl">tar</span><span class="p">:</span>
     <span class="n">tar</span> <span class="n">czvf</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span> <span class="n">Makefile</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">h</span> <span class="n">tad_hora</span><span class="p">.</span><span class="n">c</span> <span class="n">usa_hora</span><span class="p">.</span><span class="n">c</span>
 </pre></div>
 </td></tr></table><p>Ara escriu a consola</p>
@@ -958,7 +957,7 @@ gcc -Wall -c tad_hora.c
 gcc -Wall usa_hora.o tad_hora.o -o usa_hora
 </pre></div>
 <p>Si tornem a executar <tt class="docutils literal">make</tt> ens dirà quelcom similar a</p>
-<div class="highlight"><pre>make: Nothing to be <span class="k">done for</span> <span class="sb">`</span>all<span class="err">&#39;</span>.
+<div class="highlight"><pre>make: Nothing to be <span class="k">done</span> <span class="k">for</span> <span class="sb">`</span>all<span class="err">&#39;</span>.
 </pre></div>
 <p>Ara modifiquem <tt class="docutils literal">usa_hora.c</tt>, o simplement el podem &quot;tocar&quot; amb</p>
 <div class="highlight"><pre><span class="nv">$ </span>touch usa_hora.c
