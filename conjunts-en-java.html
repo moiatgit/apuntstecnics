@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -128,7 +129,7 @@ més detalls.</p>
 <p>Per recórrer tots els elements d'un conjunt, donat que implementen
 <em>Iterable</em>, podem fer servir el bucle <em>foreach</em>. Per exemple</p>
 <div class="highlight"><pre><span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostra</span><span class="o">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">set</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">:</span> <span class="n">set</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="nl">s:</span> <span class="n">set</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -330,7 +331,7 @@ comptar i cercar) tenen un cost constant.</p>
             <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
         <span class="o">}</span>
         <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Integer</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>  <span class="c1">// aquest no l&#39;afegirà perquè està repetit</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Integer</span> <span class="n">i</span><span class="o">:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Integer</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span>
@@ -381,7 +382,7 @@ això sempre d'una classe conjunt.</p>
             <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
         <span class="o">}</span>
         <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="n">i</span><span class="o">:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span>
@@ -443,7 +444,7 @@ això el què ha de ser un conjunt?</p>
             <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
         <span class="o">}</span>
         <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="n">i</span><span class="o">:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span>
@@ -496,7 +497,7 @@ is not required by the JavaTM programming language.)</p>
         <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
     <span class="o">}</span>
     <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
-    <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="n">i</span><span class="o">:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; amb hashCode: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -589,7 +590,7 @@ depenent del valor (que amb <tt class="docutils literal">Integer</tt> semblava f
         <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">EnvoltaString</span><span class="o">&gt;</span> <span class="n">hsint</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">EnvoltaString</span><span class="o">&gt;();</span>
         <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="n">i</span><span class="o">));</span> <span class="o">}</span>
         <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">EnvoltaString</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">EnvoltaString</span> <span class="n">i</span><span class="o">:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">EnvoltaString</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat el EnvoltaString: &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; amb hashCode: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
         <span class="o">}</span>
     <span class="o">}</span>
@@ -686,7 +687,7 @@ perspectiva OO, oi?. De moment és el que tenim.</p>
             <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
         <span class="o">}</span>
         <span class="n">hsint</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Enter</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="n">i</span><span class="o">:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Enter</span> <span class="nl">i:</span> <span class="n">hsint</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Trobat l&#39;enter: &quot;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; amb hashCode: &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">.</span><span class="na">hashCode</span><span class="o">());</span>
         <span class="o">}</span>
     <span class="o">}</span>

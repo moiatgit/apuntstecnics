@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -204,7 +205,7 @@ mètode actionPerformed()</p>
         <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
         <span class="n">boto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;prem-me&quot;</span><span class="o">);</span>
         <span class="n">boto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span> <span class="c1">// ens registrem com a listeners</span>
-        <span class="n">del</span> <span class="n">botó</span>
+        <span class="n">del</span> <span class="n">bot</span><span class="err">ó</span>
             <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">boto</span><span class="o">);</span>
         <span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
         <span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
@@ -285,7 +286,7 @@ següent</p>
         <span class="kt">int</span> <span class="n">vermell</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">verd</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">blau</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Color</span><span class="o">(</span><span class="n">vermell</span><span class="o">,</span> <span class="n">verd</span><span class="o">,</span> <span class="n">blau</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Color</span><span class="o">(</span><span class="n">vermell</span><span class="o">,</span> <span class="n">verd</span><span class="o">,</span> <span class="n">blau</span><span class="o">);</span>
     <span class="o">}</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">paintComponent</span><span class="o">(</span><span class="n">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// omple tot l&#39;espai amb color el per defecte (negre)</span>
@@ -907,7 +908,7 @@ d'ingredients</p>
 <p>El nombre d'ingredients és un valor enter positiu.</p>
 <p>El codi de PizzaModel ens el ofereixen tot i que sense cap documentació
 i ni tant sols complet</p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="nn">pizza.model</span><span class="o">;</span>
+<div class="highlight"><pre><span class="kn">package</span> <span class="n">pizza</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PizzaModel</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Pizza</span><span class="o">&gt;</span> <span class="n">pizzes</span><span class="o">;</span>

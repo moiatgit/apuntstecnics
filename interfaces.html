@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -293,7 +294,7 @@ la interfície (Canari no cal)</p>
 26
 27
 28
-29</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">package</span> <span class="nn">org.estudi_poo.</span><span class="err">«</span><span class="n">elteunom</span><span class="err">»</span><span class="o">.</span><span class="na">animals</span><span class="o">;</span>
+29</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">package</span> <span class="n">org</span><span class="o">.</span><span class="na">estudi_poo</span><span class="o">.</span><span class="err">«</span><span class="n">elteunom</span><span class="err">»</span><span class="o">.</span><span class="na">animals</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.Vector</span><span class="o">;</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaAnimals</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
@@ -309,14 +310,14 @@ la interfície (Canari no cal)</p>
         <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Canari</span><span class="o">(</span><span class="s">&quot;Piolin&quot;</span><span class="o">));</span>
         <span class="n">llistaAnimals</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Lleo</span><span class="o">(</span><span class="s">&quot;Bonifaci&quot;</span><span class="o">));</span>
         <span class="c1">// fa que tots els animals facin coses</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Animal</span> <span class="n">a</span><span class="o">:</span> <span class="n">llistaAnimals</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Animal</span> <span class="nl">a:</span> <span class="n">llistaAnimals</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">moute</span><span class="o">());</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">menja</span><span class="o">());</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">fesSoroll</span><span class="o">());</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; fa: &quot;</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">dorm</span><span class="o">());</span>
         <span class="o">}</span>
         <span class="c1">// fa que tots els animals de companyia facin coses</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">AnimalDeCompanyia</span> <span class="n">a</span><span class="o">:</span> <span class="n">llistaAnimalsDeCompanyia</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">AnimalDeCompanyia</span> <span class="nl">a:</span> <span class="n">llistaAnimalsDeCompanyia</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(((</span><span class="n">Animal</span><span class="o">)</span><span class="n">a</span><span class="o">).</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">siguesAmistos</span><span class="o">());</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(((</span><span class="n">Animal</span><span class="o">)</span><span class="n">a</span><span class="o">).</span><span class="na">getNom</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; &quot;</span>     <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="na">juga</span><span class="o">());</span>
         <span class="o">}</span>

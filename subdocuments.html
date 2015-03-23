@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -188,16 +189,16 @@ resta de les dades si et cal.</p>
 <p>El mètode <em>find</em> ens permet especificar subcamps tant al document de
 sel·lecció (primer argument) com al de projecció (segon argument). Per
 exemple:</p>
-<div class="highlight"><pre><span class="lineno"> 1 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
-<span class="lineno"> 2 </span>    <span class="p">{</span><span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="s2">&quot;Lleida&quot;</span><span class="p">},</span>
-<span class="lineno"> 3 </span>    <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">}</span>
-<span class="lineno"> 4 </span>  <span class="p">).</span><span class="nx">pretty</span><span class="p">()</span>
-<span class="lineno"> 5 </span><span class="p">{</span>
-<span class="lineno"> 6 </span>    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Jordi Navarro Cucurella&quot;</span><span class="p">,</span>
-<span class="lineno"> 7 </span>    <span class="s2">&quot;adreça&quot;</span> <span class="o">:</span> <span class="p">{</span>
-<span class="lineno"> 8 </span>        <span class="s2">&quot;província&quot;</span> <span class="o">:</span> <span class="s2">&quot;Lleida&quot;</span>
-<span class="lineno"> 9 </span>    <span class="p">}</span>
-<span class="lineno">10 </span><span class="p">}</span>
+<div class="highlight"><pre><span class="lineno"> 1</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
+<span class="lineno"> 2</span>     <span class="p">{</span><span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="s2">&quot;Lleida&quot;</span><span class="p">},</span>
+<span class="lineno"> 3</span>     <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">}</span>
+<span class="lineno"> 4</span>   <span class="p">).</span><span class="nx">pretty</span><span class="p">()</span>
+<span class="lineno"> 5</span> <span class="p">{</span>
+<span class="lineno"> 6</span>     <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Jordi Navarro Cucurella&quot;</span><span class="p">,</span>
+<span class="lineno"> 7</span>     <span class="s2">&quot;adreça&quot;</span> <span class="o">:</span> <span class="p">{</span>
+<span class="lineno"> 8</span>         <span class="s2">&quot;província&quot;</span> <span class="o">:</span> <span class="s2">&quot;Lleida&quot;</span>
+<span class="lineno"> 9</span>     <span class="p">}</span>
+<span class="lineno">10</span> <span class="p">}</span>
 </pre></div>
 <p>Tant a la sel·lecció com a la projecció hem especificat el subcamp a
 partir del nom de la clau i el nom del subcamp separats amb un punt
