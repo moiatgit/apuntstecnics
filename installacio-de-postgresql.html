@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -134,7 +135,7 @@ Ubuntu 12.04, les instruccions següents t'ho permetran fàcilment:</p>
 </pre></div>
 </li>
 <li><p class="first">Registra la clau pública d'Oracle:</p>
-<div class="highlight"><pre><span class="nv">$ </span>wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- <span class="p">|</span> sudo apt-key add -
+<div class="highlight"><pre><span class="nv">$ </span>wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
 </pre></div>
 </li>
 <li><p class="first">Actualitza la base de dades de apt i instal·la l'aplicació:</p>
@@ -143,7 +144,7 @@ Ubuntu 12.04, les instruccions següents t'ho permetran fàcilment:</p>
 </pre></div>
 </li>
 <li><p class="first">Arrenca l'aplicació:</p>
-<div class="highlight"><pre><span class="nv">$ </span>VirtualBox <span class="p">&amp;</span>
+<div class="highlight"><pre><span class="nv">$ </span>VirtualBox &amp;
 </pre></div>
 </li>
 </ol>
@@ -313,7 +314,7 @@ possibilitats de logar-se:</p>
 postgres@vm:~<span class="nv">$ </span>psql
 <span class="nv">$ </span>psql
 psql <span class="o">(</span>9.3.6<span class="o">)</span>
-Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
 <span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE USER usuaribd WITH PASSWORD &#39;toPSikr3t&#39;;</span>
 CREATE ROLE
 <span class="nv">postgres</span><span class="o">=</span><span class="c"># CREATE DATABASE testbd;</span>
@@ -337,10 +338,10 @@ teva màquina virtual és la que se't proposa en aquest document, només
 es podrà accedir a aquesta des de la teva màquina amfitrió.</p>
 <p>Accedim a la nova base de dades amb el nou usuari fent servir:</p>
 <div class="highlight"><pre>usuarivm@vm:~<span class="nv">$ </span>psql -U usuaribd -d testbd -h localhost
-Password <span class="k">for</span> user usuaribd:
+Password <span class="k">for </span>user usuaribd:
 psql <span class="o">(</span>9.3.6<span class="o">)</span>
 SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-SHA, bits: 256<span class="o">)</span>
-Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
 
 <span class="nv">testbd</span><span class="o">=</span>&gt;<span class="se">\q</span>
 </pre></div>
@@ -381,10 +382,10 @@ simplement amb:</p>
 </pre></div>
 <p>Ara ja podem fer una prova des de l'amfitrió:</p>
 <div class="highlight"><pre><span class="nv">$ </span>psql -U usuaribd -d testbd -h 192.168.56.101
-Password <span class="k">for</span> user usuaribd:
+Password <span class="k">for </span>user usuaribd:
 psql <span class="o">(</span>9.3.6<span class="o">)</span>
 SSL connection <span class="o">(</span>cipher: DHE-RSA-AES256-GCM-SHA384, bits: 256<span class="o">)</span>
-Type <span class="s2">&quot;help&quot;</span> <span class="k">for</span> help.
+Type <span class="s2">&quot;help&quot;</span> <span class="k">for </span>help.
 
 <span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\q</span>
 </pre></div>

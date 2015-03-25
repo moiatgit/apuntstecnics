@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -347,7 +348,7 @@ pot ajudar a fer-te una idea de com podria funcionar.</p>
 
         <span class="n">vins</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2010010003</span><span class="o">,</span>
                 <span class="s">&quot;Roura blanc&quot;</span><span class="o">,</span>
-                <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">6.06</span><span class="o">),</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">6.06</span><span class="o">),</span>
                 <span class="s">&quot;prestatge blau&quot;</span><span class="o">,</span>
                 <span class="s">&quot;Juan Antonio Pérez Roura&quot;</span><span class="o">,</span>
                 <span class="s">&quot;Alella&quot;</span><span class="o">,</span>
@@ -357,7 +358,7 @@ pot ajudar a fer-te una idea de com podria funcionar.</p>
 
         <span class="n">vins</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011100042</span><span class="o">,</span>
                 <span class="s">&quot;Cercium 2009&quot;</span><span class="o">,</span>
-                <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">5.65</span><span class="o">),</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">5.65</span><span class="o">),</span>
                 <span class="s">&quot;prestatge verd amunt&quot;</span><span class="o">,</span>
                 <span class="s">&quot;Mas Llunes Vinyes i Cellers&quot;</span><span class="o">,</span>
                 <span class="s">&quot;Empordà&quot;</span><span class="o">,</span>
@@ -367,7 +368,7 @@ pot ajudar a fer-te una idea de com podria funcionar.</p>
 
         <span class="n">vins</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011090002</span><span class="o">,</span>
                 <span class="s">&quot;Masia Serra - IO 2008&quot;</span><span class="o">,</span>
-                <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">13.50</span><span class="o">),</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">13.50</span><span class="o">),</span>
                 <span class="s">&quot;prestatge verd amunt&quot;</span><span class="o">,</span>
                 <span class="s">&quot;Masia Serra&quot;</span><span class="o">,</span>
                 <span class="s">&quot;Empordà&quot;</span><span class="o">,</span>
@@ -376,7 +377,7 @@ pot ajudar a fer-te una idea de com podria funcionar.</p>
                 <span class="mi">2008</span><span class="o">);</span>
 
         <span class="k">try</span> <span class="o">{</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="n">v</span><span class="o">:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="nl">v:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">botiga</span><span class="o">.</span><span class="na">afegeix</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
             <span class="o">}</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BotigaException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
@@ -384,9 +385,9 @@ pot ajudar a fer-te una idea de com podria funcionar.</p>
 
     <span class="cm">/* defineix una especificació de vi */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vi</span> <span class="nf">creaEspec</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span>   <span class="c1">// sense nr. de ref perquè és únic</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Vi</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span>   <span class="c1">// sense nr. de ref perquè és únic</span>
                 <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el nom</span>
-                <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">10.50</span><span class="o">),</span> <span class="c1">// com a molt fins a aquest preu</span>
+                <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">10.50</span><span class="o">),</span> <span class="c1">// com a molt fins a aquest preu</span>
                 <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el lloc</span>
                 <span class="kc">null</span><span class="o">,</span>       <span class="c1">// no importa el celler</span>
                 <span class="s">&quot;Empordà&quot;</span><span class="o">,</span>  <span class="c1">// la denominació d&#39;origen sí importa</span>
@@ -402,7 +403,7 @@ pot ajudar a fer-te una idea de com podria funcionar.</p>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;No s&#39;ha trobat cap Vi&quot;</span><span class="o">);</span>
         <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;S&#39;ha trobat les següents coincidències:&quot;</span><span class="o">);</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="n">v</span><span class="o">:</span> <span class="n">trobats</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="nl">v:</span> <span class="n">trobats</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span>
                         <span class="s">&quot;Vi: %s\n&quot;</span> <span class="o">+</span>
                         <span class="s">&quot;\tNom : %s\n&quot;</span> <span class="o">+</span>
@@ -544,7 +545,7 @@ d'inicialització:</p>
 
     <span class="n">vins</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2010010003</span><span class="o">,</span>
             <span class="s">&quot;Roura blanc&quot;</span><span class="o">,</span>
-            <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">6.06</span><span class="o">),</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">6.06</span><span class="o">),</span>
             <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_BLAU</span><span class="o">,</span>
             <span class="s">&quot;Juan Antonio Pérez Roura&quot;</span><span class="o">,</span>
             <span class="n">Origen</span><span class="o">.</span><span class="na">ALELLA</span><span class="o">,</span>
@@ -554,7 +555,7 @@ d'inicialització:</p>
 
     <span class="n">vins</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011100042</span><span class="o">,</span>
             <span class="s">&quot;Cercium 2009&quot;</span><span class="o">,</span>
-            <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">5.65</span><span class="o">),</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">5.65</span><span class="o">),</span>
             <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_VERD_AMUNT</span><span class="o">,</span>
             <span class="s">&quot;Mas Llunes Vinyes i Cellers&quot;</span><span class="o">,</span>
             <span class="n">Origen</span><span class="o">.</span><span class="na">EMPORDA</span><span class="o">,</span>
@@ -564,7 +565,7 @@ d'inicialització:</p>
 
     <span class="n">vins</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(</span><span class="mi">2011090002</span><span class="o">,</span>
             <span class="s">&quot;Masia Serra - IO 2008&quot;</span><span class="o">,</span>
-            <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">13.50</span><span class="o">),</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">13.50</span><span class="o">),</span>
             <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_VERD_AMUNT</span><span class="o">,</span>
             <span class="s">&quot;Masia Serra&quot;</span><span class="o">,</span>
             <span class="n">Origen</span><span class="o">.</span><span class="na">EMPORDA</span><span class="o">,</span>
@@ -573,7 +574,7 @@ d'inicialització:</p>
             <span class="mi">2008</span><span class="o">);</span>
 
     <span class="k">try</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="n">v</span><span class="o">:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Vi</span> <span class="nl">v:</span> <span class="n">vins</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">botiga</span><span class="o">.</span><span class="na">afegeix</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
         <span class="o">}</span>
     <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BotigaException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
@@ -592,9 +593,9 @@ d'inicialització:</p>
 10
 11
 12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="n">Vi</span> <span class="nf">creaEspec</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">Vi</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span>              <span class="c1">// sense nr. de ref perquè és únic</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">Vi</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span>              <span class="c1">// sense nr. de ref perquè és únic</span>
             <span class="s">&quot;&quot;</span><span class="o">,</span>                    <span class="c1">// no importa el nom</span>
-            <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">10.50</span><span class="o">),</span> <span class="c1">// com a molt fins a aquest preu</span>
+            <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">10.50</span><span class="o">),</span> <span class="c1">// com a molt fins a aquest preu</span>
             <span class="kc">null</span><span class="o">,</span>                  <span class="c1">// no importa el lloc</span>
             <span class="s">&quot;&quot;</span><span class="o">,</span>                    <span class="c1">// no importa el celler</span>
             <span class="n">Origen</span><span class="o">.</span><span class="na">EMPORDA</span><span class="o">,</span>        <span class="c1">// la denominació d&#39;origen sí importa</span>
@@ -691,7 +692,7 @@ aplicació de manera que integri el nou producte.</p>
 6
 7
 8</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">Cava</span> <span class="n">cava</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cava</span><span class="o">(</span><span class="mi">2009100004</span><span class="o">,</span>
-        <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mf">12.10</span><span class="o">),</span>
+        <span class="k">new</span> <span class="nf">BigDecimal</span><span class="o">(</span><span class="mf">12.10</span><span class="o">),</span>
         <span class="n">Localitzacio</span><span class="o">.</span><span class="na">PRESTATGE_VERMELL</span><span class="o">,</span>
         <span class="s">&quot;Marfil escumós blanc de negre brut&quot;</span><span class="o">,</span>
         <span class="s">&quot;Alella vinícola&quot;</span><span class="o">,</span>

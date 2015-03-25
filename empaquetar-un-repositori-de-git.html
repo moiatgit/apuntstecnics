@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -101,24 +102,24 @@ Initialized empty Git repository in /tmp/elmeurepo/.git/
 <span class="nv">$ </span>git add .
 <span class="nv">$ </span>git commit -am <span class="s2">&quot;primer commit&quot;</span>
 <span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> eb124ef<span class="o">]</span> primer commit
- <span class="m">1</span> file changed, <span class="m">1</span> insertion<span class="o">(</span>+<span class="o">)</span>
- create mode <span class="m">100644</span> readme
+ 1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 readme
 <span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;Un fitxer amb continguts&quot;</span> &gt; continguts.txt
 <span class="nv">$ </span>git add continguts.txt
 /tmp/elmeurepo<span class="nv">$ </span>git commit -am <span class="s2">&quot;Afegit continguts&quot;</span>
 <span class="o">[</span>master 54da159<span class="o">]</span> Afegit continguts
- <span class="m">1</span> file changed, <span class="m">1</span> insertion<span class="o">(</span>+<span class="o">)</span>
- create mode <span class="m">100644</span> continguts.txt
+ 1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+ create mode 100644 continguts.txt
 <span class="nv">$ </span>git log
 commit 54da15947ad77315308c21d75c351023773a7bb2
 Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
-Date:   Thu Mar <span class="m">19</span> 16:25:39 <span class="m">2015</span> +0100
+Date:   Thu Mar 19 16:25:39 2015 +0100
 
     Afegit continguts
 
 commit eb124ef136751c60c224070581d94fc588e31fbb
 Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
-Date:   Thu Mar <span class="m">19</span> 16:24:26 <span class="m">2015</span> +0100
+Date:   Thu Mar 19 16:24:26 2015 +0100
 
     primer commit
 </pre></div>
@@ -126,10 +127,10 @@ Date:   Thu Mar <span class="m">19</span> 16:24:26 <span class="m">2015</span> +
 dos fitxers i amb dos <em>commits</em>. Toca crear el paquet:</p>
 <div class="highlight"><pre><span class="nv">$ </span>git bundle create elmeurepo.bundle master
 Counting objects: 6, <span class="k">done</span>.
-Delta compression using up to <span class="m">4</span> threads.
+Delta compression using up to 4 threads.
 Compressing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="k">done</span>.
-Writing objects: 100% <span class="o">(</span>6/6<span class="o">)</span>, <span class="m">497</span> bytes, <span class="k">done</span>.
-Total <span class="m">6</span> <span class="o">(</span>delta 1<span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta 0<span class="o">)</span>
+Writing objects: 100% <span class="o">(</span>6/6<span class="o">)</span>, 497 bytes, <span class="k">done</span>.
+Total 6 <span class="o">(</span>delta 1<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
 <span class="nv">$ </span>ls
 continguts.txt  elmeurepo.bundle  readme
 </pre></div>
@@ -149,9 +150,9 @@ git bundle verify «nomfitxer»
 Suposem que el tenim a un altre lloc (encara que podria ser a la
 mateixa carpeta on el vam crear). Comprovarem la seva integritat amb:</p>
 <div class="highlight"><pre><span class="nv">$ </span>git bundle verify elmeurepo.bundle
-The bundle contains <span class="m">1</span> ref
+The bundle contains 1 ref
 54da15947ad77315308c21d75c351023773a7bb2 refs/heads/master
-The bundle requires these <span class="m">0</span> ref
+The bundle requires these 0 ref
 elmeurepo.bundle is okay
 </pre></div>
 </div>
@@ -174,13 +175,13 @@ continguts.txt  readme
 <span class="nv">$ </span>git log
 commit 54da15947ad77315308c21d75c351023773a7bb2
 Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
-Date:   Thu Mar <span class="m">19</span> 16:25:39 <span class="m">2015</span> +0100
+Date:   Thu Mar 19 16:25:39 2015 +0100
 
     Afegit continguts
 
 commit eb124ef136751c60c224070581d94fc588e31fbb
 Author: Moisès Gómez Girón &lt;iesmoises@example.com&gt;
-Date:   Thu Mar <span class="m">19</span> 16:24:26 <span class="m">2015</span> +0100
+Date:   Thu Mar 19 16:24:26 2015 +0100
 
     primer commit
 </pre></div>

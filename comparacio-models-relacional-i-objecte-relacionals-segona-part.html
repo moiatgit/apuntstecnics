@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -210,14 +211,14 @@ nul·les en cas de clients estàndard <a class="footnote-reference" href="#nocal
 <p>Podem consultar els detalls del tipus amb</p>
 <div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span>T+ tractament
                          List of data types
- Schema <span class="p">|</span>    Name    <span class="p">|</span> Internal name <span class="p">|</span> Size <span class="p">|</span> Elements <span class="p">|</span> Description
+ Schema |    Name    | Internal name | Size | Elements | Description
 --------+------------+---------------+------+----------+-------------
- public <span class="p">|</span> tractament <span class="p">|</span> tractament    <span class="p">|</span> <span class="m">4</span>    <span class="p">|</span> Sr.     +<span class="p">|</span>
-        <span class="p">|</span>            <span class="p">|</span>               <span class="p">|</span>      <span class="p">|</span> Sra.    +<span class="p">|</span>
-        <span class="p">|</span>            <span class="p">|</span>               <span class="p">|</span>      <span class="p">|</span> Srta.   +<span class="p">|</span>
-        <span class="p">|</span>            <span class="p">|</span>               <span class="p">|</span>      <span class="p">|</span> Dr.     +<span class="p">|</span>
-        <span class="p">|</span>            <span class="p">|</span>               <span class="p">|</span>      <span class="p">|</span> Dra.     <span class="p">|</span>
-<span class="o">(</span><span class="m">1</span> row<span class="o">)</span>
+ public | tractament | tractament    | 4    | Sr.     +|
+        |            |               |      | Sra.    +|
+        |            |               |      | Srta.   +|
+        |            |               |      | Dr.     +|
+        |            |               |      | Dra.     |
+<span class="o">(</span>1 row<span class="o">)</span>
 </pre></div>
 </div>
 <div class="section" id="exercici-1-l-enumerat-pel-tipus-de-telefon">
@@ -240,11 +241,11 @@ dades compostes de <em>PostGreSQL</em>, de la següent manera</p>
 manera que consultàvem els detalls d'una taula:</p>
 <div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span> Telefon
       Composite <span class="nb">type</span> <span class="s2">&quot;public.telefon&quot;</span>
- Column <span class="p">|</span>         Type          <span class="p">|</span> Modifiers
+ Column |         Type          | Modifiers
 --------+-----------------------+-----------
- tipus  <span class="p">|</span> tipustelefon          <span class="p">|</span>
- pref   <span class="p">|</span> character varying<span class="o">(</span>4<span class="o">)</span>  <span class="p">|</span>
- num    <span class="p">|</span> character varying<span class="o">(</span>16<span class="o">)</span> <span class="p">|</span>
+ tipus  | tipustelefon          |
+ pref   | character varying<span class="o">(</span>4<span class="o">)</span>  |
+ num    | character varying<span class="o">(</span>16<span class="o">)</span> |
 </pre></div>
 <p>Fixa't que estem fent servir <em>TipusTelefon</em> directament com el tipus de
 dades de la propietat <em>tipus</em> de <em>Telefon</em>. Fàcil no?</p>
@@ -298,13 +299,13 @@ d'herència entre dues entitats amb la clau <em>INHERITS</em>.</p>
 <p>Fixa't què passa si fas:</p>
 <div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; <span class="se">\d</span> clients_vip
        Table <span class="s2">&quot;public.clients_vip&quot;</span>
-    Column    <span class="p">|</span>    Type     <span class="p">|</span> Modifiers
+    Column    |    Type     | Modifiers
 --------------+-------------+-----------
- id           <span class="p">|</span> integer     <span class="p">|</span> not null
- nom          <span class="p">|</span> denominacio <span class="p">|</span>
- adr          <span class="p">|</span> adressa     <span class="p">|</span>
- telefons     <span class="p">|</span> telefon<span class="o">[]</span>   <span class="p">|</span>
- id_comercial <span class="p">|</span> integer     <span class="p">|</span>
+ id           | integer     | not null
+ nom          | denominacio |
+ adr          | adressa     |
+ telefons     | telefon<span class="o">[]</span>   |
+ id_comercial | integer     |
 Foreign-key constraints:
     <span class="s2">&quot;clients_vip_id_comercial_fkey&quot;</span> FOREIGN KEY <span class="o">(</span>id_comercial<span class="o">)</span> REFERENCES comercials<span class="o">(</span>id<span class="o">)</span>
 Inherits: clients
@@ -388,30 +389,30 @@ extensió de clients, és molt similar a la inserció a una taula
 <p>Un cop disposem d'aquest client VIP, podem comprovar què:</p>
 <ul>
 <li><p class="first">es troba a CLIENTS_VIP</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM CLIENTS_VIP<span class="p">;</span>
-  id   <span class="p">|</span>         nom          <span class="p">|</span>                                            adr                                             <span class="p">|</span>                     telefons                      <span class="p">|</span> id_comercial
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM CLIENTS_VIP;
+  id   |         nom          |                                            adr                                             |                     telefons                      | id_comercial
 -------+----------------------+--------------------------------------------------------------------------------------------+---------------------------------------------------+--------------
- <span class="m">10002</span> <span class="p">|</span> <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span> <span class="p">|</span> <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.2&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> <span class="p">|</span> <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span> <span class="p">|</span>        40001
-<span class="o">(</span><span class="m">1</span> row<span class="o">)</span>
+ 10002 | <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span> | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.2&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span> |        40001
+<span class="o">(</span>1 row<span class="o">)</span>
 </pre></div>
 </li>
 <li><p class="first">es troba a CLIENTS</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM CLIENTS<span class="p">;</span>
-  id   <span class="p">|</span>         nom          <span class="p">|</span>                                            adr                                             <span class="p">|</span>                     telefons
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM CLIENTS;
+  id   |         nom          |                                            adr                                             |                     telefons
 -------+----------------------+--------------------------------------------------------------------------------------------+---------------------------------------------------
- <span class="m">10001</span> <span class="p">|</span> <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span>  <span class="p">|</span> <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.1&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> <span class="p">|</span> <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
- <span class="m">10002</span> <span class="p">|</span> <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span> <span class="p">|</span> <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.2&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> <span class="p">|</span> <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+ 10001 | <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span>  | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.1&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
+ 10002 | <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span> | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.2&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 </li>
 </ul>
 <p>Per cert, si volem saber només els clients que no són VIP, <em>PostGreSQL</em>
 ens ofereix <tt class="docutils literal">ONLY</tt></p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM ONLY CLIENTS<span class="p">;</span>
-  id   <span class="p">|</span>         nom         <span class="p">|</span>                                            adr                                             <span class="p">|</span>                     telefons
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT * FROM ONLY CLIENTS;
+  id   |         nom         |                                            adr                                             |                     telefons
 -------+---------------------+--------------------------------------------------------------------------------------------+---------------------------------------------------
- <span class="m">10001</span> <span class="p">|</span> <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span> <span class="p">|</span> <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.1&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> <span class="p">|</span> <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
-<span class="o">(</span><span class="m">1</span> row<span class="o">)</span>
+ 10001 | <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span> | <span class="o">(</span><span class="s2">&quot;{&quot;&quot;C/ Càspita, nr.1&quot;&quot;,&quot;&quot;Polígon Industrial Guarapunzo&quot;&quot;}&quot;</span>,08080,Alifardi,<span class="s2">&quot;Guinea Bisau&quot;</span><span class="o">)</span> | <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
+<span class="o">(</span>1 row<span class="o">)</span>
 </pre></div>
 <p>Malauradament, com ja hem comentat, la implementació actual de
 <em>PostGreSQL</em> permet alguns usos no adequats. Per exemple, podrem inserir
@@ -428,80 +429,80 @@ CLIENTS_VIP. També podríem inserir només els camps de CLIENTS i
 <h3>Seleccionar clients</h3>
 <p>Ja hem vist abans que podem accedir als camps de tipus complex i
 d'array com amb qualsevol altre camp. Per exemple</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT nom FROM CLIENTS<span class="p">;</span>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT nom FROM CLIENTS;
          nom
 ----------------------
  <span class="o">(</span>Sr.,Pepito,Grillo<span class="o">)</span>
  <span class="o">(</span>Sra.,Pepita,Grilla<span class="o">)</span>
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 <p>Fixa't, però, que els valors dels atributs surten agrupats. Si els
 volem separats, podem fer</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT <span class="o">(</span>nom<span class="o">)</span>.* FROM CLIENTS<span class="p">;</span>
-  tr  <span class="p">|</span>  nom   <span class="p">|</span> cognoms
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT <span class="o">(</span>nom<span class="o">)</span>.* FROM CLIENTS;
+  tr  |  nom   | cognoms
 ------+--------+---------
- Sr.  <span class="p">|</span> Pepito <span class="p">|</span> Grillo
- Sra. <span class="p">|</span> Pepita <span class="p">|</span> Grilla
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+ Sr.  | Pepito | Grillo
+ Sra. | Pepita | Grilla
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 <p>De manera individual els seleccionarem indicant el nom de l'atribut</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT <span class="o">(</span>nom<span class="o">)</span>.cognoms <span class="o">||</span> <span class="s1">&#39;, &#39;</span> <span class="o">||</span> <span class="o">(</span>nom<span class="o">)</span>.nom FROM CLIENTS<span class="p">;</span>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT <span class="o">(</span>nom<span class="o">)</span>.cognoms <span class="o">||</span> <span class="s1">&#39;, &#39;</span> <span class="o">||</span> <span class="o">(</span>nom<span class="o">)</span>.nom FROM CLIENTS;
     ?column?
 ----------------
  Grillo, Pepito
  Grilla, Pepita
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 <p>En el cas dels arrays, podem accedir simplement amb</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT telefons FROM CLIENTS<span class="p">;</span>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT telefons FROM CLIENTS;
                      telefons
 ---------------------------------------------------
  <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
  <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 <p>O especificant un rang</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT telefons<span class="o">[</span>1:2<span class="o">]</span> FROM CLIENTS<span class="p">;</span>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT telefons<span class="o">[</span>1:2<span class="o">]</span> FROM CLIENTS;
                      telefons
 ---------------------------------------------------
  <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333333)&quot;</span>,<span class="s2">&quot;(fax,0034,933333334)&quot;</span><span class="o">}</span>
  <span class="o">{</span><span class="s2">&quot;(mòbil,0034,933333335)&quot;</span>,<span class="s2">&quot;(fax,0034,933333336)&quot;</span><span class="o">}</span>
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 <p>Per defecte, els arrays es defineixen a partir del 1 i no del 0.</p>
 <p>Disposem d'algunes utilitats per saber les dimensions d'un array
 <a class="footnote-reference" href="#dimensions" id="id3">[2]</a></p>
 <div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; -- la longitut de l<span class="err">&#39;</span>array telèfons per la primera dimensió
-<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_LENGTH<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS<span class="p">;</span>
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_LENGTH<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS;
  array_length
 --------------
             2
             2
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 
 <span class="nv">testbd</span><span class="o">=</span>&gt; -- la posició superior per la primera dimensió
-<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_UPPER<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS<span class="p">;</span>
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_UPPER<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS;
  array_upper
 -------------
            2
            2
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 
 <span class="nv">testbd</span><span class="o">=</span>&gt; -- la posició inferior per la primera dimensió
-<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_LOWER<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS<span class="p">;</span>
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_LOWER<span class="o">(</span>telefons, 1<span class="o">)</span> FROM CLIENTS;
  array_lower
 -------------
            1
            1
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 
 <span class="nv">testbd</span><span class="o">=</span>&gt; -- les dimensions dels arrays
-<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_DIMS<span class="o">(</span>telefons<span class="o">)</span> FROM CLIENTS<span class="p">;</span>
+<span class="nv">testbd</span><span class="o">=</span>&gt; SELECT ARRAY_DIMS<span class="o">(</span>telefons<span class="o">)</span> FROM CLIENTS;
  array_dims
 ------------
  <span class="o">[</span>1:2<span class="o">]</span>
  <span class="o">[</span>1:2<span class="o">]</span>
-<span class="o">(</span><span class="m">2</span> rows<span class="o">)</span>
+<span class="o">(</span>2 rows<span class="o">)</span>
 </pre></div>
 <p>Per exemple, la següent consulta ens retorna tots els clients amb 2 o
 més telèfons</p>
@@ -604,11 +605,11 @@ mateixa ciutat que la de l'adreça del client, i que hagin comprat un
 mínim de 10 productes amb preu superior a 10€ durant el darrer mes (30
 dies).</p>
 <p>Pista:</p>
-<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT DATE <span class="s1">&#39;2013-04-08&#39;</span> - INTERVAL <span class="s1">&#39;1 month&#39;</span> &lt; DATE <span class="s1">&#39;2013-04-08&#39;</span> AS abans<span class="p">;</span>
+<div class="highlight"><pre><span class="nv">testbd</span><span class="o">=</span>&gt; SELECT DATE <span class="s1">&#39;2013-04-08&#39;</span> - INTERVAL <span class="s1">&#39;1 month&#39;</span> &lt; DATE <span class="s1">&#39;2013-04-08&#39;</span> AS abans;
  abans
 -------
  t
-<span class="o">(</span><span class="m">1</span> row<span class="o">)</span>
+<span class="o">(</span>1 row<span class="o">)</span>
 </pre></div>
 </div>
 <div class="section" id="exercici-12-comandes-dificils">

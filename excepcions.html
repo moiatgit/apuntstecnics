@@ -57,6 +57,7 @@
                 <li><a href="./tag/mongodb.html">mongoDB</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
                 <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
@@ -186,7 +187,7 @@ el resultat de la seva execució:</p>
     <span class="k">if</span> <span class="o">(</span><span class="n">h</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">h</span><span class="o">&lt;</span><span class="mi">24</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">h</span><span class="o">=</span><span class="n">h</span><span class="o">;</span>
     <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">&quot;Hora.setHora(&quot;</span><span class="o">+</span><span class="n">h</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">&quot;Hora.setHora(&quot;</span><span class="o">+</span><span class="n">h</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
@@ -324,7 +325,7 @@ printStackTrace().</p>
 </pre></div>
 <p>Què passaria si substitueixes aquesta línia per la següent? (considera
 la informació del constructor a la API de Java)</p>
-<div class="highlight"><pre><span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span><span class="o">(</span><span class="s">&quot;Exception capturada&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>  <span class="c1">// tornem a llençar l&#39;excepció</span>
+<div class="highlight"><pre><span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="o">(</span><span class="s">&quot;Exception capturada&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>  <span class="c1">// tornem a llençar l&#39;excepció</span>
 </pre></div>
 </div>
 <div class="section" id="exercici-3-renat-amb-excepcions">
@@ -402,7 +403,7 @@ equival a</p>
     <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">llegeix_fitxer</span><span class="o">(</span><span class="n">String</span> <span class="n">path</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">linies</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
         <span class="k">try</span> <span class="o">(</span><span class="n">BufferedReader</span> <span class="n">br</span> <span class="o">=</span>
-                <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">path</span><span class="o">)))</span> <span class="o">{</span>
+                <span class="k">new</span> <span class="nf">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">path</span><span class="o">)))</span> <span class="o">{</span>
             <span class="n">String</span> <span class="n">linia</span><span class="o">;</span>
             <span class="k">while</span> <span class="o">((</span><span class="n">linia</span> <span class="o">=</span> <span class="n">br</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">linies</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">linia</span><span class="o">);</span>
@@ -418,7 +419,7 @@ equival a</p>
             <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Indica un o més paràmetres&quot;</span><span class="o">);</span>
             <span class="k">return</span><span class="o">;</span>
         <span class="o">}</span>
-        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">a</span><span class="o">:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="nl">a:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">String</span> <span class="n">linies</span><span class="o">[]</span> <span class="o">=</span> <span class="n">llegeix_fitxer</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
             <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">linia</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">linia</span> <span class="o">&lt;</span> <span class="n">linies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">linia</span><span class="o">++)</span> <span class="o">{</span>
                 <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;Línia [%d]: &#39;%s&#39;\n&quot;</span><span class="o">,</span> <span class="n">linia</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span> <span class="n">linies</span><span class="o">[</span><span class="n">linia</span><span class="o">]);</span>
@@ -534,7 +535,7 @@ crear de noves.</p>
     <span class="err">«</span><span class="o">...</span><span class="err">»</span>   <span class="c1">// altres mètodes</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHora</span><span class="o">(</span><span class="kt">int</span> <span class="n">h</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">HoraNoValidaException</span>  <span class="o">{</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">h</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">h</span><span class="o">&lt;</span><span class="mi">24</span><span class="o">)</span> <span class="k">this</span><span class="o">.</span><span class="na">h</span><span class="o">=</span><span class="n">h</span><span class="o">;</span>
-        <span class="k">else</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">HoraNoValidaException</span><span class="o">(</span><span class="s">&quot;Hora.setHora(&quot;</span><span class="o">+</span><span class="n">h</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
+        <span class="k">else</span> <span class="k">throw</span> <span class="k">new</span> <span class="nf">HoraNoValidaException</span><span class="o">(</span><span class="s">&quot;Hora.setHora(&quot;</span><span class="o">+</span><span class="n">h</span><span class="o">+</span><span class="s">&quot;) valor fora de rang&quot;</span><span class="o">);</span>
     <span class="o">}</span>
     <span class="err">«</span><span class="o">...</span><span class="err">»</span>   <span class="c1">// altres mètodes</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
