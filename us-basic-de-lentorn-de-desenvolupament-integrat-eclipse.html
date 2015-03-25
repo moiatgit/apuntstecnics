@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Us bàsic de l'entorn de desenvolupament integrat Eclipse</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Us bàsic de l'entorn de desenvolupament integrat Eclipse             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Us bàsic de l'entorn de desenvolupament integrat Eclipse</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/eines.html">
+        eines
+    </a>
+</div>
+    <div><!-- categories: eines -->
+<!-- tags: eclipse -->
+<!-- permalink: '/:categories/eclipse-us-basic' -->
+<div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquest document accedirem als elements bàsics personalització i ús
+de l'entorn Eclipse.</p>
+<p>Per seguir-lo, caldrà disposar de</p>
+<ul class="simple">
+<li>eclipse instal·lat amb jdk correctament instal·lat</li>
+<li>plug-in CDT instal·lat</li>
+</ul>
+<p>Si encara no tens instal·lat Eclipse, pots seguir aquesta
+<a class="reference external" href="./tutorial-dinstallacio-de-eclipse.html">guia d'eclipse</a>.</p>
+<p>Si no tens instal·lat el CDT, pots seguir aquesta
+<a class="reference external" href="./configuracio-declipse-per-cc.html">guia de CDT</a>.</p>
+</div>
+<div class="section" id="continguts">
+<h2>Continguts</h2>
+<p>Començarem amb la creació d'un programa en C que respongui al següent
+enunciat de requeriments:</p>
+<blockquote>
+Escriu un programa que demani a l'usuari dos punts en el pla i li
+mostri la longitud del segment que descriuen.</blockquote>
+<p>Crea un nou projecte de tipus <em>C Project</em> i anomenal <em>Punts</em></p>
+<p>Selecciona el projecte acabat de crear i, amb el botó dret, crea un
+nou fitxer font de C</p>
+<p>Ens crea el nou fitxer amb una capçalera de comentaris on surt la
+data de creació i el nom de l'autor (el nom de l'usuari del
+sistema)</p>
+<p>Comença a escriure <tt class="docutils literal">int main(</tt> i fixa't que et tanca el parèntesi
+automàticament. Un detall és que si tot i així el tanques tu, no et
+queden dos parèntesis tancats.</p>
+<p>Passa el mateix amb les claus. Si obres <tt class="docutils literal">{</tt> i fas &lt;enter&gt;, et
+tanca la clau i t'indenta adequadament en la línia on probablement
+voldràs començar a escriure codi.</p>
+<p>Introdueix <tt class="docutils literal"><span class="pre">printf(&quot;Introdueix</span> les coordenades de dos punts\n&quot;)</tt>
+sense el punt i coma final. Veuràs que t'avisa del problema amb un
+interrogant al costat esquerre de la línia. Si poses el cursor a
+sobre de l'interrogant, podràs llegir una descripció de l'error. En
+aquest cas <tt class="docutils literal">Missing ;</tt>. Corregeix la situació i l'avís
+desapareixerà.</p>
+<p>També veuràs que algunes paraules del missatge apareixen
+subratllades en vermell. El comprovador ortogràfic no està
+configurat pel català <a class="footnote-reference" href="#spellcat" id="id1">[1]</a></p>
+<p>Afegeix</p>
+<pre class="literal-block">
+printf(&quot;Punt 1 coordenada x: &quot;);
+scanf(&quot;%f&quot;, &amp;x1);
+</pre>
+<p>Un nou avís ens informa que la variable x1 no apareix definida.
+Escollim l'opció de creació d'una variable local i veiem que ens la
+crea però amb el tipus incorrecte (no sempre encerta) A més, ens ha
+col·locat la declaració a la línia justament anterior al seu ús
+quan en C es usual posar-les a l'inici del bloc. Fes les
+correccions corresponents.</p>
+<p>Escriu peticions per la resta de coordenades, fes el càlcul de la
+longitud del segment i mostra el resultat per pantalla.</p>
+<p>El programa hauria de quedar quelcom similar a:</p>
+<pre class="literal-block">
+/*
+ * calculaSegment.c
+ *
+ *  Created on: 16/08/2012
+ *      Author: Moisès
+ */
+
+#include&lt;stdio.h&gt;
+#include&lt;math.h&gt;
+int main() {
+    float x1, y1, x2, y2;
+    float longitud;
+    printf(&quot;Introdueix les coordenades de dos punts\n&quot;);
+    printf(&quot;Punt 1 coordenada x: &quot;);
+    scanf(&quot;%f&quot;, &amp;x1);
+    printf(&quot;Punt 1 coordenada y: &quot;);
+    scanf(&quot;%f&quot;, &amp;y1);
+    printf(&quot;Punt 2 coordenada x: &quot;);
+    scanf(&quot;%f&quot;, &amp;x2);
+    printf(&quot;Punt 2 coordenada y: &quot;);
+    scanf(&quot;%f&quot;, &amp;y2);
+    longitud = sqrt(pow((x2-x1), 2)+pow((y2-y1), 2));
+    printf(&quot;La longitud del segment és %0.2f\n&quot;, longitud);
+    return 0;
+}
+</pre>
+<p>Ara executarem el nostre codi (ex. Run-&gt;run) <a class="footnote-reference" href="#sqrtproblem" id="id2">[2]</a></p>
+<p>Eclipse ens ha fet tot: compilar, enllaçar i llençar l'execució. Si
+anem a la consola veurem que podem introduir les dades i executar
+el nostre programa.</p>
+<div class="figure align-center">
+<img alt="Funcionament del càlcul de segment" src="./images/eclipse004.img001.funcionant.png" />
+</div>
+<p>Suposem que volem canviar el nom de les variables del primer punt
+per <tt class="docutils literal">coord1</tt> i <tt class="docutils literal">coord2</tt>. Fàcil. Cliquem sobre qualsevol
+aparició de <tt class="docutils literal">x1</tt> i escollim <em>Refactor</em> del menú contextual (clic
+dret) Ara escollim <em>Rename</em> i comencem a escriure el nou nom.
+Tornem a posar, però, els noms anteriors que eren molt més curts.</p>
+<p>Estaria bé veure els números de línia, no? Windows -&gt; Preferences
+-&gt; Editors -&gt; Text Editors -&gt; Show line numbers.</p>
+<p>Ara crearem una funció que calculi la longitud del segment. Per
+fer-ho, en comptes de copiar&amp;enganxar, el que farem serà
+seleccionar l'expressió que assignem a <tt class="docutils literal">longitud</tt> i fem
+Refactor-&gt;Extract function. Aqui, simplement escollim el nom de la
+funció (per exemple <tt class="docutils literal">calcula_longitud</tt> i Eclipse ens ho fa tot
+sol!. Ens ha posat com a tipus de retorn <em>double</em>. El podem
+corregir si volem un float.</p>
+<p>Ara tornarem a executar el programa. Aquest cop, però, anirem a Run
+-&gt; Debug. Ens demanarà obrir una nova perspectiva, acceptem-ho i
+veurem quelcom similar a la següent imatge.</p>
+<div class="figure align-center">
+<img alt="Depuració amb Eclipse" src="./images/eclipse004.img002.depurant.png" />
+</div>
+<p>A la secció 1 trobem el fil d'execució en que estem. Com que no estem
+desenvolupant una aplicació multifil, podem ignorar-la</p>
+<p>La secció 2 correspon a la inspecció de variables i altres elements
+de l'execució del nostre programa. Es clar que les variables no han
+estat inicialitzades i contenen soroll.</p>
+<p>La secció 3 continua sent el nostre codi però té ressaltada la
+línia amb el proper codi a executar. De moment només ha declarat
+les variables. Atenció que, tot i que podem editar, ara no és el
+moment més adequat i probablement ens demanarà tornar a executar
+per tenir en compte els canvis. També és interessant passar per
+sobre de les variables amb el cursor de l'apuntador. Veurem
+informació en temps d'execució.</p>
+<p>La secció 4 ja l'havíem vista. Ens dona un esquema del codi. Podem
+veure-hi les nostres dues funcions <tt class="docutils literal">main()</tt> i <tt class="docutils literal">calcula_longitud()</tt>.</p>
+<p>La secció 5 també la coneixem: correspon a la consola.</p>
+<p>Amb Run -&gt; Step Over (o F6) podem executar la línia actual. Així
+podem anar fent fins que arribem a <tt class="docutils literal">scanf()</tt>. No podrem avançar
+fins que no introduïm un valor i fem enter a la consola.</p>
+<p>Fixem-nos que a la secció d'inspecció de variables podem veure el
+nou valor de <tt class="docutils literal">x1</tt>. Suposem que voldríem que fos un altre. Doncs
+l'editem a la secció d'inspecció i ja està!</p>
+<p>Com que és una mica incòmode anar línia a línia, afegirem un punt
+d'aturada a la línia on assignem valor a la variable <tt class="docutils literal">longitud</tt>.
+Ho farem, per exemple, amb clic dret sobre el número de línia i
+<em>Toggle breakpoint</em> (tot i que és més directe amb un doble clic
+sobre la part grisa del costat) Ara continuem amb l'execució del
+programa amb Run -&gt; Resume o F8. S'aturarà quan arribi a la línia
+amb el punt d'aturada.</p>
+<p>Ara tenim dues opcions. Executar aquesta línia com un bloc (farem
+F6) o bé entrar dins de la funció <tt class="docutils literal">calcula_longitud()</tt> per
+inspeccionar-la (Run -&gt; Step Into o F5) Si fem aquesta segona
+notarem que l'inspector de variables ja no té longitud. Això és
+perquè estem en un bloc on aquesta variable no existeix. De fet,
+encara que tenen el mateix nom, la resta de les variables no són
+les mateixes que les del bloc principal.</p>
+<p>Per cert, trobarem l'executable a la carpeta Debug dins de la carpeta
+en el <em>workspace</em> corresponent al nostre projecte.</p>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="spellcat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Tot i que es pot configurar perquè faci la comprovació
+pel català, el procés no resulta gaire interessant pels objectius
+d'aquesta guia. Queda com a exercici de l'usuari interessat.
+Altrament caldrà ignorar aquest subratllat, o encara millor,
+inhabilitar la comprovació ortogràfica.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="sqrtproblem" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Amb les darreres versions del compilador gcc (i
+potser amb altres) cal linkar explícitament la biblioteca math al
+nostre programa. Per fer-ho haurem d'anar a les propietats del
+projecte -&gt; C/C++ Build -&gt; Settings -&gt; GCC C Linker -&gt; Libraries, i
+aquí premem l'icona verda amb un + i afegim <tt class="docutils literal">m</tt></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

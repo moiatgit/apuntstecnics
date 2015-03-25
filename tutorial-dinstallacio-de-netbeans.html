@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Tutorial d'instal·lació de NetBeans</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Tutorial d'instal·lació de NetBeans             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Tutorial d'instal·lació de NetBeans</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/eines.html">
+        eines
+    </a>
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document descriu una manera d'instal·lar l'IDE NetBeans a un
+sistema Ubuntu.</p>
+<p>Atenció: La instal·lació a altres sistemes operatius no hauria de
+resultar gaire més complexa.</p>
+</div>
+<div class="section" id="installacio">
+<h2>Instal·lació</h2>
+<p>Per la realització d'una instal·lació de NetBeans seguirem les
+següents passes des d'una consola:</p>
+<ol class="arabic" start="0">
+<li><p class="first">Abans d'instal·lar NetBeans</p>
+<p>Donat que NetBeans és una aplicació java, caldrà disposar d'una
+màquina virtual (JVM) al nostre sistema per a poder-la instal·lar.</p>
+<p>Si encara no la tens instal·lada, pots seguir el <a class="reference external" href="./tutorial-dinstallacio-de-eclipse.html">pas 0 de la guia
+d'instal·lació d'Eclipse</a>.</p>
+</li>
+<li><p class="first">Obtenció del NetBeans</p>
+<p>El NetBeans podria ser instal·lat des del centre de programari que
+ofereix l'Ubuntu. Amb tot, en el moment en que s'escrivia aquesta
+guia, la versió empaquetada disponible era la 7.0.1, mentre que la
+darrera publicada era la 7.2.</p>
+<p>Tot i que, probablement, no trobarem cap diferència entre les dues
+versions per un ús no professional de l'IDE, en aquesta guia es
+proposa realitzar la instal·lació de la darrera versió.</p>
+<p>Per tant, caldrà anar al lloc oficial de NetBeans (netbeans.org) a
+la secció de descàrregues (des de la pàgina principal hi ha un
+enllaç directe a la descàrrega de la darrera versió)</p>
+<p>Ara escollim idioma i plataforma (probablement la proposta per
+defecte serà la correcta), i escollim la descàrrega de la versió
+Java SE (la més bàsica) donat que més endavant podrem afegir altres
+complements com indica la pàgina al final.</p>
+<p>Es descarregarà l'instal·lador, un script d'uns 83 Mb.</p>
+</li>
+<li><p class="first">Instal·lació del NetBeans</p>
+<p>La instal·lació del NetBeans a partir de l'instal·lador descarregat
+és molt fàcil. Simplement cal executar l'instal·lador i anar
+seguint les instruccions.</p>
+<p>Per executar l'instal·lador podem, per exemple, anar al directori
+on l'hem descarregat i fer:</p>
+<pre class="literal-block">
+$ bash netbeans-7-2-ml-javase-linux.sh
+</pre>
+<p>Ens caldrà, a banda d'acceptar una sèrie d'acords de llicències,
+definir el directori on instal·lar NetBeans i el JDK. Per exemple,
+podem escollir el directori <tt class="docutils literal">~/soft/netbeans7.2</tt> i el jdk per
+defecte.</p>
+<p>En acabar, continuarà descarregant i finalment instal·larà
+l'aplicació.</p>
+<p>Per comoditat, es pot crear algun llançador. Per exemple, per poder
+executar-ho des de línia de comandes, pot ser còmode:</p>
+<pre class="literal-block">
+$ cd ~
+$ mkdir -p bin
+$ cd bin
+$ cat &gt; netbeans.sh &lt;&lt; EOF
+&gt; #! /bin/sh
+&gt; ~/soft/netbeans-7.2/bin/netbeans &amp;
+&gt; EOF
+$ chmod u+x netbeans.sh
+</pre>
+<p>i, des de qualsevol lloc</p>
+<pre class="literal-block">
+$ netbeans.sh
+</pre>
+</li>
+<li><p class="first">Una prova ràpida</p>
+<p>Per defecte, NetBeans s'instal·la per construir aplicacions en
+java.</p>
+<p>Aprofitant que no hem de fer res especial, farem una primera prova
+de l'entorn creant un &quot;original&quot; programa de salutació al món.</p>
+<p>Anirem a Fitxer -&gt; Nou projecte i escollirem els valors per defecte
+(Categoria Java i Projectes Java Aplication) Farem <em>Següent</em> i
+escollirem un nom de projecte (ex. HolaMon) i un lloc on deixar el
+projecte (potser l'opció per defecte ja ens està bé) Quan ja ho
+tenim tot, premem <em>Finalitzar</em>.</p>
+<p>En aquest moment ens apareixerà una finestra amb un aspecte similar
+al següent:</p>
+<div class="figure align-center">
+<img alt="Projecte HolaMon a Netbeans" src="./images/netbeans001.holamon.png" />
+</div>
+<p>A la subfinestra més ampla (a la dreta), hi trobem un editor amb el
+codi del nostre projecte. NetBeans ens ha autocompletat una sèrie
+d'elements per nosaltres. Entre d'altres, ens ha afegit el nostre
+nom, i ens ha creat un primer esquema de la classe HolaMon que hem
+demanat crear.</p>
+<p>Ara, allà on posa <tt class="docutils literal">// TODO code application logic here</tt>
+escriurem <tt class="docutils literal">Sys</tt>. A continuació, farem &lt;ctrl&gt;-&lt;espai&gt; i podrem
+veure que NetBeans ens ofereix, no només com continuar la paraula
+que estem escrivint, sinó també documentació corresponent a la
+proposta de compleció. Farem &lt;enter&gt; per completar.</p>
+<p>Continuem escrivint un punt <tt class="docutils literal">.</tt> i observem que ens apareix una
+llista de possibilitats per a continuar que podem navegar amb el
+cursor. Escollirem <tt class="docutils literal">out</tt> i tornarem a escriure un punt. Ens
+apareix una nova llista. Aquest cop, començarem a escriure <tt class="docutils literal">pri</tt>
+i observarem que ens porta a les paraules que comencen amb &quot;pri&quot;.
+Escollirem la primera i ens autocompletarà a la funció
+<tt class="docutils literal">System.out.print()</tt> deixant-nos el cursor dins dels parèntesis i
+informant-nos del possible tipus de dades que hi podem ficar dins.
+Escriurem entre cometes <tt class="docutils literal">&quot;Hola <span class="pre">Món!\n&quot;</span></tt> i farem &lt;enter&gt;. NetBeans
+col·loca el cursor al final de la sentència.</p>
+<p>Si tot està correcte (NetBeans ens avisaria en cas contrari) podem
+ja executar el nostre programa. Execució -&gt; Executar projecte
+(HolaMon) i ens apareix una nova subfinestra a la part inferior on
+es veu el resultat de l'execució del programa. NetBeans s'ha fet
+càrrec de guardar, compilar i executar el nostre codi.</p>
+</li>
+</ol>
+<p>Ja tenim disponible el NetBeans!</p>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

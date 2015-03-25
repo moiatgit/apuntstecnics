@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: conclusions</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: conclusions             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-altres-passes-de-refaccio.html">
+        Refactoring: altres passes de refacció
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: conclusions</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Hem arribat al final d'aquesta introducció a la refacció. Fem aquí
+unes breus paraules com a conclusió de la feina feta i, sobre tot,
+unes indicacions per a ampliar els nostres coneixements en un tema
+que, en cas d'aplicar-lo correctament, ens garantirà que la qualitat
+del nostre millori cada cop que el revisem.</p>
+</div>
+<div class="section" id="recapitulem">
+<h2>Recapitulem</h2>
+<p>Amb uns senzills canvis, hem passat d'un mètode d'unes 50 línies en
+les que es barrejaven un munt d'aspectes diversos, a un altre de menys
+de 5 que es limita a realitzar la <strong>seva</strong> tasca: composar l'informe.
+Les funcionalitats &quot;sobrants&quot; les hem passades a altres mètodes,
+alguns fins i tot els hem mogut a altres classes. A més, hem realitzat
+alguns canvis de noms.</p>
+<p>El resultat és un codi molt més modular (hom diria <em>orientat a
+objectes</em>) que permet crear nous formats d'informes de manera molt més
+àgil.</p>
+<p>Hem vist només unes poques passes de refacció. Es coneixen moltes més.
+Tot i que les presentades en aquesta sèrie d'exercicis ja poden
+ajudar-nos a millorar significativament el nostre codi, és possible
+que no et vulguis quedar aquí.</p>
+<p>Si és així. Si t'has quedat amb ganes de veure més, et recomano que
+aconsegueixis una còpia del fantàstic llibre del <a class="citation-reference" href="#fowler" id="id1">[FOWLER]</a> i gaudeixis
+de la seva lectura. Malgrat la transformació que he realitzat al seu
+exemple inicial per a adaptar-lo al context que persegueixo per a
+aquests materials, estic segur que podràs seguir els conceptes
+que hi apareixen a la resta de l'exemple i, sobre tot, que aprofitaràs
+l'ampli ventall de passos de refacció que recopila.</p>
+<p>Un altre llibre que t'ajudarà a aprofundir en els conceptes de
+reanomenament i reducció de llargària de mètodes és el <a class="citation-reference" href="#martin" id="id2">[MARTIN]</a> en
+els capítols 2 i 3. El conjunt del llibre t'oferirà una visió molt
+pràctica del què vol dir un <em>codi net</em>.</p>
+</div>
+<div class="section" id="referencies">
+<h2>Referències</h2>
+<table class="docutils citation" frame="void" id="fowler" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[FOWLER]</a></td><td>Fowler, Martin (1999) <em>Refactoring: Improving the Design
+of Existing Code</em>.  Addison-Wesley Professional.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="martin" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[MARTIN]</a></td><td>Martin, Robert C. (2009) <em>Clean Code: A Handbook of Agile
+Software Craftmanship</em>. Prentice Hall.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-altres-passes-de-refaccio.html">
+        Refactoring: altres passes de refacció
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

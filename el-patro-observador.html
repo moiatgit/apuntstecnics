@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: El patró <strong>observador</strong></title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ El patró <strong>observador</strong>             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>El patró <strong>observador</strong></h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/gui.html">
+        gui
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><!-- XXX TODO: to be converted to current rst for pelican.
+Decide also if it has to appear in this category (it could do in
+the GUI one or even in a new one about patterns) -->
+<div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada es presenta un patró de disseny anomenat
+<em>patró observador</em> o <em>observer pattern</em>.</p>
+<p>Es tracta d'un patró molt utilitzat en contextos en els que cal
+reaccionar a canvis que es poden produir en algun lloc. La seva
+implementació evita haver de fer mecanismes de <a class="reference external" href="http://en.wikipedia.org/wiki/Polling_%28computer_science%29">poling</a> o
+<a class="reference external" href="http://ca.wikipedia.org/wiki/Espera_activa">espera activa</a> en els
+que part del codi va comprovant constantment si s'ha produït el canvi
+esperat. No és d'estranyar que aquest patró sigui amplament utilitzat
+en interfícies gràfiques d'usuari (GUI).</p>
+</div>
+<div class="section" id="id1">
+<h2>El patró <strong>observador</strong></h2>
+<div class="figure align-center">
+<img alt="Com va el patró observador" src="./images/poo024.img001.observer.comic.png" />
+</div>
+<p><strong>Observador</strong> és un patró de disseny de programari format per un
+objecte anomenat <em>subjecte</em> que genera algun tipus de missatge a un o
+més objectes anomenats <em>observadors</em>.</p>
+<p>Els observadors han de mostrar l'interès en rebre el tipus de
+missatges; és a dir, s'han de <em>subscriure</em>. El subjecte manté la
+llista d'observadors i quan hi ha un missatge per enviar, els envia a
+tots els subscriptors. El patró correctament implementat permet que
+tant el subjecte com l'observador puguin ser quasi completament
+desconeguts entre si. Això ho aconsegueixen implementant unes
+determinades <em>interfaces</em>.</p>
+<p>És tracta d'un model multicast amb un únic enviador i molts receptors.</p>
+<p>El patró observador es pot trobar a situacions de la vida quotidiana.
+Per exemple, considera com funciona el mon de les revistes o diaris
+per subscripció. Una editorial comença a publicar diaris. A tu
+t'interessa i decideixes subscriure't. Cada cop que l'editorial llença
+una nova edició, a tu te n'arriba una còpia. Quan finalment decideixes
+que ja no t'interessa aquestes publicacions, et desubscrius i
+l'editorial deixa d'enviar-te noves edicions.</p>
+<div class="section" id="un-exemple-l-estacio-meteorologica">
+<h3>Un exemple: l'estació meteorològica</h3>
+<p>El llibre Head First Design patterns ens ofereix el següent exemple
+<a class="footnote-reference" href="#exempleadaptat" id="id2">[1]</a> pel patró <em>observador</em>: l'estació meteorològica.</p>
+<p>Disposem d'una estació meteorològica capaç de mesurar la
+temperatura, l'humitat i la pressió atmosfèrica. Amb l'estació ens han
+afegit una classe abstracta en java anomenada AbsEstacioMeteorologica
+amb la següent interfície pública:</p>
+<pre class="literal-block">
+$ javap AbsEstacioMeteorologica
+Compiled from &quot;AbsEstacioMeteorologica.java&quot;
+public abstract class AbsEstacioMeteorologica extends java.lang.Object{
+    public AbsEstacioMeteorologica();
+    public double getTemperatura();
+    public double getHumitat();
+    public double getPressio();
+    public abstract void canviMessures();
+    public static void main(java.lang.String[]);
+    static void access$000(AbsEstacioMeteorologica);
+    static {};
+}
+</pre>
+<p>Com podem veure, AbsEstacioMeteorologica ens ofereix mètodes per a
+obtenir les dades de la darrera lectura de les tres mesures que pren
+l'estació meteorològica. Ens deixa, però, un mètode &quot;obert&quot;
+(<tt class="docutils literal">canviMessures()</tt>) i ens asseguren que el mètode és cridat cada cop
+que una o més mesures han canviat.</p>
+<p>El nostre objectiu consisteix en crear la classe EstacioMeteorologica
+que estengui AbsEstacioMeteorologica i implementi canviMessures()
+adequadament per a permetre mostrar les mesures a la nostra aplicació.</p>
+<p>Suposem que volem mostrar les mesures de tres maneres diferents:</p>
+<ol class="arabic">
+<li><p class="first">la primera consisteix en simplement mostrar les dades de les condicions actuals del temps.</p>
+</li>
+<li><p class="first">la segona mostraria els estadístics de les darreres 50 lectures:</p>
+<blockquote>
+<ul class="simple">
+<li>temperatura mitja</li>
+<li>temperatura mínima</li>
+<li>temperatura màxima</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">finalment la tercera mostrarà una representació gràfica de les dades actuals amb icones tipus núvols, sol, pluja...</p>
+</li>
+</ol>
+<p>És important, però, que la nostra solució permeti afegir fàcilment
+altres presentacions de les dades. Exemple, una previsió del temps que
+farà les properes 24 hores.</p>
+</div>
+<div class="section" id="exercici-1-primera-aproximacio">
+<h3>Exercici 1: primera aproximació</h3>
+<p>Una primera solució <em>feble</em> del problema consistiria en disposar d'una
+instància de les vistes accessible des de EstacioMeteorologica, de
+manera que cada cop que és cridat el mètode canviMessures(), es fan
+les actualitzacions de les vistes.</p>
+<p>Les vistes podrien estar implementades per les classes
+<tt class="docutils literal">CondicionsActuals</tt>, <tt class="docutils literal">Estadistiques</tt> i
+<tt class="docutils literal">GraficaCondicionsActuals</tt>.</p>
+<p>Considera el següent diagrama de classes:</p>
+<div class="figure align-center">
+<img alt="Primera aproximació de l'estació meteorològica" src="./images/poo024.img002.observer_pattern_sol01.png" />
+</div>
+<p>El diagrama implica que EstacioMeteorologica disposa d'accés a
+instàncies de les tres classes que mostren les dades.</p>
+<p>El codi seria quelcom semblant a:</p>
+<pre class="literal-block">
+public void canviMessures() {
+    double temperatura = getTemperatura();
+    double humitat = getHumitat();
+    double pressio = getPressio();
+
+    condicionsActuals.actualitzaValors(temperatura, humitat, pressio);
+    grafCondicionsActuals.actualitzaGrafic(humitat, pressio, temperatura);
+    estadistiques.actualitzaEstats(temperatura, pressio, humitat);
+
+}
+</pre>
+<p>Implementa la classe EstacioMeteorologica de manera que el
+constructor rebi com a paràmetres instàncies de les tres vistes, i que
+canviMessures() faci una crida per a actualitzar les vistes.</p>
+<p>Implementa també les classes corresponents a les tres vistes. Els
+mètodes d'actualització, per simplicitat, simplement escriuran per
+sortida estàndard un missatge similar a:</p>
+<pre class="literal-block">
+[Vista Estadistiques] temperatura: 32.21º humitat: 60% pressió: 1017,06 hPa
+</pre>
+<p>Finalment implementa la classe TestEstacioMeteorologica que crei tot
+el sistema i permeti mostrar el funcionament.</p>
+<p>Ja que és un exercici tan fàcil, afegim un petit anàlisi. Indica
+quines de les següents afirmacions són correctes, quines no i perquè
+t'has decidit pel sí o el no.</p>
+<ol class="arabic simple">
+<li>la solució codifica contra implementacions concretes en comptes d'interfícies.</li>
+<li>hi ha una violació de l'encapsulació de la classe EstacioMeteorologica.</li>
+<li>cada cop que afegim una nova vista, caldrà modificar el codi d'EstacioMeteorologica.</li>
+<li>la solució no permet afegir o treure vistes en temps d'execució.</li>
+<li>les tres vistes no implementen una interfície comuna.</li>
+<li>EstacioMeteorologica continua sent abstracta.</li>
+</ol>
+<p>Nota: no miris el següent exercici fins que no hagis contestat aquest.
+Tindràs temps en cas que vulguis corregir les respostes del teu
+anàlisi abans de lliurar-les. El profe no ho podrà saber. ;)</p>
+</div>
+<div class="section" id="exercici-2-les-vistes-implementen-una-interficie-comuna">
+<h3>Exercici 2: Les vistes implementen una interfície comuna</h3>
+<p>D'acord. La solució anterior presenta un munt de problemes.
+Entre els problemes més incòmodes es troba el fet que les classes
+<em>vista</em> no implementen una interfície comuna. Això implica que
+EstacioMeteorologica hagi de fer una crida diferent per a cada mètode
+d'actualització.</p>
+<p>A més de conèixer les classes concretes, EstacioMeteorologica no té
+manera d'oferir un mètode per a afegir noves vistes. Simplement es
+queda amb les que rep amb el constructor, i si en volem afegir més,
+ens toca modificar codi.</p>
+<p>Considera el diagrama següent que pretén solucionar aquests problemes:</p>
+<div class="figure align-center">
+<img alt="Segona aproximació de l'estació meteorològica" src="./images/poo024.img003.observer_pattern_sol02.png" />
+</div>
+<p>Com podem veure, EstacioMeteorologica encara està composat de les tres
+<em>vistes</em>, però ara aquestes implementen una interfície comuna.
+Refés el codi de EstacioMeteorologica de manera que en tregui profit
+de la interfície comuna.</p>
+<p><strong>Nota</strong>: Potser tens la temptació de modificar <strong>només</strong> les crides
+d'actualització de les vistes al mètode <tt class="docutils literal">canviMessures()</tt>. Intenta
+vèncer la mandra i fes que totes les vistes estiguin a algun tipus de
+contenidor iterable i treu-ne profit.</p>
+<p>Finalment, com que el que se't demana en aquest exercici continua sent
+molt senzill, caldrà que facis un petit anàlisi similar al de
+l'exercici anterior. Així, indica quines de les següents afirmacions
+són correctes, quines no i perquè t'has decidit pel sí o el no.</p>
+<ol class="arabic simple">
+<li>la solució codifica contra implementacions concretes en comptes d'interfícies.</li>
+<li>cada cop que afegim una nova vista, caldrà modificar el codi d'EstacioMeteorologica.</li>
+<li>la solució no permet afegir o treure vistes en temps d'execució.</li>
+<li>les tres vistes no implementen una interfície comuna.</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-el-patro-observador">
+<h3>Exercici 3: El patró observador</h3>
+<p>Probablement quan desenvolupaves l'exercici anterior ja havies vist
+com solucionar alguns dels problemes que encara tenia la nova
+implementació. En aquest cas, felicitats!</p>
+<p>Tant si te n'has adonat com si no, considera el següent diagrama que
+modifica <em>lleugerament</em> l'anterior. <a class="footnote-reference" href="#id4" id="id3">[*]</a></p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[*]</a></td><td>Trobaràs una versió més general d'aquest diagrama a <a class="reference external" href="http://ca.wikipedia.org/wiki/Patr%C3%B3_observador">http://ca.wikipedia.org/wiki/Patr%C3%B3_observador</a></td></tr>
+</tbody>
+</table>
+<div class="figure align-center">
+<img alt="Tercera aproximació de l'estació meteorològica" src="./images/poo024.img003.observer_pattern_sol03.png" />
+</div>
+<p>Implementa el nou disseny de solució i indica quines de les següents afirmacions són correctes, quines no i perquè t'has decidit pel sí o el no.</p>
+<ol class="arabic simple">
+<li>la solució codifica contra implementacions concretes en comptes d'interfícies.</li>
+<li>cada cop que afegim una nova vista, caldrà modificar el codi d'EstacioMeteorologica.</li>
+<li>la solució no permet afegir o treure vistes en temps d'execució.</li>
+</ol>
+</div>
+<div class="section" id="exercici-4-observable-i-observer">
+<h3>Exercici 4: Observable i Observer</h3>
+<p>La API de java ens ofereix unes interfícies per a fer això més
+estàndard. No és que ens aportin gaire nou respecte el que ja em vist,
+però pot ser interessant veure la notació.</p>
+<p>Troba les interfícies Observable i Observer a la API de java i
+realitza una nova versió de l'aplicació de l'Estació Meteorològica tot
+fent sevir les dues interfícies en comptes de la que ja havíem creat.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="exempleadaptat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>L'exemple apareix adaptat als coneixements de POO
+que estem seguint en aquests materials.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

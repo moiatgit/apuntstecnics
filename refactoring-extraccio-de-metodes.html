@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: extracció de mètodes</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: extracció de mètodes             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-lexemple.html">
+        Refactoring: L'exemple
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-moviment-de-metodes.html">
+        Refactoring: Moviment de mètodes
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: extracció de mètodes</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada relitza els primers passos de refacció sobre
+l'exemple. En concret, es realitza un pas de refacció conegut com a
+<em>extracció de mètode</em>.</p>
+</div>
+<div class="section" id="extraccio-de-metodes">
+<h2>Extracció de mètodes</h2>
+<p>En un mètode tan llarg, potser una de les passes de refacció més
+adequada és aconseguir descomposar-lo en mètodes més petits.</p>
+<p>A aquest tipus de refacció li direm <em>extracció de mètode</em>.</p>
+<p>Per exemple, considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* mostra un missatge amb el mes anterior i el mes següent de</span>
+<span class="cm"> * l&#39;especificat per paràmetre.</span>
+<span class="cm"> * Pressuposa que mesActual és un valor entre 1 i 12.  */</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnteriorISeguent</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// calcula i mostra el mes anterior</span>
+    <span class="kt">int</span> <span class="n">mesAnterior</span><span class="o">,</span> <span class="n">anyAnterior</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes anterior: &quot;</span> <span class="o">+</span> <span class="n">mesAnterior</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anyAnterior</span><span class="o">);</span>
+
+    <span class="c1">// calcula i mostra el mes següent</span>
+    <span class="kt">int</span> <span class="n">mesSeguent</span><span class="o">,</span> <span class="n">anySeguent</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">12</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mesSeguent</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anySeguent</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">mesSeguent</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anySeguent</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes següent: &quot;</span> <span class="o">+</span> <span class="n">mesSeguent</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anySeguent</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Aquest codi realitza dues coses diferents:</p>
+<ol class="arabic simple">
+<li>calcula i mostra el mes anterior</li>
+<li>calcula i mostra el mes següent</li>
+</ol>
+<p>Quan un mètode fa més d'una cosa, sol resultar molt convenient
+<em>delegar</em> algunes o totes aquestes coses a nous mètodes. Això facilita
+la llegibilitat i el reaprofitament.</p>
+<p>En aquest exemple, aplicant l'extracció de mètodes aconseguirem el
+següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="cm">/* mostra un missatge amb el mes anterior i el mes següent de</span>
+<span class="cm"> * l&#39;especificat per paràmetre.</span>
+<span class="cm"> * Pressuposa que mesActual és un valor entre 1 i 12.*/</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnteriorISeguent</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">mostraMesAnterior</span><span class="o">(</span><span class="n">mesActual</span><span class="o">,</span> <span class="n">anyActual</span><span class="o">);</span>
+    <span class="n">mostraMesSeguent</span><span class="o">(</span><span class="n">mesActual</span><span class="o">,</span> <span class="n">anyActual</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">mostraMesAnterior</span><span class="o">(</span><span class="kt">int</span> <span class="n">mesActual</span><span class="o">,</span> <span class="kt">int</span> <span class="n">anyActual</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">mesAnterior</span><span class="o">,</span> <span class="n">anyAnterior</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">mesActual</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="mi">12</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">mesAnterior</span> <span class="o">=</span> <span class="n">mesActual</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">anyAnterior</span> <span class="o">=</span> <span class="n">anyActual</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Mes anterior: &quot;</span> <span class="o">+</span> <span class="n">mesAnterior</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">anyAnterior</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>El mètode <tt class="docutils literal">mostraMesSeguent()</tt> te'l deixo per que t'exercitis.</p>
+<p>No sempre resultarà tan fàcil fer l'extracció del mètode com en aquest
+exemple. De vegades hi haurà variables compartides o parts de codi
+barrejades.</p>
+<p>Tornant al nostre mètode <tt class="docutils literal">Client.informe()</tt>, una part que podríem
+considerar candidata a extreure per començar és el bloc del
+<tt class="docutils literal">switch</tt>.</p>
+<p>Com que en aquest cas, el procés és una mica més complex que amb
+l'exemple del <tt class="docutils literal">mesAnteriorSeguent()</tt>, haurem d'anar amb més compte.</p>
+<p>Per començar, hem de detectar quines són les dependències del fragment
+de codi a extreure respecte de la resta del mètode. Podem veure que el
+bloc del <tt class="docutils literal">switch</tt> requereix les variables <tt class="docutils literal">lloguer</tt> i
+<tt class="docutils literal">quantitat</tt>. D'aquestes variables, <tt class="docutils literal">lloguer</tt> només és consultada
+dins del codi, mentre que <tt class="docutils literal">quantitat</tt> és modificada. <tt class="docutils literal">lloguer</tt> el
+podem passar com a paràmetre amb tranquil·litat. Amb <tt class="docutils literal">quantitat</tt>
+però, haurem d'anar amb compte. Com que en aquest cas és només una,
+podem considerar retornar el seu valor. Donat que <tt class="docutils literal">quantitat</tt>
+s'inicialitza a 0 a cada volta del bucle i se li assigna el valor dins
+del <tt class="docutils literal">switch</tt>, podem simplement assignar-li el valor de retorn del
+nou mètode que estem definint.</p>
+<p>El codi resultant per <tt class="docutils literal">Client.informe()</tt> podria ser el següent:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+        <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+        <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+<span class="hll">        <span class="kt">double</span> <span class="n">quantitat</span> <span class="o">=</span> <span class="n">quantitatPerLloguer</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
+</span>
+        <span class="c1">// afegeix lloguers freqüents</span>
+        <span class="n">bonificacions</span> <span class="o">++;</span>
+
+        <span class="c1">// afegeix bonificació per dos dies de lloguer de Luxe</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getCategoria</span><span class="o">()</span> <span class="o">==</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">LUXE</span> <span class="o">&amp;&amp;</span>
+                <span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()&gt;</span><span class="mi">1</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="n">bonificacions</span> <span class="o">++;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+        <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+            <span class="s">&quot; &quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+            <span class="o">(</span><span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// afegeix informació final</span>
+    <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+        <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><div class="section" id="exercici-6-quantitat-per-lloguer">
+<h3>Exercici 6: Quantitat per lloguer</h3>
+<p>Implementa el mètode privat <tt class="docutils literal">Client.quantitatPerLloguer()</tt> de manera
+que el codi resultant continuï passant els jocs de prova.</p>
+<p>Atenció: no intentis fer massa. Simplement cal que moguis el bloc del
+<tt class="docutils literal">switch</tt> a dins del nou mètode, declaris alguna variable on guardar
+l'import i retornis el seu valor al final.</p>
+<p>Fixa't què, donat que el canvi és petit i disposes d'un bon joc de
+proves, resulta molt fàcil de corregir els errors que ocasionalment
+puguis haver introduït.</p>
+<hr class="docutils" />
+<p>Passem ara a veure un altre pas de refacció, l'anomenat <a class="reference external" href="./refactoring-moviment-de-metodes.html">moviment de
+mètode</a></p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-lexemple.html">
+        Refactoring: L'exemple
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-moviment-de-metodes.html">
+        Refactoring: Moviment de mètodes
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

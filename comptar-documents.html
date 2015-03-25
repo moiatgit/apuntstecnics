@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Comptar documents</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Comptar documents             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./consultes-amb-criteri.html">
+        Consultes amb criteri
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./seleccio-de-camps.html">
+        Selecció de camps
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Comptar documents</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquesta breu secció ens mostra com podem demanar a MongoDB que ens
+calculi <em>quants</em> documents en comptes de <em>quins</em>.</p>
+</div>
+<div class="section" id="comptar-elements">
+<h2>Comptar elements</h2>
+<p>De vegades podem estar interessats en conèixer quants documents hi ha
+disponibles a una col·lecció.</p>
+<p>Recordem la manera de SQL:</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">persones</span><span class="p">;</span>
+</pre></div>
+<p>La manera en que MongoDB resol aquesta funcionalitat és amb el mètode
+<em>count</em>.</p>
+<p>Així, per comptar quants documents hi ha a la col·lecció <em>persones</em>
+farem:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">count</span><span class="p">()</span>
+<span class="mi">10</span>
+</pre></div>
+<p>O si estem interessats en saber quants desenvolupadors hi ha:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">count</span><span class="p">({</span><span class="s1">&#39;professió&#39;</span><span class="o">:</span><span class="s1">&#39;desenvolupador/a&#39;</span><span class="p">})</span>
+<span class="mi">3</span>
+</pre></div>
+<div class="section" id="exercici-1-quants-tenen-21-anys">
+<h3>Exercici 1. Quants tenen 21 anys?</h3>
+<p>Construeix una consulta que retorni el nombre de persones que tenen 21
+anys.</p>
+</div>
+<div class="section" id="exercici-2-quants-desenvolupadors-cobren-2800">
+<h3>Exercici 2. Quants desenvolupadors cobren 2800€?</h3>
+<p>Construeix una consulta que retorni el nombre de
+desenvolupadors/desenvolupadores que cobren 2800€</p>
+</div>
+<div class="section" id="exercici-3-comptar-a-tort-i-a-dret">
+<h3>Exercici 3. Comptar a tort i a dret</h3>
+<p>Respon a les següents preguntes, tot afegint les comandes i resultats
+de la shell de MongoDB que t'han permès comprovar la teva resposta.</p>
+<ol class="arabic simple">
+<li>Què passa si demanem comptar els documents d'una col·lecció
+inexistent?</li>
+<li>Què passa si demanem comptar els documents que acompleixen un valor
+per una clau que no disposa cap document de la col·lecció?</li>
+<li>Què passa si demanem comptar els documents que acompleixen dos
+valors diferents per una mateixa clau?</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./consultes-amb-criteri.html">
+        Consultes amb criteri
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./seleccio-de-camps.html">
+        Selecció de camps
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

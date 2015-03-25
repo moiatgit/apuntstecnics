@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Consultes bàsiques amb MongoDB</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Consultes bàsiques amb MongoDB             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-a-la-shell-de-mongodb.html">
+        Introducció a la shell de MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./consultes-amb-criteri.html">
+        Consultes amb criteri
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Consultes bàsiques amb MongoDB</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquest article estudiarem com podem obtenir la informació
+emmagatzemada a una col·lecció en MongoDB.</p>
+</div>
+<div class="section" id="consulta">
+<h2>Consulta</h2>
+<p>La raó principal de guardar les dades és poder-les recuperar
+posteriorment. Quan guardem les dades a una base de dades,
+probablement voldrem que aquesta recuperació sigui acceptablement
+flexible i eficient.</p>
+<p>Recordarem que el llenguatge SQL ens ofereix la comanda de consulta
+<em>SELECT</em>. Es tracta d'una comanda que ens permet especificar amb molta
+precisió i flexibilitat allò que volem consultar de la base de dades.</p>
+<p>Considera la següent consulta SQL que demana <strong>tots</strong> els registres de
+la taula <em>quadrats</em>.</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">quadrats</span><span class="p">;</span>
+</pre></div>
+<div class="section" id="el-metode-find">
+<h3>El mètode <em>find</em></h3>
+<p>MongoDB disposa del mètode <em>find</em> i el seu parent <em>findOne</em>. Si bé,
+<em>find</em> no ofereix totes les possibilitats de <em>SELECT</em> <a class="footnote-reference" href="#impacients" id="id1">[1]</a>,
+ens pot resultar molt còmode per la seva senzillesa d'ús.</p>
+<p>La sintàxi de consulta més propera a l'exemple anterior, en MongoDB
+seria:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+</pre></div>
+<p>Si llencem però aquesta consulta, el més probable és que no obtinguem
+cap resultat.</p>
+<p>En primer lloc, ens caldrà disposar d'alguna dada per a poder fer
+consultes. Farem servir una tècnica similar a la que ja vam utilitzar a
+l'article on introduíem la <a class="reference external" href="./introduccio-a-la-shell-de-mongodb.html">shell de MongoDB</a> :</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadats</span><span class="p">.</span><span class="nx">drop</span><span class="p">()</span>
+<span class="o">&gt;</span> <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;valor_&quot;</span><span class="o">+</span><span class="nx">i</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="o">:</span> <span class="nx">i</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span><span class="o">:</span> <span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">)});</span> <span class="p">}</span>
+</pre></div>
+<p>No et preocupis de moment pel detall de les dues línies anteriors.
+Simplement eliminen la col·lecció <em>quadrats</em> (si existia) i la tornen
+a crear de nou, tot afegint-hi 100 entrades.</p>
+<p>Ara ja podem llençar la consulta amb possibilitats d'obtenir
+resultats.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ee&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_0&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ef&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_1&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">1</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f0&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_2&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">4</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f1&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_3&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">9</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f2&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_4&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">16</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f3&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_5&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">25</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f4&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_6&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">36</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f5&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_7&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">49</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f6&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_8&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">64</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f7&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_9&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">81</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f8&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_10&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">100</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f9&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_11&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">121</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fa&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_12&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">144</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fb&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_13&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">169</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fc&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_14&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">196</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fd&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_15&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">225</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fe&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_16&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">256</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ff&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_17&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">17</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">289</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd5294400&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_18&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">324</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd5294401&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_19&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">361</span> <span class="p">}</span>
+<span class="nx">Type</span> <span class="s2">&quot;it&quot;</span> <span class="k">for</span> <span class="nx">more</span>
+</pre></div>
+<p>Fixa't:</p>
+<ul>
+<li><p class="first">ha aparegut un camp que no havíem introduït amb la clau <em>_id</em>.
+En breu, MongoDB ens genera un identificador de manera automàtica si
+no li especifiquem nosaltres un. El tipus d'identificador es
+<em>ObjectID</em></p>
+<p>Molt probablement els valors del camp <em>_id</em> que t'apareguin a tu
+seran diferents dels meus. És molt raonable.</p>
+</li>
+<li><p class="first">ha llistat només 20 entrades, encara que hi haurien d'haver 100. La
+darrera línia ens dóna la pista amb el missatge <em>Escriu &quot;it&quot; per
+més</em>. Si escrivim <em>it</em> ens mostrarà els 20 documents següents:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">it</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd5294402&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_20&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">400</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd5294403&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_21&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">441</span> <span class="p">}</span>
+<span class="err">«</span><span class="p">...</span><span class="err">»</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd5294415&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_39&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">39</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">1521</span> <span class="p">}</span>
+<span class="nx">Type</span> <span class="s2">&quot;it&quot;</span> <span class="k">for</span> <span class="nx">more</span>
+</pre></div>
+<p>Aquesta paginació la proveeix la shell de MongoDB.</p>
+</li>
+<li><p class="first">la manera de cridar a <em>find</em> pot resultar una mica peculiar. Això és
+perquè la comanda <em>find</em> és en realitat un <em>mètode</em> de la col·lecció
+<em>quadrats</em>. La col·lecció és, a la seva vegada, una propietat de
+l'objecte <em>db</em> que, recordem, no és més que una referència a la base
+de dades en ús (inicialment <em>test</em>).</p>
+<p>Podem consultar quin aspecte té la implementació del mètode <em>find</em>
+fent:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span>
+<span class="kd">function</span> <span class="p">(</span> <span class="nx">query</span> <span class="p">,</span> <span class="nx">fields</span> <span class="p">,</span> <span class="nx">limit</span> <span class="p">,</span> <span class="nx">skip</span><span class="p">,</span> <span class="nx">batchSize</span><span class="p">,</span> <span class="nx">options</span> <span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">cursor</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DBQuery</span><span class="p">(</span> <span class="k">this</span><span class="p">.</span><span class="nx">_mongo</span> <span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_db</span> <span class="p">,</span> <span class="k">this</span> <span class="p">,</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">_fullName</span> <span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_massageObject</span><span class="p">(</span> <span class="nx">query</span> <span class="p">)</span> <span class="p">,</span> <span class="nx">fields</span> <span class="p">,</span> <span class="nx">limit</span> <span class="p">,</span> <span class="nx">skip</span> <span class="p">,</span> <span class="nx">batchSize</span> <span class="p">,</span> <span class="nx">options</span> <span class="o">||</span> <span class="k">this</span><span class="p">.</span><span class="nx">getQueryOptions</span><span class="p">()</span> <span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">connObj</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getMongo</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">readPrefMode</span> <span class="o">=</span> <span class="nx">connObj</span><span class="p">.</span><span class="nx">getReadPrefMode</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">readPrefMode</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">cursor</span><span class="p">.</span><span class="nx">readPref</span><span class="p">(</span><span class="nx">readPrefMode</span><span class="p">,</span> <span class="nx">connObj</span><span class="p">.</span><span class="nx">getReadPrefTagSet</span><span class="p">());</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">cursor</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Aviat veurem què volen dir alguns dels paràmetres disponibles
+d'aquest mètode.</p>
+<p>Si la teva curiositat no et deixa esperar, pots consultar la resta
+de mètodes disponibles a la secció <a class="reference external" href="http://docs.mongodb.org/manual/reference/method/js-collection/">Collection Methods</a>
+de la documentació oficial de MongoDB.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="exercici-1-al-cub">
+<h3>Exercici 1. Al cub</h3>
+<p>Crea la col·lecció <em>cubs</em> i afegeix el cub dels primers 50 nombres
+naturals. Finalment llença una consulta per veure els resultats.</p>
+<p>Pista: un dels documents que retorni la consulta hauria de
+contenir les següents dades (amb altres valors en compte
+dels interrogants):</p>
+<div class="highlight"><pre><span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;????????????????????????&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_2&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;cub&quot;</span> <span class="o">:</span> <span class="mi">8</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="el-metode-findone">
+<h3>El mètode <em>findOne</em></h3>
+<p>Sovint consultarem les dades d'una col·lecció només per fer-nos una
+idea de quin aspecte tenen els seus continguts. MongoDB ens ofereix el
+mètode <em>findOne</em> per a aquest tipus de situacions.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">findOne</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ee&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+<p>Fixa't que el document és el primer que ens oferia <em>find</em>. Ara però,
+apareix més llegible, amb els camps indentats.</p>
+</div>
+<div class="section" id="exercici-2-un-dels-cubs">
+<h3>Exercici 2. Un dels cubs</h3>
+<p>Construeix una consulta que et permeti veure un element de la
+col·lecció <em>cubs</em> que vas crear en l'exercici anterior.</p>
+</div>
+<div class="section" id="el-metode-pretty">
+<h3>El mètode <em>pretty</em></h3>
+<p>A una llista de resultats d'una consulta <em>find</em> se li pot aplicar el
+mètode <em>pretty</em>. Per exemple:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">pretty</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ee&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ef&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+<span class="err">«</span><span class="p">...</span><span class="err">»</span>
+</pre></div>
+<p>D'aquesta manera, també podem obtenir els documents indentats com amb
+<em>findOne</em>.</p>
+</div>
+<div class="section" id="exercici-3-cubs-macos">
+<h3>Exercici 3. Cubs macos</h3>
+<p>Realitza una consulta a la col·lecció <em>cubs</em> que et mostri les dades
+formatades de manera més <em>maca</em>.</p>
+</div>
+<div class="section" id="el-metode-limit">
+<h3>El mètode <em>limit</em></h3>
+<p>Un altre mètode que es pot aplicar al resultat d'una consulta <em>find</em>
+és <em>limit</em>.</p>
+<p>Per exemple, la següent crida seria equivalent a fer servir <em>findOne</em>.</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">pretty</span><span class="p">().</span><span class="nx">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943ee&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+<p>Seria l'equivalent de SQL</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">quadrats</span> <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-4-cinc-cubs">
+<h3>Exercici 4. Cinc cubs</h3>
+<p>Construeix una consulta que et mostri únicament cinc documents de la
+col·lecció <em>cubs</em>.</p>
+</div>
+<div class="section" id="el-metode-skip">
+<h3>El mètode <em>skip</em></h3>
+<p>No sempre ens interessen els primers elements que apareixen a una
+consulta amb <em>find</em>. Per a poder-nos saltar un nombre de documents
+concret, disposem del mètode <em>skip</em>. Per exemple,</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">skip</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f8&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_10&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">100</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f9&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_11&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">121</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fa&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_12&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">144</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fb&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_13&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">169</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fc&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_14&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">196</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943fd&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_15&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">225</span> <span class="p">}</span>
+</pre></div>
+<p>Fixa't com, en aquest cas, hem obtingut els documents posteriors als
+10 primers.</p>
+<p>Com segurament imagines, <em>skip</em> pot ser utilitzat conjuntament amb
+<em>limit</em>:</p>
+<div class="highlight"><pre>&gt; db.quadrats.find().skip(2).limit(4)
+{ &quot;_id&quot; : ObjectId(&quot;5300f707d661d6bcd52943f0&quot;), &quot;nom&quot; : &quot;valor_2&quot;, &quot;val&quot; : 2, &quot;quadrat&quot; : 4 }
+{ &quot;_id&quot; : ObjectId(&quot;5300f707d661d6bcd52943f1&quot;), &quot;nom&quot; : &quot;valor_3&quot;, &quot;val&quot; : 3, &quot;quadrat&quot; : 9 }
+{ &quot;_id&quot; : ObjectId(&quot;5300f707d661d6bcd52943f2&quot;), &quot;nom&quot; : &quot;valor_4&quot;, &quot;val&quot; : 4, &quot;quadrat&quot; : 16 }
+{ &quot;_id&quot; : ObjectId(&quot;5300f707d661d6bcd52943f3&quot;), &quot;nom&quot; : &quot;valor_5&quot;, &quot;val&quot; : 5, &quot;quadrat&quot; : 25 }
+</pre></div>
+</div>
+<div class="section" id="exercici-5-retalla-quadrats">
+<h3>Exercici 5. Retalla quadrats</h3>
+<p>Considera un altre cop la col·lecció <em>quadrats</em> que vam poblar a
+l'inici d'aquest article.</p>
+<p>Crea una consulta que mostri els tres documents a partir d'aquell que
+té com a quadrat el valor 400. El resultat començarà amb el valor 20
+per la clau <em>val</em>.</p>
+<p>Pistes:</p>
+<ul class="simple">
+<li>no et compliquis gaire amb aquest exercici. Simplement s'espera que
+facis una consulta i miris en quina posició apareix el quadrat amb
+valor 400. A partir d'aquest salta conseqüentment i limita.</li>
+<li>si en comptes de tres, t'hagués demanat quatre documents, el darrer
+hagués estat el document amb el parell <tt class="docutils literal">&quot;nom&quot;: &quot;valor_23&quot;</tt>.</li>
+</ul>
+</div>
+<div class="section" id="exercici-6-consulta-de-combinacions">
+<h3>Exercici 6. Consulta de combinacions</h3>
+<p>Crearem la col·lecció <em>combinacions5x3</em> que contindrà les combinacions
+de cinc elements agafats de 3 en 3 i sense repeticions.</p>
+<p>Farem servir les següents comandes a la shell de MongoDB:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">combinacions5x3</span><span class="p">.</span><span class="nx">drop</span><span class="p">()</span>
+<span class="o">&gt;</span> <span class="k">for</span><span class="p">(</span><span class="nx">a</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">a</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">a</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="k">for</span><span class="p">(</span><span class="nx">b</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">b</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">b</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="k">for</span> <span class="p">(</span><span class="nx">c</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="nx">c</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span><span class="nx">c</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nx">a</span> <span class="o">!=</span> <span class="nx">b</span> <span class="o">&amp;&amp;</span> <span class="nx">a</span> <span class="o">!=</span><span class="nx">c</span> <span class="o">&amp;&amp;</span> <span class="nx">b</span><span class="o">!=</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span> <span class="nx">db</span><span class="p">.</span><span class="nx">combinacions5x3</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="o">:</span><span class="nx">a</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="o">:</span><span class="nx">b</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="o">:</span><span class="nx">c</span><span class="p">});</span> <span class="p">}}}}</span>
+</pre></div>
+<p>Com amb el cas dels quadrats, no et preocupis si no entens del tot
+aquestes comandes.</p>
+<p>Construeix una consulta que mostri els cinc documents de
+<em>combinacions5x3</em> a partir del 10é. És a dir, cal que et <em>saltis</em> els
+deu primers i que només n'agafis 5. Ah! Mira que els resultats es
+vegin <em>macos</em>.</p>
+</div>
+<div class="section" id="exercici-7-skip-limit-o-limit-skip">
+<h3>Exercici 7. <em>skip().limit()</em> o <em>limit().skip()</em></h3>
+<p>T'has plantejat si l'ordre en que s'apliquen aquests dos mètodes té
+alguna repercussió en el resultat?</p>
+<p>És a dir, la següent consulta seria diferent/equivalent a l'anterior?</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">limit</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="nx">skip</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+<p>Comprova-ho.</p>
+</div>
+<div class="section" id="exercici-8-multiples-skip-i-limit">
+<h3>Exercici 8. Múltiples <em>skip</em> i <em>limit</em></h3>
+<p>Comprova què passa quan encadenes més d'un <em>skip</em> o més d'un <em>limit</em> a
+la mateixa consulta.</p>
+<p>Per exemple, són equivalents les següents dues consultes?</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">skip</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">limit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">skip</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">limit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+<p>Descriu què passa tant per <em>skip</em> com per <em>limit</em>.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="impacients" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Pels impacients val a dir que <em>find</em> es complementa
+amb altres comandes que ofereix MongoDB de manera que aconseguirem
+pràcticament la mateixa funcionalitat que amb <em>SELECT</em>. On
+pràcticament l'has de llegir com: tenint en compte les diferències
+entre el model relacional i el documental, allà on es poden
+comparar la funcionalitat serà la mateixa, i allà on no, de vegades
+en &quot;guanya&quot; un i de vegades l'altre.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-a-la-shell-de-mongodb.html">
+        Introducció a la shell de MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./consultes-amb-criteri.html">
+        Consultes amb criteri
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

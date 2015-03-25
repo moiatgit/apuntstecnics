@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Contenidors ordenats</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Contenidors ordenats             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./generics.html">
+        Generics
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./conjunts-en-java.html">
+        Conjunts en Java
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Contenidors ordenats</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document introdueix diferents maneres de agrupar informació de
+manera seqüencial en un objecte Java.</p>
+<p>La línia general és la comparació de les diferents estructures segons
+eficiència, de manera que permetin fer-se una idea de en quins casos
+una solució es preferible a una altra.</p>
+<p>Comença amb una discussió respecte l'ús dels Strings i s'introdueix
+<tt class="docutils literal">StringBuilder</tt>.</p>
+<p>A continuació es consideren els <tt class="docutils literal">Arrays</tt> i la classe alternativa <tt class="docutils literal">Vector</tt>.</p>
+<p>Finalment es comparen tres estructures seqüèncials: <tt class="docutils literal">Vector</tt>,
+<tt class="docutils literal">ArrayList</tt> i <tt class="docutils literal">LinkedList</tt> basat en l'article <a class="reference external" href="http://onjava.com/pub/a/onjava/2001/05/30/optimization.html">The Performance of
+Java's Lists</a></p>
+</div>
+<div class="section" id="strings">
+<h2>Strings</h2>
+<p>La classe <tt class="docutils literal">String</tt> és una de les primeres que coneixem en Java.
+Resulta una classe molt útil i és especialment estimada pel nous
+programadors de Java que venen de llenguatges com ara C.</p>
+<p>La classe String presenta, però, un problema que cal tenir present:
+baix rendiment en les modificacions.</p>
+<p>El problema és que en Java, els Strings són immutables. Això vol dir
+que un cop creats, no podem modificar el seu valor. Mentre que per a
+moltes aplicacions dels Strings, això no representa cap problema, per
+altres pot suposar un alentiment important en l'execució.</p>
+<p>Per exemple, imagina que ens cal posar en majúscules la inicial d'un
+String. La manera que ens ofereix la classe és crear un nou String a
+partir de dues peces de l'original, per exemple:</p>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">paraula</span> <span class="o">=</span> <span class="s">&quot;renat&quot;</span><span class="o">;</span>
+<span class="n">paraula</span> <span class="o">=</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">).</span><span class="na">toUpperCase</span><span class="o">()</span> <span class="o">+</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</pre></div>
+<p>o potser una mica millor</p>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">paraula</span> <span class="o">=</span> <span class="s">&quot;renat&quot;</span><span class="o">;</span>
+<span class="n">paraula</span> <span class="o">=</span> <span class="n">Character</span><span class="o">.</span><span class="na">toUpperCase</span><span class="o">(</span><span class="n">paraula</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">+</span> <span class="n">paraula</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</pre></div>
+<p>En qualsevol dels dos casos, estem creant dos o més Strings, mentre
+que en C ho hagéssim resolt amb un econòmic:</p>
+<div class="highlight"><pre><span class="n">paraula</span><span class="o">[</span><span class="mi">0</span><span class="o">]=</span><span class="n">toupper</span><span class="o">(</span><span class="n">paraula</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+</pre></div>
+<p>Per millorar el rendiment, hi ha diferents possibilitats.
+Malauradament no hi ha una resposta única per decidir <em>la manera més
+eficient sempre</em>. Per tant, cal analitzar cas a cas depenent de l'ús
+que fem dels Strings.</p>
+<div class="section" id="proves-de-rendiment">
+<h3>Proves de rendiment</h3>
+<p>Analitzem quan ens costa realitzar alguna tasca amb Strings. Per
+exemple, suposa que ens interessa construir un String a partir
+d'afegir-hi substrings al començament. El codi podria ser quelcom
+similar a:</p>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">mida</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="s">&quot;A&quot;</span> <span class="o">+</span> <span class="n">str</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+<p>Una manera habitual de comprovar quan costa realitzar una certa tasca es
+comptant el temps que passa des de que se la crida fins que acaba
+l'execució. Per exemple:</p>
+<div class="highlight"><pre><span class="kt">long</span> <span class="n">tempsInicial</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+<span class="err">«</span> <span class="n">codi</span> <span class="n">a</span> <span class="n">analitzar</span> <span class="err">»</span>
+<span class="kt">long</span> <span class="n">tempsFinal</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+</pre></div>
+<p>Cal tenir present que diferents execucions sobre la mateixa prova
+ofereixen resultats diferents. Hi ha diferents raons, des de la
+càrrega de l'equip en el moment de la prova fins als optimitzadors que
+disposi la implementació de Java que estiguem fent servir.</p>
+<p>Per aquesta raó, pot ser adequat
+realitzar la prova vàries vegades i calcular la desviació tipus per
+tenir una idea de la dispersió de les mesures.</p>
+<p>Simplificant-ho molt, si per una prova concreta els resultat mig de
+rendiment d'una estructura es troba dins del rang definit pel resultat
+mig +/- la desviació tipus d'una altra estructura, podríem deduir que
+el rendiment de les dues estructures no és significativament diferent
+per a aquella prova.</p>
+</div>
+<div class="section" id="exercici-1-comparacio-string">
+<h3>Exercici 1. Comparació String</h3>
+<p>En aquest primer exercici compararem el rendiment de composar un
+String des de l'inici (<tt class="docutils literal">str = &quot;A&quot; + str;</tt>) i des del final (<tt class="docutils literal">str =
+str + &quot;A&quot;;</tt>)</p>
+<p>Realitza 5 proves de cadascuna de les dues opcions amb mides de 10,
+1000 i 100000. Calcula la mitja i la desviació tipus i omple
+una taula com la següent:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">&nbsp;</th>
+<th class="head">10</th>
+<th class="head">1000</th>
+<th class="head">100000</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>String inserció ini</td>
+<td>xxxx (yyyy)</td>
+<td>xxxx (yyyy)</td>
+<td>xxxx (yyyy)</td>
+</tr>
+<tr><td>String inserció fin</td>
+<td>xxxx (yyyy)</td>
+<td>xxxx (yyyy)</td>
+<td>xxxx (yyyy)</td>
+</tr>
+</tbody>
+</table>
+<p>On <tt class="docutils literal">xxxx</tt> indica la mitja i <tt class="docutils literal">(yyyy)</tt> la desviació tipus.</p>
+<p>També caldrà que aportis algunes dades de l'equip on executes les
+proves: processador, versió del SO, versió de jre.</p>
+<p>En un equip GNU/Linux, pots obtenir aquestes dades (i més) amb les
+comandes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">$ lshw <span class="pre">-class</span> cpu <span class="pre">-class</span> memory</tt></li>
+<li><tt class="docutils literal">$ uname <span class="pre">-a</span></tt></li>
+<li><tt class="docutils literal">$ java <span class="pre">-version</span></tt></li>
+</ul>
+<p>Per fer-ho fàcil, pots afegir a l'informe directament el resultat
+d'aquestes crides.</p>
+<p>Finalment afegeix al teu informe una interpretació dels resultats que
+inclogui, com a mínim, si si hi trobes una diferència significativa en
+les dues maneres de composar el String.</p>
+<p><strong>Pistes</strong></p>
+<ul>
+<li><p class="first">Per calcular la mitja d'un <tt class="docutils literal">long[]</tt> pots fer servir:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kt">double</span> <span class="nf">calculaMitja</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">resultats</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="n">resultats</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+
+    <span class="kt">double</span> <span class="n">suma</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">resultats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">suma</span> <span class="o">=</span> <span class="n">suma</span> <span class="o">+</span> <span class="n">resultats</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">suma</span> <span class="o">/</span> <span class="n">resultats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">Per calcular la desviació tipus d'un <tt class="docutils literal">long[]</tt> pots fer servir:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kt">double</span> <span class="nf">calculaDesviacio</span><span class="o">(</span><span class="kt">long</span><span class="o">[]</span> <span class="n">resultats</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kt">double</span><span class="o">[]</span> <span class="n">desviacio</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+    <span class="kt">double</span> <span class="n">mitja</span> <span class="o">=</span> <span class="n">calculaMitja</span><span class="o">(</span><span class="n">resultats</span><span class="o">);</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">desviacio</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">desviacio</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">resultats</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">-</span> <span class="n">mitja</span> <span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kt">double</span><span class="o">[]</span> <span class="n">quadrats</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="o">[</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">quadrats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">quadrats</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">desviacio</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">*</span> <span class="n">desviacio</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+
+    <span class="kt">double</span> <span class="n">suma</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">quadrats</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="n">suma</span> <span class="o">=</span> <span class="n">suma</span> <span class="o">+</span> <span class="n">quadrats</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="kt">double</span> <span class="n">res</span> <span class="o">=</span> <span class="n">suma</span> <span class="o">/</span> <span class="o">(</span><span class="n">resultats</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">sqrt</span><span class="o">(</span><span class="n">res</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">Donat que hauràs de preparar més d'un informe com aquest, es
+recomanable que preparis una mena de plantilla amb les següents
+seccions:</p>
+<ul>
+<li><p class="first">Dades de la prova</p>
+<p>Inclou com a mínim: descripció, autor i data de la prova.</p>
+</li>
+<li><p class="first">Resultats de la prova</p>
+<p>La taula de resultats.</p>
+</li>
+<li><p class="first">Interpretació dels resultats</p>
+<p>La teva interpretació dels resultats segons et demani l'enunciat.</p>
+</li>
+<li><p class="first">Descripció de l'equip</p>
+<p>Informació de l'equip, SO i JRE.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="preparant-l-entorn-de-proves-de-rendiment">
+<h3>Preparant l'entorn de proves de rendiment</h3>
+<p>Com que haurem de realitzar l'anàlisi de rendiment en diverses
+ocasions, ens pot ser interessant preparar alguna mena d'entorn de
+proves de rendiment que ens faciliti la feina.</p>
+<p>Un entorn senzill per realitzar proves de rendiment podria tenir el
+següent aspecte:</p>
+<div class="figure align-center">
+<img alt="Entorn de proves" src="./images/poo020.img001.entorn_proves.png" />
+</div>
+<p>La classe <tt class="docutils literal">Tester</tt> permetria, a partir del mètode <tt class="docutils literal">test(String,
+Testable)</tt>, comprovar el temps d'execució d'un mètode tenint en
+comptes diferents mides de prova i generaria un conjunt d'estadístics
+resultants: bàsicament temps mig d'execució de les <em>num_proves</em> i
+desviació tipus per cadascuna de les mides de prova.</p>
+<p>Depenent de la potència de la teva màquina, potser voldràs fer més o
+menys proves, o amb mides més grans o més petits. Per aquesta raó
+<tt class="docutils literal">Tester</tt> ofereix diferents maneres d'inicialitzar-lo. Es proposa com
+a valors per defecte de <em>num_proves</em> el 5 i per <em>mides</em> 10, 1000,
+10000.</p>
+<p><tt class="docutils literal">Tester</tt> fa servir la <em>interface</em> <tt class="docutils literal">Testable</tt> que especifica dos
+mètodes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">setMida(int mida)</tt> permet especificar la mida de la prova. El
+temps requerit per executar aquest mètode no computa amb el càlcul
+total. D'aquesta manera, aquest mètode és adequat per realitzar
+tasques d'inicialització de la prova.</li>
+<li><tt class="docutils literal">crida()</tt>. Aquest serà el mètode que cridarà <tt class="docutils literal">Tester</tt> amb
+cadascuna de les mides.</li>
+</ul>
+</div>
+<div class="section" id="exercici-2-l-entorn-de-proves-de-rendiment">
+<h3>Exercici 2. L'entorn de proves de rendiment</h3>
+<p>Munta l'entorn de proves descrit abans.</p>
+<p><strong>Pista</strong>: potser voldràs aïllar la prova real de la resta dels
+càlculs i preparacions estadístiques amb un codi similar a:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="kt">long</span> <span class="nf">realitzaProva</span><span class="o">(</span><span class="n">Testable</span> <span class="n">t</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mida</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">setMida</span><span class="o">(</span><span class="n">mida</span><span class="o">);</span> <span class="c1">// la preparació no compta en el temps</span>
+    <span class="kt">long</span> <span class="n">tempsInicial</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+    <span class="n">t</span><span class="o">.</span><span class="na">crida</span><span class="o">();</span>
+    <span class="kt">long</span> <span class="n">tempsFinal</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+    <span class="k">return</span> <span class="o">(</span><span class="n">tempsFinal</span> <span class="o">-</span> <span class="n">tempsInicial</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Torna a passar les proves de l'exercici 1 tot fent servir el teu nou
+entorn de proves i omple la taula amb els nous resultats.</p>
+</div>
+<div class="section" id="exercici-3-stringbuilder-en-insercio">
+<h3>Exercici 3. <tt class="docutils literal">StringBuilder</tt> en inserció</h3>
+<p>Considera la classe <tt class="docutils literal">StringBuilder</tt> (consulta l'<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html">API de
+StringBuilder</a>)</p>
+<p>Prepara les següents proves amb aquesta classe i compara-les amb les
+que has obtingut fins ara amb String:</p>
+<ul class="simple">
+<li>StringBuilder amb constructor per defecte inserint a l'inici (<tt class="docutils literal">insert(0, &quot;A&quot;)</tt>)</li>
+<li>StringBuilder amb constructor per defecte inserint al final (<tt class="docutils literal"><span class="pre">append(&quot;A&quot;)</span></tt>)</li>
+<li>StringBuilder construït amb <tt class="docutils literal">StringBuilder(int capacity)</tt> i
+inserint a l'inici.</li>
+</ul>
+<p>Omple una taula amb els resultats i elabora un petit informe que
+compari el que has obtingut. Inclou a l'informe una comparativa amb
+els resultats obtinguts amb Strings.</p>
+</div>
+<div class="section" id="exercici-4-stringbuilder-en-modificacio">
+<h3>Exercici 4. <tt class="docutils literal">StringBuilder</tt> en modificació</h3>
+<p>Posarem novament a prova les classes <tt class="docutils literal">String</tt> i <tt class="docutils literal">StringBuilder</tt>.
+Aquest cop, construirem amb el mètode <tt class="docutils literal">setMida(int)</tt> un
+<tt class="docutils literal">String</tt> / <tt class="docutils literal">StringBuilder</tt> tot de &quot;A&quot;s, i al mètode <tt class="docutils literal">crida()</tt>
+simplement passarem, caràcter per caràcter, a minúscules.</p>
+<p><strong>Pista</strong>: El codi de test per <tt class="docutils literal">String</tt> podria ser similar a:</p>
+<div class="highlight"><pre><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">mida</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="n">Character</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">))</span> <span class="o">+</span> <span class="n">str</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>Omple una taula amb els resultats obtinguts i elabora un breu informe
+comparant els resultats.</p>
+</div>
+<div class="section" id="exercici-5-string-vs-stringbuilder">
+<h3>Exercici 5. <tt class="docutils literal">String</tt> vs <tt class="docutils literal">StringBuilder</tt></h3>
+<p>A partir dels resultats que has obtingut, prepara un petit resum en el
+que indicaràs en quins casos és preferible fer servir
+<tt class="docutils literal">StringBuilder</tt> i en quins en tindrem prou amb <tt class="docutils literal">String</tt>.</p>
+<p>Nota: tingues en comptes que per a fer servir el resultat de
+<tt class="docutils literal">StringBuilder</tt> probablement haurem de passar-lo a <tt class="docutils literal">String</tt>.
+Potser voldràs comprovar quin cost té fer-ho per elaborar les teves
+conclusions.</p>
+</div>
+</div>
+<div class="section" id="arrays">
+<h2>Arrays</h2>
+<p>Els <em>arrays</em> són una manera senzilla d'agrupar dades d'un mateix tipus
+en forma de seqüència.</p>
+<p>A la secció anterior hem analitzat un tipus d'<em>array</em> particular
+(seqüència de caràcters) encapsulat dins la classe <tt class="docutils literal">String</tt>.</p>
+<p>En aquesta secció, analitzarem el rendiment d'aquesta estructura i
+veurem algunes maneres d'optimitzar-la.</p>
+<div class="section" id="exercici-6-copia-d-arrays">
+<h3>Exercici 6. Còpia d'<em>arrays</em></h3>
+<p>Construirem una prova que donat un <em>array</em> (de diferents mides) de
+valors enters (ex. de 1 a mida de la prova), calculem quan de temps
+ens costa copiar els valors a un altre <em>array</em>.</p>
+<p>Farem servir dues aproximacions:</p>
+<ul class="simple">
+<li>&quot;a ma&quot;: amb un bucle copiarem un a un cada valor de l'<em>array</em>
+inicial al final.</li>
+<li>automàtic: farem servir la utilitat <tt class="docutils literal">System.arraycopy()</tt>
+(consulteu l'<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/lang/System.html">API d'arraycopy()</a>)</li>
+</ul>
+<p>Elabora una taula de resultats i un informe comparatiu.</p>
+<p><strong>Recomanació</strong>: fes servir la classe <tt class="docutils literal">Integer</tt> (mira l'<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/index.html?java/lang/System.html">API de
+Integer</a>)
+en comptes del tipus primitiu <tt class="docutils literal">int</tt> si vols estalviar-te feina per
+un exercici posterior.  Si disposes de prou temps, pots també fer les
+dues opcions, de manera que podràs comprovar el rendiment de la
+creació massiva d'objectes en Java.</p>
+</div>
+<div class="section" id="operacions-costoses-amb-arrays">
+<h3>Operacions costoses amb <em>arrays</em></h3>
+<p>Fer servir <em>arrays</em> sol ser convenient si volem una agrupació
+seqüèncial d'elements del mateix tipus amb un accés directe ràpid (per
+consultes i modificacions), que només s'amplia afegint nous elements
+al final i, sobretot, del que coneixem la mida màxima (nombre màxim
+d'elements que contindrà) en el moment de la creació.</p>
+<p>Quan les operacions que hem de realitzar amb l'<em>array</em> inclouen
+inserció o eliminació d'elements en qualsevol punt de l'<em>array</em>, tenim
+un problema. Ens cal &quot;moure&quot; els elements cap a un costat i cap a
+l'altre.</p>
+<p>Quan la mida total de la seqüència ens és desconeguda o pot variar
+significativament (creixent i decreixent) al llarg del seu ús, el
+problema és encara &quot;pitjor&quot;: ens trobem amb la complexitat d'anar
+ampliant o/i encongint l'<em>array</em>.  La manera habitual sol ser, crear
+un nou <em>array</em> amb la nova mida i copiar-hi les dades. Com que
+l'operació és costosa, sovint es deixa un cert marge d'espai
+disponible per a ampliacions.</p>
+<p>Java ens ofereix una classe que ens fa totes aquestes operacions sense
+haver-les d'implementar nosaltres. Consulta l'<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/index.html?java/lang/System.html">API de Vector</a>.</p>
+</div>
+<div class="section" id="exercici-7-rendiment-de-vector">
+<h3>Exercici 7. Rendiment de <tt class="docutils literal">Vector</tt></h3>
+<p>Defineix una prova per poder comparar el rendiment de la classe
+<tt class="docutils literal">Vector</tt> amb l'ús dels <em>arrays</em> analitzat al'exercici anterior.</p>
+<p>Com que <tt class="docutils literal">Vector</tt> només pot emmagatzemar objectes (no tipus
+primitius), declara un <tt class="docutils literal">Vector</tt> de <tt class="docutils literal">Integer</tt> amb el constructor
+<tt class="docutils literal">Vector(int initialCapacity)</tt> i omple'l amb els valors dels enters,
+per exemple amb <tt class="docutils literal">add()</tt>.</p>
+<p>Les dues variants de còpia seran:</p>
+<ul class="simple">
+<li>&quot;a mà&quot;: com amb la primera d'<em>arrays</em> copiarem element a element
+fent servir un bucle.</li>
+<li>automàtic: fent servir el constructor <tt class="docutils literal">Vector(Collection&lt;? extends
+E&gt; c)</tt></li>
+</ul>
+<p>Com sempre, omple la taula de resultats i elabora un informe
+comparatiu. Inclou la comparativa amb els resultats de l'exercici
+anterior.</p>
+</div>
+<div class="section" id="exercici-8-opcional-operacions-de-vector">
+<h3>Exercici 8. [opcional] Operacions de <tt class="docutils literal">Vector</tt></h3>
+<p>Si disposes de prou temps, pot ser un bon exercici implementar i
+comparar algunes de les funcionalitats que ens ofereix <tt class="docutils literal">Vector</tt>.</p>
+<p>Aquestes poden ser:</p>
+<ul>
+<li><p class="first">inserció dels valors d'un <em>array</em>/<tt class="docutils literal">Vector</tt> des del principi</p>
+<p>Requereix la implementació del desplaçament cap al final de la
+seqüència a cada inserció.</p>
+</li>
+<li><p class="first">eliminat dels valors d'un <em>array</em>/<tt class="docutils literal">Vector</tt> des del principi</p>
+<p>Requereix la implementació del desplaçament cap a l'inici de la
+seqüència de la resta d'elements.</p>
+</li>
+<li><p class="first">ampliació de l'espai</p>
+<p>A partir d'un <em>array</em>/<tt class="docutils literal">Vector</tt> amb unes dimensions inicials
+determinades (i comunes) i un increment també comú, implementar una
+prova que permeti anar incrementant les seqüències de manera que
+requereixin fer l'increment de mida vàries vegades.</p>
+</li>
+</ul>
+<p>Disposes de quelcom més que idees per implementar alguna d'aquestes
+funcionalitats a l'article <a class="reference external" href="http://onjava.com/pub/a/onjava/2001/05/30/optimization.html">The Performance of Java's Lists</a>.</p>
+</div>
+</div>
+<div class="section" id="llistes">
+<h2>Llistes</h2>
+<p>A la secció anterior hem analitzat diferents maneres d'agrupar
+informació d'un mateix tipus en forma de seqüència, fins a arribar a
+la classe <tt class="docutils literal">Vector</tt> que ens ofereix un bon nombre de funcionalitats
+ja implementades.</p>
+<p>Tot i sent molt convenient, la classe <tt class="docutils literal">Vector</tt> presenta alguns
+problemes de rendiment en determinades situacions. Per aquesta raó,
+els desenvolupadors de l'API de Java han inclòs altres classes.</p>
+<p>En aquesta secció n'analitzarem bàsicament les classes:</p>
+<ul class="simple">
+<li><tt class="docutils literal">Vector</tt></li>
+<li><tt class="docutils literal">ArrayList</tt>: <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">API ArrayList</a></li>
+<li><tt class="docutils literal">LinkedList</tt>: <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html">API LinkedList</a></li>
+</ul>
+<p><strong>Nota</strong>: normalment a la programació orientada a objectes, amb
+l'encapsulació es pretén ocultar informació sobre la implementació
+interna de les classes. En aquest cas, els dissenyadors de l'API de
+Java s'estan saltant aquest principi donant-nos pistes de com estan
+implementades aquestes classes. La raó principal es resumeix amb la
+paraula <strong>rendiment</strong>. El coneixement de la implementació interna
+d'aquestes classes permet els programadors de Java decidir-se per la
+classe que millor s'ajusta a les necessitats del programa que està
+realitzant.</p>
+<div class="section" id="exercici-9-insercio-sequencial">
+<h3>Exercici 9. Inserció seqüencial</h3>
+<p>Defineix una prova amb les tres classe de manera que inserim una
+seqüència de <tt class="docutils literal">Integer</tt> al final (<tt class="docutils literal">add()</tt>)</p>
+<p>Per <tt class="docutils literal">Vector</tt> i <tt class="docutils literal">ArrayList</tt> farem dues versions:</p>
+<ul class="simple">
+<li>amb el constructor per defecte</li>
+<li>amb el constructor que permet inicialitzar l'espai que requerirà la
+prova.</li>
+</ul>
+<p>Per <tt class="docutils literal">LinkedList</tt> només en fem una perquè la seva implementació
+interna la fa insensible a saber la mida final.</p>
+<p>És a dir, en total hi ha 5 variants: dues per <tt class="docutils literal">Vector</tt>, dues per
+<tt class="docutils literal">ArrayList</tt> i una per <tt class="docutils literal">LinkedList</tt>.</p>
+</div>
+<div class="section" id="exercici-10-consulta-sequencial">
+<h3>Exercici 10. Consulta seqüèncial</h3>
+<p>Defineix una prova amb les tres classe de manera que inicialment
+disposem d'una seqüència creixent de <tt class="docutils literal">Integer</tt> i la ordeni
+decreixement amb el mètode de la bombolla.</p>
+<p>Recorda que aquest mètode d'ordenació es basa en anar comparant dos a
+dos i intercanviant els valors que no es troben en ordre, fent
+passades per tots els elements fins que no hi ha més canvis.</p>
+</div>
+<div class="section" id="exercici-11-consulta-aleatoria">
+<h3>Exercici 11. Consulta aleatòria</h3>
+<p>Aquest conjunt de proves persegueix comprovar el rendiment de les tres
+estructures que estem analitzant quan s'accedeix de manera aleatòria
+(no seqüencial).</p>
+<p>Omplirem inicialment les seqüències de manera creixent amb <tt class="docutils literal">Integer</tt>.</p>
+<p>La prova consisteix en mesurar quan costa mostrar tots els valors
+començant per cada posició múltiple de tres, per continuar amb els
+anteriors fins (sense incloure) l'anterior múltiple de tres.  Serien
+les posicions 0, 3, 2, 1, 6, 5, 4, 9, 8, 7, ...</p>
+</div>
+<div class="section" id="exercici-12-insercio-aleatoria">
+<h3>Exercici 12. Inserció aleatòria</h3>
+<p>En aquesta ocasió, realitzarem la prova d'inserir dades a instàncies
+de les diferents classes que estem analitzant. Aquest cop, però, no
+inserirem les dades de manera seqüencial, sinó que ho farem sempre des
+del punt mig.</p>
+<p>Per tant, el primer element l'inserirem a la posició 0. El segon a la
+0 també (1 element / 2 resulta 0). El tercer element anirà a la
+posició 1 (2 / 2 fa 1). El quart va a la 1 ( 3/2 fa 1). El cinqué a la
+2 (4 / 2 fa 2) i així...</p>
+<p>Per <tt class="docutils literal">Vector</tt> i <tt class="docutils literal">ArrayList</tt> farem dues versions: una amb el
+constructor per defecte i l'altra inicialitzant-les amb la mida
+màxima.</p>
+<p>En total doncs, tindrem cinc proves, dues per <tt class="docutils literal">Vector</tt>, dues per
+<tt class="docutils literal">ArrayList</tt> i una per <tt class="docutils literal">LinkedList</tt>.</p>
+</div>
+<div class="section" id="exercici-13-modificacio-aleatoria">
+<h3>Exercici 13. Modificació aleatòria</h3>
+<p>Per la realització d'aquest conjunt de proves, et caldrà implementar
+l'algoritme d'ordenació <em>quicksort</em> (mira per exemple la proposta de
+<a class="reference external" href="http://www.vogella.com/articles/JavaAlgorithmsQuicksort/article.html">vogela</a>).</p>
+<p>Per començar, tenint en comptes que les tres classes que estem
+comparant implementen la interfície <tt class="docutils literal">List</tt>, adapta l'algorisme de
+manera que el mètode <tt class="docutils literal">sort()</tt> disposi (també) de la següent
+signatura:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">sort</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">values</span><span class="o">)</span>
+</pre></div>
+<p>Un cop el tinguis funcionant (fes alguna prova simple), munta les
+proves de manera que els valors de cada seqüència s'inicialitzi en ordre
+decreixent, i mesura quan li costa a l'algorisme d'ordenació processar
+instàncies de cadascuna de les tres classes de manera que les deixi
+ordenades creixentment.</p>
+<p>Donat que <tt class="docutils literal">Integer</tt> implementa la <em>interface</em> <tt class="docutils literal">Comparable</tt>,
+afegeix a l'estudi l'anàlisi fent servir <tt class="docutils literal">Collections.sort(List&lt;T&gt;
+list)</tt>.</p>
+<p>En total, doncs, hauràs de fer sis proves: dues per cadascuna de les
+classes que estem comparant.</p>
+</div>
+<div class="section" id="exercici-14-buidat">
+<h3>Exercici 14. Buidat</h3>
+<p>Aquest conjunt de proves requereix inicialitzar les seqüències amb
+<tt class="docutils literal">Integer</tt> seqüencials.</p>
+<p>El que es mesurarà és el temps que costa per cada classe buidar tots
+els elements segons els següents criteris:</p>
+<ul class="simple">
+<li>eliminant sempre el primer (cua)</li>
+<li>eliminant sempre el darrer (pila)</li>
+<li>eliminant sempre el del punt mig</li>
+</ul>
+<p>En total són nou proves (tres per classe)</p>
+<p>Opcionalment se't proposa que avaluïs les classes <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayDeque.html">ArrayDeque</a>
+i <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/Stack.html">Stack</a> per
+comprovar si aquestes classes ofereixen avantatge eliminant el primer
+o el darrer respectivament)</p>
+</div>
+<div class="section" id="exercici-15-resum">
+<h3>Exercici 15. Resum</h3>
+<p>A partir dels resultats obtinguts amb els exercicis anteriors, elabora
+un informe en el que, per cada opció, indiquis en quins casos d'ús
+és recomanable escollir-la i en quins casos és preferible no fer-ho.</p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./generics.html">
+        Generics
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./conjunts-en-java.html">
+        Conjunts en Java
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+Un cop instal·lat i configurat lleugerament postgresql es procedirà a
+instal·lar també el plug-in de pl/java seguint http://invariantproperties.com/2011/12/26/introduction-to-postgresql-pljava-part-1-2/ i http://www.slideshare.net/petereisentraut/postgresql-and-pljava
+# apt-get install postgresql-9.1-pljava-gcj
+# su - postgres
+$ createdb template_java
+$ psql -d template_java -f /usr/share/postgresql-9.1-pljava/install.sql
+
+Un test ràpid que tot ha anat bé: ::
+
+    $ psql
+    postgres=# \c template_java
+    You are now connected to database "template_java" as user "postgres".    postgres=# create function getsysprop(varchar) returns varchar
+       as 'java.lang.System.getProperty'
+       language java;
+    CREATE FUNCTION
+    template_java=# select getsysprop('user.home');
+    template_java=# select getsysprop('user.home'), getsysprop('user.name');
+     getsysprop      | getsysprop 
+    ---------------------+------------
+     /var/lib/postgresql | postgres
+    (1 row)
+        template_java=# drop function getsysprop (character varying);
+
+Ara donarem permissos a l'usuari per a poder fer servir el llenguatge
+    # update pg_language set lanpltrusted = true where lanname='java';
+    # grant all on language javau to usuari;
+
+

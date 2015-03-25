@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Un primer contacte amb la programació en Java</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Un primer contacte amb la programació en Java             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./ritual-hola-mon.html">
+        Ritual Hola Món!
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Un primer contacte amb la programació en Java</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document té com a objectiu oferir l'estudiant una primera
+impressió d'un programa en java tot comparant-lo amb una versió del
+programa en un altre llenguatge conegut: el <em>C</em></p>
+<p>Per a aprofitar al màxim aquesta activitat, caldria tenir alguns
+coneixements bàsics del llenguatge C (e.g. directius de
+precompil·lació, funcions)</p>
+</div>
+<div class="section" id="continguts">
+<h2>Continguts</h2>
+<p>Intenta interpretar les següents versions del mateix programa.</p>
+<div class="section" id="versio-c">
+<h3>Versió C</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;math.h&gt;</span>
+<span class="cp">#define PI 3.14159265358979323846264338327</span>
+
+<span class="cm">/* calcula l&#39;àrea d&#39;un cercle a partir del seu radi */</span>
+<span class="kt">double</span> <span class="nf">calcula_area_cercle</span><span class="p">(</span><span class="kt">double</span> <span class="n">radi</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">PI</span> <span class="o">*</span> <span class="n">pow</span><span class="p">(</span><span class="n">radi</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">radi</span><span class="p">,</span> <span class="n">area</span><span class="p">;</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Càlcul de l&#39;àrea d&#39;un cercle</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Introduïu el radi: &quot;</span><span class="p">);</span>
+  <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%lg&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">radi</span><span class="p">);</span>
+  <span class="n">area</span> <span class="o">=</span> <span class="n">calcula_area_cercle</span><span class="p">(</span><span class="n">radi</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;L&#39;àrea és %.16lg</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">area</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="versio-java">
+<h3>Versió java</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CalculaRadi</span><span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="kt">double</span> <span class="nf">calcula_area</span><span class="o">(</span><span class="kt">double</span> <span class="n">radi</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">PI</span> <span class="o">*</span> <span class="n">Math</span><span class="o">.</span><span class="na">pow</span><span class="o">(</span><span class="n">radi</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="o">}</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Càlcul de l&#39;àrea d&#39;un cercle&quot;</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">&quot;Introduïu el radi: &quot;</span><span class="o">);</span>
+    <span class="n">BufferedReader</span> <span class="n">reader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">));</span>
+    <span class="n">String</span> <span class="n">linia</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="na">readLine</span><span class="o">();</span>
+    <span class="kt">double</span> <span class="n">radi</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">linia</span><span class="o">);</span>  <span class="c1">// conversió de String a double</span>
+    <span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="n">calcula_area</span><span class="o">(</span><span class="n">radi</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot; L&#39;àrea és &quot;</span> <span class="o">+</span> <span class="n">area</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<div class="section" id="exercici-1-preguntes-sobre-el-codi">
+<h3>Exercici 1. Preguntes sobre el codi</h3>
+<p>Contesta les següents preguntes sobre el codi que hem vist.</p>
+<ol class="arabic simple">
+<li>Què fan aquests programes?</li>
+<li>Compara la manera en que cada llenguatge mostra un missatge a
+l'usuari.</li>
+<li>Compara la manera en que cada llenguatge obté una resposta de
+l'usuari.</li>
+<li>Compara la manera en que cada llenguatge defineix el bloc principal
+del programa.</li>
+<li>Compara la manera en que cada llenguatge defineix una funció.</li>
+<li>Perquè la versió en Java no requereix definit la constant <em>PI</em> i C
+sí?</li>
+<li>Quin llenguatge et sembla més fàcil i quin més complex?
+Argumenta-ho?</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./ritual-hola-mon.html">
+        Ritual Hola Món!
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

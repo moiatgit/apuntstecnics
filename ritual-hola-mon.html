@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Ritual Hola Món!</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Ritual Hola Món!             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        Un primer contacte amb la programació en Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./primers-exercicis-en-java.html">
+        Primers exercicis en Java
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Ritual Hola Món!</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document guia l'estudiant a l'edició i execució del seu primer
+programa en java.</p>
+<p>Per a poder-lo seguir, cal disposar de:</p>
+<ul class="simple">
+<li>jdk</li>
+<li>editor de text</li>
+</ul>
+<p>Per simplicitat, la guia pressuposa que el sistema operatiu és Ubuntu
+12.04, el JDK és el JDK d'Oracle en versió 7, i l'editor el gedit.  És
+perfectament possible seguir aquesta guia amb una configuració
+diferent. En aquest cas, queda com exercici, l'adaptació de les passes
+al sistema escollit.</p>
+<p>En cas que no es disposi del JDK, es pot considerar la guia
+d'<a class="reference external" href="./tutorial-dinstallacio-del-jdk.html">instal·lació del jdk</a></p>
+</div>
+<div class="section" id="continguts">
+<h2>Continguts</h2>
+<p>Passem a l'acció! Segueix les passes:</p>
+<ol class="arabic">
+<li><p class="first">obre un terminal (ex. &lt;ctrl&gt;&lt;alt&gt;t)</p>
+</li>
+<li><p class="first">crea una carpeta on treballar i situat dins:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir ~/programacio
+<span class="nv">$ </span><span class="nb">cd</span> ~/programacio
+</pre></div>
+</li>
+<li><p class="first">edita un fitxer anomenat <tt class="docutils literal">HolaMon.java</tt> (atenció a les
+majúscules)</p>
+<div class="highlight"><pre><span class="nv">$ </span>gedit HolaMon.java <span class="p">&amp;</span>
+</pre></div>
+</li>
+<li><p class="first">escriu al fitxer el següent contingut:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="cm">/*</span>
+<span class="cm">  * Programa que saluda al món</span>
+<span class="cm">  */</span>
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">HolaMon</span> <span class="o">{</span>
+     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hola Món!&quot;</span><span class="o">);</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
+</pre></div>
+</td></tr></table></li>
+<li><p class="first">guarda el document (ex. &lt;ctrl&gt;s), torna al terminal i compila escriu:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span class="nv">$ </span>javac HolaMon.java
+</pre></div>
+<ol class="arabic simple" start="6">
+<li>si apareix algun error, revisa que el text que has introduït al
+fitxer contingui <strong>exactament</strong> l'indicat. Corregeix el que calgui
+i torna a compilar fins que no s'indiqui cap error.</li>
+<li>executa el teu programa</li>
+</ol>
+<div class="highlight"><pre><span class="nv">$ </span>java HolaMon
+</pre></div>
+<p>Felicitats! Acabes de realitzar el teu primer programa en Java!</p>
+</div>
+<div class="section" id="exercicis">
+<h2>Exercicis</h2>
+<p><strong>Exercici 1</strong>: Preguntes sobre el ritual</p>
+<p>Contesta les següents preguntes. Potser et caldrà fer proves amb el
+codi de les dues versions:</p>
+<ol class="arabic simple">
+<li>Perquè creus que pot ser tan habitual que es faci un programa
+tipus &quot;hola món!&quot; quan entres a un nou llenguatge?</li>
+<li>Què creus que contenir l'argument args? Com es feia això en C? Què
+passa si intentem fer un main() sense arguments com podíem fer a
+C?</li>
+<li>Llença una hipòtesi de per què pot ser que no calgui fer quelcom
+equivalent al <tt class="docutils literal">#include &lt;stdio.h&gt;</tt> de C per poder escriure un
+missatge per pantalla.</li>
+</ol>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        Un primer contacte amb la programació en Java
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./primers-exercicis-en-java.html">
+        Primers exercicis en Java
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

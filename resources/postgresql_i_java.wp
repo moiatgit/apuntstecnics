@@ -1,0 +1,337 @@
+Aquests apunts són una introducció a l'ús de mysql des de java.
+
+<h1>AC1. Hola PostGreSQL</h1>
+Seguir les passes per a instal·lar PostGreSQL i fer l'HolaPostGreSQL.java
+<ul>
+	<li>
+<p class="first">instal·lar:</p>
+Considerarem la instal·lació de la versió que hi hagi als repositoris. En el moment d'aquest escrit, era la 5.1 tot i que la 5.6 ja es trobava disponible a la pàgina oficial de MySQL <a id="id1" class="footnote-reference" href="#id2">[1]</a>.
+
+[sourcecode language="bash"]
+
+$ sudo apt-get install mysql-client mysql-server
+
+[/sourcecode]</li>
+	<li>
+<p class="first">arrencar:</p>
+
+[sourcecode language="bash"]
+
+$ sudo /etc/init.d/mysql start
+
+[/sourcecode]</li>
+	<li>
+<p class="first">posar-li una clau nova (en aquest cas <em>myPassword</em>)</p>
+
+[sourcecode language="bash"]
+
+$ mysqladmin -u root password myPassword
+
+[/sourcecode]</li>
+	<li>
+<p class="first">entrar com a <em>root</em></p>
+
+[sourcecode language="bash"]
+
+$ mysql -u root -p
+
+[/sourcecode]</li>
+	<li>
+<p class="first">crear una nova base de dades (<a class="reference external" href="http://dev.mysql.com/doc/refman/5.0/en/create-database.html" target="_blank">http://dev.mysql.com/doc/refman/5.0/en/create-database.html</a>)</p>
+
+[sourcecode language="sql"]
+
+mysql>create database testbd;
+mysql> create user test@localhost identified by 'test';
+mysql> grant all privileges on testbd.\* to 'test'@'localhost';
+mysql> exit
+$ mysql -u test -p testbd
+mysql> create table Cotxes ( id integer primary key, nom varchar(50));
+
+[/sourcecode]</li>
+	<li>
+<p class="first">instal·lar el connector per java, primer el descarreguem (<a class="reference external" href="http://dev.mysql.com/downloads/connector/j/" target="_blank">http://dev.mysql.com/downloads/connector/j/</a>)</p>
+</li>
+	<li>
+<p class="first">configurem el <em>CLASSPATH</em></p>
+
+[sourcecode language="bash"]
+
+$ <code>export CLASSPATH=${CLASSPATH:-"."}:</code>«path on estigui»/mysql-connector-java-5.0.4/mysql-connector-java-5.0.4-bin.jar
+
+[/sourcecode]</li>
+	<li><p class="first">en cas de fer servir NetBeans o algun altre IDE, recorda afegir el <em>driver</em> al teu projecte.</p>
+</li>
+	<li>
+<p class="first">provar el connector, crea el següent programa HolaMySQL.java</p>
+
+[sourcecode language="java"]
+
+public class HolaMySQL {
+    public static void main(String[] args) {
+        try {
+            // carrega el driver a partir del nom
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            System.out.println("HolaMySQL: Ok!");
+        } catch(Exception e) {
+            System.out.println("Error: " + e.toString());
+        }
+    }
+}
+
+[/sourcecode]</li>
+	<li>
+<p class="first">i ara ja podem començar a <em>jugar</em>!</p>
+</li>
+</ul>
+Trobaràs la documentació del paquet a
+<a class="reference external" href="http://docs.oracle.com/javase/tutorial/jdbc/basics/index.html" target="_blank">http://docs.oracle.com/javase/tutorial/jdbc/basics/index.html</a>
+
+<h1>AC2. Animals al MySQL</h1>
+Estudiem els següents codis:
+
+[sourcecode language="sql"]
+
+create table Animals ( id integer primary key auto\_increment, nom varchar(50), categoria varchar(50));
+
+[/sourcecode]
+
+i
+
+[sourcecode language="java"]
+
+/*
+ * Classe Animal guardat a la taula Animals
+ */
+public class Animal {
+    private int id;
+    private String nom;
+    private String categoria;
+    public Animal(String nom, String categoria) {
+        this(-1, nom, categoria); // encara no té identificador
+    }
+    public Animal(int id, String nom, String categoria) {
+        this.id = id;
+        this.nom = nom;
+        this.categoria = categoria;
+    }
+    public void setId(int id){this.id=id;}
+    public String getNom(){return nom;}
+    public String getCategoria(){return categoria;}
+    public String toString(){
+        return "<" + id + ", '" + nom + "', '" + categoria + "'>";
+    }
+}
+
+[/sourcecode]
+
+i
+
+[sourcecode language="java"]
+
+// Continguts: Manipulació de la taula Animals. 
+// Aquest programa serveix com a exemple d'ús de les operacions
+// més habituals amb BD.
+
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Animals {
+    private static final String BD_NOM = "test";
+    private static final String BD_USU = "test";
+    private static final String BD_PSW = "test";
+
+    // variables de connexió
+    private static Connection conn = null; // connexió
+    private static void connecta() throws ClassNotFoundException,
+            InstantiationException,
+            IllegalAccessException,
+            SQLException {
+                // Carrega el driver Connector/J
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                // estableix la connexió amb la base de dades
+                conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost/" + BD_NOM +
+                        "?user=" + BD_USU +
+                        "&password="+ BD_PSW);
+    }
+
+    private static void desconnecta() throws SQLException {
+        if (conn != null) conn.close();
+    }
+
+    private static void creaTaula() throws SQLException {
+        eliminaTaula();
+        Statement s = conn.createStatement ();
+        s.executeUpdate ("CREATE TABLE Animals ("
+                + "id INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+                + "PRIMARY KEY (id),"
+                + "nom VARCHAR(40), "
+                + "categoria VARCHAR(40))");
+    }
+
+    private static void eliminaTaula() throws SQLException {
+        conn.createStatement().executeUpdate ("DROP TABLE IF EXISTS Animals");
+    }
+
+    private static void consulta() throws SQLException {
+        final String SELECT_SQL = "SELECT \* FROM Animals ORDER BY nom";
+        Statement st = conn.createStatement(
+                ResultSet.TYPE_FORWARD_ONLY, // només farem servir next()
+                ResultSet.CONCUR_READ_ONLY); // només per lectura
+        st.setFetchSize(Integer.MIN_VALUE); // carregar de manera individual
+        ResultSet rs = st.executeQuery(SELECT_SQL);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String nom = rs.getString("nom");
+            String cat = rs.getString("categoria");
+            Animal animal = new Animal(id, nom, cat);
+            System.out.println(animal);
+        }
+    }
+
+    private static void comptaAnimals() throws SQLException {
+        // retorna el nombre d'animals que hi ha insertats
+        final String SELECT_SQL = "SELECT COUNT(\*) FROM Animals";
+        ResultSet rs = conn.createStatement().executeQuery(SELECT_SQL);
+        rs.next();
+        System.out.println("El nombre d'animals a la bd és: " + rs.getInt(1));
+    }
+
+    private static int getBDId(PreparedStatement ps) throws SQLException {
+        // obtenim el darrer identificador generat
+        ResultSet nousIds = ps.getGeneratedKeys();
+        nousIds.next();
+        return nousIds.getInt(1);
+    }
+
+    /* aquest mètode inserta uns quants animals a la taula
+      ho fa com una transacció. És a dir, en cas que no
+      pugui insertar-los tots, no n'inserta cap
+      definim la plantilla de la sentència d'inserció */
+    private static void insertaAnimals() throws SQLException {
+        final String INSERT_SQL = "INSERT INTO Animals (nom, categoria) values (?,?)";
+        // crea els animals
+        Animal[] llista = {
+            new Animal("canari", "ocell"), // aquests animals no tenen id!
+            new Animal("estruç", "ocell"),
+            new Animal("kiwi", "ocell"),
+            new Animal("gos", "mamifer"),
+            new Animal("bacallà", "peix"),
+            new Animal("dofí", "peix")
+        };
+        // obté l'estat anterior de l'autocommit.
+        boolean anteriorAutoCommit = conn.getAutoCommit();
+        // fem que no faci autocommit a cada execució
+        conn.setAutoCommit(false);
+        try {
+            // crea la sentència a executar (només un cop!)
+            PreparedStatement ps = conn.prepareStatement(INSERT_SQL,
+                    Statement.RETURN_GENERATED_KEYS);
+            for (Animal a: llista) {
+                System.out.println("Insertant l'animal " + a);
+                // afegim els valors a insertar
+                ps.setString(1, a.getNom());
+                ps.setString(2, a.getCategoria());
+                ps.executeUpdate();
+                // assignem l'identificador de la bd a l'animal
+                a.setId(getBDId(ps));
+                System.out.println("Insertat l'animal " + a);
+            }
+            // acceptem tots els inserts un cop veiem que no hi ha problemes
+            conn.commit();
+        } catch (SQLException e) {
+            // hem trobat problemes amb la inserció, així que tirem tot enrere i
+            rellencem l'excepció
+                conn.rollback();
+            throw e;
+        } finally {
+            // tornem l'estat de autocomit tal i com estava
+            conn.setAutoCommit(anteriorAutoCommit);
+        }
+    }
+
+    private static void corregeixAnimals() throws SQLException {
+        // tenim el dofí en una categoria equivocada. Canviem-la a la BD
+        final String UPDATE_SQL = "UPDATE Animals set categoria = 'mamifer'
+            WHERE nom = 'dofí'";
+        Statement st = conn.createStatement();
+        st.executeUpdate(UPDATE_SQL);
+    }
+
+    private static void eliminaOcells() throws SQLException {
+        // volem eliminar tots els ocells de la bd
+        final String DELETE_SQL = "DELETE FROM Animals WHERE categoria =
+            'ocell'";
+        Statement st = conn.createStatement();
+        int cont = st.executeUpdate(DELETE_SQL);
+        System.out.println("Eliminats " + cont + " ocells");
+    }
+
+    public static void main(String[] args) {
+        try {
+            connecta(); System.out.println(".");
+            creaTaula(); System.out.println(".");
+            consulta(); System.out.println(".");
+            insertaAnimals(); System.out.println(".");
+            consulta(); System.out.println(".");
+            corregeixAnimals(); System.out.println(".");
+            consulta(); System.out.println(".");
+            eliminaOcells(); System.out.println(".");
+            consulta(); System.out.println(".");
+            comptaAnimals(); System.out.println(".");
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        } finally {
+            try {
+                desconnecta();
+            } catch (Exception e) {
+                System.out.println("error: " + e);
+            }
+        }
+    }
+}
+
+[/sourcecode]
+
+Aquesta activitat no té cap exercici a lliurar. Té com a objectiu servir de referència per a realitzar la següent activitat.
+
+<h1>AC3. BD a la pràctica</h1>
+
+<h2>Exercici 1. El videoclub</h2>
+A aquest exercici se't demana la implementació d'una part de l'aplicació del videoclub que vas estudiar al crèdit AA. No et preocupis si no te'n recordes, ja que de seguida s'explica els detalls importants.
+
+En concret, es tracta d'implementar un simple mòdul capaç de treballar amb les entitats PEL·LICULES i CÒPIES.
+
+De cada pel·lícula en guardem el títol, el director, l'any d'estrena i la data d'alta en el nostre sistema.
+
+Cada pel·lícula pot tenir 0 o més còpies al videoclub. De les còpies guardem el codi de còpia, la data d'alta al nostre sistema.
+
+Es demana desenvolupar una petita aplicació que permeti:
+
+<ol class="arabic simple">
+	<li>llistar totes les pel·lícules disponibles. Es mostra, l'identificador intern del producte, els primers 20 caràcters del títol, els primers 10 del director i l'any d'estrena. Les pel·lícules apareixeran ordenades per títol.</li>
+	<li>consultar el detall d'una pel·lícula. A partir de l'identificador intern de la pel·lícula, es mostren: el títol complet, el nom complet del director, l'any d'estrena, el nombre total de còpies disponibles, la data d'alta al sistema. Finalment ha d'aparèixer la llista de còpies que té la pel·lícula (codi de còpia i data d'alta al sistema). Si l'identificador subministrat no correspon a cap pel·lícula disponible, es mostra el corresponent missatge d'error.</li>
+	<li>donar d'alta una pel·lícula. Es demanen el títol, director i any d'estrena i se li assigna un identificador intern i la data actual.</li>
+	<li>donar d'alta una còpia d'una pel·lícula. A partir de l'identificador de la pel·lícula, si existeix, es demana un codi de còpia i, si no existia, es dóna d'alta amb la data actual. En els casos que l'identificador subministrat no correspongui a una pel·lícula disponible, o bé que el codi de còpia ja existeixi al sistema, es mostraran els missatges d'error corresponents.</li>
+	<li>modificar les dades d'una pel·lícula. A partir de l'identificador de la pel·lícula, si existeix, es demanen els nous valors pel títol, el director i l'any d'estrena. En cas que l'identificador no fos conegut, s'informarà de l'error. Les dades es demanaran de manera que si, per exemple, només cal canviar el director, l'usuari no es vegi obligat a reescriure el títol ni l'any d'estrena. A més a més, abans de realitzar la modificació, es demanarà confirmació tot mostrant totes les dades de la pel·lícula (veure #2). Finalment s'indicarà, tant si es modifica com si no, el nombre de pel·lícules modificades.</li>
+	<li>eliminar una pel·lícula. A partir de l'identificador d'una pel·lícula, si existeix, es mostraran les dades (com a #2), i es demanarà confirmació per a eliminar. En cas que la pel·lícula tingui còpies, a la petició de confirmació s'indicarà que les <em>n</em> còpies seran també eliminades. Finalment, si es realitza l'eliminació, es mostrarà un missatge de l'estil "Pel·lícules eliminades: 1 Còpies eliminades: 5" En cas que no s'elimini, el missatge indicarà "Pel·lícules eliminades: 0".</li>
+	<li>eliminar una còpia. A partir de l'identificador d'una còpia, si existeix, es mostrarà les dades de la pel·lícula corresponent i les de la còpia (la data d'alta). A continuació es demanarà confirmació i, en cas que s'elimini, es mostrarà un missatge indicant l'eliminació de la còpia. En cas que no, el missatge indicarà que s'ha eliminat 0 còpies.</li>
+	<li>sortir de l'aplicació.</li>
+</ol>
+Es pot decidir si es vol fer una interfície en mode gràfic, o bé es prefereix fer-la en format text amb menús. En tot cas, caldrà tenir en compte què les dades han de ser emmagatzemades a la BD tan bon punt es modifiquin i, a l'hora, caldrà llegir-les de la BD cada cop que calgui mostrar-les. Amb tot, es pot pressuposar que només una instància de la nostra aplicació accedirà a la BD.
+
+<hr class="docutils" />
+
+<table id="id2" class="docutils footnote" rules="none"> <col class="label" /> <col />
+<tbody valign="top">
+<tr>
+<td class="label"><a class="fn-backref" href="#id1">[1]</a></td>
+<td>Per a fer aquests exercicis amb la 5.1 en tindrem prou. Si decideixes instal·lar una altra versió, hauràs de trobar també la versió corresponent del driver per java.</td>
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Pujar notes massivament al Moodle</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Pujar notes massivament al Moodle             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li class="active"><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Pujar notes massivament al Moodle</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/misc.html">
+        misc
+    </a>
+            amb el tag:
+            <a href="./tag/util.html">util</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest petit tutorial mostra com es pot pujar notes i retroaccions des
+d'un full de càlcul al Moodle.</p>
+<p>L'exemple que es segueix és la notificació de les notes finals d'una
+unitat formativa.</p>
+<p>Objectius:</p>
+<ol class="arabic simple">
+<li>poder calcular les notes en un full de càlcul</li>
+<li>poder pujar les notes i comentaris massivament al Moodle (en
+comptes d'alumne per alumne)</li>
+<li>poder oferir a cada alumne la seva nota i comentari de manera
+individual i privada, respecte la resta d'alumnes.</li>
+</ol>
+<p>Per fer-ho ens cal:</p>
+<ul>
+<li><p class="first">una tasca Moodle</p>
+<p>A l'exemple et mostro com crear-ne una que té com únic a objectiu,
+transmetre les notes. És a dir, no pretén recollir cap exercici.</p>
+</li>
+<li><p class="first">un full de càlcul amb les notes i retroaccions.</p>
+<p>Veuràs que en el full cal que els alumnes estiguin identificats. A
+l'exemple apareixen identificats per correu electrònic, i t'explica
+com obtenir-los en cas que no en disposis.</p>
+</li>
+<li><p class="first">importació i vinculació</p>
+</li>
+</ul>
+<p>Et recomano que facis una primera lectura a totes les passes abans de
+començar a seguir-les. Això et permetrà tenir clar coses com que cal
+disposar les notes en un determinat format (ex. un full de càlcul)</p>
+</div>
+<div class="section" id="procediment">
+<h2>Procediment</h2>
+<div class="section" id="la-tasca-moodle">
+<h3>La tasca Moodle</h3>
+<p>En primer lloc entrarem a Moodle. Un cop al nostre curs, activarem
+l'edició:</p>
+<div class="figure align-center">
+<img alt="activa edició" src="./images/moodle.01.activa_edicio.png" />
+</div>
+<p>Ara anem a la secció on volem introduir les notes i seleccionem
+&quot;afegeix una activitat o un recurs&quot;. Si ja tens una activitat creada i
+simplement la vols puntuar, escull-la i saltat les següents passes de
+creació.</p>
+<div class="figure align-center">
+<img alt="afegeix activitat" src="./images/moodle.02.afegeix_activitat.png" />
+</div>
+<p>L'activitat que escollirem és de tipus &quot;Tasca&quot;.</p>
+<div class="figure align-center">
+<img alt="escull tipus d'activitat tasca" src="./images/moodle.03.tasca.png" />
+</div>
+<p>Omple el títol i el detall de la tasca. En el cas de l'exemple, estic
+aprofitant per afegir-hi una breu conclusió del curs, la descripció
+de com he calculat la nota final, i donar ànims per la següent part
+del curs.</p>
+<p>És important inhabilitar a la secció &quot;Paràmetres de la tasca&quot; les
+dates de lliurament. D'aquesta manera, la tasca quedarà només
+disponible per ser consultada i els alumnes no hi podran lliurar res.</p>
+<div class="figure align-center">
+<img alt="crea nova tasca" src="./images/moodle.04.nova_tasca.png" />
+</div>
+<p>És recomanable marcar la tasca com a oculta. D'aquesta manera els
+estudiants no hi podran accedir fins que hàgim vist que tot està
+correcte.</p>
+<div class="figure align-center">
+<img alt="Marca tasca oculta per seguretat" src="./images/moodle.05.oculta.png" />
+</div>
+<p>Ara que ja tenim creada l'activitat, l'obrim:</p>
+<div class="figure align-center">
+<img alt="Obre l'activitat" src="./images/moodle.06.entra.png" />
+</div>
+<p>Al final de la pàgina que t'apareix, selecciona l'enllaç de
+&quot;Visualitza/Qualifica totes les trameses&quot;.</p>
+<div class="figure align-center">
+<img alt="visualitza les trameses" src="./images/moodle.07.visualitza.png" />
+</div>
+<p>Tot seguit selecciona &quot;Visualitza el butlletí de qualificacions&quot; del
+desplegable.</p>
+<div class="figure align-center">
+<img alt="visualitza el butlletí" src="./images/moodle.08.butlleti.png" />
+</div>
+</div>
+<div class="section" id="el-full-de-calcul">
+<h3>El full de càlcul</h3>
+<p>Ara passarem a veure el full de càlcul on tindrem les notes</p>
+<div class="figure align-center">
+<img alt="revisem el full de càlcul" src="./images/moodle.10.full_calcul.png" />
+</div>
+<p>Els requeriments són:</p>
+<ul class="simple">
+<li>una capçalera que descrigui les dades. Et recomano que facis servir
+noms que et diguin alguna cosa.</li>
+<li>una columna que permeti identificar els alumnes. Et recomano que
+facis servir el correu electrònic per evitar les variants dels noms.</li>
+<li>una columna amb les notes. A l'exemple apareixen sobre 100 i sense
+decimals.</li>
+<li>una columna amb la retroacció individual. No és obligatòria però
+trobo genial poder dedicar a cada alumne un breu comentari més o
+menys personalitzat.</li>
+<li>poden haver-hi altres columnes que ignorarem a l'hora d'importar.</li>
+</ul>
+<p>Com? Què no tens els correus electrònics dels teus alumnes? Els pots
+extreure del Moodle.</p>
+<div class="figure align-center">
+<img alt="exporta a csv" src="./images/moodle.11.exporta.png" />
+</div>
+<p>Un cop disposis del full de càlcul amb les notes i retroaccions, l'hauràs de guardar com a csv ja que, de moment, Moodle no sap com importar directament des del full de càlcul.</p>
+<div class="figure align-center">
+<img alt="selecciona format csv" src="./images/moodle.13.format_csv.png" />
+</div>
+<p>La següent configuració de csv funciona sense problemes. Amb tot,
+Moodle acceptarà d'altres si li indiques a l'hora d'importar.</p>
+<div class="figure align-center">
+<img alt="Parametritza csv" src="./images/moodle.14.cometes.png" />
+</div>
+</div>
+<div class="section" id="la-importacio">
+<h3>La importació</h3>
+<p>Ara ja podem importar el fitxer csv al Moodle, per fer-ho, escollirem
+al desplegable l'opció &quot;Fitxer CSV&quot; de la secció &quot;Importar&quot; del menú
+desplegable:</p>
+<div class="figure align-center">
+<img alt="Importa csv al Moodle" src="./images/moodle.09.importa_csv.png" />
+</div>
+<p>Per fer-ho, arrossega el fitxer csv a la caixeta que conté una fletxa
+animada.</p>
+<p>Si ho has fet bé, trobaràs el nom del teu fitxer dins la caixeta (ara
+sense fletxa)</p>
+<div class="figure align-center">
+<img alt="Arrossega el fitxer" src="./images/moodle.16.arrossegat.png" />
+</div>
+</div>
+<div class="section" id="la-vinculacio">
+<h3>La vinculació</h3>
+<p>Un cop has fet la importació, pots comprovar que les dades siguin les
+que esperaves. Si tot és com esperaves, pots passar a fer la
+vinculació de les columnes a les dades de la tasca a puntuar.</p>
+<div class="figure align-center">
+<img alt="Vinculació dels camps" src="./images/moodle.17.vinculacio.png" />
+</div>
+<p>A la figura anterior s'ha vinculat:</p>
+<ul class="simple">
+<li>la columna del full de càlcul &quot;email&quot; amb el camp Moodle &quot;Correu
+electrònic&quot;.</li>
+<li>la columna del full de càlcul &quot;nota&quot; amb el camp Moodle &quot;Tasca «nom
+que hem posat a la tasca»&quot;</li>
+<li>la columna del full de càlcul &quot;retroacció&quot; amb el camp Moodle
+&quot;Retroacció per a Tasca «nom que hem posat a la tasca»&quot;</li>
+<li>la resta de columnes del full de càlcul són ignorades.</li>
+</ul>
+</div>
+<div class="section" id="comprovacions-i-finalitzacio">
+<h3>Comprovacions i finalització</h3>
+<p>Tot seguit, consultarem les notes del Moodle per veure si tot ha anat
+com esperàvem. En el cas de l'exemple, haig de fer un desplaçament
+horitzontal per poder visualitzar la tasca, el que fa perdre la
+columna amb el nom. Amb tot, si poses el cursor a sobre, hi pots
+consultar el nom i la retroacció de l'alumne:</p>
+<div class="figure align-center">
+<img alt="Comprovació dels resultats" src="./images/moodle.18.resultat.png" />
+</div>
+<p>Ara ja només queda marcar com a visible la tasca i quedarà disponible
+pels nostres estudiants</p>
+<div class="figure align-center">
+<img alt="Fem públiques les notes" src="./images/moodle.19.mostra.png" />
+</div>
+<p>I ja tenim les notes consultables pels nostres alumnes!</p>
+</div>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

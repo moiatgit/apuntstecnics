@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Interfícies gràfiques amb Java</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Interfícies gràfiques amb Java             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./hola-swing.html">
+        Hola Swing
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Interfícies gràfiques amb Java</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/gui.html">
+        gui
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><!-- XXX TODO: translation to proper rst still unfinished. Check it
+still works for current version of everything. Consider spliting
+in different documents. Check specially the voice problem. Consider
+adding challenge problems. For example, it'd be nice to have a GUI
+version of the Animals system. -->
+<div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>La sèrie d'entrades que comença amb aquesta, té com a objectiu
+introduir-te en la programació d'interfícies gràfiques d'usuari (GUI)
+usant el llenguatge de programació Java.</p>
+<p>Per desenvolupar aplicacions amb GUI, farem servir la biblioteca
+<em>swing</em> <a class="footnote-reference" href="#guilocal" id="id1">[1]</a>.</p>
+<p>El mecanisme d'introducció serà a partir de la realització de
+diferents programes que presenten un o més conceptes nous o/i reforcen
+conceptes anteriors.</p>
+<p>Inicialment realitzarem els exercicis sense l'ajut d'eines gràfiques
+que ofereixen alguns IDEs com ara Eclipse o NetBeans. Això ens
+permetrà entendre l'estructura interna d'una GUI de Java. A
+continuació passarem a desenvolupar-los ajudant-nos de les eines
+ofertes per un IDE. En aquest cas s'ha escollit el NetBeans per que no
+requereix de cap instal·lació especial <a class="footnote-reference" href="#altreide" id="id2">[2]</a>.</p>
+<p>Un cop assolits els continguts d'aquesta introducció, podràs
+atrevir-te a implementar interfícies gràfiques per les teves
+aplicacions en Java.</p>
+<p>Comencem com els deus de la programació manen: amb l'<a class="reference external" href="./hola-swing.html">Hola Swing</a></p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="guilocal" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Aquest tema es centra exclusivament en l'ús de la
+biblioteca <em>Swing</em> per aplicacions d'escriptori.</td></tr>
+</tbody>
+</table>
+<!-- XXX TODO: planteja si pots aconseguir passar algun dels exercicis a
+applet i així executar-ho en un navegador! -->
+<table class="docutils footnote" frame="void" id="altreide" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Si t'estimes més fer servir un altre IDE, o fins i tot
+si prefereixes fer-ho tot manualment (sense suport), és
+perfectament acceptable. Només has de tenir en compte que no rebràs
+suport en aquests materials.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+
+
+    <li class="navigation-next">
+    <a href="./hola-swing.html">
+        Hola Swing
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

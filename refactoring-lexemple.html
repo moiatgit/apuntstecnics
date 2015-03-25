@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: L'exemple</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: L'exemple             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-que-es.html">
+        Refactoring: què és
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-extraccio-de-metodes.html">
+        Refactoring: extracció de mètodes
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: L'exemple</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada es presenta i desenvolupa una primera implementació
+de l'exemple que treballarem al llarg d'aquesta introducció al
+<em>refactoring</em>.</p>
+</div>
+<div class="section" id="l-exemple">
+<h2>L'exemple</h2>
+<p>Aquest document només pretén servir d'introducció d'aquest tema. Ho
+farà a partir d'una versió simplificada de l'exemple introductori de
+<a class="citation-reference" href="#fowler" id="id1">[FOWLER]</a>. Es recomana anar seguint l'exemple i realitzant els
+exercicis.</p>
+<div class="section" id="punt-de-partida">
+<h3>Punt de partida</h3>
+<p>L'exemple que treballarem és un sistema de gestió de lloguers de
+vehicles. En concret, estudiarem el programa que genera els informes a
+lliurar als clients. El programa, a partir dels lloguers realitzats
+per un client, calcula l'import total dels lloguers i les
+bonificacions aconseguides. Els vehicles llogats poden ser de tres
+categories diferents: bàsic, general i de luxe.</p>
+<p>Considera el següent diagrama UML de classes que descriu els elements
+principals d'aquest exemple.</p>
+<div class="figure">
+<img alt="Diagrama inicial de classes" src="./images/refactoring.img001.diagrama_classes.png" />
+</div>
+</div>
+<div class="section" id="exercici-1-codificant-el-gestor-de-lloguers">
+<h3>Exercici 1. Codificant el Gestor de Lloguers</h3>
+<!-- XXX TODO: cal descriure els tipus de les propietats -->
+<!-- XXX TODO: cal idear mecanisme per obtenir el nombre de lloguers i
+recorrer els lloguers des de fora d'un client -->
+<p>A partir del diagrama anterior, fes una proposta de codificació de les
+classes que hi apareixen.</p>
+<p>Assegura't que les propietats que apareixen al diagrama de classes
+disposen d'accessors adequats. Considera el codi següent per la classe
+Client com a referència.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.util.Vector</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">nif</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">nom</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">telefon</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Lloguer</span><span class="o">&gt;</span> <span class="n">lloguers</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Client</span><span class="o">(</span><span class="n">String</span> <span class="n">nif</span><span class="o">,</span> <span class="n">String</span> <span class="n">nom</span><span class="o">,</span> <span class="n">String</span> <span class="n">telefon</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">nif</span> <span class="o">=</span> <span class="n">nif</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">nom</span> <span class="o">=</span> <span class="n">nom</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">telefon</span> <span class="o">=</span> <span class="n">telefon</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lloguers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Lloguer</span><span class="o">&gt;();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getNif</span><span class="o">()</span>     <span class="o">{</span> <span class="k">return</span> <span class="n">nif</span><span class="o">;</span>     <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getNom</span><span class="o">()</span>     <span class="o">{</span> <span class="k">return</span> <span class="n">nom</span><span class="o">;</span>     <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTelefon</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">telefon</span><span class="o">;</span> <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNif</span><span class="o">(</span><span class="n">String</span> <span class="n">nif</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">nif</span> <span class="o">=</span> <span class="n">nif</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setNom</span><span class="o">(</span><span class="n">String</span> <span class="n">nom</span><span class="o">)</span> <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">nom</span> <span class="o">=</span> <span class="n">nom</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTelefon</span><span class="o">(</span><span class="n">String</span> <span class="n">telefon</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">telefon</span> <span class="o">=</span> <span class="n">telefon</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afegeix</span><span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span> <span class="n">lloguers</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">lloguer</span><span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="n">lloguers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">elimina</span><span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lloguers</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">lloguer</span><span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="n">lloguers</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">conte</span><span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">lloguers</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// de moment en blanc</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="exercici-2-el-gestor-de-lloguers-lite">
+<h3>Exercici 2. El Gestor de Lloguers <em>lite</em></h3>
+<p>Codifica la classe <tt class="docutils literal">GestorLloguersLite</tt> que crei un client amb el
+teu nom, que disposi de un mínim de tres lloguers, un per cada tipus
+de vehicle.</p>
+<p>Considera el següent <em>snippet</em> com a pista per crear els vehicles i
+lloguers:</p>
+<div class="highlight"><pre><span class="c1">// demostració de construcció d&#39;un vehicle de categoria BASIC</span>
+<span class="n">Vehicle</span> <span class="n">vehicleBasic</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Tata&quot;</span><span class="o">,</span> <span class="s">&quot;Vista&quot;</span><span class="o">,</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">BASIC</span><span class="o">);</span>
+
+<span class="c1">// demostració de construccuó d&#39;un lloguer amb una data</span>
+<span class="n">SimpleDateFormat</span> <span class="n">dateFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SimpleDateFormat</span><span class="o">(</span><span class="s">&quot;d/M/yyyy&quot;</span><span class="o">);</span>
+<span class="n">Date</span> <span class="n">date</span> <span class="o">=</span> <span class="n">dateFormat</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;2/8/2013&quot;</span><span class="o">);</span>
+<span class="n">Lloguer</span> <span class="n">lloguerBasic</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Lloguer</span><span class="o">(</span><span class="n">date</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">vehicleBasic</span><span class="o">);</span>
+
+<span class="c1">// demostració de formatat d&#39;una data</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">dateFormat</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">lloguerBasic</span><span class="o">.</span><span class="na">getData</span><span class="o">()));</span>
+</pre></div>
+<p>Finalment, implementa un mètode estàtic de <tt class="docutils literal">GestorLloguersLite</tt> que
+donat un Client, retorni un String que contingui la següent
+informació:</p>
+<div class="highlight"><pre>Client: «nom del client»
+        «nif»
+        «telèfon»
+Lloguers: «num de lloguers del client»
+        1. vehicle: «marca del vehícle del primer lloguer» «model»
+           data d&#39;inici: «data d&#39;inici del lloguer»
+           dies llogats: «nombre de dies llogats»
+        2. «... dades de la resta de lloguers del client»
+</pre></div>
+</div>
+<div class="section" id="informe-de-client">
+<h3>Informe de client</h3>
+<p>Hem vist que <tt class="docutils literal">Client.informe()</tt> apareix en blanc al codi que ofereix
+el primer exercici.</p>
+<p>El següent diagrama de seqüència ofereix una visió del seu
+funcionament:</p>
+<div class="figure">
+<img alt="Diagrama inicial de classes" src="./images/refactoring.img002.diagrama_sequencia.png" />
+</div>
+<p>Suposa que el codi que et trobes d'aquest mètode és el següent:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">bonificacions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
+        <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
+        <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">double</span> <span class="n">quantitat</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">switch</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getCategoria</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">case</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">BASIC</span><span class="o">:</span>
+                <span class="n">quantitat</span> <span class="o">+=</span> <span class="mi">3</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">quantitat</span> <span class="o">+=</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()</span> <span class="o">-</span> <span class="mi">3</span><span class="o">)</span> <span class="o">*</span> <span class="mf">1.5</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">GENERAL</span><span class="o">:</span>
+                <span class="n">quantitat</span> <span class="o">+=</span> <span class="mi">4</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">quantitat</span> <span class="o">+=</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()</span> <span class="o">-</span> <span class="mi">2</span><span class="o">)</span> <span class="o">*</span> <span class="mf">2.5</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">LUXE</span><span class="o">:</span>
+                <span class="n">quantitat</span> <span class="o">+=</span> <span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()</span> <span class="o">*</span> <span class="mi">6</span><span class="o">;</span>
+                <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// afegeix lloguers freqüents</span>
+        <span class="n">bonificacions</span> <span class="o">++;</span>
+
+        <span class="c1">// afegeix bonificació per dos dies de lloguer de Luxe</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getCategoria</span><span class="o">()</span> <span class="o">==</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">LUXE</span> <span class="o">&amp;&amp;</span>
+                <span class="n">lloguer</span><span class="o">.</span><span class="na">getDies</span><span class="o">()&gt;</span><span class="mi">1</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="n">bonificacions</span> <span class="o">++;</span>
+        <span class="o">}</span>
+
+        <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
+        <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
+            <span class="s">&quot; &quot;</span> <span class="o">+</span>
+            <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getModel</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span>
+            <span class="o">(</span><span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;€&quot;</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">quantitat</span> <span class="o">*</span> <span class="mi">30</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// afegeix informació final</span>
+    <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;Import a pagar: &quot;</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">&quot;€\n&quot;</span> <span class="o">+</span>
+        <span class="s">&quot;Punts guanyats: &quot;</span> <span class="o">+</span> <span class="n">bonificacions</span> <span class="o">+</span> <span class="s">&quot;\n&quot;</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">resultat</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>D'aquest codi en podríem dir vàries coses. Probablement no totes
+<em>maques</em>. El mètode <tt class="docutils literal">Client.informe()</tt> és molt llarg i fa un munt de
+coses que probablement hauria de fer alguna altra classe. Seria una
+mena de traducció directa d'un algorisme no orientat a objectes a
+java.  Podríem dir que és un codi <em>lleig</em>.</p>
+<p>Amb tot, el codi fa el que s'espera i al compilador no l'importa
+l'estètica. El problema vindrà quan ens calgui modificar-lo. Imagina
+que ens demanen que afegim un nou mètode que generi l'informe en
+format html. No podríem aprofitar pràcticament res del mètode
+<tt class="docutils literal">Client.informe()</tt> ! D'acord que podem fer un <em>copy&amp;paste</em> i
+modificar la part de construcció del String de tornada. Què passaria
+llavors si ens demanen que canviem la lògica del càlcul de l'informe?
+(ex. canvien política de preu pels vehicles de luxe).</p>
+<p>Potser em diràs que <em>el codi no és tan complex després de tot</em> i que
+no és tan greu haver-lo de reescriure. Si penses així, recorda que
+aquest és només un exemple senzill, una <em>joguina</em> per introduir el
+concepte. A la vida real aquest tipus de codi el trobaràs <strong>molt</strong> més
+llarg, enrevessat i barrejat amb altre codi del mateix nivell.</p>
+<p>Com a regla d'or: si el codi que has de modificar presenta una
+resistència important als canvis que persegueixes incorporar-li,
+primer refacció i després introducció de la modificació.</p>
+<p>A continuació, seguint diferents passes de refacció, convertirem
+aquest disseny en quelcom més <em>maco</em>. Com que la millora de qualsevol
+codi pot ser un procés infinit, ens concentrarem amb l'objectiu
+d'aconseguir facilitar la implementació del mètode
+<tt class="docutils literal">Client.informeHTML()</tt>.</p>
+<!-- XXX TODO: cal reforçar aquest tema com a objectiu, doncs no tornes
+a parlar d'aquest concepte fins vàries lliçons després! La primera
+vegada que el vas impartir, se't va passar desapercebut i, per
+tant, va ser una sorpresa trobar-te una referència a informeHTML -->
+</div>
+<div class="section" id="exercici-3-preparant-el-terreny-control-de-versions">
+<h3>Exercici 3. Preparant el terreny: control de versions</h3>
+<p>Per començar, i si encara no ho has fet, crea un repositori Git
+on guardaràs les diferents versions d'aquest codi.</p>
+<p>Assegura't que fas servir comentaris informatius per cada <em>commit</em>.</p>
+</div>
+<div class="section" id="exercici-4-preparant-el-terreny-proves-unitaries">
+<h3>Exercici 4. Preparant el terreny: proves unitàries</h3>
+<p>Com que anirem modificant el codi de manera significativa, voldrem
+disposar d'algun mecanisme que ens garanteixi que no hem trencat res.</p>
+<p>Genera una prova unitària per al mètode <tt class="docutils literal">Client.informe()</tt></p>
+<p>Inclou les proves al control de versions.</p>
+<p>Pista: obté un informe a partir de dels resultats generats per
+la versió actual de <tt class="docutils literal">Client.informe()</tt> amb el client que crees amb
+<tt class="docutils literal">GestorLloguersLite</tt>. La prova unitària es limitarà a comparar el
+resultat de <tt class="docutils literal">Client.informe()</tt> amb l'informe que has obtingut.
+Evidentment, si no modifiquem <tt class="docutils literal">Client.informe()</tt> hauria de passar la
+prova <a class="footnote-reference" href="#testdespresdecodi" id="id2">[1]</a>. La gràcia apareixerà quan modifiquem el
+mètode.</p>
+</div>
+<div class="section" id="exercici-5-preparant-el-terreny-ara-seriosament-proves-unitaries">
+<h3>Exercici 5. Preparant el terreny: ara seriosament, proves unitàries</h3>
+<p>En cas que estiguis començant amb les proves unitàries, és molt
+probable que a l'exercici anterior t'hagis quedat amb una prova
+senzilla amb un sol cas. Potser fins i tot n'has fet més d'un de cas.
+Molt més sorprenent serà que hagis fet casos de prova amb una
+cobertura del 100% del codi a provar (és a dir, proves que <em>provin</em>
+<strong>totes</strong> les línies del mètode)</p>
+<p>Com que estem d'entrenament, dedica una mica més d'esforç i crea un
+joc de prova amb cobertura 100% de les línies del mètode
+<tt class="docutils literal">Client.informe()</tt></p>
+<p>Pista: cap lloguer, un lloguer, més d'un lloguer, lloguer de vehicle
+general amb un dia, lloguer de general amb 2 dies, etc.</p>
+<hr class="docutils" />
+<p>Ara que ja tenim el nostre exemple preparat, passem a fer les <a class="reference external" href="./refactoring-extraccio-de-metodes.html">primeres
+passes de refacció</a></p>
+</div>
+</div>
+<div class="section" id="referencies">
+<h2>Referències</h2>
+<table class="docutils citation" frame="void" id="fowler" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[FOWLER]</a></td><td>Fowler, Martin (1999) <em>Refactoring: Improving the Design of Existing
+Code</em>.  Addison-Wesley Professional.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="testdespresdecodi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Potser estàs pensant <em>no m'havien venut que les
+proves es creen per que fallin? Com és que ara em demanen crear una
+prova a passar?.</em> És cert que l'objectiu de crear una prova
+(especialment en TDD) és fer que falli i per això escrivim la prova
+abans del codi. En aquest cas però, el codi ja el tenim i estem
+pressuposant que funciona. La idea és que aviat canviarem el codi i
+volem comprovar que continua funcionant de la mateixa manera
+després de les modificacions.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./refactoring-que-es.html">
+        Refactoring: què és
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-extraccio-de-metodes.html">
+        Refactoring: extracció de mètodes
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

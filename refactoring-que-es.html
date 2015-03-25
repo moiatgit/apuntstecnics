@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Refactoring: què és</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Refactoring: què és             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-al-refactoring.html">
+        Introducció al <em>Refactoring</em>
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-lexemple.html">
+        Refactoring: L'exemple
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Refactoring: què és</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/dev.html">
+        dev
+    </a>
+            amb els tags: 
+            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta entrada estudiarem què és el <em>refactoring</em></p>
+</div>
+<div class="section" id="refactoring">
+<h2>Refactoring</h2>
+<p>Llegim a la pàgina principal de <a class="reference external" href="http://www.refactoring.com/">www.refactoring.com</a> mantinguda per Martin Fowler, un dels
+autors de referència sobre el concepte de <em>refacció</em> o <em>refactoring</em>:</p>
+<blockquote>
+Refactoring is a disciplined technique for restructuring an
+existing body of code, altering its internal structure without
+changing its external behavior.</blockquote>
+<p>Així, la refacció és un procés que persegueix millorar un codi sense
+afectar la seva funcionalitat.</p>
+<p>No és fàcil d'explicar, en termes generals, en que consisteix aquesta
+millora. Aquí considerarem que un codi és millor que un altre quan
+una o més de les següents afirmacions s'acompleixi:</p>
+<ul class="simple">
+<li>és més fàcil d'entendre</li>
+<li>és més fàcil de reutilitzar</li>
+<li>és més fàcil de modificar</li>
+</ul>
+<p>La refacció <strong>no</strong> afegeix més funcionalitat al codi. És un procés
+que fem per a nosaltres mateixos, els desenvolupadors, i no pels usuaris
+finals (tot i que aquests també es veuran beneficiats)</p>
+<p>La refacció <strong>no</strong> necessàriament fa el codi executar-se més
+eficientment. De fet, de vegades pot ser el contrari. Amb tot, la
+possible pèrdua d'eficiència d'execució es veu gairebé sempre
+compensada per l'enorme increment en l'eficiència d'introducció de
+nous canvis, correcció d'errors, etc. Ah! En el no tan freqüent cas
+que l'eficiència en execució sigui un punt crític, la refacció ajuda a
+que l'optimització s'apliqui sobre un codi més senzill i,
+probablement, serà encara més efectiva.</p>
+<p>Clàssicament als desenvolupadors ens diuen que primer hem de fer un
+disseny perfecte, per després implementar-lo. Amb les tècniques de
+desenvolupament àgil de moda actualment, aquest període de
+disseny s'ha vist reduït. En comptes, el programari es va generant en
+cicles de curta durada. A cada cicle, normalment es corregeixen errors
+al codi anterior, se li afegeixen noves funcionalitats i... es
+realitza un procés de refacció per permetre continuar fent més cicles
+<em>curts</em>.</p>
+<p>Però com? T'estic venent que desenvolupadors amb seny modificaran un
+codi que aparentment ja funciona només per fer-ho més &quot;maco&quot;? I si la
+modificació trenca l'aplicació en algun punt imprevist? Com era
+aquella màxima... «si funciona, no el toquis»? Hi ha truc. Encara que,
+en la teoria, no és absolutament imprescindible, la refacció es
+recolza fortament en la <em>prova unitària</em>. El procés es realitza amb
+petits canvis seguits del llançament de la bateria de proves. Si hi ha
+algun problema, es detecta, es corregeix i es continua amb un sistema
+lliure d'errors (fins on les proves sàpiguen dir).</p>
+<p>Passem a veure l'<a class="reference external" href="./refactoring-lexemple.html">exemple</a></p>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-al-refactoring.html">
+        Introducció al <em>Refactoring</em>
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-refactoring.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./refactoring-lexemple.html">
+        Refactoring: L'exemple
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

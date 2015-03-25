@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Consultes amb criteri</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Consultes amb criteri             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./consultes-basiques-amb-mongodb.html">
+        Consultes bàsiques amb MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./comptar-documents.html">
+        Comptar documents
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Consultes amb criteri</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb el tag:
+            <a href="./tag/mongodb.html">mongoDB</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Amb el que hem vist a la <a class="reference external" href="./consultes-basiques-amb-mongodb.html">secció anterior</a> ja sabem com consultar les
+dades d'una col·lecció, veure-les d'una manera maca, limitar el nombre
+de documents i saltar-nos els primers si no ens interessen.</p>
+<p>Podem entendre els mètodes <em>skip</em> i <em>limit</em> com eines per &quot;tallar&quot;
+l'inici i final de la llista retornada.</p>
+<p>A aquesta secció obtindrem encara més control sobre quins documents
+ens interessa, tot especificant característiques que han d'acomplir.</p>
+</div>
+<div class="section" id="seleccio-segons-un-criteri">
+<h2>Selecció segons un criteri</h2>
+<p>En SQL disposem de la clàusula <em>WHERE</em> per a poder discriminar els
+registres que ens interessen d'una consulta.</p>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">quadrats</span> <span class="k">WHERE</span> <span class="n">nom</span> <span class="o">=</span> <span class="ss">&quot;valor_2&quot;</span><span class="p">;</span>
+</pre></div>
+<p>En MongoDB ho especifiquem afegint un paràmetre al mètode <em>find</em>.
+Aquest paràmetre és de tipus... document!</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nx">nom</span><span class="o">:</span> <span class="s2">&quot;valor_2&quot;</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;5300f707d661d6bcd52943f0&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;valor_2&quot;</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span> <span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span> <span class="o">:</span> <span class="mi">4</span> <span class="p">}</span>
+</pre></div>
+<div class="section" id="exercici-1-qui-te-el-quadrat-4">
+<h3>Exercici 1. Qui té el quadrat 4?</h3>
+<p>Construeix una consulta que retorni el document (o documents) que
+continguin el valor 4 per la clau <em>quadrat</em>.</p>
+</div>
+<div class="section" id="exercici-2-una-base-de-dades-de-persones">
+<h3>Exercici 2. Una base de dades de persones</h3>
+<p>Malauradament, la col·lecció <em>quadrats</em> que tan bé ens ha anat per a
+introduir les consultes anteriors, resulta massa limitada per que
+aquest tipus de consultes tinguin sentit. Així que crearem una
+col·lecció amb una mica més de gràcia.</p>
+<p>Introdueix les següents dades a la col·lecció <em>persones</em>
+<a class="footnote-reference" href="#dadesinventades" id="id1">[2]</a> dins de la base de dades <em>test</em> (pista:
+<em>mongoimport</em>)</p>
+<div class="highlight"><pre><span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Júlia Galceran Buscart&quot;</span>  <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">27</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;monjo/a&quot;</span>           <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">0</span>      <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Irene Ruíz Cloquell&quot;</span>     <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">44</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span>  <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">2500</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Marc Hernández Muñoz&quot;</span>    <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;docent&quot;</span>            <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">1200</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Iker Fernández Fijo&quot;</span>     <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;fotògraf/a&quot;</span>        <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">2200</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Iker Navarro López&quot;</span>      <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span>  <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">2800</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Cristina Navarro Sánchez&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">40</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;director/a&quot;</span>        <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">120000</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Alexia López Fabrelle&quot;</span>   <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;equilibrista&quot;</span>      <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">3900</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Pol Fernández García&quot;</span>    <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;desenvolupador/a&quot;</span>  <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">1800</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Carla Fernández Balló&quot;</span>   <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;pintor/a&quot;</span>          <span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">2400</span>   <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;Pau Romero Vilchez&quot;</span>      <span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span><span class="s2">&quot;psicòleg/psicòloga&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span><span class="o">:</span><span class="mi">2200</span>   <span class="p">}</span>
+</pre></div>
+<p>Pots descarregar el fitxer <a class="reference external" href="./resources/persones01.json">d'aquest enllaç</a>.</p>
+<p>Un cop introduïdes, escriu una consulta que et mostri tots els
+desenvolupadors/desenvolupadores.</p>
+</div>
+<div class="section" id="seleccio-amb-mes-d-un-criteri">
+<h3>Selecció amb més d'un criteri</h3>
+<p>Imagina que t'interessa disposar de totes les persones que siguin
+desenvolupadores amb una edat de 35 anys. La consulta seria:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;edat&quot;</span><span class="o">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span><span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530110cb37dd0ec3059698f7&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">&quot;professió&quot;</span> <span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">,</span> <span class="s2">&quot;sou&quot;</span> <span class="o">:</span> <span class="mi">2800</span> <span class="p">}</span>
+</pre></div>
+<p>És a dir, per a afegir més d'un criteri, simplement hem d'afegir les
+diferents claus i valors esperats dins el document que passem com a
+argument a <em>find</em>.</p>
+<p>Per exemple:</p>
+<div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="s2">&quot;professió&quot;</span><span class="o">:</span> <span class="s2">&quot;desenvolupador/a&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="kc">true</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530110cb37dd0ec3059698f4&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Irene Ruíz Cloquell&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">44</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530110cb37dd0ec3059698f7&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Iker Navarro López&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">35</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="nx">ObjectId</span><span class="p">(</span><span class="s2">&quot;530110cb37dd0ec3059698fa&quot;</span><span class="p">),</span> <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Pol Fernández García&quot;</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span> <span class="o">:</span> <span class="mi">34</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="exercici-3-mes-d-un-criteri-a-sql">
+<h3>Exercici 3. Més d'un criteri a SQL</h3>
+<p>Proposa una traducció amb SQL de la consulta anterior.</p>
+</div>
+<div class="section" id="exercici-4-desenvolupadors-de-34-anys">
+<h3>Exercici 4. Desenvolupadors de 34 anys?</h3>
+<p>Construeix una consulta que retorni els desenvolupadors amb 34 anys.</p>
+</div>
+<div class="section" id="exercici-5-persones-amb-34-o-amb-44-anys">
+<h3>Exercici 5. Persones amb 34 o amb 44 anys?</h3>
+<p>Què passa quan repeteixes la clau a una consulta? Imagina que la
+consulta que presentem té els següents criteris:</p>
+<div class="highlight"><pre><span class="p">{</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s2">&quot;edat&quot;</span><span class="o">:</span><span class="mi">44</span> <span class="p">}</span>
+</pre></div>
+<p>En principi, una consulta com aquesta podria ser interessant si i
+només si MongoDB l'entengués com a &quot;vull les persones que tinguin 34
+<strong>o</strong> 44 anys d'edat&quot; <a class="footnote-reference" href="#ornoand" id="id2">[1]</a>.</p>
+<p>Atenció: més endavant veurem com podem demanar documents amb un o
+altre valor. Aquest exercici només pretén que siguis conscient del
+comportament de MongoDB en aquestes situacions.</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="ornoand" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>És clar, voldríem <strong>OR</strong> i no <strong>AND</strong>. Si no ho veus
+clar, penso que és important que li donis alguna volta o, si més
+no, que <em>discretament</em> demanis algú que t'ho aclareixi.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="dadesinventades" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>Els noms i la resta de dades que apareixen en
+aquest fitxer són inventades. Han estat generades automàticament a
+partir de llistats oficials de noms i cognoms que diferents
+organismes fan públics a la web. Insisteixo: qualsevol semblança
+amb la realitat <strong>és pura coincidència</strong>. És a dir, que no em
+vingui ningú queixant-se de que el seu nom apareix al llistat i que
+li he posat un sou massa baix.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./consultes-basiques-amb-mongodb.html">
+        Consultes bàsiques amb MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./comptar-documents.html">
+        Comptar documents
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

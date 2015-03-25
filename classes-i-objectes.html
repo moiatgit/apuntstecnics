@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Classes i objectes</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Classes i objectes             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/gui.html">gui</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./encapsulacio.html">
+        Encapsulació
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./procedural-vs-oo.html">
+        Procedural vs OO
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Classes i objectes</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/poo.html">
+        poo
+    </a>
+            amb el tag:
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document introdueix l'estudiant de programació orientada a
+objectes als conceptes fonamentals de <em>classe</em> i <em>objecte</em>.</p>
+<p>Aquesta introducció es realitza de manera pràctica, guiada amb
+exercicis que progressivament incorporen diferents perspectives dels
+conceptes a tractar.</p>
+<p>Per al correcte seguiment d'aquests materials, es pressuposa
+coneixement bàsic de la sintaxi de les estructures bàsiques del
+llenguatge Java, així com de certa experiència en programació
+elemental en el llenguatge C. Bàsicament, declaració de variables,
+assignació, estructures condicionals i iteratives, declaració i crida
+de funcions, i E/S estàndard.</p>
+</div>
+<div class="section" id="hola-gat-renat">
+<h2>Hola gat Renat!</h2>
+<p>Ja va sent hora que coneguem un del principals personatges d'aquests
+materials.</p>
+<div class="section" id="exercici-1-el-gat-renat-te-set-vides">
+<h3>Exercici 1. El gat Renat té set vides</h3>
+<p>Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GatRenat</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">vides</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>   <span class="c1">// vides disponibles del gat Renat</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">GatRenat</span> <span class="n">renat</span><span class="o">;</span>           <span class="c1">// declarem la referència al gat</span>
+        <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>   <span class="c1">// creem la instància del gat Renat.</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Copia i executa el codi i contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Quin ha de ser el nom del fitxer que contingui aquest codi perquè
+funcioni?</li>
+<li>A quina línia està declarada la variable <tt class="docutils literal">renat</tt> que apareix a la
+línia 6?</li>
+<li>A quina línia s'assigna el valor que es mostra per pantalla?</li>
+<li>Quin valor apareix si a aquesta línia no s'assigna cap valor?</li>
+<li>Què passaria sí la línia 5 no hi fos? Perquè creus?</li>
+<li>Perquè creus que el comentari de la línia 4 parla de <em>referència</em>?
+Recordes quelcom equivalent en C? Què?</li>
+<li>La línia 5 parla d'<em>instància</em>. En aquest context, una instància es
+pot entendre com el contingut real al que fa referència la variable
+<tt class="docutils literal">renat</tt>. Es diu que la instància es <em>construeix</em> amb l'operador
+<tt class="docutils literal">new</tt> i això implica bàsicament que es reserva espai de memòria
+per a allotjar tota la informació relativa a la instància. Què et
+sona que pugui comparar-se a això en el llenguatge C?</li>
+</ol>
+<p>El resultat de l'exercici consistirà en el fitxer amb el codi i, al
+final d'aquest, en forma de comentaris, cada pregunta amb la seva
+resposta.</p>
+<p>No oblidis posar el nom de l'autor/l'autora (el teu és clar), la data
+i una petita descripció del contingut, al començament del fitxer.</p>
+</div>
+<div class="section" id="exercici-2-el-gat-renat-te-un-accident">
+<h3>Exercici 2. El gat Renat té un accident</h3>
+<p>Podem canviar el nombre de vides del gat Renat simplement afegint les
+següents línies al final del main:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">GatRenat</span> <span class="n">renat</span><span class="o">;</span>           <span class="c1">// declarem l&#39;objecte (la referència) al gat</span>
+    <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>   <span class="c1">// creem la instància del gat Renat.</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Abans el gat Renat tenia &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>  <span class="c1">// Renat ha tingut un accident</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Ara el gat Renat té &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Modifica la classe GatRenat amb els canvis, executa el codi i contesta
+les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Com podem consultar (llegir, obtenir) el valor d'una propietat de
+la instància?</li>
+<li>Com podem canviar (escriure, assignar) el valor d'una propietat de
+la instància?</li>
+<li>És possible indicar que el gat Renat té -12 vides? Com? És quelcom
+desitjable que pugui passar? En cas que es pugui, com ho podries
+evitar fent servir els teus coneixements amb el llenguatge C?</li>
+</ol>
+</div>
+<div class="section" id="exercici-3-hi-ha-dos-gats-renat">
+<h3>Exercici 3. Hi ha dos gats Renat?</h3>
+<p>Considera ara el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GatRenat</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">vides</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>   <span class="c1">// vides disponibles del gat Renat</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">GatRenat</span> <span class="n">renat_I</span><span class="o">;</span>
+        <span class="n">renat_I</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>               <span class="c1">// crea un primer gat Renat</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat I té  &quot;</span> <span class="o">+</span> <span class="n">renat_I</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+
+        <span class="n">GatRenat</span> <span class="n">renat_II</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>     <span class="c1">// crea un segon gat Renat!</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat II té &quot;</span> <span class="o">+</span> <span class="n">renat_II</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+
+        <span class="n">renat_I</span><span class="o">.</span><span class="na">vides</span><span class="o">++;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat I té  &quot;</span> <span class="o">+</span> <span class="n">renat_I</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat II té &quot;</span> <span class="o">+</span> <span class="n">renat_II</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+
+        <span class="n">renat_II</span> <span class="o">=</span> <span class="n">renat_I</span><span class="o">;</span> <span class="c1">// atenció: la instància de Renat II es perd!</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat I té  &quot;</span> <span class="o">+</span> <span class="n">renat_I</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat II té &quot;</span> <span class="o">+</span> <span class="n">renat_II</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+
+        <span class="n">renat_I</span><span class="o">.</span><span class="na">vides</span><span class="o">++;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat I té  &quot;</span> <span class="o">+</span> <span class="n">renat_I</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;El gat Renat II té &quot;</span> <span class="o">+</span> <span class="n">renat_II</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Copia i executa el codi i contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Quanta memòria ocupa, com a mínim, una instància de GatRenat?</li>
+<li>Quantes instàncies hi ha de GatRenat tot just executat el codi fins la línia 5 (inclosa)?</li>
+<li>I fins la línia 6?</li>
+<li>I fins la línia 9?</li>
+<li>Perquè les línies 7 i 10 mostren les mateixes vides pels gats Renat
+I i Renat II?</li>
+<li>Perquè les línies 13 i 14 mostren diferent nombre de vides pels
+gats Renat I i Renat II?</li>
+<li>Què creus que vol dir el comentari de la línia 16?</li>
+<li>Perquè les línies 17 i 18 mostren les mateixes vides pels gats
+Renat I i Renat II?</li>
+<li>Perquè les línies 21 i 22 mostren les mateixes vides pels gats
+Renat I i Renat II malgrat la instrucció de la línia 20?</li>
+<li>Quantes instàncies hi ha quan s'executa la l'inia 20? Perquè?</li>
+</ol>
+</div>
+<div class="section" id="exercici-4-renat-tambe-des-de-fora">
+<h3>Exercici 4. Renat també des de fora</h3>
+<p>Considera ara el següent codi que apareix a un altre fitxer:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaGatRenat</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">GatRenat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Copia el codi en un fitxer al mateix directori que el de l'exercici
+anterior i executa'l.</p>
+<p>Respon a les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Quin és el nom del fitxer on està definit el punt d'entrada <tt class="docutils literal">main()</tt> d'aquest programa?</li>
+<li>Ara tenim dos fitxers amb <tt class="docutils literal">main()</tt>. Com pot saber Java quin és el
+<tt class="docutils literal">main()</tt> a executar?</li>
+<li>A quin fitxer està definida la classe del gat Renat?</li>
+<li>Quants programes es podrien construir fent ús de la definició del gat Renat?</li>
+<li>Què passaria si el fitxer amb el codi anterior i el que conté la
+definició de la classe del Renat estiguessin en directoris
+diferents? (prova-ho!)</li>
+<li>Elimina el <tt class="docutils literal">main()</tt> de GatRenat. Continua funcionant UsaGatRenat?
+Què ha deixat de poder-se executar?</li>
+</ol>
+<p>Per a aquest, com potser ja has imaginat, caldrà lliurar els dos
+fitxers. Fes servir la utilitat tar per a agrupar-los.</p>
+</div>
+<div class="section" id="exercici-5-renat-te-estat">
+<h3>Exercici 5. Renat té estat</h3>
+<p>El gat Renat pot estar dret, assegut o estirat. Modifica la definició
+de la seva classe perquè pugui guardar aquesta informació, fent que
+inicialment estigui estirat.</p>
+<p>Crea un <tt class="docutils literal">main()</tt> dins de la definició de la classe, que instanciï un
+gat Renat, mostri el nombre de vides i l'estat per defecte, canviï
+l'estat a assegut i torni a mostrar el nou estat.</p>
+<p>Crea un altre main() fora de la definició de la classe, que instanciï
+un gat Renat, mostri el nombre de vides i l'estat per defecte, canviï
+l'estat a dret i torni a mostrar el nou estat.</p>
+<p>Pista: el tipus de dades per codificar l'estat podria ser <tt class="docutils literal">String</tt>.</p>
+</div>
+<div class="section" id="exercici-6-el-renat-te-sempre-un-nombre-de-vides-correcte">
+<h3>Exercici 6. El Renat té sempre un nombre de vides correcte!</h3>
+<p>Ja hem comentat abans que deixar una propietat pública perquè tothom pugui modificar-la pot portar a problemes. Per exemple, al gat Renat li podem posar impunement -15 vides.</p>
+<p>Considera el següent codi:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GatRenat</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">vides</span> <span class="o">=</span> <span class="mi">7</span><span class="o">;</span>   <span class="c1">// vides disponibles del gat Renat</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getVides</span><span class="o">()</span> <span class="o">{</span>  <span class="c1">// mètode que retorna el nombre de vides</span>
+        <span class="k">return</span> <span class="n">vides</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setVides</span><span class="o">(</span><span class="kt">int</span> <span class="n">vides</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// modifica el nombre de vides del gat si el paràmetre vides conté un valor vàlid</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">vides</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">vides</span><span class="o">;</span>   <span class="c1">// de moment passem per alt aquest &quot;this&quot;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>Contesta les següents preguntes:</p>
+<ol class="arabic simple">
+<li>Què passa si intentes executar el següent codi? Perquè creus?</li>
+</ol>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaGatRenat</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">GatRenat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
+        <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">=</span> <span class="n">renat</span><span class="o">.</span><span class="na">vides</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><ol class="arabic simple" start="2">
+<li>Què s'està declarant a la línia 3? Així, que pot voler dir <em>mètode</em>
+en notació POO?</li>
+<li>Indica quina sortida genera el següent <tt class="docutils literal">main()</tt> i explica perquè
+és aquesta?</li>
+</ol>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+       <span class="n">GatRenat</span> <span class="n">renat</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GatRenat</span><span class="o">();</span>
+       <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+       <span class="n">renat</span><span class="o">.</span><span class="na">setVides</span><span class="o">(-</span><span class="mi">12</span><span class="o">);</span>
+       <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+       <span class="n">renat</span><span class="o">.</span><span class="na">setVides</span><span class="o">(</span><span class="mi">12</span><span class="o">);</span>
+       <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Al gat Renat li queden &quot;</span> <span class="o">+</span> <span class="n">renat</span><span class="o">.</span><span class="na">getVides</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; vides&quot;</span><span class="o">);</span>
+   <span class="o">}</span>
+</pre></div>
+</td></tr></table><ol class="arabic simple" start="4">
+<li>Sense modificar la classe GatRenat, és possible aconseguir que una
+instància de GatRenat pugui tenir un nombre de vides negatiu?
+Perquè o Com?</li>
+</ol>
+</div>
+<div class="section" id="exercici-7-l-estat-del-renat-es-sempre-bo">
+<h3>Exercici 7. L'estat del Renat és sempre bo!</h3>
+<p>Crea els mètodes <em>setters</em> i <em>getters</em> necessaris per garantir que
+l'estat del Renat sigui sempre correcte, a l'hora que pugui ser
+canviat.</p>
+<p>Crea un <tt class="docutils literal">main()</tt> que demostri el funcionament dels nous mètodes.</p>
+</div>
+<div class="section" id="exercici-8-com-esta-renat">
+<h3>Exercici 8. Com està Renat?</h3>
+<p>De vegades amb els <em>accessors</em> (mètodes <em>getters</em> i <em>setters</em>) no
+resulta pràctic treballar. Així, cal afegir nous mètodes que permetin
+un ús més còmode.</p>
+<p>Afegeix al repertori de mètodes del Renat els següents:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal">boolean estaViu()</tt> // cert si encara li queda alguna vida</li>
+<li><tt class="docutils literal">boolean estaDret()</tt>, <tt class="docutils literal">boolean estaAssegut()</tt>, <tt class="docutils literal">boolean estaEstirat()</tt></li>
+</ol>
+<p>Crea un <tt class="docutils literal">main()</tt> que demostri el funcionament dels nous mètodes.</p>
+</div>
+<div class="section" id="exercici-9-el-gat-renat-esta-ensinistrat">
+<h3>Exercici 9. El gat Renat està ensinistrat!</h3>
+<p>Una de les gràcies de la POO és que podem tractar peces de codi com si
+tinguessin una mena de personalitat pròpia. D'això s'en diu de vegades
+com la metàfora de la POO. Així, podem imaginar que els objectes ens
+realitzen serveis o que els podem donar ordres. Ho visualitzarem amb
+el nostre pacient amic Renat.</p>
+<p>Afegeix tres nous mètodes: <tt class="docutils literal">void aixecat()</tt>, <tt class="docutils literal">void seu()</tt>, i
+<tt class="docutils literal">void estirat()</tt> de manera que quan vulguem, per exemple, que Renat
+s'aixequi simplement li diguem  <tt class="docutils literal"><span class="pre">renat.aixecat();</span></tt>.</p>
+<p>Quan s'executa l'acció, Renat ens dirà el que fa en forma de missatge
+per sortida estàndard. Així, la instrucció anterior faria generar per
+pantalla el missatge: <tt class="docutils literal">m'aixeco</tt>. En cas, però, que ja estigui
+en l'estat que se li demana, no mostra cap missatge.</p>
+<p>Crea un <tt class="docutils literal">main()</tt> que demostri el funcionament dels nous mètodes.</p>
+</div>
+<div class="section" id="exercici-10-protegim-encara-mes-l-estat-del-renat">
+<h3>Exercici 10. Protegim encara més l'estat del Renat</h3>
+<p>El fet que l'estat del gat estigui codificat amb un String, no deixa
+de ser una incomoditat. Hom es pot equivocar teclejant i la detecció
+no és massa senzilla. Has de fer un munt de comprovacions.</p>
+<p>Cerca per la web el concepte de enum en java i tracta de millorar la
+definició del Renat creant una enumeració anomenada GatEstat. Afegeix
+els següents mètodes</p>
+<ol class="arabic">
+<li><p class="first"><tt class="docutils literal">void setEstat(String)</tt></p>
+<p>Assigna l'estat a partir d'un String. Si el string no es correspon
+amb un estat vàlid, no canvia res. Aquest mètode és pràcticament el
+que ja teníem.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">void setEstat(GatEstat)</tt></p>
+<p>Assigna l'estat a partir d'un GatEstat. Sí, té el mateix nom que la
+funció anterior. Cerca method overloading o sobrecàrrega de
+mètodes.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">String getEstatComString()</tt></p>
+<p>Retorna l'estat del gat en forma de String</p>
+</li>
+<li><p class="first"><tt class="docutils literal">GatEstat getEstat()</tt></p>
+<p>Retorna l'estat del gat com a GatEstat. Fixa't que ara no podem
+posar-li el mateix nom que a l'anterior</p>
+</li>
+</ol>
+<p>És probable que et calgui realitzar algun altre canvi en el codi de
+mètodes existents. Prova de realitzar-los sense modificar-los la
+signatura.</p>
+<p>Perquè creus que el codi de <tt class="docutils literal">setEstat()</tt> es tan diferent en
+complexitat depenent del tipus paràmetre que rep? Afegeix aquest
+comentari al codi del mètode més senzill. Inclou als comentaris una
+descripció amb les teves paraules.</p>
+<p>Executa el codi amb un <tt class="docutils literal">main()</tt> del problema anterior. Funciona
+sense haver de modificar res? Perquè creus que és així? Quin avantatge
+hi trobes? Crea un nou <tt class="docutils literal">main()</tt> ampliant l'anterior que demostri el
+funcionament dels nous mètodes. Afegeix-hi les teves reflexions.</p>
+</div>
+<div class="section" id="exercici-11-el-gat-renat-sap-parlar-i-callar">
+<h3>Exercici 11. El gat Renat sap parlar i callar</h3>
+<p>De vegades ens pot interessar que Renat <strong>no</strong> indiqui el que està
+fent quan li donem una ordre de canvi d'estat amb els mètodes
+<tt class="docutils literal">aixecat()</tt>, <tt class="docutils literal">seu()</tt> i <tt class="docutils literal">estirat()</tt></p>
+<p>Afegeix els següents mètodes a Renat:</p>
+<ol class="arabic">
+<li><p class="first"><tt class="docutils literal">void calla()</tt></p>
+<p>Indica a Renat que deixi de dir el que fa. Si ja estava callat, ho
+continua estant.</p>
+<p>A partir d'aquest moment, els missatges de moviment (ex.
+&quot;m'aixeco&quot;) queden reemplaçats per &quot;...&quot;.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">void parla()</tt></p>
+<p>Indica a Renat que digui el que fa. És el comportament per defecte.
+Si ja estava parlant, ho continua fent.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">boolean potParlar()</tt></p>
+<p>Retorna cert quan el Renat pot parlar i fals altrament.</p>
+</li>
+<li><p class="first"><tt class="docutils literal">void miola()</tt></p>
+<p>Escriu el missatge <tt class="docutils literal">MEEEEEEU</tt> si pot parlar, altrament escriurà <tt class="docutils literal">...</tt></p>
+</li>
+</ol>
+<p>Modifica UsaGatRenat perquè demostri el funcionament d'aquests nous
+mètodes.</p>
+</div>
+<div class="section" id="exercici-12-que-he-apres">
+<h3>Exercici 12. Què he aprés?</h3>
+<p>Fes un repàs dels exercicis anteriors. Indica exercici a exercici què
+has aprés de nou en fer-lo, o bé quins són els conceptes que
+introdueix l'exercici, si ja els coneixies anteriorment. Procura ser
+molt concret. Si et cal, ajuda't de (nous) exemples.</p>
+<p>En el cas que no hagis entès algun dels exercicis... bé, aquest cas no
+es pot donar ja que, abans de fer aquest exercici t'ajudaràs de les
+diferents fonts de suport que tens al teu abast (incloent, és clar,
+consultes al teu docent) per arribar a entendre'l.</p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./encapsulacio.html">
+        Encapsulació
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./un-primer-contacte-amb-la-programacio-en-java.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./procedural-vs-oo.html">
+        Procedural vs OO
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
