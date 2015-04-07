@@ -8,13 +8,13 @@
 
 <!-- HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-        <script src="./theme/html5.js"></script>
+        <script src="../theme/html5.js"></script>
     <![endif]-->
 
 <!-- Styles -->
-<link href="./theme/bootstrap.moi.css" rel="stylesheet">
-<link href="./theme/local.css" rel="stylesheet">
-<link href="./theme/pygments.css" rel="stylesheet">
+<link href="../theme/bootstrap.moi.css" rel="stylesheet">
+<link href="../theme/local.css" rel="stylesheet">
+<link href="../theme/pygments.css" rel="stylesheet">
 
 <!-- Feeds -->
 <link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
@@ -25,7 +25,7 @@
 <div class="topbar">
     <div class="topbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="./">[Apunts tècnics]
+            <a class="brand" href="../">[Apunts tècnics]
  Hola Swing             </a>
         </div>
     </div>
@@ -41,54 +41,36 @@
             -->
             <h3>Categories</h3>
             <ul>
-                <li ><a href="./category/bd.html">bd</a></li>
-                <li ><a href="./category/dev.html">dev</a></li>
-                <li ><a href="./category/eines.html">eines</a></li>
-                <li class="active"><a href="./category/gui.html">gui</a></li>
-                <li ><a href="./category/misc.html">misc</a></li>
-                <li ><a href="./category/poo.html">poo</a></li>
-                <li ><a href="./category/programacio.html">programacio</a></li>
-                <li ><a href="./category/uml.html">uml</a></li>
+                <li ><a href="../category/bd.html">bd</a></li>
+                <li ><a href="../category/dev.html">dev</a></li>
+                <li ><a href="../category/eines.html">eines</a></li>
+                <li ><a href="../category/misc.html">misc</a></li>
+                <li ><a href="../category/poo.html">poo</a></li>
+                <li ><a href="../category/programacio.html">programacio</a></li>
+                <li ><a href="../category/uml.html">uml</a></li>
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
-                <li><a href="./tag/mongodb.html">mongoDB</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
-                <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="../tag/c.html">C</a></li>
+                <li><a href="../tag/java.html">java</a></li>
+                <li><a href="../tag/programari.html">programari</a></li>
+                <li><a href="../tag/util.html">util</a></li>
+                <li><a href="../tag/test.html">test</a></li>
+                <li><a href="../tag/postgresql.html">PostGreSQL</a></li>
             </ul>
         </div>
     </div>
 
     <div class="content">
 <div class='article'>
-<div class="well small">
-<ul id="navigation"> 
-    <li class="navigation-prev">
-    <a href="./interficies-grafiques-amb-java.html">
-        Interfícies gràfiques amb Java
-    </a>
-    </li>
-
-    <li class="navigation-top">
-    <a href="./interficies-grafiques-amb-java.html">
-        inici
-    </a>
-    </li>
-
-</ul> 
-</div>
     <div class="page-header"><h1>Hola Swing</h1></div>
 <div class="well small">
     Entrada ubicada a la categoria
-    <a href="./category/gui.html">
+    <a href="../category/gui.html">
         gui
     </a>
             amb el tag:
-            <a href="./tag/java.html">java</a> 
+            <a href="../tag/java.html">java</a> 
 </div>
     <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
@@ -205,7 +187,7 @@ mètode actionPerformed()</p>
         <span class="n">marc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">();</span>
         <span class="n">boto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;prem-me&quot;</span><span class="o">);</span>
         <span class="n">boto</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span> <span class="c1">// ens registrem com a listeners</span>
-        <span class="n">del</span> <span class="n">bot</span><span class="err">ó</span>
+        <span class="n">del</span> <span class="n">botó</span>
             <span class="n">marc</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">boto</span><span class="o">);</span>
         <span class="n">marc</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">JFrame</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
         <span class="n">marc</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
@@ -286,7 +268,7 @@ següent</p>
         <span class="kt">int</span> <span class="n">vermell</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">verd</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
         <span class="kt">int</span> <span class="n">blau</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()*</span><span class="mi">255</span><span class="o">);</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">Color</span><span class="o">(</span><span class="n">vermell</span><span class="o">,</span> <span class="n">verd</span><span class="o">,</span> <span class="n">blau</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Color</span><span class="o">(</span><span class="n">vermell</span><span class="o">,</span> <span class="n">verd</span><span class="o">,</span> <span class="n">blau</span><span class="o">);</span>
     <span class="o">}</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">paintComponent</span><span class="o">(</span><span class="n">Graphics</span> <span class="n">g</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// omple tot l&#39;espai amb color el per defecte (negre)</span>
@@ -908,7 +890,7 @@ d'ingredients</p>
 <p>El nombre d'ingredients és un valor enter positiu.</p>
 <p>El codi de PizzaModel ens el ofereixen tot i que sense cap documentació
 i ni tant sols complet</p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="n">pizza</span><span class="o">.</span><span class="na">model</span><span class="o">;</span>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nn">pizza.model</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">PizzaModel</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Pizza</span><span class="o">&gt;</span> <span class="n">pizzes</span><span class="o">;</span>
@@ -1023,29 +1005,13 @@ Edition&quot; del Adam Myatt Ed. Apress.</td></tr>
 </table>
 </div>
 </div>
-<div class="well small">
-<ul id="navigation"> 
-    <li class="navigation-prev">
-    <a href="./interficies-grafiques-amb-java.html">
-        Interfícies gràfiques amb Java
-    </a>
-    </li>
-
-    <li class="navigation-top">
-    <a href="./interficies-grafiques-amb-java.html">
-        inici
-    </a>
-    </li>
-
-</ul> 
-</div>
 </div>
 <footer>
   <p>
-  <a href=".">Apunts tècnics</a> 
+  <a href="..">Apunts tècnics</a> 
   &copy; 
   <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
-  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="../images/adressamoi.png">)
   amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
   </p>
 </footer>    </div>

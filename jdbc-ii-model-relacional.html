@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: JDBC II. Model relacional</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ JDBC II. Model relacional             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./jdbc-i-introduccio.html">
+        JDBC I. Introducció
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./jdbc-i-introduccio.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./jdbc-iii-model-objecte-relacional.html">
+        JDBC III. Model Objecte-Relacional
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>JDBC II. Model relacional</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb els tags: 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introducio">
+<h2>Introdució</h2>
+<p>Amb aquests continguts treballarem la manera de comunicar els nostres
+programes orientats a objecte amb les nostres bases de dades objecte
+relacionals.</p>
+<p>A aquesta segona part es treballa amb el JDBC per a comunicar-nos amb
+una base de dades que disposi d'un model relacional <em>bàsic</em>. La
+comunicació amb una base de dades amb característiques
+Objecte-Relacional es deixa per la tercera part.</p>
+</div>
+<div class="section" id="jdbc-sobre-sgbd">
+<h2>JDBC sobre SGBD</h2>
+<p>En aquesta secció considerarem la manera bàsica de comunicar-nos amb
+la base de dades.</p>
+<p>Estudiem el següent codi:</p>
+<pre class="literal-block">
+public class Animal {
+    private int id;     // valor de la clau primària a ANIMALS
+    private String nom;
+    private String categoria;
+    public Animal(String nom, String categoria) {
+        this(-1, nom, categoria); // encara no té identificador
+    }
+    public Animal(int id, String nom, String categoria) {
+        this.id = id;
+        this.nom = nom;
+        this.categoria = categoria;
+    }
+    public void setId(int id)    { this.id=id;       }
+    public String getNom()       { return nom;       }
+    public String getCategoria() { return categoria; }
+    public String toString(){
+        return &quot;(&quot; + id + &quot;, '&quot; + nom + &quot;', '&quot; + categoria + &quot;')&quot;;
+    }
+}
+</pre>
+<p>i</p>
+<pre class="literal-block">
+import java.sql.*;
+public class UsaAnimal {
+    private Connection conn = null;    // connexió
+
+    private void connecta() throws SQLException {
+        if (conn==null) {
+            String usuari   = &quot;usuaribd&quot;;
+            String password = &quot;pass&quot;;
+            String host     = &quot;192.168.56.101&quot;;
+            String bd       = &quot;testbd&quot;;
+            String url      = &quot;jdbc:postgresql://&quot; + host + &quot;/&quot; + bd;
+            conn = DriverManager.getConnection(url, usuari, password);
+            System.out.println(&quot;Connectat amb &quot; + url);
+        }
+    }
+
+    // tanca la connexió en cas que estigui connectada
+    private void desconnecta() {
+        if (conn != null) {
+            try { conn.close(); } catch (SQLException e) {}
+            System.out.println(&quot;Desconnectat&quot;);
+            conn = null;
+        }
+    }
+
+    // crea la taula d'animals
+    private void creaTaula() throws SQLException {
+        eliminaTaula(); // eliminem si ja existia
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            String sql =
+                &quot;CREATE TABLE  ANIMALS (&quot; +
+                &quot;       id        SERIAL PRIMARY KEY,&quot; +
+                &quot;       nom       TEXT,              &quot; +
+                &quot;       categoria VARCHAR(40))&quot;;
+            st.executeUpdate(sql);
+            System.out.println(&quot;Creada taula ANIMALS&quot;);
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    // elimina la taula d'animals si existeix
+    private void eliminaTaula() throws SQLException {
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            String sql = &quot;DROP TABLE IF EXISTS ANIMALS&quot;;
+            st.executeUpdate (sql);
+            System.out.println(&quot;Eliminada taula ANIMALS&quot;);
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    // mostra la llista d'animals
+    private void consulta() throws SQLException {
+        String sql = &quot;SELECT * FROM ANIMALS ORDER BY nom&quot;;
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            int nAnimals = 0;
+            while (rs.next()) {
+                int id = rs.getInt(&quot;id&quot;);
+                String nom = rs.getString(&quot;nom&quot;);
+                String cat = rs.getString(&quot;categoria&quot;);
+                Animal animal = new Animal(id, nom, cat);
+                System.out.println(animal);
+                nAnimals++;
+            }
+            if (nAnimals==0) System.out.println(&quot;Cap animal de moment&quot;);
+            rs.close();
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    // retorna el nombre d'animals que hi ha insertats
+    private void comptaAnimals() throws SQLException {
+        String SELECT_SQL = &quot;SELECT COUNT(*) FROM Animals&quot;;
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(SELECT_SQL);
+            rs.next();
+            System.out.println(&quot;El nombre d'animals a la bd és: &quot; + rs.getInt(1));
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    // afegeix un animal a la taula i obté l'id generat
+    private void afegeixAnimal() throws SQLException {
+        // crea l'animal
+        Animal a = new Animal(&quot;canari&quot;, &quot;ocell&quot;);
+        // crea la comanda
+        String sql = &quot;INSERT INTO ANIMALS (nom, categoria) values ('&quot;
+            + a.getNom()
+            + &quot;', '&quot;
+            + a.getCategoria()
+            + &quot;')&quot;;
+        // envia la comanda
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            int num = st.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            System.out.println(&quot;Nombre d'animals afegits: &quot; + num);
+            ResultSet rs = st.getGeneratedKeys();
+            rs.next();
+            int id = rs.getInt(1);
+            a.setId(id);        // assignem l'id de l'animal
+            System.out.println(&quot;Afegit l'animal &quot; + a);
+            rs.close();
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    // afegeix uns quants animals a la taula
+    // Ho fa com a transacció (o tots o cap)
+    // Fa servir un PreparedStatement per optimitzar repetides crides
+
+    private void afegeixMoltsAnimals() throws SQLException {
+        // plantilla de la sentència d'inserció
+        String sql = &quot;INSERT INTO Animals (nom, categoria) values (?,?)&quot;;
+
+        // crea els animals
+        Animal[] llista = {
+            new Animal(&quot;estruç&quot;, &quot;ocell&quot;),
+            new Animal(&quot;kiwi&quot;, &quot;ocell&quot;),
+            new Animal(&quot;gos&quot;, &quot;mamifer&quot;),
+            new Animal(&quot;bacallà&quot;, &quot;peix&quot;),
+            new Animal(&quot;dofí&quot;, &quot;peix&quot;)
+        };
+
+        // obté l'estat anterior de l'autocommit.
+        boolean anteriorAutoCommit = conn.getAutoCommit();
+        // fem que no faci autocommit a cada execució
+        conn.setAutoCommit(false);
+
+        PreparedStatement ps = null;
+        // crea la sentència a executar (només un cop!)
+        try {
+            ps = conn.prepareStatement(sql);
+            try {
+                for (Animal a: llista) {
+                    // afegim els valors a insertar
+                    ps.setString(1, a.getNom());       // primer camp
+                    ps.setString(2, a.getCategoria()); // segon camp
+                    ps.executeUpdate();
+                    System.out.println(&quot;Afegit l'animal &quot; + a);
+                }
+                // si no hi ha problemes accepta tot
+                conn.commit();
+            } catch (SQLException e) {
+                // trobat problemes amb la inserció: tot enrere
+                conn.rollback();
+            } finally {
+                // tornem l'estat de autocomit tal i com estava
+                conn.setAutoCommit(anteriorAutoCommit);
+            }
+        } finally {
+            if (ps != null) { ps.close(); }
+        }
+    }
+
+    private void corregeixAnimals() throws SQLException {
+        // tenim el dofí en una categoria equivocada. Canviem-la a la BD
+        String sql = &quot;UPDATE Animals set categoria = 'mamifer' WHERE nom = 'dofí'&quot;;
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            int num = st.executeUpdate(sql);
+            System.out.println(&quot;Modificat animals: &quot; + num);
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    private void eliminaOcells() throws SQLException {
+        // volem eliminar tots els ocells de la bd
+        String DELETE_SQL = &quot;DELETE FROM Animals WHERE categoria = 'ocell'&quot;;
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            int num = st.executeUpdate(DELETE_SQL);
+            System.out.println(&quot;Eliminats ocells: &quot; + num);
+        } finally {
+            if (st != null) { st.close(); }
+        }
+    }
+
+    public static void main(String[] args) {
+        UsaAnimal ua = null;
+        try {
+            ua = new UsaAnimal();
+            ua.connecta();
+            ua.creaTaula();
+            ua.consulta();
+            ua.afegeixAnimal();
+            ua.afegeixMoltsAnimals();
+            ua.consulta();
+            ua.corregeixAnimals();
+            ua.consulta();
+            ua.eliminaOcells();
+            ua.consulta();
+            ua.comptaAnimals();
+            ua.eliminaTaula();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ua != null) ua.desconnecta();
+        }
+    }
+}
+</pre>
+<div class="section" id="exercici-1-jdbc-en-funcionament">
+<h3>Exercici 1. JDBC en funcionament</h3>
+<p>Contesta les següents preguntes respecte el codi anterior. Algunes de
+les preguntes potser requeriran que revisis la documentació oficial.</p>
+<ol class="arabic simple">
+<li>Quines diferències hi trobes entre executar una comanda sql que
+potencialment modifica registres i una altra que fa una consulta?</li>
+<li>Què passa si tanques un <em>Statement</em> que ja està tancat?</li>
+<li>Què passa si no tanques un <em>ResultSet</em>?</li>
+<li>Com s'assegura aquest codi que es tanquen els <em>Statement</em> passi el
+que passi?</li>
+<li>Seria possible fer servir una única instància de <em>Statement</em> per a
+totes les operacions d'aquest codi? Si contestes que sí, mostra com
+(no cal el codi complet) Si contestes que no, indica perquè?</li>
+<li>Indica la diferència principal entre <em>Statement</em> i
+<em>PreparedStatement</em>.</li>
+<li>Perquè hi ha dos <em>try</em> al mètode <em>afegeixMoltsAnimals()</em>?</li>
+<li>Què volen dir els interrogants que apareixen a la comanda sql del
+mètode <em>afegeixMoltsAnimals()</em>?</li>
+<li>Explica quin és l'objectiu que persegueixen les crides als mètodes
+<em>getAutoCommit()</em> i <em>setAutoCommit()</em> al mètode
+<em>afegeixMoltsAnimals()</em>.</li>
+<li>Al mètode <em>afegeixMoltsAnimals()</em> què ha de passar perquè s'executi
+la crida al mètode <em>commit()</em>? i què per què s'executi
+<em>rollback()</em>?</li>
+<li>La documentació del mètode <em>rollback()</em> ens indica que només hem de
+fer servir aquest mètode quan tenim <em>autocomit</em> inhabilitat. El
+codi anterior respecta aquest <em>contracte</em>?</li>
+<li>Què fan les crides al mètode <em>setString()</em> a
+<em>afegeixMoltsAnimals()</em>?</li>
+<li>Com es pot saber a quants registres ha afectat l'execució d'una
+comanda de modificació?</li>
+<li>Fixa't que cada animal que es guarda a la base de dades disposa
+d'un identificador (la clau primària de la taula). Tal i com s'ha
+definit aquest programa, qui posa l'identificador dels animals, el
+codi o el SGBD? Com podem fer que l'altre part se n'assabenti?
+Podríem fer-ho a l'inrevés? És a dir, podria ser la part que no
+assigna ara l'identificador qui l'assignés? Quines implicacions
+tindria? Què consideres més adequat? Perquè?</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./jdbc-i-introduccio.html">
+        JDBC I. Introducció
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./jdbc-i-introduccio.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./jdbc-iii-model-objecte-relacional.html">
+        JDBC III. Model Objecte-Relacional
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

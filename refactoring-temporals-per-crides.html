@@ -44,7 +44,6 @@
                 <li ><a href="./category/bd.html">bd</a></li>
                 <li class="active"><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
-                <li ><a href="./category/gui.html">gui</a></li>
                 <li ><a href="./category/misc.html">misc</a></li>
                 <li ><a href="./category/poo.html">poo</a></li>
                 <li ><a href="./category/programacio.html">programacio</a></li>
@@ -53,12 +52,11 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
-                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/java.html">java</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
                 <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
             </ul>
         </div>
     </div>
@@ -181,7 +179,7 @@ trobem la variable <tt class="docutils literal">quantitat</tt>.</p>
     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// afegeix lloguers freqüents</span>
         <span class="n">bonificacions</span> <span class="o">++;</span>
 
@@ -255,7 +253,7 @@ la inicialització, segons es ressalta al codi:</p>
 </span>     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
          <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
          <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
          <span class="c1">// afegeix lloguers freqüents</span>
 <span class="hll">         <span class="n">bonificacions</span> <span class="o">++;</span>
 </span>
@@ -313,8 +311,8 @@ al control de versions.</p>
     <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
         <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
         <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
-<span class="hll">        <span class="n">bonificacions</span> <span class="o">+=</span> <span class="n">bonificacionsDeLLoguer</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+<span class="hll">        <span class="n">bonificacions</span> <span class="o">+=</span> <span class="n">bonificacionsDeLloguer</span><span class="o">(</span><span class="n">lloguer</span><span class="o">);</span>
 </span>        <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
         <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
             <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>

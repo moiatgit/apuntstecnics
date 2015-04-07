@@ -44,7 +44,6 @@
                 <li ><a href="./category/bd.html">bd</a></li>
                 <li class="active"><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
-                <li ><a href="./category/gui.html">gui</a></li>
                 <li ><a href="./category/misc.html">misc</a></li>
                 <li ><a href="./category/poo.html">poo</a></li>
                 <li ><a href="./category/programacio.html">programacio</a></li>
@@ -53,12 +52,11 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
-                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/java.html">java</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
                 <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
             </ul>
         </div>
     </div>
@@ -103,8 +101,8 @@ amb algunes passes finals.</p>
 </div>
 <div class="section" id="altres-passes-de-refaccio">
 <h2>Altres passes de refacció</h2>
-<div class="section" id="exercici-17-cada-metode-fa-una-unica-cosa">
-<h3>Exercici 17. Cada mètode fa una única cosa</h3>
+<div class="section" id="una-cosa-per-metode">
+<h3>Una cosa per mètode</h3>
 <p>Encara es podrien fer més passes de refacció. Per exemple, fixa't que
 el mètodes <tt class="docutils literal">Client.informe()</tt> fa tres coses separades: composa la
 capçalera, el detall de cada lloguer i peu de l'informe.</p>
@@ -130,7 +128,7 @@ l'extracció de mètodes.</p>
 <p>Tornarem a aplicar l'<em>extracció de mètodes</em> de manera que el codi
 següent funcioni:</p>
 <div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="nf">composaCapsalera</span><span class="o">()</span> <span class="o">+</span>
+    <span class="k">return</span> <span class="n">composaCapsalera</span><span class="o">()</span> <span class="o">+</span>
            <span class="n">composaDetall</span><span class="o">()</span> <span class="o">+</span>
            <span class="n">composaPeu</span><span class="o">();</span>
 <span class="o">}</span>
@@ -139,7 +137,7 @@ següent funcioni:</p>
 En general, quan en intentar-ho, no aconseguim millorar la
 llegibilitat. Per exemple, podríem reduir el codi anterior a:</p>
 <div class="highlight"><pre><span class="kd">public</span> <span class="n">String</span> <span class="nf">informe</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="nf">composaCapsalera</span><span class="o">()</span> <span class="o">+</span>
+    <span class="k">return</span> <span class="n">composaCapsalera</span><span class="o">()</span> <span class="o">+</span>
            <span class="n">composaRestaInforme</span><span class="o">();</span>
 </pre></div>
 <p>Si bé el codi és més reduït (una línia menys), no sembla que hàgim
@@ -151,6 +149,12 @@ continuar pensant que aquest mètode també calcula l'import total dels
 lloguers... En qualsevol cas, confio en que acceptis que, al menys, el
 codi actual de <tt class="docutils literal">Client.informe()</tt> resulta molt més fàcil/ràpid
 d'entendre que l'original.</p>
+</div>
+<div class="section" id="exercici-17-cada-metode-fa-una-unica-cosa">
+<h3>Exercici 17. Cada mètode fa una única cosa</h3>
+<p>Distribueix el mètode <em>Client.informe()</em> de manera que quedin
+separades les funcionalitats de construcció de la capçalera, el detall
+i el peu de l'informe, tal i com acabem de veure.</p>
 </div>
 <div class="section" id="literals-per-constants">
 <h3>Literals per constants</h3>
@@ -164,7 +168,7 @@ Té el mateix significat que el <tt class="docutils literal">30</tt> que t'apare
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+8</pre></div></td><td class="code"><div class="highlight"><pre> <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
      <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
      <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
          <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>
@@ -206,7 +210,7 @@ com es veu a <tt class="docutils literal">Client.informe()</tt>:</p>
      <span class="n">String</span> <span class="n">resultat</span> <span class="o">=</span> <span class="s">&quot;Informe de lloguers del client &quot;</span> <span class="o">+</span>
          <span class="n">getNom</span><span class="o">()</span> <span class="o">+</span>
          <span class="s">&quot; (&quot;</span> <span class="o">+</span> <span class="n">getNif</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;)\n&quot;</span><span class="o">;</span>
-     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="nl">lloguer:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
+     <span class="k">for</span> <span class="o">(</span><span class="n">Lloguer</span> <span class="n">lloguer</span><span class="o">:</span> <span class="n">lloguers</span><span class="o">)</span> <span class="o">{</span>
          <span class="c1">// composa els resultats d&#39;aquest lloguer</span>
          <span class="n">resultat</span> <span class="o">+=</span> <span class="s">&quot;\t&quot;</span> <span class="o">+</span>
              <span class="n">lloguer</span><span class="o">.</span><span class="na">getVehicle</span><span class="o">().</span><span class="na">getMarca</span><span class="o">()</span> <span class="o">+</span>

@@ -8,13 +8,13 @@
 
 <!-- HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-        <script src="./theme/html5.js"></script>
+        <script src="../theme/html5.js"></script>
     <![endif]-->
 
 <!-- Styles -->
-<link href="./theme/bootstrap.moi.css" rel="stylesheet">
-<link href="./theme/local.css" rel="stylesheet">
-<link href="./theme/pygments.css" rel="stylesheet">
+<link href="../theme/bootstrap.moi.css" rel="stylesheet">
+<link href="../theme/local.css" rel="stylesheet">
+<link href="../theme/pygments.css" rel="stylesheet">
 
 <!-- Feeds -->
 <link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
@@ -25,7 +25,7 @@
 <div class="topbar">
     <div class="topbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="./">[Apunts tècnics]
+            <a class="brand" href="../">[Apunts tècnics]
  Subdocuments             </a>
         </div>
     </div>
@@ -41,59 +41,36 @@
             -->
             <h3>Categories</h3>
             <ul>
-                <li class="active"><a href="./category/bd.html">bd</a></li>
-                <li ><a href="./category/dev.html">dev</a></li>
-                <li ><a href="./category/eines.html">eines</a></li>
-                <li ><a href="./category/gui.html">gui</a></li>
-                <li ><a href="./category/misc.html">misc</a></li>
-                <li ><a href="./category/poo.html">poo</a></li>
-                <li ><a href="./category/programacio.html">programacio</a></li>
-                <li ><a href="./category/uml.html">uml</a></li>
+                <li class="active"><a href="../category/bd.html">bd</a></li>
+                <li ><a href="../category/dev.html">dev</a></li>
+                <li ><a href="../category/eines.html">eines</a></li>
+                <li ><a href="../category/misc.html">misc</a></li>
+                <li ><a href="../category/poo.html">poo</a></li>
+                <li ><a href="../category/programacio.html">programacio</a></li>
+                <li ><a href="../category/uml.html">uml</a></li>
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
-                <li><a href="./tag/mongodb.html">mongoDB</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
-                <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="../tag/c.html">C</a></li>
+                <li><a href="../tag/java.html">java</a></li>
+                <li><a href="../tag/programari.html">programari</a></li>
+                <li><a href="../tag/util.html">util</a></li>
+                <li><a href="../tag/test.html">test</a></li>
+                <li><a href="../tag/postgresql.html">PostGreSQL</a></li>
             </ul>
         </div>
     </div>
 
     <div class="content">
 <div class='article'>
-<div class="well small">
-<ul id="navigation"> 
-    <li class="navigation-prev">
-    <a href="./modificacio-de-dades.html">
-        Modificació de dades
-    </a>
-    </li>
-
-    <li class="navigation-top">
-    <a href="./introduccio-al-mongodb.html">
-        inici
-    </a>
-    </li>
-
-    <li class="navigation-next">
-    <a href="./arrays.html">
-        Arrays
-    </a>
-    </li>
-</ul> 
-</div>
     <div class="page-header"><h1>Subdocuments</h1></div>
 <div class="well small">
     Entrada ubicada a la categoria
-    <a href="./category/bd.html">
+    <a href="../category/bd.html">
         bd
     </a>
             amb el tag:
-            <a href="./tag/mongodb.html">mongoDB</a> 
+            <a href="../tag/mongodb.html">mongoDB</a> 
         (Darrera modificació: <b> 9/4/2014 </b>)
 </div>
     <div><div class="section" id="introduccio">
@@ -189,16 +166,16 @@ resta de les dades si et cal.</p>
 <p>El mètode <em>find</em> ens permet especificar subcamps tant al document de
 sel·lecció (primer argument) com al de projecció (segon argument). Per
 exemple:</p>
-<div class="highlight"><pre><span class="lineno"> 1</span> <span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
-<span class="lineno"> 2</span>     <span class="p">{</span><span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="s2">&quot;Lleida&quot;</span><span class="p">},</span>
-<span class="lineno"> 3</span>     <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">}</span>
-<span class="lineno"> 4</span>   <span class="p">).</span><span class="nx">pretty</span><span class="p">()</span>
-<span class="lineno"> 5</span> <span class="p">{</span>
-<span class="lineno"> 6</span>     <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Jordi Navarro Cucurella&quot;</span><span class="p">,</span>
-<span class="lineno"> 7</span>     <span class="s2">&quot;adreça&quot;</span> <span class="o">:</span> <span class="p">{</span>
-<span class="lineno"> 8</span>         <span class="s2">&quot;província&quot;</span> <span class="o">:</span> <span class="s2">&quot;Lleida&quot;</span>
-<span class="lineno"> 9</span>     <span class="p">}</span>
-<span class="lineno">10</span> <span class="p">}</span>
+<div class="highlight"><pre><span class="lineno"> 1 </span><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">persones</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span>
+<span class="lineno"> 2 </span>    <span class="p">{</span><span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="s2">&quot;Lleida&quot;</span><span class="p">},</span>
+<span class="lineno"> 3 </span>    <span class="p">{</span><span class="nx">nom</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;adreça.província&quot;</span><span class="o">:</span><span class="mi">1</span><span class="p">,</span> <span class="nx">_id</span><span class="o">:</span><span class="mi">0</span><span class="p">}</span>
+<span class="lineno"> 4 </span>  <span class="p">).</span><span class="nx">pretty</span><span class="p">()</span>
+<span class="lineno"> 5 </span><span class="p">{</span>
+<span class="lineno"> 6 </span>    <span class="s2">&quot;nom&quot;</span> <span class="o">:</span> <span class="s2">&quot;Jordi Navarro Cucurella&quot;</span><span class="p">,</span>
+<span class="lineno"> 7 </span>    <span class="s2">&quot;adreça&quot;</span> <span class="o">:</span> <span class="p">{</span>
+<span class="lineno"> 8 </span>        <span class="s2">&quot;província&quot;</span> <span class="o">:</span> <span class="s2">&quot;Lleida&quot;</span>
+<span class="lineno"> 9 </span>    <span class="p">}</span>
+<span class="lineno">10 </span><span class="p">}</span>
 </pre></div>
 <p>Tant a la sel·lecció com a la projecció hem especificat el subcamp a
 partir del nom de la clau i el nom del subcamp separats amb un punt
@@ -248,7 +225,7 @@ professions. Així, canviarem la professió per <em>alcalde/ssa</em>.</p>
 </div>
 <div class="section" id="exercici-4-estudiants-amb-sou">
 <h3>Exercici 4. Estudiants amb sou?</h3>
-<p>Importa les dades d'<a class="reference external" href="./resources/persones02.json">aquest fitxer</a> a la col·lecció <em>persones</em>
+<p>Importa les dades d'<a class="reference external" href="../resources/persones02.json">aquest fitxer</a> a la col·lecció <em>persones</em>
 <a class="footnote-reference" href="#dadesficticies" id="id4">[3]</a>.  Assegura't que elimines les dades anteriors.</p>
 <p>El Molt Honorable President de la Generalitat de Catalunya ha tingut
 accés a les dades de la col·lecció <em>persones</em> i s'ha quedat preocupat
@@ -288,7 +265,7 @@ eliminar-la document.</td></tr>
 <table class="docutils footnote" frame="void" id="collecciopersones" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Hem treballat amb la col·lecció <a class="reference external" href="./resources/persones02.json">persones</a> en articles anteriors.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Hem treballat amb la col·lecció <a class="reference external" href="../resources/persones02.json">persones</a> en articles anteriors.</td></tr>
 </tbody>
 </table>
 <table class="docutils footnote" frame="void" id="dadesficticies" rules="none">
@@ -309,34 +286,13 @@ fictícies.</td></tr>
 </table>
 </div>
 </div>
-<div class="well small">
-<ul id="navigation"> 
-    <li class="navigation-prev">
-    <a href="./modificacio-de-dades.html">
-        Modificació de dades
-    </a>
-    </li>
-
-    <li class="navigation-top">
-    <a href="./introduccio-al-mongodb.html">
-        inici
-    </a>
-    </li>
-
-    <li class="navigation-next">
-    <a href="./arrays.html">
-        Arrays
-    </a>
-    </li>
-</ul> 
-</div>
 </div>
 <footer>
   <p>
-  <a href=".">Apunts tècnics</a> 
+  <a href="..">Apunts tècnics</a> 
   &copy; 
   <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
-  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="../images/adressamoi.png">)
   amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
   </p>
 </footer>    </div>

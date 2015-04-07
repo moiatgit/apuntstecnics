@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: JDBC III. Model Objecte-Relacional</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ JDBC III. Model Objecte-Relacional             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./jdbc-ii-model-relacional.html">
+        JDBC II. Model relacional
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./jdbc-i-introduccio.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>JDBC III. Model Objecte-Relacional</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb els tags: 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introducio">
+<h2>Introdució</h2>
+<p>Amb aquests continguts treballarem la manera de comunicar els nostres
+programes orientats a objecte amb les nostres bases de dades objecte
+relacionals.</p>
+<p>A aquesta darrera part es considera com podem fer servir el JDBC per
+comunicar-nos amb una base de dades que implementi elements
+d'Objecte-Relacional.</p>
+<p>Els continguts pressuposen que disposes de la base de dades presentada
+als <a class="reference external" href="./comparacio-models-relacional-i-objecte-relacionals-segona-part.html">continguts sobre el model objecte relacional</a>. S'afegirà un
+<em>lleuger</em> canvi a la definició de les claus primàries de les diferents
+taules (passaran a ser <em>SERIAL</em>) i un de <em>no tan lleuger</em> a la
+definició de la relació d'herència entre <em>CLIENTS</em> i <em>CLIENTS_VIP</em> per
+evitar els problemes que provoca el fet que PostGreSQL encara no
+tingui completament implementat aquest concepte a la versió que estem
+treballant.</p>
+<p>La bateria d'exercicis presenta propostes d'ampliació (exercicis
+marcats amb un asterisc). Bàsicament es poden resumir en:</p>
+<ul>
+<li><p class="first">agrupament del codi en <em>packages</em></p>
+<p>Pot resultar una mica més incòmode a l'hora de compilar i executar,
+especialment si no estàs fent servir un IDE, però és una forma molt
+habitual de treballar. Si disposes de prou temps, pots investigar el
+funcionament de <a class="reference external" href="http://ant.apache.org/">ant</a>, una utilitat amb un
+objectiu similar al del <em>make</em> de C, que et podria simplificar la
+compilació a una única comanda.</p>
+</li>
+<li><p class="first">gestió de versions mitjançant git</p>
+<p>En realitat no incorpora una feina extra i és molt recomanable
+tenint en compte que alguns exercicis et demanaran que reorganitzis
+codi d'exercicis previs.</p>
+</li>
+<li><p class="first">creació de jocs de prova unitària</p>
+<p>Per afavorir la claredat, aquests exercicis apareixen després de
+l'element a provar. Si tens interès per provar el desenvolupament
+TDD (<em>Test Driven Development</em>) et proposo que abans de començar a
+desenvolupar un exercici miris si el següent inclou la descripció
+de la seva prova.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="jdbc-sobre-sgbdor">
+<h2>JDBC sobre SGBDOR</h2>
+<p>El mecanisme per guardar instàncies d'objectes a una
+base de dades relacional, el descriuen alguns a partir del següent
+símil:</p>
+<blockquote>
+Imagina que per aparcar cada nit el teu cotxe al garatge, en
+passar per la porta l'haguessis de desmuntar peça a peça i
+guardar-les convenientment en diferents calaixos especialment
+destinats per cadascuna d'aquestes. Tot plegat, per l'endemà haver
+de tornar a muntar tot el vehicle de nou a partir de les peces si
+el vols tornar a conduir.</blockquote>
+<p>Malauradament en l'actualitat, amb les bases de dades
+Objecte-Relacional la situació no ha millorat gaire. Hom diria que
+fins i tot ha empitjorat. De fet, jugant amb el símil del cotxe:</p>
+<blockquote>
+Imagina que per aparcar cada nit el teu cotxe al garatge, en
+passar per la porta l'haguessis de desmuntar peça a peça,
+tornar-les a muntar en diferents blocs i guardar aquests
+convenientment en diferents calaixos especialment destinats per
+cadascun d'aquests. Tot plegat, per l'endemà haver de tornar a
+desmuntar els blocs i, ja fora del garatge, tornar a muntar tot el
+vehicle de nou a partir de les peces si el vols tornar a conduir.</blockquote>
+<p>Diferents esforços s'estan fent per treure'ns als desenvolupadors
+d'aquesta feixuga tasca de muntatge i desmuntatge dels nostres
+objectes a i des de les nostres entitats. Considera per exemple
+<a class="reference external" href="http://ca.wikipedia.org/wiki/Hibernate">Hibernate</a>. Amb tot, encara
+molts desenvolupaments es realitzen <em>a ma</em>. En el nostre cas, ho tenim
+justificat en voler fer servir funcionalitats objecte-relacional que
+encara no disposen de prou suport.</p>
+<p>En el moment en que es composava aquest document, el JDBC per
+PostGreSQL no es troba completament implementat (especialment per la
+part que toca a les funcionalitats Objecte-Relacionals). Per aquesta
+raó, ens haurem de mantenir en un nivell encara més <em>manual</em> del que
+ens ofereix la definició del JDBC.</p>
+<div class="section" id="exercici-1-preparacio">
+<h3>Exercici 1.* Preparació</h3>
+<p>Començarem aquest bloc d'exercicis preparant l'entorn de
+desenvolupament una mica.</p>
+<p>En concret voldrem:</p>
+<ul class="simple">
+<li>crear un directori anomenat per exemple <em>projectevendes</em>/.</li>
+<li>iniciar un projecte git en aquest directori. Per cada exercici que
+realitzem farem com a mínim un <em>commit</em>. Finalment podrem agrupar
+totes les versions dins la branca mestra amb un <em>bundle</em>.</li>
+<li>crear un directori anomenat <em>src</em> que contindrà el codi font, i dins
+un directori <em>org/iesjoandaustria/«elteunom»/vendes</em> que
+correspondrà a l'arbre de directoris del <em>package</em> de les classes
+que desenvoluparàs en aquest bloc d'exercicis.</li>
+<li>crear un directori anomenat <em>test</em> que contindrà el codi de test de
+<em>junit</em> que vagis preparant per provar diferents classes que
+generis en aquest bloc.</li>
+<li>crear un directori anomenat <em>build</em> que contindrà els <tt class="docutils literal">.class</tt> que
+es generin a la compilació. D'aquesta manera podràs tenir separats
+els codis font i compilat. Recorda que hi ha alguna opció de
+<tt class="docutils literal">javac</tt> que permet definir on deixar el resultat de la compilació.</li>
+</ul>
+<p>Aquest exercici és opcional però molt recomanable si vols practicar
+conceptes de <em>packages</em>, testeig i control de versions. Pots decidir
+implementar-ho totalment o parcialment.</p>
+</div>
+<div class="section" id="implementacio-d-un-enumerat">
+<h3>Implementació d'un enumerat</h3>
+<p>Els enumerats de PostGreSQL es corresponen molt còmodament amb els
+enumerats de Java.</p>
+<p>Per exemple, <em>Tractament</em> es podria implementar com:</p>
+<pre class="literal-block">
+public enum Tractament {
+    SR   ( &quot;Sr.&quot;   ),
+    SRA  ( &quot;Sra.&quot;  ),
+    SRTA ( &quot;Srta.&quot; ),
+    DR   ( &quot;Dr.&quot;   ),
+    DRA  ( &quot;Dra.&quot;  );
+
+    private String representacio;
+
+    Tractament(String rep) { representacio = rep; }
+
+    public String toString() { return representacio; }
+
+    public static Tractament fromString(String rep) {
+        Tractament trobat = null;
+        for (Tractament e: values()) {
+            if (e.toString().equals(rep)) {
+                trobat = e;
+                break;
+            }
+        }
+        if (trobat == null) {
+            throw new IllegalArgumentException(&quot;No enum constant Tractament.&quot;+rep);
+        }
+        return trobat;
+    }
+}
+</pre>
+<p>Fixa't que aquest enumerat ofereix el mètode <em>fromString()</em> que,
+donada una representació en forma de String, retorna el valor
+corresponent de l'enumerat.</p>
+</div>
+<div class="section" id="exercici-2-el-tipustelefon">
+<h3>Exercici 2. El TipusTelefon</h3>
+<p>A partir de l'exemple de l'enumerat <em>Tractament</em> implementa un
+enumerat que correspongui al <em>TipusTelefon</em>.</p>
+</div>
+<div class="section" id="implementacio-d-un-tipus-complex">
+<h3>Implementació d'un tipus complex</h3>
+<p>Considera la següent implementació de la classe <em>Denominacio</em>. Fixa't
+en com permet crear una denominació a partir d'un tractament en format
+<em>String</em> com requeria el codi de <tt class="docutils literal">parseDenominacio()</tt> que hem vist
+abans.</p>
+<pre class="literal-block">
+class Denominacio {
+    private Tractament tr;
+    private String nom;
+    private String cognoms;
+    public Denominacio(String tr, String nom, String cognoms) {
+        this(Tractament.fromString(tr), nom, cognoms);
+    }
+    public Denominacio(Tractament tr, String nom, String cognoms) {
+        this.tr=tr;
+        this.nom=nom;
+        this.cognoms=cognoms;
+    }
+    public Tractament getTr()  { return tr;      }
+    public String getNom()     { return nom;     }
+    public String getCognoms() { return cognoms; }
+    public String toString()   { return tr + &quot; &quot; + nom + &quot; &quot; + cognoms; }
+}
+</pre>
+<p>Com podem observar, un tipus complex es tradueix directament a una
+classe estàndard de Java. Es tracta, això sí, d'una classe sovint
+immutable (com en aquest cas), i que pràcticament no ofereix res més
+que l'accés al valor de les seves propietats.</p>
+<p>Fixa't que aquesta classe ofereix dos constructors. El primer accepta
+el tractament en forma de String. Més endavant es veurà que ens
+resultarà molt còmode.</p>
+</div>
+<div class="section" id="exercici-3-telefon">
+<h3>Exercici 3. Telèfon</h3>
+<p>Implementa el tipus <em>Telefon</em> seguint la idea de la classe
+<em>Denominacio</em>.</p>
+</div>
+<div class="section" id="acces-directe-a-un-camp-complex">
+<h3>Accés directe a un camp complex</h3>
+<p>Veiem com podem accedir a un camp complex.</p>
+<p>Suposa que a la base de dades disposem de</p>
+<pre class="literal-block">
+testbd=&gt; select * from clients where id = 20001;
+  id   |          nom          |                                        adr                                        |                    telefons
+-------+-----------------------+-----------------------------------------------------------------------------------+-------------------------------------------------
+ 20001 | (Sra.,Barbara,Liskov) | (&quot;{&quot;&quot;77 Massachusetts Avenue&quot;&quot;,&quot;&quot;Blue Bilding&quot;&quot;}&quot;,&quot;MA 02139-4307&quot;,Cambridge,EEUU) | {&quot;(fax,0084,933333333)&quot;,&quot;(fix,0084,933333334)&quot;}
+(1 row)
+</pre>
+<p>Considera el següent fragment de codi que llegeix la denominació d'un
+client a partir del seu identificador</p>
+<pre class="literal-block">
+String sql = &quot;SELECT nom FROM CLIENTS WHERE id =&quot; + id;
+st = conn.createStatement();
+rs = st.executeQuery(sql);
+rs.next();
+String nom = rs.getString(&quot;nom&quot;);
+System.out.println(&quot;nom: &quot; + nom);
+</pre>
+<p>Si executem aquest codi ens generarà el següent resultat</p>
+<pre class="literal-block">
+nom: (Sra.,Barbara,Liskov)
+</pre>
+<p>Es a dir, ens ha generat tots els continguts d'un tipus compost en un
+string!</p>
+</div>
+<div class="section" id="camps-complexos-desmuntats">
+<h3>Camps complexos <em>desmuntats</em></h3>
+<p>Amb les dades d'un camp complex codificades en forma de tupla, i el
+<em>driver</em> de PostGreSQL a mig fer <a class="footnote-reference" href="#suportstruct" id="id1">[1]</a>, ens veiem obligats
+a idear algun <em>truc</em> per extreure la informació.</p>
+<p>Una possibilitat és demanar les dades ja <em>desmuntades</em> al SGBD</p>
+<pre class="literal-block">
+String sql = &quot;SELECT (nom).* FROM CLIENTS WHERE id =&quot; + id;
+st = conn.createStatement();
+rs = st.executeQuery(sql);
+rs.next();
+String tr = rs.getString(&quot;tr&quot;);
+String nom = rs.getString(&quot;nom&quot;);
+String cognoms = rs.getString(&quot;cognoms&quot;);
+Denominacio denom = new Denominacio(tr, nom, cognoms);
+System.out.println(&quot;nom: &quot; + denom);
+</pre>
+<p>Ara la sortida (suposant codificada adequadament la classe
+<em>Denominacio</em>) serà:</p>
+<pre class="literal-block">
+nom: Sra. Barbara Liskov
+</pre>
+</div>
+<div class="section" id="camps-complexos-parsejats">
+<h3>Camps complexos <em>parsejats</em></h3>
+<p>De vegades pot no ser convenient (o fàcil) aconseguir una comanda sql
+que ens retorni les dades compostes <em>desmuntades</em>.</p>
+<p>Una altra alternativa és que ens fem nosaltres el nostre <em>parser</em>.</p>
+<p>Per exemple, considera el següent mètode per la classe <em>Denominacio</em></p>
+<pre class="literal-block">
+/* retorna una denominació a partir d'una tupla &quot;(tr,nom,cognoms)&quot;
+ * codificada a un String.
+ * En cas que no sigui una tupla vàlida retorna null. */
+public static Denominacio parseDenominacio(String tupla) {
+    Denominacio denom = null;
+    if (tupla.startsWith(&quot;(&quot;) &amp;&amp; tupla.endsWith(&quot;)&quot;)) {
+        String[] elements = tupla.substring(1, tupla.length()-1).split(&quot;,&quot;);
+        if (elements.length==3) {
+            denom = new Denominacio(elements[0], elements[1], elements[2]);
+        }
+    }
+    return denom;
+}
+</pre>
+<p>Disposant d'aquest senzill <em>parser</em> podrem aconseguir la denominació
+simplement amb:</p>
+<pre class="literal-block">
+String sql = &quot;SELECT nom FROM CLIENTS WHERE id =&quot; + id;
+st = conn.createStatement();
+rs = st.executeQuery(sql);
+rs.next();
+String tupla = rs.getString(&quot;nom&quot;);
+Denominacio denom = parseDenominacio(tupla);
+System.out.println(&quot;nom: &quot; + denom);
+</pre>
+<p>Cal tenir en compte que aquest <em>parser</em> no ens servirà en tots els
+casos. Per exemple, si la senyora Liskov tingués dos cognoms (com ara
+'Liskov d'Argent', el resultat seria que PostGreSQL ens retornaria els
+dos cognoms entre cometes dobles. Un cas pitjor apareix si pel que
+sigui, els cognoms contenen una coma. El nostre <em>parser</em> detectaria
+més dels tres camps que espera i retornaria <em>null</em>!</p>
+<p>La següent versió està preparada per tuples tan particulars com
+<tt class="docutils literal">(Sra.&nbsp; &quot;Barbara Maria&quot;, &quot;Liskov, <span class="pre">&quot;&quot;d'Argent&quot;&quot;)</span></tt>. Probablement en
+tindrem més que suficient pels exercicis que treballarem en aquest
+document. Fa servir una <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html">expressió regular</a>,
+per extreure cada element <a class="footnote-reference" href="#regexsimple" id="id2">[2]</a>.</p>
+<pre class="literal-block">
+/* donada una seqüència de valors tancats entre parèntesis o claus
+ * separats per comes i amb possibilitat d'estar envoltats per cometes
+ * dobles que a l'hora puguin incloure dobles cometes dobles &quot;&quot; i comes,
+ * retorna la llista de strings.*/
+private static ArrayList&lt;String&gt; splitSeq(String seq) {
+    // patró per extreure els elements
+    Pattern pattern = Pattern.compile(&quot;((\&quot;((\&quot;\&quot;)|([^\&quot;]))*\&quot;)|([^\&quot;,]*)),&quot;);
+    /* elimina els parèntesis que envolten la seqüència */
+    StringBuilder sb = new StringBuilder();
+    if ((seq.startsWith(&quot;(&quot;) &amp;&amp; seq.endsWith(&quot;)&quot;)) ||
+            (seq.startsWith(&quot;{&quot;) &amp;&amp; seq.endsWith(&quot;}&quot;))) {
+        sb.append(seq.substring(1, seq.length()-1));
+            }
+    /* afegeix una coma al final per permetre una regex simple */
+    sb.append(',');
+    /* realitza el parseig */
+    ArrayList&lt;String&gt; trobats = new ArrayList&lt;String&gt;();
+    Matcher matcher = pattern.matcher(sb.toString());
+    while (matcher.find()) {
+        String element = matcher.group(1);
+        if (element != null &amp;&amp; !element.equals(&quot;&quot;)) {
+            if (element.startsWith(&quot;\&quot;&quot;) &amp;&amp; ! element.startsWith(&quot;\&quot;\&quot;&quot;)) {
+                // elimina cometes a l'inici i final
+                element = element.substring(1, element.length()-1);
+            }
+            // simplifica cometes dobles
+            element = element.replaceAll(&quot;\&quot;\&quot;&quot;,&quot;\&quot;&quot;);
+            // afegeix l'element un cop &quot;netejat&quot;
+            trobats.add(element);
+        }
+    }
+    return trobats;
+}
+</pre>
+<p>Fixa't que ara, implementar el mètode <em>parseDenominacio()</em> és molt
+senzill:</p>
+<pre class="literal-block">
+/* retorna una denominació a partir d'una tupla &quot;(tr,nom,cognoms)&quot;
+ * codificada a un String.
+ * En cas que no sigui una tupla vàlida retorna null. */
+public static Denominacio parseDenominacio(String tupla) {
+    Denominacio denom = null;
+    ArrayList&lt;String&gt; trobats = splitSeq(tupla);
+    if (trobats.size()==3) {
+        denom = new Denominacio(trobats.get(0), trobats.get(1), trobats.get(2));
+    }
+    return denom;
+}
+</pre>
+</div>
+<div class="section" id="exercici-4-parsetelefon">
+<h3>Exercici 4. parseTelefon()</h3>
+<p>Seguint l'exemple de codi del mètode <em>parseDenominacio()</em> implementa
+el mètode <em>parseTelefon()</em>.</p>
+<p>Col·loca tots dos mètodes a una nova classe que es digui
+<em>VendesParser</em> que ens permetrà agrupar aquests mètodes d'utilitat en
+un únic lloc <a class="footnote-reference" href="#principispooalterra" id="id3">[4]</a>.</p>
+<p><strong>Nota</strong>: Si tens intenció de realitzar exercicis de prova unitària,
+potser voldràs mirar-te primer l'exercici següent i començar per la
+prova.</p>
+</div>
+<div class="section" id="exercici-5-test-de-parsers">
+<h3>Exercici 5.* Test de parsers</h3>
+<p>Desenvolupa un codi de test pels dos mètodes <em>parser</em>.</p>
+<p>Hi pots testar que els dos mètodes retornin una denominació / un
+telèfon correctes a partir de tuples controlades pel test.</p>
+<p>Es tracta d'un test senzill que et permetrà <em>escalfar motors</em>.</p>
+</div>
+<div class="section" id="arrays">
+<h3>Arrays</h3>
+<p>Veiem com podem tractar elements de tipus <em>array</em>.</p>
+<p>Recordem la definició del tipus <em>Adressa</em></p>
+<pre class="literal-block">
+testbd=&gt; \d adressa
+         Composite type &quot;public.adressa&quot;
+   Column    |         Type          | Modifiers
+-------------+-----------------------+-----------
+ carrer      | text[]                |
+ codi_postal | character varying(20) |
+ ciutat      | text                  |
+ pais        | text                  |
+</pre>
+<p>Com podem veure, <em>carrer</em> apareix definit com a <em>array</em> de <em>strings</em>.</p>
+<p>La representació del tipus <em>Adressa</em> en Java pot tenir un aspecte similar
+al següent</p>
+<pre class="literal-block">
+public class Adressa {
+    private String[] carrer;
+    private String   codiPostal;
+    private String   ciutat;
+    private String   pais;
+
+    public Adressa(String[] carrer, String codiPostal, String ciutat, String pais) {
+        this.carrer      = carrer;
+        this.codiPostal  = codiPostal;
+        this.ciutat      = ciutat;
+        this.pais        = pais;
+    }
+
+    public String[] getCarrer()    { return carrer; }
+    «...»
+}
+</pre>
+<p>Així, construirem una adreça amb</p>
+<pre class="literal-block">
+String[] liniesCarrer = {&quot;C/Antracita, 21&quot;, &quot;Pol. Ind. Gualda&quot;};
+Adressa adr = new Adressa(liniesCarrer, &quot;08020&quot;, &quot;Barcelona&quot;, &quot;Catalunya&quot;);
+</pre>
+<p>Recordem que en SQL, l'aspecte que ha de tenir aquesta adreça segons
+la definició a la base de dades és:</p>
+<pre class="literal-block">
+ROW(ARRAY['C/Antracita, 21','Pol. Ind. Gualda'],'08020','Barcelona','Catalunya')
+</pre>
+<p>Podem composar aquests valors amb els següents mètodes</p>
+<pre class="literal-block">
+private static String composaCarrer(String[] linies) {
+    String carrer = null;
+    if (linies.length==0) {
+        carrer = &quot;ARRAY[]&quot;;
+    } else {
+        StringBuilder sb = new StringBuilder(&quot;ARRAY['&quot;);
+        sb.append(linies[0]);
+        for (int i = 1; i &lt; linies.length; i++) {
+            sb.append(&quot;','&quot;);
+            sb.append(linies[i]);
+        }
+        sb.append(&quot;']&quot;);
+        carrer = sb.toString();
+    }
+    return carrer;
+}
+
+private static String composaAdressa(Adressa a) {
+    final String sql = &quot;ROW(%s,'%s','%s','%s')&quot;;
+    String carrer = composaCarrer(a.getCarrer());
+    return String.format(sql,carrer, a.getCodiPostal(), a.getCiutat(), a.getPais());
+}
+</pre>
+<p>A l'hora de llegir l'adreça, ens trobem que ens retorna la següent
+tupla:</p>
+<pre class="literal-block">
+(&quot;{&quot;&quot;C/Antracita, 21&quot;&quot;,&quot;&quot;Pol. Ind. Gualda&quot;&quot;}&quot;,08020,Barcelona,Catalunya)
+</pre>
+<p>Per interpretar-la, ho tenim molt fàcil gràcies al mètode <em>splitSeq()</em>
+que hem presentat abans. Així el següent mètode ens pot construir una
+adreça a partir de la tupla anterior</p>
+<pre class="literal-block">
+public static Adressa parseAdressa(String tupla) {
+    Adressa adr = null;
+    ArrayList&lt;String&gt; trobats = splitSeq(tupla);
+    if (trobats.size()==4) {
+        ArrayList&lt;String&gt; carrer = splitSeq(trobats.get(0));
+        String[] elements = new String[carrer.size()];
+        adr = new Adressa(carrer.toArray(elements),
+                trobats.get(1), trobats.get(2), trobats.get(3));
+    }
+    return adr;
+}
+</pre>
+<p>Fixa't com <em>parseAdressa()</em> crida dos cops a <em>splitSeq()</em>. El primer
+per destriar els camps de l'adreça, i el segon per les diferents
+línies del carrer.</p>
+</div>
+<div class="section" id="exercici-6-test-de-composicio-i-parser">
+<h3>Exercici 6.* Test de composició i parser</h3>
+<p>Desenvolupa codi de test per comprovar el funcionament dels mètodes
+<em>composaCarrer()</em>, <em>composaAdressa()</em> i <em>parseAdressa()</em>.</p>
+<p>És clar, si trobes un error de funcionament al codi que et
+proporciona aquest document, avisa!</p>
+</div>
+<div class="section" id="implementacio-d-una-entitat">
+<h3>Implementació d'una entitat</h3>
+<p>Les entitats (no tipus) de la base de dades també trobaran
+correspondència amb una classe de Java.</p>
+<p>Com que volem recuperar instàncies guardades com a registres a una o
+més taules de la base de dades, per després poder tornar a guardar les
+modificacions sobre els mateixos registres, ens caldrà disposar de
+l'identificador dels registres associat a les instàncies. La proposta
+aquí és molt bàsica: afegim una propietat <em>îd</em> a la instància.</p>
+<p>Per exemple, considera el següent codi que implementa la classe
+<em>Comercial</em></p>
+<pre class="literal-block">
+public class Comercial {
+    private int id;
+    private Denominacio nom;
+    private Telefon telefon;
+
+    public Comercial(Denominacio nom, Telefon telefon) {
+        this(-1, nom, telefon);
+    }
+    public Comercial(int id, Denominacio nom, Telefon telefon) {
+        this.id=id;
+        this.nom=nom;
+        this.telefon=telefon;
+    }
+
+    public void setId(int id)       { this.id = id;   }
+    public int         getId()      { return id;      }
+    public Denominacio getNom()     { return nom;     }
+    public Telefon     getTelefon() { return telefon; }
+    public String toString() {
+        return &quot;Comercial: &quot; + id +
+            &quot;\n\tnom: &quot;+ nom +
+            &quot;\n\ttelefon: &quot; + telefon;
+    }
+}
+</pre>
+<p>Fixat:</p>
+<ol class="arabic simple">
+<li>La classe ofereix dos constructors. Quan creem una instància a
+partir de les dades obtingudes d'una consulta a la base de dades,
+disposarem de l'identificador (la clau primària d'aquesta). Quan
+creem una nova instància, però, aquest identificador encara no
+estarà assignat. Suposarem que si no ho està encara, aquest serà un
+valor que no pugui ser representat com a identificador a la base de
+dades. En concret aquí s'ha escollit el -1 <a class="footnote-reference" href="#messofisticat" id="id4">[5]</a>.</li>
+<li>El camp <em>id</em> pot ser assignat amb posterioritat. És a dir, aquesta
+classe no és immutable com ho era per exemple <em>Denominacio</em>.</li>
+<li>La classe reescriu el mètode <em>toString()</em> per facilitar la prova.</li>
+</ol>
+</div>
+<div class="section" id="exercici-7-client">
+<h3>Exercici 7. Client</h3>
+<p>Implementa la classe <em>Client</em> seguint les idees anteriors.</p>
+</div>
+<div class="section" id="carrega-d-una-entitat">
+<h3>Càrrega d'una entitat</h3>
+<p>Suposem que coneixem l'identificador del comercial a la base de dades.
+Com podem obtenir les dades associades i a partir d'elles construir la
+instància del comercial?</p>
+<p>Considera el següent codi:</p>
+<pre class="literal-block">
+public Comercial carregaComercial(int id) {
+    Statement st  = null;
+    String sql = &quot;SELECT * FROM COMERCIALS WHERE id =&quot; + id;
+    Comercial comercial = null;
+    try {
+        st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        if (rs.next()) {
+            String nomStr = rs.getString(&quot;nom&quot;);
+            String telStr = rs.getString(&quot;tel&quot;);
+            Denominacio denom = VendesParser.parseDenominacio(nomStr);
+            Telefon telefon = VendesParser.parseTelefon(telStr);
+            comercial = new Comercial(id, denom, telefon);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (st != null) st.close();
+        } catch (SQLException e) {}
+    }
+    return comercial;
+}
+</pre>
+<p>Fixat:</p>
+<ol class="arabic simple">
+<li>Aquest mètode intenta trobar el comercial amb l'identificador
+indicat. Si no el troba (o hi ha qualsevol problema amb la BD)
+retorna el comercial <em>null</em>.</li>
+<li>El mètode <em>absorbeix</em> qualsevol problema amb la base de dades.
+Únicament mostra el traç de l'excepció per sortida estàndard. Si bé
+és una manera còmoda de sortir-nos del pas aquí, potser no és gaire
+adequada per aplicacions <em>reals</em>. És clar, no voldrem que la nostra
+aplicació hagi de tractar amb excepcions SQL i que finalment pugui
+arribar a l'usuari un missatge de la base de dades! Però tampoc
+voldrem quedar-nos sense informació potser vital durant la
+depuració. Considera la classe <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/logging/Logger.html">java.util.logging.Logger</a>.</li>
+</ol>
+</div>
+<div class="section" id="exercici-8-test-de-carrega-de-comercial">
+<h3>Exercici 8.* Test de càrrega de comercial</h3>
+<p>El desenvolupament d'aquest test pot ser una mica <em>peculiar</em> ja que
+haurem de tractar amb la base de dades i sabem, per la resposta del
+mestre Flying Feathers a <a class="reference external" href="http://www.agitar.com/downloads/TheWayOfTestivus.pdf">The way of Testivus</a> a la secció
+<em>The test is more important than the unit</em>, que:</p>
+<blockquote>
+<p>If it talks to the database, it is not a unit test</p>
+<p>If it can't run at the same time as any other unit tests, it is not a unit test.</p>
+<p>«...»</p>
+<p>If you have to do special things to your environment to run it, it is not a unit test.</p>
+</blockquote>
+<p>Recorda la nota que va rebre l'estudiant aquella nit:</p>
+<blockquote>
+The answer from the great master Flying Feathers is an excellent
+guide.  Follow it, and most of the time you will do well.  But
+don’t get stuck on any dogma.  Write the test that needs to be
+written&quot;.</blockquote>
+<p>Amb aquest segon consell en ment, pots escriure unes proves que
+preparin la base de dades amb les dades d'un comercial, després
+executin el mètode a provar i finalment <em>netegin</em> la base de dades. No
+serà una prova unitària <em>de mena</em> però de moment ens permetrà sortir
+del pas (<em>An imperfect test today is better than a perfect test
+someday</em>)</p>
+<p>Com sempre, si descobreixes un error al codi, avisa.</p>
+</div>
+<div class="section" id="exercici-9-carrega-un-client">
+<h3>Exercici 9. Carrega un client</h3>
+<p>Fen servir de guia el codi de càrrega d'un comercial, implementa el
+mètode <em>Client carregaClient(int id)</em> que carrega un client a partir
+del seu identificador de la base de dades i retorna una instància de
+<em>Client</em>.</p>
+</div>
+<div class="section" id="exercici-10-test-de-carrega-de-client">
+<h3>Exercici 10.* Test de càrrega de client</h3>
+<p>Afegeix el codi de prova per comprovar el funcionament del teu codi.</p>
+</div>
+<div class="section" id="exercici-11-carregant-clients">
+<h3>Exercici 11. Carregant clients</h3>
+<p>Anteriorment hem desenvolupat ja algunes classes i mètodes per
+accedir a la base de dades.</p>
+<p>Alguns mètodes, com ara els tipus <em>parser</em> els estem col·locant a la
+classe <em>VendesParser</em>. Hi ha altres mètodes, però, que no tenim tan
+clar on col·locar. Per exemple, on has posat els mètodes
+<em>carregaComercial()</em> i <em>carregaClient()</em>?</p>
+<p>En aquest exercici crearem la classe <em>VendesBD</em> que, com
+<em>VendesParser</em> ens permetrà que classes com <em>Client</em> no hagin de
+preocupar-se gaire de coses com l'emmagatzemament a la base de dades.</p>
+<p>Així <em>VendesBD</em> encapsularà tot l'accés a la base de dades.  A
+diferència de <em>VendesParser</em>, aquesta classe requerirà mantenir un
+cert estat, com a mínim la connexió amb la base de dades. Només
+voldrem una instància d'aquesta classe i ens interessarà poder accedir
+a ella des de qualsevol mètode de la nostra aplicació (com si fos una
+variable global).</p>
+<p>Per donar resposta a aquestes característiques, hi ha un patró de
+desenvolupament anomenat <a class="reference external" href="http://www.javaworld.com/javaworld/jw-04-2003/jw-0425-designpatterns.html">singleton</a>.
+Donat que a la nostra aplicació sempre ens interessarà disposar de la
+connexió, podrem implementar el patró d'una manera molt senzilla.
+El codi següent podria servir de plantilla <a class="footnote-reference" href="#threadsafe" id="id5">[6]</a></p>
+<pre class="literal-block">
+public class VendesBD {
+    // única instància de VendesBD per tot el procés
+    private static final VendesBD instancia = new VendesBD();
+
+    // connexió amb la base de dades
+    private Connection conn = null;
+
+    private VendesBD() {}
+
+    /* retorna la única instància de VendesBD
+     * Si hi ha problemes de connexió genera una excepció RuntimeException */
+    public static VendesBD getInstance() throws RuntimeException {
+        if (instancia.conn == null) {       // primer cop o tancada?
+            instancia.conn = connecta();
+            if (instancia.conn == null) {   // no es pot establir la connexió
+                throw new RuntimeException(&quot;Sense connexió&quot;);
+            }
+        }
+        return instancia;
+    }
+
+    /* tanca la instància.*/
+    public void tanca() {
+        if (instancia.conn != null) {
+            try {
+                instancia.conn.close();
+            } catch (SQLException e) { }
+            instancia.conn = null;
+        }
+    }
+
+    /* Crea la connexió amb la base de dades.
+     * Si ja hi havia una connexió, no fa res.
+     * No genera error si no pot establir la connexió
+     */
+    private static Connection connecta() {
+        Connection conn = null;
+        String usuari   = &quot;usuaribd&quot;;
+        String password = &quot;pass&quot;;
+        String host     = &quot;192.168.56.101&quot;;
+        String bd       = &quot;testbd&quot;;
+        String url      = &quot;jdbc:postgresql://&quot; + host + &quot;/&quot; + bd;
+        try {
+            conn = DriverManager.getConnection(url, usuari, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+    «...»
+}
+</pre>
+<p>Per cridar a un mètode de <em>VendesBD</em> podem, per exemple</p>
+<pre class="literal-block">
+Client client = VendesBD.getInstance().carregaClient(id);
+</pre>
+<p>En acabar l'execució, és recomanable tancar la connexió amb la base de
+dades. Per aquest fi disposem del mètode <em>tanca()</em> que hauria de ser
+cridat quan ja no tinguem més necessitat de disposar de connexió a la
+base de dades des del nostre programa.</p>
+<p>A banda d'afegir-hi els mètodes que ja hem treballat abans (ex.
+<em>carregaClient()</em>), per aquest exercici caldrà que implementis el
+mètode públic <em>Client[] carregaClients()</em> que llegeix de la base de
+dades tots els clients, construirà instàncies de Client i, agrupades
+en un array, les retornarà. No consideris la taula de clients VIP en
+aquest exercici.</p>
+<p>La classe <em>UsaClient</em> consistirà en una funció <em>main()</em> que demanarà a
+<em>VendesBD</em> la llista de tots els clients, i els mostrarà per sortida
+estàndard. No oblidis de tancar la connexió en finalitzar.</p>
+</div>
+<div class="section" id="exercici-12-test-de-carrega-de-clients">
+<h3>Exercici 12.* Test de càrrega de clients</h3>
+<p>Probablement els canvis anteriors et requeriran reorganitzar el codi
+de les teves proves. A més a més, segurament hi ha nous elements que
+voldràs provar.</p>
+<p>Realitza els canvis necessaris a la teva bateria de proves.</p>
+</div>
+</div>
+<div class="section" id="herencia">
+<h2>Herència</h2>
+<p>A un <a class="reference external" href="./comparacio-models-relacional-i-objecte-relacionals-segona-part.html">tema anterior</a>
+vàrem veure que PostGreSQL ens ofereix la clau <em>INHERITS</em> per
+especificar una relació d'herència entre dues entitats.  Havíem fet
+servir aquest mecanisme per relacionar <em>CLIENTS</em> amb <em>CLIENTS_VIP</em>.
+També vàrem observar que es tracta d'una funcionalitat que encara no
+està completament implementada pel SGBD.</p>
+<p>Com que l'herència és un element bàsic a la POO, haurem de trobar un
+camí alternatiu mentre els desenvolupadors d'aquest (per altra banda
+fantàstic) SGBD, poden finalitzar la implementació d'aquest concepte.</p>
+<p>L'aproximació que prendrem aquí és molt habitual en el model
+relacional (sense Objecte-Relacional): l'entitat que estén disposa
+d'una clau primària que és a l'hora forana de l'entidad estesa</p>
+<pre class="literal-block">
+CREATE TABLE CLIENTS_VIP (
+    id_client INTEGER PRIMARY KEY REFERENCES CLIENTS(id),
+    id_comercial INTEGER REFERENCES COMERCIALS
+);
+</pre>
+<p>D'aquesta manera, la taula de <em>CLIENTS_VIP</em> conté únicament les dades
+que estén, mentre que <em>CLIENTS</em> conté la resta.</p>
+<p>Farem que un client sigui VIP simplement afegint a <em>CLIENTS_VIP</em> una
+entrada. Per exemple, la nostra clienta 20001 la farem VIP amb:</p>
+<pre class="literal-block">
+INSERT INTO CLIENTS_VIP VALUES (20001, 40001);
+</pre>
+<p>Per a accedir a les dades de tots els clients, siguin o no, VIP podem
+fer</p>
+<pre class="literal-block">
+SELECT * FROM CLIENTS LEFT OUTER JOIN CLIENTS_VIP ON (id = id_client);
+</pre>
+<p>Aquesta consulta ens retornarà una columna <em>id_comercial</em> que
+contindrà un valor nul en el cas que el client no correspongui a un
+VIP.</p>
+<p>Si fem una consulta d'aquesta manera amb el driver de PostGreSQL des
+de Java, ens trobarem que els clients no VIP presenten un 0 al valor
+del camp <em>id_comercial</em>. Potser ens interessaria que aquest valor fos
+el -1 que estem fent servir en aquests materials. Això ho aconseguirem
+amb <a class="footnote-reference" href="#coalesce" id="id6">[3]</a></p>
+<pre class="literal-block">
+SELECT CLIENTS.*, coalesce(id_comercial, -1) AS id_comercial
+FROM CLIENTS LEFT OUTER JOIN CLIENTS_VIP ON (id = id_client);
+</pre>
+<p>D'aquesta manera, quan estem llegint un client podem fer</p>
+<pre class="literal-block">
+«...»
+int id_comercial = rs.getInt(&quot;id_comercial&quot;);
+Client client = null;
+if (id_comercial == -1) {
+    client = new Client(id, denom, adr, telefons);
+} else {
+    Comercial comercial = carregaComercial(id_comercial);
+    client = new ClientVip(id, denom, adr, telefons, comercial);
+}
+«...»
+</pre>
+<p>Fixa't que en cas que el comercial ja hagi estat carregat al sistema
+per un altre client, hi haurà instàncies duplicades del mateix
+comercial.  És molt probable que a la teva aplicació no vulguis que
+això passi. En aquest cas pots fer <em>trucs</em> com ara guardar-te la
+llista d'entitats de comercials i mirar si el comercial cercat ja
+apareix a la llista, abans de crear-ne una altra instància. Per
+aquests exercicis introductoris, no cal que facis una versió tant
+sofisticada.</p>
+<div class="section" id="exercici-13-carregant-clients-vip">
+<h3>Exercici 13. Carregant clients VIP</h3>
+<p>Desenvolupa una nova versió de <em>UsaClient</em>. En aquesta ocasió, el
+programa mostrarà la informació de tots els clients, incloent la dels
+VIP.</p>
+<p><em>Pista</em>: gràcies al polimorfisme probablement no et serà necessari
+distingir quina mena de client t'arriba a <em>UsaClient</em>.</p>
+</div>
+<div class="section" id="exercici-14-test-de-carrega-de-clients-vip">
+<h3>Exercici 14.* Test de càrrega de clients VIP</h3>
+<p>Ja saps: codifica la prova del mètode o mètodes anteriors.</p>
+</div>
+<div class="section" id="guardant-clients">
+<h3>Guardant clients</h3>
+<p>A l'hora de guardar un client a la base de dades, cal tenir en compte
+si es tracta d'un client VIP, i en aquest cas caldrà guardar també la
+informació d'aquest.</p>
+<p>Una manera seria crear dos mètodes:</p>
+<pre class="literal-block">
+VendesBD.guardaClient(Client client) { «...» }
+</pre>
+<p>i</p>
+<pre class="literal-block">
+VendesBD.guardaClient(ClientVip client) { «...» }
+</pre>
+<p>D'aquesta manera deixaríem la distinció del tipus de client al
+compilador. Com que sovint, però, les nostres referències seran a
+client tant si són VIP com si no, segurament ens serà més pràctic fer
+una distinció amb l'operador <em>instanceof</em> <a class="footnote-reference" href="#principispooalterra" id="id7">[4]</a>.</p>
+<p>Considera la implementació del següent mètode de <em>VendesBD</em></p>
+<pre class="literal-block">
+public void guardaClient(Client client) throws SQLException {
+    boolean esVip = (client instanceof ClientVip);
+    String nom = composaDenominacio(client.getNom());
+    String adr = composaAdressa(client.getAdr());
+    String tel = composaTelefons(client.getTelefons());
+    int idClient = client.getId();
+    if (idClient == -1) {
+        idClient = insertClientBD(nom, adr, tel);
+        client.setId(idClient); // assigna l'id del client
+    } else {
+        updateClientBD(idClient, nom, adr, tel);
+    }
+    if (esVip) {
+        Comercial comercial = ((ClientVip) client).getComercial();
+        if (comercial.getComercial() == -1) {
+            guardaComercial(comercial);
+        }
+        insertOUpdateClientVipBD(idClient, comercial.getId());
+    }
+}
+</pre>
+<p>Fixa't:</p>
+<ol class="arabic">
+<li><p class="first">El mètode distingeix si ha de realitzar un <em>insert</em> o un <em>update</em> a
+partir de l'identificador del client.</p>
+</li>
+<li><p class="first">El codi inicialitza <em>esVip</em> segons sigui o no VIP. Més endavant, si
+és VIP, se n'encarrega de guardar (també <em>insert</em> o <em>update</em>) el
+comercial i la informació a la taula <em>CLIENTS_VIP</em>.</p>
+</li>
+<li><p class="first">El codi de <em>composaDenominacio()</em> podria ser:</p>
+<pre class="literal-block">
+private static String composaDenominacio(Denominacio d) {
+    return String.format( &quot;ROW('%s','%s','%s')&quot;,d.getTr(), d.getNom(), d.getCognoms());
+}
+</pre>
+</li>
+<li><p class="first">El codi de <em>insertClientBD()</em> podria ser:</p>
+<pre class="literal-block">
+private int insertClientBD(String nom, String adr, String tel) throws SQLException {
+    String sql = String.format(
+            &quot;INSERT INTO CLIENTS (nom, adr, telefons) VALUES (%s,%s,CAST(%s AS Telefon[]))&quot;,
+            nom, adr, tel);
+    return insertElementBd(sql);
+}
+</pre>
+<p>amb</p>
+<pre class="literal-block">
+/* Executa una query que generarà una única clau i la retorna */
+private int insertElementBd(String sql) throws SQLException {
+    Statement st = null;
+    int id = -1;
+    try {
+        st = conn.createStatement();
+        st.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+        ResultSet rs = st.getGeneratedKeys();
+        rs.next();
+        id = rs.getInt(1);
+        rs.close();
+    } finally {
+        if (st != null) { st.close(); }
+    }
+    return id;
+}
+</pre>
+</li>
+</ol>
+</div>
+<div class="section" id="exercici-15-guardant-client">
+<h3>Exercici 15. Guardant client</h3>
+<p>Completa el codi necessari per que funcioni el mètode
+<em>VendesBD.guardaClient(Client)</em> a partir de les idees anteriors.</p>
+<p>Amplia <em>UsaClient</em> de manera que mostri com s'afegeix un nou client i
+com es modifica un d'existent.</p>
+</div>
+<div class="section" id="exercici-16-test-de-guardar-client">
+<h3>Exercici 16.* Test de guardar client</h3>
+<p>Aquí també hauràs de fer una prova amb la base de dades. En aquest
+cas, però, inicialment segurament voldràs assegurar-te que el client
+que vols guardar encara no hi sigui.</p>
+</div>
+<div class="section" id="exercici-17-entorn-operatiu-de-vendes">
+<h3>Exercici 17. Entorn operatiu de Vendes</h3>
+<p>Desenvolupa una aplicació que ofereixi la possibilitat d'administrar
+clients (incloent VIPs), comercials, comandes i productes</p>
+<p>Inclou:</p>
+<ol class="arabic simple">
+<li>altes i baixes de Clients (incloent VIPs), Comandes, Productes i
+Comercials.</li>
+<li>consulta de la llista de clients (id, nom, cognoms, i marca <em>VIP</em>
+per indicar els que siguin VIP).</li>
+<li>consulta de la llista de comandes (id, data, nom+cognom client,
+import total)</li>
+<li>consulta dels comercials (id, nom+cognom, telèfon)</li>
+<li>llistat de clients no VIP ordenats per quantitat de despesa
+realitzada en els darrers 12 mesos. Permetrà escollir els clients a
+passar a VIP.</li>
+<li>consultes del detall, a partir d'identificador, dels clients. En el
+cas de clients VIP es mostrarà també el detall del seu comercial.</li>
+<li>consultes del detall, a partir d'identificador, de les comandes.
+Es mostrarà el detall de les línies de comandes i productes, així
+com l'identificador i nom + cognoms del client amb una marca <em>VIP</em>
+quan aquest sigui un client VIP, més la data i l'import total.</li>
+<li>modificació, a partir d'identificador, de les dades d'un client
+(VIP o no), una comanda (incloent afegir/eliminar línia de comanda
+sencera), un producte i un comercial.</li>
+<li>conversió d'un client no VIP a VIP tot assignant-li un comercial</li>
+</ol>
+<p>Per simplicitat, es proposa:</p>
+<ul>
+<li><p class="first">carregar tota la informació necessària per satisfer cada petició de
+l'usuari (com si l'aplicació no guardés estat a banda de la
+connexió)</p>
+</li>
+<li><p class="first">realitzar les modificacions completes. És a dir, encara que s'hagi
+modificat només un número de telèfon d'un client, es guarda <strong>tot</strong>
+el client.</p>
+</li>
+<li><p class="first">mostrar en els llistats la informació generada pels mètodes
+<em>toString()</em> corresponents (sense salts de línia i fins una
+llargària màxima de 80 caràcters).  <strong>Pista</strong></p>
+<pre class="literal-block">
+System.out.println(str.replace('\n',' ').substring(0,80));
+</pre>
+</li>
+</ul>
+</div>
+<div class="section" id="exercici-18-prova-de-vendes">
+<h3>Exercici 18.* Prova de Vendes</h3>
+<p>La majoria de les proves a preparar són similars a les que ja has fet
+en els exercicis d'ampliació previs.</p>
+<p>Hi ha, però, una novetat: la prova de l'entorn.</p>
+<p>Per facilitar la
+prova, es recomanable que aconsegueixis deixar molt aïllada la part
+d'intercanvi de dades amb l'usuari. D'aquesta manera, totes les
+operacions que realitzis per analitzar l'entrada de l'usuari i per
+preparar la resposta a aquest, acabaran sent mètodes que reben o
+retornen valors. Fixa't que això fa que siguin molt més fàcils de
+provar en una prova unitària que mètodes que llegeixen/escriuen de/en
+entrada/sortida estàndard.</p>
+<p>Una altra opció, no necessàriament excloent, és que els mètodes que
+llegeixen i escriuen d'entrada/sortida estàndard, ho facin d'un
+<em>stream</em> que pugui ser modificat per la prova. Per exemple, es podria
+afegir propietats de la classe EntornVendes que, per defecte estan
+assignades als canals d'entrada/sortida estàndards però que fent
+servir un constructor concret, passin a fer servir altres <em>streams</em>.</p>
+<hr class="docutils" />
+<p>Notes</p>
+<table class="docutils footnote" frame="void" id="suportstruct" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>En el moment en que es va composar aquest document,
+el driver <em>oficial</em> de PostGreSQL encara no disposava
+d'implementació per la interfície <tt class="docutils literal">java.sql.Struct</tt> que seria la
+que ens aniria bé aquí. Qui no té paciència ha de tenir recursos...</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="regexsimple" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Veureu que s'han realitzat algunes modificacions al
+string que conté la tupla, de manera que l'expressió regular sigui
+més senzilla. Si et ve de gust intentar-ho sense aquests trucs,
+estaré encantat si la vols compartir.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="coalesce" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[3]</a></td><td>Un agraïment per l'alumne Gerardo Galán que tan
+oportunament ens va apuntar cap aquesta solució.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="principispooalterra" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id7">2</a>)</em> Sabem que aquesta no és una bona pràctica en
+programació orientada a objectes. És cert. Les classes
+<em>VendesParser</em> i <em>VendesBD</em> saben <em>massa</em> de les intimitats
+d'altres classes com ara <em>Denominacio</em>. Per tant, estem creant
+dependències important. Amb tot, aquest tipus de classes ens
+permeten agrupar elements complexos en un sol lloc i és una
+pràctica coneguda i molt utilitzada.  Considera-ho com una mena de
+catifa on escombrem la brossa un dia amb pressesa.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="messofisticat" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[5]</a></td><td>Si vols fer-ho més sofisticat, pots codificar
+l'identificador amb un <em>Integer</em> i posar-lo a <em>null</em> quan no
+estigui assignat.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="threadsafe" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[6]</a></td><td>En aquests materials no estem considerant els
+problemes que poden esdevenir d'una execució multifil
+(<em>multithread</em>).</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./jdbc-ii-model-relacional.html">
+        JDBC II. Model relacional
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./jdbc-i-introduccio.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
