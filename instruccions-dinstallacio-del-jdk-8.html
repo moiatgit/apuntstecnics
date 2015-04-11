@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Instruccions d'instal·lació del JDK 8</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Instruccions d'instal·lació del JDK 8             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li class="active"><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>Instruccions d'instal·lació del JDK 8</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/misc.html">
+        misc
+    </a>
+            amb els tags: 
+            <a href="./tag/util.html">util</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document descriu les passes per a instal·lar JDK 8 en una
+màquina GNU/Linux <a class="footnote-reference" href="#provatendebian" id="id1">[1]</a> sense privilegis d'administració.</p>
+<p>En tot moment es pressuposa que faràs servir el JDK des de consola. Si
+el teu objectiu és fer-ho anar amb alguna aplicació com ara un IDE,
+probablement sigui preferible que el configuris des d'aquest.</p>
+</div>
+<div class="section" id="instruccions">
+<h2>Instruccions</h2>
+<p>Descarrega la darrera versió del JDK disponible al lloc de
+<a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">descàrregues d'Oracle</a></p>
+<p>En cas que tinguis dubtes de si la teva màquina funciona amb 32 o 64
+bits, pots comprovar-ho amb la comanda:</p>
+<div class="highlight"><pre><span class="nv">$ </span>uname -m
+</pre></div>
+<p>En el meu cas m'indica <em>x86_64</em> i, per tant, instal·laré la de 64
+bits. En concret l'entrada marcada com <em>jdk-8u40-linux-x64.tar.gz</em>, o
+la versió equivalent que hi hagi en el moment en que ho facis tu.</p>
+<p>Ara toca descomprimir el fitxer en un lloc accessible. Si no tens una
+preferència clara de com i on fer-ho, et proposo les següents passes:</p>
+<ol class="arabic">
+<li><p class="first">des d'una consola, col·locat a la carpeta on has descarregat el
+fitxer anterior.</p>
+<div class="highlight"><pre><span class="nv">$ </span>ls jdk-8u40-linux-x64.tar.gz
+jdk-8u40-linux-x64.tar.gz
+<span class="nv">$ abans</span><span class="o">=</span><span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span>
+<span class="nv">$ </span>mkdir -p ~/soft/jdk
+<span class="nv">$ </span><span class="nb">cd</span> ~/soft/jdk
+<span class="nv">$ </span>tar xzvf <span class="s2">&quot;</span><span class="nv">$abans</span><span class="s2">/jdk-8u40-linux-x64.tar.gz&quot;</span>
+<span class="nv">$ </span>ln -s jdk1.8.0_40 actual
+</pre></div>
+<p>Si has seguit les instruccions, ara disposes d'una instal·lació de
+JDK 8 a la carpeta ~/soft/jdk/actual. Has creat un enllaç simbòlic
+que et permetrà disposar d'altres versions del JDK sense grans
+canvis al teu sistema.</p>
+</li>
+<li><p class="first">Ara caldrà afegir el jdk a la teva variable PATH. Et proposo que
+ho facis al fitxer ~/.bashrc.</p>
+<p>Així doncs, edita el fitxer ~/.bashrc i afegeix al final d'aquest
+la següent línia:</p>
+<div class="highlight"><pre><span class="nv">PATH</span><span class="o">=</span>~/soft/jdk/actual:<span class="nv">$PATH</span>
+</pre></div>
+<p>Finalment guarda els canvis</p>
+</li>
+<li><p class="first">Comprovem que tot ha anat bé</p>
+<p>Obre una nova consola i escriu</p>
+<div class="highlight"><pre><span class="nv">$ </span>javac -version
+javac 1.8.0_40
+<span class="nv">$ </span>java -version
+java version <span class="s2">&quot;1.8.0_40&quot;</span>
+Java<span class="o">(</span>TM<span class="o">)</span> SE Runtime Environment <span class="o">(</span>build 1.8.0_40-b26<span class="o">)</span>
+Java HotSpot<span class="o">(</span>TM<span class="o">)</span> 64-Bit Server VM <span class="o">(</span>build 25.40-b25, mixed mode<span class="o">)</span>
+</pre></div>
+</li>
+</ol>
+<p>Si tot ha anat bé, enhorabona, ja tens el teu flamant JDK 8 instal·lat
+només pel teu usuari sense necessitat de privilegis d'administració.</p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="provatendebian" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>La instal·lació ha estat provada en un Debian
+Wheezy. No hauria de ser molt diferent per altres
+distribucions/versions.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

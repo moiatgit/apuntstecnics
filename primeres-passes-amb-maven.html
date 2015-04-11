@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Primeres passes amb Maven</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Primeres passes amb Maven             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./installacio-de-maven.html">
+        Instal·lació de Maven
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./installacio-de-maven.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+    <div class="page-header"><h1>Primeres passes amb Maven</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/eines.html">
+        eines
+    </a>
+            amb els tags: 
+            <a href="./tag/util.html">util</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>Aquest document et servirà d'introducció a l'us de Maven.</p>
+<p>Crearàs un projecte anomenat <em>holamaven</em> i aprendràs com:</p>
+<ul class="simple">
+<li>compilar-lo</li>
+<li>executar-lo</li>
+<li>llençar proves unitàries</li>
+<li>generar un jar per a ser distribuït</li>
+</ul>
+<p>Et proposo que no et limitis a llegir-lo i executis les passes que et
+proposo.</p>
+</div>
+<div class="section" id="crear-un-projecte-amb-maven">
+<h2>Crear un projecte amb Maven</h2>
+<p>Comencem creant el projecte <em>holamaven</em>.</p>
+<p>Per crear el projecte, anirem a la carpeta on el desenvoluparem (per
+exemple a ~/dev) tot fent:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre></div></td><td class="code"><div class="highlight"><pre> <span class="nv">$ </span><span class="nb">cd</span> ~/dev
+ <span class="nv">$ </span>mvn -B archetype:generate -DarchetypeGroupId<span class="o">=</span>org.apache.maven.archetypes -DgroupId<span class="o">=</span>org.iesjoandaustria.test -DartifactId<span class="o">=</span>holamaven
+ <span class="o">[</span>INFO<span class="o">]</span> Scanning <span class="k">for</span> projects...
+ <span class="o">[</span>INFO<span class="o">]</span>
+ <span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+ <span class="o">[</span>INFO<span class="o">]</span> Building Maven Stub Project <span class="o">(</span>No POM<span class="o">)</span> 1
+ <span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+ <span class="o">[</span>INFO<span class="o">]</span>
+ <span class="o">[</span>INFO<span class="o">]</span> &gt;&gt;&gt; maven-archetype-plugin:2.2:generate <span class="o">(</span>default-cli<span class="o">)</span> &gt; generate-sources @ standalone-pom &gt;&gt;&gt;
+ <span class="o">[</span>INFO<span class="o">]</span>
+ <span class="o">[</span>INFO<span class="o">]</span> <span class="o">&lt;&lt;&lt;</span> maven-archetype-plugin:2.2:generate <span class="o">(</span>default-cli<span class="o">)</span> &lt; generate-sources @ standalone-pom <span class="o">&lt;&lt;&lt;</span>
+ <span class="o">[</span>INFO<span class="o">]</span>
+ <span class="o">[</span>INFO<span class="o">]</span> --- maven-archetype-plugin:2.2:generate <span class="o">(</span>default-cli<span class="o">)</span> @ standalone-pom ---
+ <span class="o">[</span>INFO<span class="o">]</span> Generating project in Batch mode
+ <span class="o">[</span>INFO<span class="o">]</span> No archetype defined. Using maven-archetype-quickstart <span class="o">(</span>org.apache.maven.archetypes:maven-archetype-quickstart:1.0<span class="o">)</span>
+ <span class="o">[</span>INFO<span class="o">]</span> ----------------------------------------------------------------------------
+ <span class="o">[</span>INFO<span class="o">]</span> Using following parameters <span class="k">for</span> creating project from Old <span class="o">(</span>1.x<span class="o">)</span> Archetype: maven-archetype-quickstart:1.0
+ <span class="o">[</span>INFO<span class="o">]</span> ----------------------------------------------------------------------------
+ <span class="o">[</span>INFO<span class="o">]</span> Parameter: basedir, Value: /home/usuari/dev
+ <span class="o">[</span>INFO<span class="o">]</span> Parameter: package, Value: org.iesjoandaustria.test
+ <span class="o">[</span>INFO<span class="o">]</span> Parameter: groupId, Value: org.iesjoandaustria.test
+ <span class="o">[</span>INFO<span class="o">]</span> Parameter: artifactId, Value: holamaven
+ <span class="o">[</span>INFO<span class="o">]</span> Parameter: packageName, Value: org.iesjoandaustria.test
+ <span class="o">[</span>INFO<span class="o">]</span> Parameter: version, Value: 1.0-SNAPSHOT
+ <span class="o">[</span>INFO<span class="o">]</span> project created from Old <span class="o">(</span>1.x<span class="o">)</span> Archetype in dir: /home/usuari/dev/holamaven
+ <span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+ <span class="o">[</span>INFO<span class="o">]</span> BUILD SUCCESS
+ <span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+ <span class="o">[</span>INFO<span class="o">]</span> Total <span class="nb">time</span>: 2.316 s
+ <span class="o">[</span>INFO<span class="o">]</span> Finished at: 2015-04-10T23:18:11+02:00
+ <span class="o">[</span>INFO<span class="o">]</span> Final Memory: 13M/111M
+ <span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+</pre></div>
+</td></tr></table><p>Si tot ha anat correctament, ens haurà generat una nova carpeta
+amb el nom del projecte (<em>holamaven</em>) i dins hi apareix una estructura de directoris habitual en un projecte genèric de Java.</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>holamaven
+<span class="nv">$ </span>tree .
+.
+├── pom.xml
+└── src
+    ├── main
+    │   └── java
+    │       └── org
+    │           └── iesjoandaustria
+    │               └── <span class="nb">test</span>
+    │                   └── App.java
+    └── <span class="nb">test</span>
+        └── java
+            └── org
+                └── iesjoandaustria
+                    └── <span class="nb">test</span>
+                        └── AppTest.java
+
+<span class="m">11</span> directories, <span class="m">3</span> files
+</pre></div>
+<p>El fitxer pom.xml (POM: Project Object Model) conté la descripció del
+projecte en format xml. Maven el farà servir per a realitzar les seves
+tasques. Serà el fitxer que editarem per a afegir/modificar elements
+del nostre projecte.</p>
+<p>Fem una ullada ràpida al seu contingut:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.iesjoandaustria.test<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>holamaven<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;name&gt;</span>holamaven<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</pre></div>
+</td></tr></table><p>Aquest pom.xml generat automàticament està informant a Maven, entre
+d'altres coses, el nom del nostre projecte i el seu package.</p>
+<p>Els dos fitxers font en java contenen bàsicament un &quot;Hola Món!&quot; i una
+prova unitària que segur que passa.</p>
+<p>Mirem org.iesjoandaustria.test.App.java primer:</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nn">org.iesjoandaustria.test</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Hello world!</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span>
+<span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span>
+    <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">&quot;Hello World!&quot;</span> <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Si compiléssim i executéssim aquesta aplicació fent servir les
+utilitats javac i java del JDK, ens respondria amb el ja conegut i
+esperat <em>Hello World!</em>.</p>
+<p>L'altre fitxer correspon a una prova unitària amb junit.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">package</span> <span class="nn">org.iesjoandaustria.test</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">junit.framework.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">junit.framework.TestCase</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">junit.framework.TestSuite</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Unit test for simple App.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppTest</span>
+    <span class="kd">extends</span> <span class="n">TestCase</span>
+<span class="o">{</span>
+    <span class="cm">/**</span>
+<span class="cm">     * Create the test case</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param testName name of the test case</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">AppTest</span><span class="o">(</span> <span class="n">String</span> <span class="n">testName</span> <span class="o">)</span>
+    <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span> <span class="n">testName</span> <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * @return the suite of tests being tested</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Test</span> <span class="nf">suite</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">TestSuite</span><span class="o">(</span> <span class="n">AppTest</span><span class="o">.</span><span class="na">class</span> <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Rigourous Test :-)</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testApp</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">assertTrue</span><span class="o">(</span> <span class="kc">true</span> <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>En executar aquesta prova amb les eines del JDK, ens informaria que ha
+passat el test <em>rigorós</em>.</p>
+<p>Passem a compilar i executar el codi que ens ha generat
+automàticament.</p>
+</div>
+<div class="section" id="compilar-un-projecte-amb-maven">
+<h2>Compilar un projecte amb Maven</h2>
+<p>Per compilar el nostre projecte amb Maven, ens col·locarem en l'arrel
+del directori del projecte (on es troba pom.xml) i executarem:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn compile
+</pre></div>
+<p>Aquesta comanda realitzarà un cert nombre de passes fins acabar amb un
+missatge que tot ha anat bé (<em>BUILD SUCCESS</em>) seguit d'informació
+sobre el temps i la memòria ocupada amb la compilació.</p>
+<p>Si tornem a mirar els continguts del nostre projecte, ens trobarem que
+l'estructura ha crescut:</p>
+<div class="highlight"><pre>.
+├── pom.xml
+├── src
+│   ├── main
+│   │   └── java
+│   │       └── org
+│   │           └── iesjoandaustria
+│   │               └── <span class="nb">test</span>
+│   │                   └── App.java
+│   └── <span class="nb">test</span>
+│       └── java
+│           └── org
+│               └── iesjoandaustria
+│                   └── <span class="nb">test</span>
+│                       └── AppTest.java
+└── target
+    ├── classes
+    │   └── org
+    │       └── iesjoandaustria
+    │           └── <span class="nb">test</span>
+    │               └── App.class
+    └── maven-status
+        └── maven-compiler-plugin
+            └── compile
+                └── default-compile
+                    ├── createdFiles.lst
+                    └── inputFiles.lst
+
+<span class="m">20</span> directories, <span class="m">6</span> files
+</pre></div>
+<p>Ara disposem d'una nova carpeta anomenada <em>target</em> que, dins la
+carpeta <em>classes</em> inclou la compilació de la classe App.</p>
+<div class="section" id="encoding">
+<h3>Encoding</h3>
+<p>Entre la informació que genera Maven, hi ha alguns <em>warnings</em>
+relacionats amb la codificació de caràcters.</p>
+<p>Per exemple, al meu sistema em diu:</p>
+<pre class="literal-block">
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+</pre>
+<p>Per evitar el missatge i les conseqüències de compilar la nostra
+aplicació amb dependència de la plataforma, podem afegir al pom.xml la
+següent propietat (per exemple després de l'element &lt;url&gt;:</p>
+<div class="highlight"><pre><span class="nt">&lt;properties&gt;</span>
+  <span class="nt">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="nt">&lt;/project.build.sourceEncoding&gt;</span>
+<span class="nt">&lt;/properties&gt;</span>
+</pre></div>
+<p>Si tornem a provar a compilar, el missatge d'avís ja no hauria de ser
+generat.</p>
+</div>
+<div class="section" id="versio-de-java">
+<h3>Versió de Java</h3>
+<p>Per defecte, Maven ens compilarà amb Java 5. Per App.java això no
+representa cap problema. Imagina, però, que el teu codi inclou alguna
+característica introduïda a alguna versió posterior (per exemple, una
+sentència <em>try-with-resources</em> introduïda al Java 7).</p>
+<p>Podem especificar la versió del JDK a utilitzar, tot configurant un
+<em>plugin</em> al pom.xml.</p>
+<p>Per fer-ho, afegeix el següent bloc al pom.xml, per exemple, abans de
+definir les dependències:</p>
+<div class="highlight"><pre><span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;plugins&gt;</span>
+        <span class="nt">&lt;plugin&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>3.3<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;source&gt;</span>1.7<span class="nt">&lt;/source&gt;</span>
+                <span class="nt">&lt;target&gt;</span>1.7<span class="nt">&lt;/target&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/plugin&gt;</span>
+    <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="executar-una-classe-amb-maven">
+<h2>Executar una classe amb Maven</h2>
+<p>En compilar, hem vist que Maven ens ha guardat App.class dins de la carpeta <em>target/classes</em> (amb la jerarquia de directoris requerida pel <em>package</em>).
+Podem executar aquesta classe amb les eines estàndards del JDK</p>
+<div class="highlight"><pre><span class="nv">$ </span>java -cp <span class="nv">$CLASSPATH</span>:target/classes/ org.iesjoandaustria.test.App
+Hello World!
+</pre></div>
+<p>I també ho podem fer directament amb Maven. Per suposat, en un exemple
+tan senzill com aquest, no trobarem gaire avantatge, però a mida que
+es compliqui el nostre projecte, agrairem disposar d'una eina que ens
+controli els &quot;petits&quot; detalls de camins, dependències, etc.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>mvn <span class="nb">exec</span>:java -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;org.iesjoandaustria.test.App&quot;</span>
+<span class="o">[</span>INFO<span class="o">]</span> Scanning <span class="k">for</span> projects...
+<span class="o">[</span>INFO<span class="o">]</span>
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Building holamaven 1.0-SNAPSHOT
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span>
+<span class="o">[</span>INFO<span class="o">]</span> &gt;&gt;&gt; <span class="nb">exec</span>-maven-plugin:1.2.1:java <span class="o">(</span>default-cli<span class="o">)</span> &gt; validate @ holamaven &gt;&gt;&gt;
+<span class="o">[</span>INFO<span class="o">]</span>
+<span class="o">[</span>INFO<span class="o">]</span> <span class="o">&lt;&lt;&lt;</span> <span class="nb">exec</span>-maven-plugin:1.2.1:java <span class="o">(</span>default-cli<span class="o">)</span> &lt; validate @ holamaven <span class="o">&lt;&lt;&lt;</span>
+<span class="o">[</span>INFO<span class="o">]</span>
+<span class="o">[</span>INFO<span class="o">]</span> --- <span class="nb">exec</span>-maven-plugin:1.2.1:java <span class="o">(</span>default-cli<span class="o">)</span> @ holamaven ---
+<span class="hll">Hello World!
+</span><span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> BUILD SUCCESS
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+<span class="o">[</span>INFO<span class="o">]</span> Total <span class="nb">time</span>: 0.773 s
+<span class="o">[</span>INFO<span class="o">]</span> Finished at: 2015-04-10T23:59:55+02:00
+<span class="o">[</span>INFO<span class="o">]</span> Final Memory: 9M/110M
+<span class="o">[</span>INFO<span class="o">]</span> ------------------------------------------------------------------------
+</pre></div>
+</td></tr></table><p>Fixa't que entre tota la quantitat d'informació que mostra Maven, a la
+línia 13 apareix la sortida de l'aplicació.</p>
+<p>Si vols que no aparegui tanta informació i només t'avisi dels errors,
+pots fer servir l'opció <em>-q</em>:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -q <span class="nb">exec</span>:java -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;org.iesjoandaustria.test.App&quot;</span>
+Hello World!
+</pre></div>
+<p>Com que és molt probable que aquesta execució la fem sovint, podríem
+informar al pom.xml de quina és la classe principal del projecte.
+Així, inclourem al pom.xml dins de l'element &lt;build&gt;:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre>    <span class="nt">&lt;plugins&gt;</span>
+       <span class="nt">&lt;plugin&gt;</span>
+          <span class="nt">&lt;groupId&gt;</span>org.codehaus.mojo<span class="nt">&lt;/groupId&gt;</span>
+          <span class="nt">&lt;artifactId&gt;</span>exec-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+          <span class="nt">&lt;version&gt;</span>1.2.1<span class="nt">&lt;/version&gt;</span>
+          <span class="nt">&lt;configuration&gt;</span>
+             <span class="nt">&lt;mainClass&gt;</span>org.iesjoandaustria.test.App<span class="nt">&lt;/mainClass&gt;</span>
+          <span class="nt">&lt;/configuration&gt;</span>
+       <span class="nt">&lt;/plugin&gt;</span>
+     <span class="nt">&lt;/plugins&gt;</span>
+</pre></div>
+</td></tr></table><p>Ara podem executar l'aplicació simplement amb:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -q <span class="nb">exec</span>:java
+Hello World!
+</pre></div>
+<p>Maven ens permet especificar més d'un objectiu a l'hora. Per exemple,
+la següent comanda compilarà i, si tot ha anat bé, executarà
+l'aplicació:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -q compile <span class="nb">exec</span>:java
+Hello World!
+</pre></div>
+<p>En cas d'error, Maven ens informarà amb prou detall. Per exemple, si
+editem App.java tot treient-li el punt i coma final de la línia 11,
+ens trobem que:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="nv">$ </span>mvn -q compile <span class="nb">exec</span>:java<span class="o">[</span>ERROR<span class="o">]</span> COMPILATION ERROR :
+<span class="o">[</span>ERROR<span class="o">]</span> /mnt/dades/home/moi/Feina/repositori/ies_2014-15/dev/pg.execicis/holamaven/src/main/java/org/iesjoandaustria/test/App.java:<span class="o">[</span>11,45<span class="o">]</span> <span class="s1">&#39;;&#39;</span> expected
+<span class="o">[</span>ERROR<span class="o">]</span> Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile <span class="o">(</span>default-compile<span class="o">)</span> on project holamaven: Compilation failure
+<span class="o">[</span>ERROR<span class="o">]</span> /mnt/dades/home/moi/Feina/repositori/ies_2014-15/dev/pg.execicis/holamaven/src/main/java/org/iesjoandaustria/test/App.java:<span class="o">[</span>11,45<span class="o">]</span> <span class="s1">&#39;;&#39;</span> expected
+<span class="o">[</span>ERROR<span class="o">]</span> -&gt; <span class="o">[</span>Help 1<span class="o">]</span>
+<span class="o">[</span>ERROR<span class="o">]</span>
+<span class="o">[</span>ERROR<span class="o">]</span> To see the full stack trace of the errors, re-run Maven with the -e switch.
+<span class="o">[</span>ERROR<span class="o">]</span> Re-run Maven using the -X switch to <span class="nb">enable </span>full debug logging.
+<span class="o">[</span>ERROR<span class="o">]</span>
+<span class="o">[</span>ERROR<span class="o">]</span> For more information about the errors and possible solutions, please <span class="nb">read </span>the following articles:
+<span class="o">[</span>ERROR<span class="o">]</span> <span class="o">[</span>Help 1<span class="o">]</span> http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+</pre></div>
+</td></tr></table><p>Fixa't que entre la informació que ens ofereix trobem:</p>
+<ul class="simple">
+<li>a la línia 2 ens descriu l'error. En aquest cas, ha trobat que
+falta un punt i coma a la línia 11 de App.java.</li>
+<li>a les darreres línies ens indica que podem obtenir encara més
+detall si afegim les opcions <em>-e</em> o <em>-X</em>, i fins i tot ens ofereix
+una url amb articles d'ajut per trobar errors i possibles
+solucions!</li>
+</ul>
+<div class="section" id="passar-arguments">
+<h3>Passar arguments</h3>
+<p>Si l'execució de la nostra classe requerís arguments per línia de
+comandes, podem afegir-los a la comanda d'execució amb l'opció:</p>
+<pre class="literal-block">
+-Dexec.args=&quot;arg1 arg2 arg3&quot;
+</pre>
+<p>Per exemple, modifica App.java perquè contingui el següent codi:</p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">&quot;Hello World!&quot;</span> <span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">:</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">s</span> <span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Ara compila i executa:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -q compile <span class="nb">exec</span>:java -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;org.iesjoandaustria.test.App&quot;</span> -Dexec.args<span class="o">=</span><span class="s2">&quot;arg1 arg2 arg3&quot;</span>
+Hello World!
+arg1
+arg2
+arg3
+</pre></div>
+<p>També pots afegir els arguments al pom.xml dins del bloc
+&lt;configuration&gt;, per exemple, després de definir el &lt;mainClass&gt;:</p>
+<div class="highlight"><pre><span class="nt">&lt;arguments&gt;</span>
+   <span class="nt">&lt;argument&gt;</span>arg1<span class="nt">&lt;/argument&gt;</span>
+   <span class="nt">&lt;argument&gt;</span>arg2<span class="nt">&lt;/argument&gt;</span>
+   <span class="nt">&lt;argument&gt;</span>arg3<span class="nt">&lt;/argument&gt;</span>
+<span class="nt">&lt;/arguments&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="executar-les-proves-unitaries-amb-maven">
+<h2>Executar les proves unitàries amb Maven</h2>
+<p>Per executar les proves unitàries amb Maven, farem servir la següent
+comanda <a class="footnote-reference" href="#compteerror" id="id1">[1]</a></p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -q <span class="nb">test</span>
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.iesjoandaustria.test.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+</pre></div>
+<p>Com era d'esperar, el nostre codi passa les proves. L'objectiu <em>test</em>
+provarà d'executar totes les proves del projecte.</p>
+<div class="section" id="un-junit-mes-actual">
+<h3>Un JUnit més actual</h3>
+<p>Si tens molta capacitat d'observació, és possible que te n'hagis
+adonat que estem fent servir una versió una mica antiga de JUnit. En
+el pom.xml està demanant la versió 3.8.1, mentre que la versió
+disponible en el moment en que estic escrivint aquesta guia ja es
+trobava a la 4.12.</p>
+<p>Per fer que Maven faci servir aquesta darrera versió, modificarem el
+pom.xml de manera que la dependència de JUnit quedi com:</p>
+<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>4.12<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+<p>Per a adequar el test a la nova versió, reemplaçarem el contingut de
+AppTest.java per:</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nn">org.iesjoandaustria.test</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">junit.framework.Assert</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AppTest</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testApp</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span> <span class="kc">true</span> <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Si tornem a executar el test, hauria de passar la prova sense
+problemes.</p>
+</div>
+<div class="section" id="afegint-nous-tests">
+<h3>Afegint nous tests</h3>
+<p>Podem afegir nous tests a AppTest.java, però també a nous fitxers.</p>
+<p>En aquest cas, modificarem la classe App.java de manera que contingui
+un nou mètode que puguem provar:</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nn">org.iesjoandaustria.test</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Hello world!</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getGreeting</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Hello World!&quot;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="n">getGreeting</span><span class="o">()</span> <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Ara crearem un nou fitxer de proves al mateix directori de
+AppTest.java amb el següent contingut:</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nn">org.iesjoandaustria.test</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">junit.framework.Assert</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">App2Test</span> <span class="o">{</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testGetGreeting</span><span class="o">()</span>
+    <span class="o">{</span>
+        <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span> <span class="n">App</span><span class="o">.</span><span class="na">getGreeting</span><span class="o">()</span> <span class="o">,</span> <span class="s">&quot;Hello World!&quot;</span> <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Si provem d'executar les proves, aquest cop Maven ens dirà:</p>
+<pre class="literal-block">
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.iesjoandaustria.test.AppTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.367 sec
+Running org.iesjoandaustria.test.App2Test
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+
+Results :
+
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+</pre>
+<p>És a dir, ens ha passat un test per cada fitxer de test.</p>
+<p>Atenció: Per defecte s'espera que els noms dels fitxers de test
+comencin per <em>Test</em> o bé acabin en <em>Test</em> o <em>TestCase</em>.</p>
+<p>Podem executar fitxers concrets de test ambo</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -Dtest<span class="o">=</span>App2Test <span class="nb">test</span>
+</pre></div>
+<p>I fins i tot, seleccionar-los amb comodins:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn -Dtest<span class="o">=</span>*2Test <span class="nb">test</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generar-un-jar-amb-maven">
+<h2>Generar un jar amb Maven</h2>
+<p>Per acabar amb aquesta petita introducció a l'ús de Maven, veurem com
+podem generar un jar amb tota la aplicació, incloent dependències.</p>
+<p>En primer lloc, ens caldrà configurar al pom.xml un plugin per generar
+el jar amb totes les dependències. Sense entrar en detalls, afegirem
+al pom.xml el següent:</p>
+<div class="highlight"><pre>   <span class="nt">&lt;plugin&gt;</span>
+       <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
+       <span class="nt">&lt;configuration&gt;</span>
+           <span class="nt">&lt;archive&gt;</span>
+               <span class="nt">&lt;manifest&gt;</span>
+<span class="hll">                   <span class="nt">&lt;mainClass&gt;</span>org.iesjoandaustria.test.App<span class="nt">&lt;/mainClass&gt;</span>
+</span>               <span class="nt">&lt;/manifest&gt;</span>
+           <span class="nt">&lt;/archive&gt;</span>
+           <span class="nt">&lt;descriptorRefs&gt;</span>
+               <span class="nt">&lt;descriptorRef&gt;</span>jar-with-dependencies<span class="nt">&lt;/descriptorRef&gt;</span>
+           <span class="nt">&lt;/descriptorRefs&gt;</span>
+       <span class="nt">&lt;/configuration&gt;</span>
+   <span class="nt">&lt;/plugin&gt;</span>
+</pre></div>
+<p>Fixa't que cal indicar quina és la classe amb el main() de manera que
+Maven pugui definir correctament el manifest del .jar.</p>
+<p>Ara podem generar el .jar amb la comanda:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn compile assembly:single
+</pre></div>
+<p>Que ens haurà generat el fitxer
+<em>target/holamaven-1.0-SNAPSHOT-jar-with-dependencies.jar</em>.</p>
+<p>Podem portar-nos aquest fitxer a un altre equip amb el jre i
+executar-ho fent:</p>
+<div class="highlight"><pre><span class="nv">$ </span>java -jar holamaven-1.0-SNAPSHOT-jar-with-dependencies.jar
+Hello World!
+</pre></div>
+</div>
+<div class="section" id="conclusions">
+<h2>Conclusions</h2>
+<p>En aquesta breu guia hem vist com realitzar operacions bàsiques amb
+Maven, com ara crear un projecte, configurar diferents aspectes,
+compilar, executar, afegir/modificar dependències, passar jocs de
+prova i generar un .jar amb tota l'aplicació.</p>
+<p>Hi ha moltes coses que han quedat sense explicar d'aquesta utilitat.
+Si vols ampliar els teus coneixements, et proposo que consultis <a class="reference external" href="http://maven.apache.org/">la
+extensa documentació del projecte Maven</a></p>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="compteerror" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Abans de passar les proves, assegura't que has
+corregit l'error que hem introduït al final de l'apartat anterior
+per a veure com informa Maven dels errors de compilació! Ah! i és
+clar, caldrà que recompilis.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./installacio-de-maven.html">
+        Instal·lació de Maven
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./installacio-de-maven.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

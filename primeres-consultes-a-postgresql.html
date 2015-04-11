@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: Primeres consultes a PostGreSQL</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ Primeres consultes a PostGreSQL             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./installacio-del-driver-per-postgresql-amb-maven.html">
+        Instal·lació del driver per PostGreSQL amb maven
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./jdbc-i-introduccio-al-jdbc.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./jdbc-ii-model-relacional.html">
+        JDBC II. Model relacional
+    </a>
+    </li>
+</ul> 
+</div>
+    <div class="page-header"><h1>Primeres consultes a PostGreSQL</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb els tags: 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
+            <a href="./tag/java.html">java</a> 
+            <a href="./tag/jdbc.html">JDBC</a> 
+</div>
+    <div><div class="section" id="introduccio">
+<h2>Introducció</h2>
+<p>En aquesta secció veurem com podem fer unes consultes (molt simples)
+a un servidor de PostGreSQL.</p>
+</div>
+<div class="section" id="consultes">
+<h2>Consultes</h2>
+<p>Per llençar una consulta (<em>query</em>) a la base de dades, JDBC ens
+ofereix les classes <tt class="docutils literal">Statement</tt> i <tt class="docutils literal">PreparedStatement</tt>.</p>
+<p>Considera el següent codi que:</p>
+<ol class="arabic">
+<li><p class="first">importa la classe <em>java.util.Properties</em> per emmagatzemar les dades
+<em>sensibles</em> (usuari i password).</p>
+<p>Amb <tt class="docutils literal">Properties</tt> podem, per exemple, disposar de les dades en
+algun fitxer extern al nostre codi, probablement protegit i <em>fora</em>
+del control de versions.</p>
+</li>
+<li><p class="first">considerem un mètode per a <em>amagar</em> tots els detalls de connexió:
+el <tt class="docutils literal">connecta()</tt>.</p>
+</li>
+<li><p class="first">crea el <em>Statement</em> que permetrà llençar una comanda sql i recollir
+el resultat de la seva interpretació pel SGBD.</p>
+</li>
+<li><p class="first">crea el <em>ResultSet</em> que contindrà el resultat obtingut d'una
+commanda.</p>
+</li>
+<li><p class="first">recupera el resultat</p>
+</li>
+<li><p class="first">tanca els recursos</p>
+</li>
+</ol>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Properties</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SgbdVersion</span> <span class="o">{</span>
+<span class="hll">    <span class="cm">/* (2) realitza la connexió i la retorna */</span>
+</span>    <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">connecta</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+<span class="hll">        <span class="c1">// (1) construcció del conjunt de Properties</span>
+</span>        <span class="n">Properties</span> <span class="n">prop</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Properties</span><span class="o">();</span>
+        <span class="n">prop</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span>  <span class="s">&quot;usuaribd&quot;</span><span class="o">);</span>
+        <span class="n">prop</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&quot;password&quot;</span><span class="o">,</span>  <span class="s">&quot;pass&quot;</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">host</span> <span class="o">=</span> <span class="s">&quot;192.168.56.101&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">bd</span>   <span class="o">=</span> <span class="s">&quot;testbd&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">cadenaConnexio</span> <span class="o">=</span> <span class="s">&quot;jdbc:postgresql://&quot;</span> <span class="o">+</span> <span class="n">host</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">bd</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">cadenaConnexio</span><span class="o">,</span> <span class="n">prop</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+        <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">connecta</span><span class="o">();</span>
+<span class="hll">        <span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span> <span class="c1">// (3) crea un Statement</span>
+</span>        <span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT version()&quot;</span><span class="o">;</span>     <span class="c1">// defineix la query</span>
+<span class="hll">        <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">query</span><span class="o">);</span> <span class="c1">// (4) crea un ResultSet</span>
+</span><span class="hll">        <span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>                             <span class="c1">// (5) recupera el resultat</span>
+</span>        <span class="n">String</span> <span class="n">versio</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Versió: &quot;</span> <span class="o">+</span> <span class="n">versio</span><span class="o">);</span>
+<span class="hll">        <span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>                            <span class="c1">// tanca ResultSet</span>
+</span><span class="hll">        <span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>                            <span class="c1">// tanca Statement</span>
+</span><span class="hll">        <span class="n">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>                          <span class="c1">// tanca connexió</span>
+</span>    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><p>El resultat d'executar aquest programa hauria de mostrar-te la versió
+del servidor de PostGreSQL a la que s'està connectant.</p>
+<div class="section" id="exercici-1-obtencio-de-dades-de-la-connexio">
+<h3>Exercici 1. Obtenció de dades de la connexió</h3>
+<p>Desenvolupa un programa que es connecti a la base de dades <em>testbd</em> i
+obtingui l'adreça (<em>inet address</em>) i el port amb el que es comunica
+el nostre client, i l'adreça i el port del servidor.</p>
+<p><strong>Pista</strong>: Potser voldràs intentar-ho fer amb una única consulta. A la
+línia 22 del codi anterior apareix <tt class="docutils literal">rs.getString(1)</tt>. Aquest <tt class="docutils literal">1</tt>
+indica que el que es vol és la <strong>primera</strong> columna obtinguda.</p>
+</div>
+<div class="section" id="exercici-2-cadena-de-connexio-des-d-un-fitxer">
+<h3>Exercici 2. ★ Cadena de connexió des d'un fitxer</h3>
+<p>Disposar de les dades de connexió, com ara la contrasenya, a un fitxer
+extern al nostre codi té els seus avantatges. Per exemple, pots deixar
+el fitxer fora del control de versions i així, si estàs compartint el
+codi en un lloc públic (ex. <a class="reference external" href="https://github.com/">GitHub</a>) no corres
+risc de compartir <em>massa</em>.</p>
+<p>Considera la api <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/Properties.html">java.util.Properties</a>
+i, amb una mica de recerca, aconsegueix que les dades de la cadena de
+connexió es recullin d'un fitxer de propietats.</p>
+<p>Considera també <a class="reference external" href="http://stackoverflow.com/questions/10885077/where-can-i-store-this-property-for-use-by-maven-and-java">aquesta discussió</a>
+per incorporar les propietats a un projecte gestionat per Maven.</p>
+</div>
+<div class="section" id="exercici-3-dades-de-connexio-protegides">
+<h3>Exercici 3. ★ Dades de connexió protegides</h3>
+<p>El fitxer de propietats que has preparat a l'exercici anterior
+presenta el problema de que la contrasenya apareix <em>oberta</em>. Qualsevol
+que tingui accés al fitxer per lectura, la pot veure. Potser fent
+servir les utilitats de protecció que ofereix el sistema operatiu en
+tindràs prou per &quot;garantir&quot; la seguretat, però de vegades voldràs anar
+una mica més lluny.</p>
+<p>Si aquest és el teu cas, considera algun sistema d'encriptació com el
+que t'ofereix la llibreria com ara <a class="reference external" href="http://www.jasypt.org/">Java Simplified Encryption</a> i crea una nova versió de l'aplicació que
+et permeti protegir encara més aquestes dades tan sensibles.</p>
+</div>
+</div>
+</div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./installacio-del-driver-per-postgresql-amb-maven.html">
+        Instal·lació del driver per PostGreSQL amb maven
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./jdbc-i-introduccio-al-jdbc.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./jdbc-ii-model-relacional.html">
+        JDBC II. Model relacional
+    </a>
+    </li>
+</ul> 
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>

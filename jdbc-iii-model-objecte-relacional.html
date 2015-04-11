@@ -52,6 +52,7 @@
             <h3>Tags</h3>
             <ul>
                 <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
                 <li><a href="./tag/java.html">java</a></li>
                 <li><a href="./tag/programari.html">programari</a></li>
                 <li><a href="./tag/util.html">util</a></li>
@@ -72,7 +73,7 @@
     </li>
 
     <li class="navigation-top">
-    <a href="./jdbc-i-introduccio.html">
+    <a href="./jdbc-i-introduccio-al-jdbc.html">
         inici
     </a>
     </li>
@@ -105,30 +106,6 @@ definició de la relació d'herència entre <em>CLIENTS</em> i <em>CLIENTS_VIP</
 evitar els problemes que provoca el fet que PostGreSQL encara no
 tingui completament implementat aquest concepte a la versió que estem
 treballant.</p>
-<p>La bateria d'exercicis presenta propostes d'ampliació (exercicis
-marcats amb un asterisc). Bàsicament es poden resumir en:</p>
-<ul>
-<li><p class="first">agrupament del codi en <em>packages</em></p>
-<p>Pot resultar una mica més incòmode a l'hora de compilar i executar,
-especialment si no estàs fent servir un IDE, però és una forma molt
-habitual de treballar. Si disposes de prou temps, pots investigar el
-funcionament de <a class="reference external" href="http://ant.apache.org/">ant</a>, una utilitat amb un
-objectiu similar al del <em>make</em> de C, que et podria simplificar la
-compilació a una única comanda.</p>
-</li>
-<li><p class="first">gestió de versions mitjançant git</p>
-<p>En realitat no incorpora una feina extra i és molt recomanable
-tenint en compte que alguns exercicis et demanaran que reorganitzis
-codi d'exercicis previs.</p>
-</li>
-<li><p class="first">creació de jocs de prova unitària</p>
-<p>Per afavorir la claredat, aquests exercicis apareixen després de
-l'element a provar. Si tens interès per provar el desenvolupament
-TDD (<em>Test Driven Development</em>) et proposo que abans de començar a
-desenvolupar un exercici miris si el següent inclou la descripció
-de la seva prova.</p>
-</li>
-</ul>
 </div>
 <div class="section" id="jdbc-sobre-sgbdor">
 <h2>JDBC sobre SGBDOR</h2>
@@ -153,43 +130,23 @@ convenientment en diferents calaixos especialment destinats per
 cadascun d'aquests. Tot plegat, per l'endemà haver de tornar a
 desmuntar els blocs i, ja fora del garatge, tornar a muntar tot el
 vehicle de nou a partir de les peces si el vols tornar a conduir.</blockquote>
-<p>Diferents esforços s'estan fent per treure'ns als desenvolupadors
-d'aquesta feixuga tasca de muntatge i desmuntatge dels nostres
-objectes a i des de les nostres entitats. Considera per exemple
-<a class="reference external" href="http://ca.wikipedia.org/wiki/Hibernate">Hibernate</a>. Amb tot, encara
-molts desenvolupaments es realitzen <em>a ma</em>. En el nostre cas, ho tenim
-justificat en voler fer servir funcionalitats objecte-relacional que
+<p>S'estan fent diferents esforços per estalviar-nos als desenvolupadors
+la feixuga tasca de muntatge i desmuntatge dels nostres objectes i
+entitats. Considera per exemple <a class="reference external" href="http://ca.wikipedia.org/wiki/Hibernate">Hibernate</a>. Amb tot, encara molts
+desenvolupaments es realitzen <em>a ma</em>. En el nostre cas, estem obligats
+a fer-ho manualment, ja que les funcionalitats objecte-relacional que
 encara no disposen de prou suport.</p>
-<p>En el moment en que es composava aquest document, el JDBC per
+<p>En el moment en que escric aquest document, el JDBC per
 PostGreSQL no es troba completament implementat (especialment per la
 part que toca a les funcionalitats Objecte-Relacionals). Per aquesta
 raó, ens haurem de mantenir en un nivell encara més <em>manual</em> del que
 ens ofereix la definició del JDBC.</p>
 <div class="section" id="exercici-1-preparacio">
-<h3>Exercici 1.* Preparació</h3>
+<h3>Exercici 1. Preparació</h3>
 <p>Començarem aquest bloc d'exercicis preparant l'entorn de
-desenvolupament una mica.</p>
-<p>En concret voldrem:</p>
-<ul class="simple">
-<li>crear un directori anomenat per exemple <em>projectevendes</em>/.</li>
-<li>iniciar un projecte git en aquest directori. Per cada exercici que
-realitzem farem com a mínim un <em>commit</em>. Finalment podrem agrupar
-totes les versions dins la branca mestra amb un <em>bundle</em>.</li>
-<li>crear un directori anomenat <em>src</em> que contindrà el codi font, i dins
-un directori <em>org/iesjoandaustria/«elteunom»/vendes</em> que
-correspondrà a l'arbre de directoris del <em>package</em> de les classes
-que desenvoluparàs en aquest bloc d'exercicis.</li>
-<li>crear un directori anomenat <em>test</em> que contindrà el codi de test de
-<em>junit</em> que vagis preparant per provar diferents classes que
-generis en aquest bloc.</li>
-<li>crear un directori anomenat <em>build</em> que contindrà els <tt class="docutils literal">.class</tt> que
-es generin a la compilació. D'aquesta manera podràs tenir separats
-els codis font i compilat. Recorda que hi ha alguna opció de
-<tt class="docutils literal">javac</tt> que permet definir on deixar el resultat de la compilació.</li>
-</ul>
-<p>Aquest exercici és opcional però molt recomanable si vols practicar
-conceptes de <em>packages</em>, testeig i control de versions. Pots decidir
-implementar-ho totalment o parcialment.</p>
+desenvolupament.</p>
+<p>En concret voldrem crear un projecte Maven anomenat <em>vendes</em> que
+gestionarem amb <em>git</em>.</p>
 </div>
 <div class="section" id="implementacio-d-un-enumerat">
 <h3>Implementació d'un enumerat</h3>
@@ -429,7 +386,7 @@ potser voldràs mirar-te primer l'exercici següent i començar per la
 prova.</p>
 </div>
 <div class="section" id="exercici-5-test-de-parsers">
-<h3>Exercici 5.* Test de parsers</h3>
+<h3>Exercici 5. ★ Test de parsers</h3>
 <p>Desenvolupa un codi de test pels dos mètodes <em>parser</em>.</p>
 <p>Hi pots testar que els dos mètodes retornin una denominació / un
 telèfon correctes a partir de tuples controlades pel test.</p>
@@ -531,7 +488,7 @@ per destriar els camps de l'adreça, i el segon per les diferents
 línies del carrer.</p>
 </div>
 <div class="section" id="exercici-6-test-de-composicio-i-parser">
-<h3>Exercici 6.* Test de composició i parser</h3>
+<h3>Exercici 6. ★ Test de composició i parser</h3>
 <p>Desenvolupa codi de test per comprovar el funcionament dels mètodes
 <em>composaCarrer()</em>, <em>composaAdressa()</em> i <em>parseAdressa()</em>.</p>
 <p>És clar, si trobes un error de funcionament al codi que et
@@ -639,7 +596,7 @@ depuració. Considera la classe <a class="reference external" href="http://docs.
 </ol>
 </div>
 <div class="section" id="exercici-8-test-de-carrega-de-comercial">
-<h3>Exercici 8.* Test de càrrega de comercial</h3>
+<h3>Exercici 8. ★ Test de càrrega de comercial</h3>
 <p>El desenvolupament d'aquest test pot ser una mica <em>peculiar</em> ja que
 haurem de tractar amb la base de dades i sabem, per la resposta del
 mestre Flying Feathers a <a class="reference external" href="http://www.agitar.com/downloads/TheWayOfTestivus.pdf">The way of Testivus</a> a la secció
@@ -672,7 +629,7 @@ del seu identificador de la base de dades i retorna una instància de
 <em>Client</em>.</p>
 </div>
 <div class="section" id="exercici-10-test-de-carrega-de-client">
-<h3>Exercici 10.* Test de càrrega de client</h3>
+<h3>Exercici 10. ★ Test de càrrega de client</h3>
 <p>Afegeix el codi de prova per comprovar el funcionament del teu codi.</p>
 </div>
 <div class="section" id="exercici-11-carregant-clients">
@@ -769,7 +726,7 @@ aquest exercici.</p>
 estàndard. No oblidis de tancar la connexió en finalitzar.</p>
 </div>
 <div class="section" id="exercici-12-test-de-carrega-de-clients">
-<h3>Exercici 12.* Test de càrrega de clients</h3>
+<h3>Exercici 12. ★ Test de càrrega de clients</h3>
 <p>Probablement els canvis anteriors et requeriran reorganitzar el codi
 de les teves proves. A més a més, segurament hi ha nous elements que
 voldràs provar.</p>
@@ -850,7 +807,7 @@ VIP.</p>
 distingir quina mena de client t'arriba a <em>UsaClient</em>.</p>
 </div>
 <div class="section" id="exercici-14-test-de-carrega-de-clients-vip">
-<h3>Exercici 14.* Test de càrrega de clients VIP</h3>
+<h3>Exercici 14. ★ Test de càrrega de clients VIP</h3>
 <p>Ja saps: codifica la prova del mètode o mètodes anteriors.</p>
 </div>
 <div class="section" id="guardant-clients">
@@ -948,7 +905,7 @@ private int insertElementBd(String sql) throws SQLException {
 com es modifica un d'existent.</p>
 </div>
 <div class="section" id="exercici-16-test-de-guardar-client">
-<h3>Exercici 16.* Test de guardar client</h3>
+<h3>Exercici 16. ★ Test de guardar client</h3>
 <p>Aquí també hauràs de fer una prova amb la base de dades. En aquest
 cas, però, inicialment segurament voldràs assegurar-te que el client
 que vols guardar encara no hi sigui.</p>
@@ -1000,7 +957,7 @@ System.out.println(str.replace('\n',' ').substring(0,80));
 </ul>
 </div>
 <div class="section" id="exercici-18-prova-de-vendes">
-<h3>Exercici 18.* Prova de Vendes</h3>
+<h3>Exercici 18. ★ Prova de Vendes</h3>
 <p>La majoria de les proves a preparar són similars a les que ja has fet
 en els exercicis d'ampliació previs.</p>
 <p>Hi ha, però, una novetat: la prova de l'entorn.</p>
@@ -1018,8 +975,10 @@ llegeixen i escriuen d'entrada/sortida estàndard, ho facin d'un
 afegir propietats de la classe EntornVendes que, per defecte estan
 assignades als canals d'entrada/sortida estàndards però que fent
 servir un constructor concret, passin a fer servir altres <em>streams</em>.</p>
-<hr class="docutils" />
-<p>Notes</p>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes</h2>
 <table class="docutils footnote" frame="void" id="suportstruct" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -1076,7 +1035,6 @@ problemes que poden esdevenir d'una execució multifil
 </table>
 </div>
 </div>
-</div>
 <div class="well small">
 <ul id="navigation"> 
     <li class="navigation-prev">
@@ -1086,7 +1044,7 @@ problemes que poden esdevenir d'una execució multifil
     </li>
 
     <li class="navigation-top">
-    <a href="./jdbc-i-introduccio.html">
+    <a href="./jdbc-i-introduccio-al-jdbc.html">
         inici
     </a>
     </li>

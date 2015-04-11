@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Apunts tècnics: Introducció al <em>Refactoring</em></title>
+<title>Apunts tècnics: JDBC I. Introducció al JDBC</title>
 <meta name="description" content="">
 <meta name="author" content="Moisès Gómez Girón">
 
@@ -26,7 +26,7 @@
     <div class="topbar-inner">
         <div class="container-fluid">
             <a class="brand" href="./">[Apunts tècnics]
- Introducció al <em>Refactoring</em>             </a>
+ JDBC I. Introducció al JDBC             </a>
         </div>
     </div>
 </div>
@@ -41,8 +41,8 @@
             -->
             <h3>Categories</h3>
             <ul>
-                <li ><a href="./category/bd.html">bd</a></li>
-                <li class="active"><a href="./category/dev.html">dev</a></li>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
                 <li ><a href="./category/eines.html">eines</a></li>
                 <li ><a href="./category/misc.html">misc</a></li>
                 <li ><a href="./category/poo.html">poo</a></li>
@@ -69,71 +69,64 @@
 
 
     <li class="navigation-next">
-    <a href="./refactoring-que-es.html">
-        Refactoring: què és
+    <a href="./que-es-jdbc.html">
+        Què és JDBC
     </a>
     </li>
 </ul> 
 </div>
-    <div class="page-header"><h1>Introducció al <em>Refactoring</em></h1></div>
+    <div class="page-header"><h1>JDBC I. Introducció al JDBC</h1></div>
 <div class="well small">
     Entrada ubicada a la categoria
-    <a href="./category/dev.html">
-        dev
+    <a href="./category/bd.html">
+        bd
     </a>
             amb els tags: 
-            <a href="./tag/programari.html">programari</a> 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
             <a href="./tag/java.html">java</a> 
+            <a href="./tag/jdbc.html">JDBC</a> 
 </div>
-    <div><div class="section" id="introduccio">
-<h2>Introducció</h2>
-<p>En aquesta sèrie d'entrades tindrem una primera aproximació al
-concepte de <em>refacció</em>, més conegut directament amb el nom en anglès:
-<em>refàctoring</em>.</p>
-<p>El tema es presentarà tot seguint un exemple.</p>
-</div>
-<div class="section" id="requeriments">
-<h2>Requeriments</h2>
-<p>Per seguir aquests continguts amb el màxim d'aprofitament et caldran
-coneixements de programació orientada a objectes en Java i UML, així
-com utilització del gestor de versions Git i del entorn de prova
-unitària JUnit.</p>
-</div>
-<div class="section" id="recomanacions">
-<h2>Recomanacions</h2>
-<p>Per a poder extreure el màxim d'aquests continguts, considera les
-següents recomanacions:</p>
-<ul class="simple">
-<li>Si estàs fent servir un IDE que ofereixi suport per la refacció, et
-proposo que pels següents exercicis <strong>no facis</strong> servir aquesta
-funcionalitat. D'aquesta manera aconseguiràs un coneixement molt més
-profund del tema que el que obtindries amb simplement veure els
-resultats.</li>
-<li>Realitza els exercicis de manera seqüencial. Evidentment, si
-descobreixes alguna cosa posteriorment hi pots tornar a un exercici
-anterior. Evita, però, començar a realitzar un exercici després
-d'haver llegit continguts posteriors.</li>
+    <div><div class="section" id="introducio">
+<h2>Introdució</h2>
+<p>Amb aquests continguts treballarem la manera de comunicar els nostres
+programes orientats a objecte amb les nostres bases de dades objecte
+relacionals.</p>
+<p>Les tecnologies concretes que farem servir són el JDK 7 i PostGreSQL
+9.4 <a class="footnote-reference" href="#potseraltrestambe" id="id1">[1]</a>. Els continguts pressuposen que tens prou
+nocions d'aquestes dues tecnologies.</p>
+<p>Els continguts es poden dividir en tres parts:</p>
+<ul>
+<li><p class="first">una primera part d'introducció al JDBC (<a class="reference external" href="./que-es-jdbc.html">què és</a>, <a class="reference external" href="./installacio-directa-del-driver-per-postgresql.html">instal·lació</a> i <a class="reference external" href="./primeres-consultes-a-postgresql.html">primeres nocions d'ús</a>)</p>
+<p>S'aprofitarà aquesta part per introduir una nova eina pels nostres
+desenvolupaments: el Apache Maven.</p>
+</li>
+<li><p class="first">una <a class="reference external" href="./jdbc-ii-model-relacional.html">segona part</a> en la que
+analitzarem, a partir d'exemples, el funcionament del JDBC amb un
+model purament relacional.</p>
+</li>
+<li><p class="first">finalment, a la <a class="reference external" href="./jdbc-iii-model-objecte-relacional.html">tercera part</a>
+d'aquesta introducció analitzarem el funcionament amb les diferents
+característiques objecte-relacional que ens ofereix PostGreSQL.</p>
+</li>
 </ul>
-<p>Per començar, passa a la següent <a class="reference external" href="./refactoring-que-es.html">entrada</a></p>
+<p>En el títol d'alguns dels exercicis d'aquest tema, apareix una marca
+(★). Aquesta estrella indica que l'exercici és d'ampliació o repàs.
+Els exercicis sense marca estan dissenyats per què disposis d'una
+referència bàsica de que has entès els continguts.</p>
 </div>
-<div class="section" id="referencies">
-<h2>Referències</h2>
-<p>Aquests continguts estan basats en moltes fonts. Faré referència
-especial a:</p>
-<table class="docutils citation" frame="void" id="fowler" rules="none">
+<div class="section" id="notes">
+<h2>Notes</h2>
+<table class="docutils footnote" frame="void" id="potseraltrestambe" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[FOWLER]</td><td>Fowler, Martin (1999) <em>Refactoring: Improving the Design of Existing
-Code</em>.  Addison-Wesley Professional.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Altres versions funcionaran molt probablement
+sense grans canvis.</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="martin" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[MARTIN]</td><td>Martin, Robert C. (2009) <em>Clean Code: A Handbook of Agile Software
-Craftmanship</em>. Prentice Hall.</td></tr>
-</tbody>
-</table>
+<!-- XXX TODO: possa un enllaç en cada apartat per que serveixi d'index.
+reanomena els nous fitxers
+reset les dates
+posa entre asteriscs driver, Maven, i PostGreSQL -->
 </div>
 </div>
 <div class="well small">
@@ -141,8 +134,8 @@ Craftmanship</em>. Prentice Hall.</td></tr>
 
 
     <li class="navigation-next">
-    <a href="./refactoring-que-es.html">
-        Refactoring: què és
+    <a href="./que-es-jdbc.html">
+        Què és JDBC
     </a>
     </li>
 </ul> 
