@@ -99,13 +99,8 @@ relacionals.</p>
 comunicar-nos amb una base de dades que implementi elements
 d'Objecte-Relacional.</p>
 <p>Els continguts pressuposen que disposes de la base de dades presentada
-als <a class="reference external" href="./comparacio-models-relacional-i-objecte-relacionals-segona-part.html">continguts sobre el model objecte relacional</a>. S'afegirà un
-<em>lleuger</em> canvi a la definició de les claus primàries de les diferents
-taules (passaran a ser <em>SERIAL</em>) i un de <em>no tan lleuger</em> a la
-definició de la relació d'herència entre <em>CLIENTS</em> i <em>CLIENTS_VIP</em> per
-evitar els problemes que provoca el fet que PostGreSQL encara no
-tingui completament implementat aquest concepte a la versió que estem
-treballant.</p>
+als <a class="reference external" href="./comparacio-models-relacional-i-objecte-relacionals-segona-part.html">continguts sobre el model objecte relacional</a>. Es realitzarà
+uns <em>lleugers</em> canvis que es descriuen a diferents exercicis.</p>
 </div>
 <div class="section" id="jdbc-sobre-sgbdor">
 <h2>JDBC sobre SGBDOR</h2>
@@ -141,13 +136,6 @@ PostGreSQL no es troba completament implementat (especialment per la
 part que toca a les funcionalitats Objecte-Relacionals). Per aquesta
 raó, ens haurem de mantenir en un nivell encara més <em>manual</em> del que
 ens ofereix la definició del JDBC.</p>
-<div class="section" id="exercici-1-preparacio">
-<h3>Exercici 1. Preparació</h3>
-<p>Començarem aquest bloc d'exercicis preparant l'entorn de
-desenvolupament.</p>
-<p>En concret voldrem crear un projecte Maven anomenat <em>vendes</em> que
-gestionarem amb <em>git</em>.</p>
-</div>
 <div class="section" id="implementacio-d-un-enumerat">
 <h3>Implementació d'un enumerat</h3>
 <p>Els enumerats de PostGreSQL es corresponen molt còmodament amb els
@@ -185,6 +173,17 @@ public enum Tractament {
 <p>Fixa't que aquest enumerat ofereix el mètode <em>fromString()</em> que,
 donada una representació en forma de String, retorna el valor
 corresponent de l'enumerat.</p>
+</div>
+<div class="section" id="exercici-1-modificacio-del-model-de-dades">
+<h3>Exercici 1. Modificació del model de dades</h3>
+<p>Realitza les següents modificacions al model de dades:</p>
+<ul class="simple">
+<li>en la definició de les claus primàries de les diferents taules
+passaran a ser <em>SERIAL</em>. D'aquesta manera no caldrà que ens
+preocupem de gestionar els identificadors.</li>
+<li>les entitats CLIENTS i COMERCIALS disposaran d'un nou camp (nif) que
+no podrà ser nul ni repetit.</li>
+</ul>
 </div>
 <div class="section" id="exercici-2-el-tipustelefon">
 <h3>Exercici 2. El TipusTelefon</h3>
@@ -912,69 +911,305 @@ que vols guardar encara no hi sigui.</p>
 </div>
 <div class="section" id="exercici-17-entorn-operatiu-de-vendes">
 <h3>Exercici 17. Entorn operatiu de Vendes</h3>
-<p>Desenvolupa una aplicació que ofereixi la possibilitat d'administrar
-clients (incloent VIPs), comercials, comandes i productes</p>
-<p>Inclou:</p>
-<ol class="arabic simple">
-<li>altes i baixes de Clients (incloent VIPs), Comandes, Productes i
-Comercials.</li>
-<li>consulta de la llista de clients (id, nom, cognoms, i marca <em>VIP</em>
-per indicar els que siguin VIP).</li>
-<li>consulta de la llista de comandes (id, data, nom+cognom client,
-import total)</li>
-<li>consulta dels comercials (id, nom+cognom, telèfon)</li>
-<li>llistat de clients no VIP ordenats per quantitat de despesa
-realitzada en els darrers 12 mesos. Permetrà escollir els clients a
-passar a VIP.</li>
-<li>consultes del detall, a partir d'identificador, dels clients. En el
-cas de clients VIP es mostrarà també el detall del seu comercial.</li>
-<li>consultes del detall, a partir d'identificador, de les comandes.
-Es mostrarà el detall de les línies de comandes i productes, així
-com l'identificador i nom + cognoms del client amb una marca <em>VIP</em>
-quan aquest sigui un client VIP, més la data i l'import total.</li>
-<li>modificació, a partir d'identificador, de les dades d'un client
-(VIP o no), una comanda (incloent afegir/eliminar línia de comanda
-sencera), un producte i un comercial.</li>
-<li>conversió d'un client no VIP a VIP tot assignant-li un comercial</li>
-</ol>
-<p>Per simplicitat, es proposa:</p>
-<ul>
-<li><p class="first">carregar tota la informació necessària per satisfer cada petició de
-l'usuari (com si l'aplicació no guardés estat a banda de la
-connexió)</p>
-</li>
-<li><p class="first">realitzar les modificacions completes. És a dir, encara que s'hagi
-modificat només un número de telèfon d'un client, es guarda <strong>tot</strong>
-el client.</p>
-</li>
-<li><p class="first">mostrar en els llistats la informació generada pels mètodes
-<em>toString()</em> corresponents (sense salts de línia i fins una
-llargària màxima de 80 caràcters).  <strong>Pista</strong></p>
+<p>Crea un nou projecte amb Maven anomenat <em>vendes</em> que ofereixi
+una senzilla consola que mostri el <em>prompt</em>:</p>
 <pre class="literal-block">
-System.out.println(str.replace('\n',' ').substring(0,80));
+[vendes]:
+</pre>
+<p>L'aplicació oferirà les següents opcions:</p>
+<ul>
+<li><p class="first">help</p>
+<p>mostra la llista de comandes vàlides</p>
+</li>
+<li><p class="first">list «element»</p>
+<p>On «element» pot ser un dels següents valors: clients, vips, comandes, comercials, productes.</p>
+<p>Mostra la llista de clients, clients vip, comandes, comercials o
+productes.</p>
+<p>En cas que no hi hagi cap element dels demanats, l'aplicació
+ho indicarà amb el missatge:</p>
+<pre class="literal-block">
+No s'ha trobat cap «element»
+</pre>
+<p>En cas que es demani un tipus d'element que no correspongui amb un
+dels cinc indicats, l'aplicació mostrarà el missatge:</p>
+<pre class="literal-block">
+Element «element»
+</pre>
+<p>A l'hora de mostrar els clients, es farà omplint la següent
+plantilla per cada client:</p>
+<pre class="literal-block">
+Client [ «nif» ]: «tractament» «nom» «cognom»
+    Tel.: «tipus» «prefix» «nr.»
+          «tipus» «prefix» «nr.»
+          «...»
+    Adr.: «primera línia carrer»
+          «segona línia carrer»
+          «...»
+          «codi postal» «ciutat»
+          «país»
+</pre>
+<p>A l'hora de mostrar els clients VIP, la plantilla serà molt similar
+a la de clients:</p>
+<pre class="literal-block">
+Client VIP [ «nif» ]: «tractament» «nom» «cognom»
+    Tel.: «tipus» «prefix» «nr.»
+          «tipus» «prefix» «nr.»
+          «...»
+    Adr.: «primera línia carrer»
+          «segona línia carrer»
+          «...»
+          «codi postal» «ciutat»
+          «país»
+    Comercial: «tractament» «nom» «cognom»
+</pre>
+<p>Quan el client demana mostrar la llista de clients, apareixeran
+barrejats tant
+els clients VIPs com els que no ho siguin. Amb tot, els clients VIPs
+es mostraran amb la seva pròpia plantilla.</p>
+<p>Els comercials es mostraran segons la plantilla:</p>
+<pre class="literal-block">
+Comercial:
+</pre>
+<p>Les comandes es mostraran segons la plantilla
+<a class="footnote-reference" href="#simplicitatidcomanda" id="id8">[7]</a>:</p>
+<pre class="literal-block">
+Comanda [«id»]
+    data: «dia/mes/any»
+    client: [«nif»]: «tractament» «nom» «cognom»
+    detall:
+         nr  producte       quantitat   preu unit      import
+        001: «nom producte» «quantitat» «preu unitari» «import»
+        002: «nom producte» «quantitat» «preu unitari» «import»
+        «...»
+    import total: «import total de la comanda»
+</pre>
+<p>En el cas dels productes, es mostraran segons la plantilla
+<a class="footnote-reference" href="#simplicitatidproducte" id="id9">[8]</a>:</p>
+<pre class="literal-block">
+Producte [«id»]: «nom»
+    preu unitari: «preu»
+    estoc: «estoc»
 </pre>
 </li>
+<li><p class="first">add client</p>
+<p>Permet donar d'alta un client. L'aplicació demanarà interactivament
+les següents dades tot indicant el nom de la dada seguit de dos
+punts.</p>
+<ul class="simple">
+<li>nif:</li>
+<li>nom:</li>
+<li>cognoms:</li>
+<li>telèfon 1<ul>
+<li>tipus de telèfon (m: mòbil, i: fix, a: fax, x: finalitzar telèfon)</li>
+<li>prefix:</li>
+<li>número:</li>
 </ul>
+</li>
+<li>telèfon 2<ul>
+<li>«...»</li>
+</ul>
+</li>
+<li>adreça<ul>
+<li>carrer (introduir línies amb la darrera en blanc per finalitzar):</li>
+<li>codi postal:</li>
+<li>ciutat:</li>
+<li>país:</li>
+</ul>
+</li>
+</ul>
+<p>En cas que el nif proporcionat pertanyi a un client existent,
+s'indicarà l'error i se li permetrà corregir o cancel·lar l'alta:</p>
+<pre class="literal-block">
+Ja existeix un client amb aquest nif. e: editar, c: cancelar
+</pre>
+<p>En el moment en que l'usuari indiqui 'x' al tipus de telèfon, ja no
+se li demanarà més dades de telèfon.</p>
+<p>Es requerirà especificar al menys un telèfon.</p>
+<p>En el moment en que l'usuari introdueixi una línia en blanc, es
+considerarà finalitzada la introducció de línies de carrer.</p>
+<p>Es requerirà especificar al menys una línia de carrer.</p>
+<p>Un cop obtingudes totes les dades, es mostraran (segons plantilla de
+client) i es demanarà confirmació amb el missatge:</p>
+<pre class="literal-block">
+Procedir als canvis (s: sí, e: editar, c: cancelar)
+</pre>
+<p>En cas que l'usuari respongui 's', es donarà d'alta el client i, si
+tot ha anat correcte, mostrarà el missatge:</p>
+<pre class="literal-block">
+D'acord
+</pre>
+<p>En cas que la resposta sigui 'c', es mostrarà el missatge:</p>
+<pre class="literal-block">
+Cap canvi
+</pre>
+<p>Finalment, per qualsevol altra resposta es procedirà a editar les
+dades del client (veure opció <em>edit</em>)</p>
+</li>
+<li><p class="first">set client «nif client» as vip «nif comercial»</p>
+<p>Converteix un client estàndard a VIP, o si ja ho era, li assigna un
+nou comercial.</p>
+<p>En cas que el nif del client no correspongui a cap client de la base
+de dades, es mostrarà el missatge:</p>
+<pre class="literal-block">
+No es troba cap client amb el nif «nif client»
+</pre>
+<p>De la mateixa manera, si no es troba cap comercial amb el nif
+indicat, es mostrarà el missatge:</p>
+<pre class="literal-block">
+No es troba cap comercial amb el nif «nif client»
+</pre>
+<p>En cas d'error, se li mostrarà l'opció de tornar a intentar-ho o bé
+cancel·lar la comanda:</p>
+<pre class="literal-block">
+Premi r per reintentar o c per cancel·lar.
+</pre>
+<p>Un cop es disposi de totes les dades correctes, es mostrarà els
+canvis a realitzar (plantilla client VIP) i es demanarà confirmació:</p>
+<pre class="literal-block">
+Aplicar els canvis (s: sí, c: cancel·lar)
+</pre>
+<p>Es respondrà de la manera especificada a la confirmació de l'alta de
+client.</p>
+</li>
+<li><p class="first">unset vip «nif»</p>
+<p>Converteix un client vip a un client normal. És a dir, s'elimina
+l'associació del client amb un comercial.</p>
+<p>En cas que el client no sigui vip, s'indicarà amb el missatge:</p>
+<pre class="literal-block">
+El client no era vip
+</pre>
+<p>Altrament, es demanarà confirmació:</p>
+<pre class="literal-block">
+Fer que el client deixi de ser vip (s: sí, c: cancelar)
+</pre>
+</li>
+<li><p class="first">add comanda</p>
+<p>Permet afegir una nova comanda.</p>
+<p>Demanarà interactivament les dades de la comanda:</p>
+<ul class="simple">
+<li>nif del client:</li>
+<li>data («data actual»):</li>
+<li>línies de comanda:<ul>
+<li>producte línia 001 (blanc per finalitzar):</li>
+<li>quantitat</li>
+</ul>
+</li>
+</ul>
+<p>En cas que el nif proporcionat no correspongui a un client conegut
+es mostrarà el missatge d'error corresponent com a l'opció
+de convertir client a client vip.</p>
+<p>En quan a la data, es proposarà la data d'avui (en format
+dia/mes/any). Si l'usuari prem enter (cadena en blanc), es
+considerarà que accepta la data proposada.</p>
+<p>El producte de les línies de comanda s'especificarà mitjançant
+l'identificador de producte. Si no es troba cap producte amb aquest
+id, s'indicarà l'error amb el missatge:</p>
+<pre class="literal-block">
+No es troba cap producte amb l'identificador «id»
+</pre>
+</li>
+<li><p class="first">add «element»</p>
+<p>On element pot ser comercial o producte.</p>
+<p>La interacció és molt similar a afegir client</p>
+</li>
+<li><p class="first">edit client «nif»</p>
+<p>Permet modificar qualsevol de les dades de client (excepte l'id
+intern)</p>
+<p>En cas que el nif no correspongui a cap client, es mostrarà el
+missatge d'error corresponent. Si l'usuari vol tornar-ho a intentar,
+haurà de tornar a llençar la comanda un altre cop.</p>
+<p>Demanarà cada dada pel seu nom, seguit del valor actual entre
+parèntesis. D'aquesta manera, si l'usuari vol, pot respondre en
+blanc per conservar el valor previ. Per exemple, amb el nif:</p>
+<pre class="literal-block">
+nif («nif actual»):
+</pre>
+<p>Finalment es procedirà a mostrar les dades recollides i a demanar
+confirmació a l'estil de l'alta de client.</p>
+<p>Per simplicitat, encara que el client correspongui a un client VIP,
+no es permetrà editar el nif del comercial associat.</p>
+<p>En cas que aparegui algun error (ex. el nou nif correspongui a un
+altre client) es mostrarà el missatge d'error corresponent.</p>
+</li>
+<li><p class="first">edit «element» «id»</p>
+<p>Permet editar les dades d'una comanda, comercial o producte.</p>
+<p>En cas de ser un comercial, «id» es refereix al seu nif.</p>
+<p>El comportament és molt similar al de la modificació de client.</p>
+</li>
+<li><p class="first">del «element» «id»</p>
+<p>Permet eliminar un client, comercial, producte o comanda.</p>
+<p>En cas que l'element sigui un client o un comercial, «id» es
+refereix al seu nif.</p>
+<p>En cas que no es pugui trobar cap element amb aquest identificador,
+es mostrarà el missatge d'error corresponent seguit del prompt.</p>
+<p>En cas que s'hagi trobat l'element a eliminar, es mostrarà les seves
+dades amb la plantilla corresponent, i es demanarà confirmació.</p>
+<p>En el cas d'eliminar un client, cal tenir present que pot tenir
+comandes associades. Per això, al final de les dades del client,
+caldrà indicar que s'eliminaran també les comandes del client:</p>
+<pre class="literal-block">
+S'eliminaran «n» comandes
+</pre>
+<p>En el cas de productes o comercials, no es permetrà eliminar-los si
+tenen comandes o clients associats (respectivament) amb el missatge:</p>
+<pre class="literal-block">
+No es pot eliminar el producte perquè té les següents comandes
+associades:
+    «capçalera de cada comanda»
+</pre>
+<p>o:</p>
+<pre class="literal-block">
+No es pot eliminar el comercial perquè té els següents clients
+associats: ::
+    «nif» «tractament» «nom» «cognoms»
+    «...»
+</pre>
+</li>
+<li><p class="first">show «element»</p>
+<p>Permet mostrar els detalls d'un element (client o comercial)</p>
+<p>En cas de client, es mostrarà, a banda de les dades del client
+(segons plantilla), les dades resumides de les comandes realitzades
+(la plantilla de comandes sense el detall de línies) i l'import
+total de totes les comandes realitzades.</p>
+<p>En el cas de comercial, es mostrarà, a banda de les dades del
+comercial, la llista de clients associats. Es tracta de la plantilla
+completa de client vip (per simplicitat s'accepta la redundància de
+mostrar el nif del comercial) més l'import total de les comandes del
+client (sense detall de comandes). Finalment, es mostrarà l'import
+total de les despeses de tots els clients del comercial.</p>
+</li>
+<li><p class="first">quit</p>
+<p>Finalitzarà l'aplicació</p>
+</li>
+</ul>
+<div class="section" id="requeriments-addicionals">
+<h4>Requeriments addicionals</h4>
+<p>Estructura el projecte de manera similar a la descrita a
+l'<a class="reference external" href="./jdbc-ii-model-relacional.html">exercici 2 del model relacional</a></p>
+</div>
+<div class="section" id="pistes">
+<h4>Pistes</h4>
+<p>A banda de les pistes de l'<a class="reference external" href="./jdbc-ii-model-relacional.html">exercici 2 del model relacional</a>,
+considera:</p>
+<ul class="simple">
+<li>realitzar les modificacions completes. És a dir, encara que s'hagi
+modificat només un número de telèfon d'un client, es guarda <strong>tot</strong>
+el client.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="exercici-18-prova-de-vendes">
 <h3>Exercici 18. ★ Prova de Vendes</h3>
-<p>La majoria de les proves a preparar són similars a les que ja has fet
-en els exercicis d'ampliació previs.</p>
-<p>Hi ha, però, una novetat: la prova de l'entorn.</p>
-<p>Per facilitar la
-prova, es recomanable que aconsegueixis deixar molt aïllada la part
-d'intercanvi de dades amb l'usuari. D'aquesta manera, totes les
-operacions que realitzis per analitzar l'entrada de l'usuari i per
-preparar la resposta a aquest, acabaran sent mètodes que reben o
-retornen valors. Fixa't que això fa que siguin molt més fàcils de
-provar en una prova unitària que mètodes que llegeixen/escriuen de/en
-entrada/sortida estàndard.</p>
-<p>Una altra opció, no necessàriament excloent, és que els mètodes que
-llegeixen i escriuen d'entrada/sortida estàndard, ho facin d'un
-<em>stream</em> que pugui ser modificat per la prova. Per exemple, es podria
-afegir propietats de la classe EntornVendes que, per defecte estan
-assignades als canals d'entrada/sortida estàndards però que fent
-servir un constructor concret, passin a fer servir altres <em>streams</em>.</p>
+<p>En aquest exercici d'ampliació, et proposo que agrupis totes les
+proves que hagis preparat en els exercicis d'ampliació previs.</p>
+<p>A més, potser voldràs provar que funcionen les diferents restriccions
+(ex. que no es puguin eliminar comercials amb clients associats, o que
+la informació d'import total de client sigui l'esperada...)</p>
+<p>Com a l'ampliació de  l'<a class="reference external" href="./jdbc-ii-model-relacional.html">exercici 2 del model relacional</a>, no cal que
+implementis proves amb un 100% de cobertura.  Únicament recorda que
+per poc que facis en aquest exercici, segur que el codi de la teva
+aplicació i, el més important, la teva manera de codificar, hauran
+millorat ostensiblement. Fes la prova!</p>
 </div>
 </div>
 <div class="section" id="notes">
@@ -1031,6 +1266,22 @@ estigui assignat.</td></tr>
 <tr><td class="label"><a class="fn-backref" href="#id5">[6]</a></td><td>En aquests materials no estem considerant els
 problemes que poden esdevenir d'una execució multifil
 (<em>multithread</em>).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="simplicitatidcomanda" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[7]</a></td><td>Per simplicitat, farem servir directament
+l'identificador intern de la taula COMANDES.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="simplicitatidproducte" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[8]</a></td><td>Per simplicitat, farem servir directament
+l'identificador intern de la taula PRODUCTES, tot i que en un
+context més real, probablement disposaríem d'un SKU (Stock Keep
+Unit) o nr. de referència.</td></tr>
 </tbody>
 </table>
 </div>

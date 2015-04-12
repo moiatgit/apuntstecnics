@@ -2260,9 +2260,15 @@ commanda.&lt;/p&gt;
 del servidor de PostGreSQL a la que s'està connectant.&lt;/p&gt;
 &lt;div class="section" id="exercici-1-obtencio-de-dades-de-la-connexio"&gt;
 &lt;h3&gt;Exercici 1. Obtenció de dades de la connexió&lt;/h3&gt;
-&lt;p&gt;Desenvolupa un programa que es connecti a la base de dades &lt;em&gt;testbd&lt;/em&gt; i
-obtingui l'adreça (&lt;em&gt;inet address&lt;/em&gt;) i el port amb el que es comunica
-el nostre client, i l'adreça i el port del servidor.&lt;/p&gt;
+&lt;p&gt;Crea un nou projecte amb Maven i modifica App.java de manera que:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;pertanyi al &lt;em&gt;package&lt;/em&gt; &lt;em&gt;org.iesjoandaustria.test&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;es connecti a la base de dades &lt;em&gt;testbd&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;obtingui l'adreça (&lt;em&gt;inet address&lt;/em&gt;) i el port amb el que es comunica
+el nostre client&lt;/li&gt;
+&lt;li&gt;obtingui l'adreça i el port del servidor.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Finalment, l'aplicació mostrarà els resultats obtinguts i finalitzarà.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Pista&lt;/strong&gt;: Potser voldràs intentar-ho fer amb una única consulta. A la
 línia 22 del codi anterior apareix &lt;tt class="docutils literal"&gt;rs.getString(1)&lt;/tt&gt;. Aquest &lt;tt class="docutils literal"&gt;1&lt;/tt&gt;
 indica que el que es vol és la &lt;strong&gt;primera&lt;/strong&gt; columna obtinguda.&lt;/p&gt;
@@ -2301,7 +2307,7 @@ relacionals.&lt;/p&gt;
 &lt;p&gt;A aquesta segona part es treballa amb el JDBC per a comunicar-nos amb
 una base de dades que disposi d'un model relacional &lt;em&gt;bàsic&lt;/em&gt;. La
 comunicació amb una base de dades amb característiques
-Objecte-Relacional es deixa per la tercera part.&lt;/p&gt;
+Objecte-Relacional es deixa per la &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/jdbc-iii-model-objecte-relacional.html"&gt;tercera part&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="jdbc-sobre-sgbd"&gt;
 &lt;h2&gt;JDBC sobre SGBD&lt;/h2&gt;
@@ -2822,6 +2828,218 @@ assigna ara l'identificador qui l'assignés? Quines implicacions
 tindria? Què consideres més adequat? Perquè?&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
+&lt;div class="section" id="exercici-2-l-entorn-operatiu-de-gestio-d-animals"&gt;
+&lt;h3&gt;Exercici 2. L'entorn operatiu de gestió d'animals&lt;/h3&gt;
+&lt;p&gt;Crea un nou projecte amb Maven anomenat &lt;em&gt;gestoranimals&lt;/em&gt; que ofereixi
+una senzilla consola que mostri el &lt;em&gt;prompt&lt;/em&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[animals]:
+&lt;/pre&gt;
+&lt;p&gt;L'aplicació oferirà les següents opcions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;help&lt;/p&gt;
+&lt;p&gt;mostra la llista de comandes vàlides&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;list&lt;/p&gt;
+&lt;p&gt;Mostra la llista d'animals a la base de dades en el següent format:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+* primera categoria (per ordre alfabètic)
+
+    - nom primer animal de la primera categoria (per ordre
+      alfabètic)
+
+    - nom segon animal de la primera categoria
+
+* segona categoria
+
+    - nom primer animal de la segona categoria
+
+    - ..
+&lt;/pre&gt;
+&lt;p&gt;Si no es troba cap animal a la bd, s'indicarà amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Cap animal
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;list «categoria»&lt;/p&gt;
+&lt;p&gt;Mostra la llista d'animals ordenats alfabèticament de la categoria
+indicada.&lt;/p&gt;
+&lt;p&gt;El format serà idèntic que per l'opció &lt;em&gt;list&lt;/em&gt;, excepte que només
+mostrarà una categoria.&lt;/p&gt;
+&lt;p&gt;Si no es troba cap animal de la categoria indicada, s'indicarà amb
+el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Cap animal
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;add «nom animal» «categoria»&lt;/p&gt;
+&lt;p&gt;Afegeix un nou animal a la categoria indicada.&lt;/p&gt;
+&lt;p&gt;Si ja existeix un animal amb aquest nom, per a aquesta categoria,
+mostrarà el missatge d'error:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Ja existeix un animal amb aquest nom per a aquesta categoria
+&lt;/pre&gt;
+&lt;p&gt;Si tot ha anat correctament, es mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+D'acord
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;del «nom animal» [ «categoria» ]&lt;/p&gt;
+&lt;p&gt;Aquesta comanda permet eliminar un animal pel seu nom. Opcionalment
+es pot indicar la categoria a la que pertany.&lt;/p&gt;
+&lt;p&gt;En cas que no existeixi cap animal amb aquest nom, o no existeixi
+amb el nom per la categoria indicada, es mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No es troba l'animal
+&lt;/pre&gt;
+&lt;p&gt;En cas que no s'especifiqui la categoria i hi hagi més d'un animal
+amb el mateix nom en diferents categories, es mostrarà el missatge i
+es tornarà mostrar el &lt;em&gt;prompt&lt;/em&gt; :&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+S'ha trobat aquest nom d'animal en les següents categories:
+
+* primera categoria (per ordre alfabètic)
+
+* segona categoria
+
+* ...
+
+Per favor, expliciteu la categoria
+&lt;/pre&gt;
+&lt;p&gt;Finalment, en cas que s'hagi identificat un únic animal, es demanarà
+confirmació segons:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Es procedirà a eliminar l'animal «nom animal» de la categoria «categoria»
+Segur? (S|n):
+&lt;/pre&gt;
+&lt;p&gt;En cas que l'usuari respongui amb 'S' o 's', s'eliminarà l'animal de
+la base de dades i s'informarà amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+D'acord
+&lt;/pre&gt;
+&lt;p&gt;Si es respon amb qualsevol altre caràcter, es mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Cap modificació
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;assign «nom animal» [ «categoria1» ] to «categoria2»&lt;/p&gt;
+&lt;p&gt;Permet canviar la categoria d'un animal.&lt;/p&gt;
+&lt;p&gt;En cas que no quedi clarament especificat un sol animal (com a
+l'opció &lt;em&gt;del&lt;/em&gt;), es mostrarà els mateixos missatges.&lt;/p&gt;
+&lt;p&gt;En cas de que l'animal estigui identificat, es procedirà a demanar
+confirmació amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Es procedirà a assignar l'animal «nom animal» de la categoria «categoria1» a la categoria «categoria2»
+Segur? (S|n):
+&lt;/pre&gt;
+&lt;p&gt;L'usuari rebrà el missatge corresponent com en el cas de &lt;em&gt;del&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;quit&lt;/p&gt;
+&lt;p&gt;Finalitzarà l'aplicació&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="requeriments-addicionals"&gt;
+&lt;h4&gt;Requeriments addicionals&lt;/h4&gt;
+&lt;p&gt;Cal que el codi estigui estructurat seguint el patró
+Model-Vista-Controlador.&lt;/p&gt;
+&lt;p&gt;En aquest context això implica que hi haurà, almenys, els següents
+&lt;em&gt;packages&lt;/em&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;org.iesjoandaustria.animals.model&lt;/p&gt;
+&lt;p&gt;inclou classes que encapsulen la lògica i les dades de
+l'aplicació.&lt;/p&gt;
+&lt;p&gt;En aquest package no hauria d'aparèixer ni sql, ni text concret a
+mostrar a l'usuari, ni cap interpretació de l'entrada de l'usuari.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;org.iesjoandaustria.animals.vista&lt;/p&gt;
+&lt;p&gt;inclou classes que encapsulen els elements a mostrar a l'usuari
+de l'aplicació.&lt;/p&gt;
+&lt;p&gt;En el cas d'aquesta aplicació de consola, únicament caldrà que
+les classes de vista retornin els missatges de text a mostrar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;org.iesjoandaustria.animals.control&lt;/p&gt;
+&lt;p&gt;inclou les classes que interpreten les comandes de l'usuari, les
+tradueixen a missatges cap a les classes del model i mostren el
+resultat a partir de la informació del model i amb el format/text
+de la vista.&lt;/p&gt;
+&lt;p&gt;En aquest package no hauria d'aparèixer ni sql, ni text concret a
+mostrar a l'usuari. Tampoc no hi hauria d'aparèixer la lògica de
+l'aplicació, com ara que no es pugui eliminar un animal si hi ha
+més d'un amb el mateix nom i l'usuari no ha especificat la
+categoria.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;org.iesjoandaustria.animals.bd&lt;/p&gt;
+&lt;p&gt;inclou les classes que encapsulen la comunicació amb el SGBD. És
+a dir, contindrà les sentències SQL, mètodes de
+connexió/desconnexió, etc.&lt;/p&gt;
+&lt;p&gt;En aquest package no hauria d'aparèixer ni text concret a mostrar
+a l'usuari, ni lògica de l'aplicació, ni interpretació de
+l'entrada.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pistes"&gt;
+&lt;h4&gt;Pistes:&lt;/h4&gt;
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;Per simplicitat, totes les operacions que modifiquin els continguts
+de la base de dades, es realitzaran directament, sense esperar a
+que es tanqui l'aplicació.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;No et capfiquis gaire amb les classes d'alguns &lt;em&gt;packages&lt;/em&gt;. Per
+exemple, la de vista és possible que només contingui una classe amb
+un mètode que composi i retorni un String per cada missatge que
+s'hagi d'escriure a la consola.&lt;/p&gt;
+&lt;p&gt;Per independitzar al màxim la vista (i potser altres &lt;em&gt;packages&lt;/em&gt;) et
+proposo que plantegis la comunicació fent servir alguna
+implementació de &lt;a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html"&gt;Map&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Per a aconseguir que es pugui llegir el password de manera segura
+(sense fer eco del que teclegi l'usuari), i aprofitant que es
+tracta d'una aplicació de consola, podem fer servir la classe
+&lt;a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/io/Console.html"&gt;java.io.Console&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DemoPassword&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;io&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Console&lt;/span&gt; &lt;span class="n"&gt;cons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;console&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+        &lt;span class="kt"&gt;char&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="n"&gt;String&lt;/span&gt; &lt;span class="n"&gt;usuari&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cons&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;usuari&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cons&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;readLine&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Usuari: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cons&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;readPassword&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Password de %s: &amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;usuari&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;cons&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;printf&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Usuari: %s. Password: %s%n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;usuari&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;passwd&lt;/span&gt;&lt;span class="o"&gt;));&lt;/span&gt;
+            &lt;span class="n"&gt;java&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;util&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;Arrays&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;fill&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;passwd&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39; &amp;#39;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt; &lt;span class="c1"&gt;// un cop usat, eliminem el contingut de&lt;/span&gt;
+                                                &lt;span class="c1"&gt;// passwd per minimitzar el temps que&lt;/span&gt;
+                                                &lt;span class="c1"&gt;// mantenim dades sensibles en memòria&lt;/span&gt;
+        &lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Revisa la resta de l'API de la classe Console per veure si hi ha
+altres mètodes que et puguin ser d'utilitat.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Per a aquesta versió de l'aplicació no cal que et preocupis pels
+jocs de prova unitària. Simplement fes el que puguis per mantenir
+l'aplicació sense errors.&lt;/p&gt;
+&lt;p&gt;Si t'agradaria, però, intentar-ho. Llegeix primer l'exercici
+següent.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-3-jocs-de-prova"&gt;
+&lt;h3&gt;Exercici 3. ★ Jocs de prova&lt;/h3&gt;
+&lt;p&gt;Aquest exercici d'ampliació et convida a desenvolupar un joc de proves
+per la teva aplicació de gestió.&lt;/p&gt;
+&lt;p&gt;Et proposo que defineixis &lt;em&gt;interfaces&lt;/em&gt; per les classes del &lt;em&gt;package&lt;/em&gt;
+de base de dades. D'aquesta manera podràs fer que classes controlades
+pel teu test implementin aquestes &lt;em&gt;interfaces&lt;/em&gt; i així no et calgui
+modificar la base de dades per fer les proves.&lt;/p&gt;
+&lt;p&gt;Nota: no cal que implementis proves amb un 100% de cobertura.
+Únicament recorda que per poc que facis en aquest exercici, segur que
+el codi de la teva aplicació i, el més important, la teva manera
+de codificar, hauran millorat ostensiblement. Fes la prova!&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 </description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Sat, 11 Apr 2015 22:09:38 +0200</pubDate><guid>tag:apuntstecnics.herokuapp.com,2015-04-11:jdbc-ii-model-relacional.html</guid><category>PostGreSQL</category><category>java</category></item><item><title>JDBC III. Model Objecte-Relacional</title><link>http://apuntstecnics.herokuapp.com/jdbc-iii-model-objecte-relacional.html</link><description>&lt;div class="section" id="introducio"&gt;
 &lt;h2&gt;Introdució&lt;/h2&gt;
@@ -2832,13 +3050,8 @@ relacionals.&lt;/p&gt;
 comunicar-nos amb una base de dades que implementi elements
 d'Objecte-Relacional.&lt;/p&gt;
 &lt;p&gt;Els continguts pressuposen que disposes de la base de dades presentada
-als &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/comparacio-models-relacional-i-objecte-relacionals-segona-part.html"&gt;continguts sobre el model objecte relacional&lt;/a&gt;. S'afegirà un
-&lt;em&gt;lleuger&lt;/em&gt; canvi a la definició de les claus primàries de les diferents
-taules (passaran a ser &lt;em&gt;SERIAL&lt;/em&gt;) i un de &lt;em&gt;no tan lleuger&lt;/em&gt; a la
-definició de la relació d'herència entre &lt;em&gt;CLIENTS&lt;/em&gt; i &lt;em&gt;CLIENTS_VIP&lt;/em&gt; per
-evitar els problemes que provoca el fet que PostGreSQL encara no
-tingui completament implementat aquest concepte a la versió que estem
-treballant.&lt;/p&gt;
+als &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/comparacio-models-relacional-i-objecte-relacionals-segona-part.html"&gt;continguts sobre el model objecte relacional&lt;/a&gt;. Es realitzarà
+uns &lt;em&gt;lleugers&lt;/em&gt; canvis que es descriuen a diferents exercicis.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="jdbc-sobre-sgbdor"&gt;
 &lt;h2&gt;JDBC sobre SGBDOR&lt;/h2&gt;
@@ -2874,13 +3087,6 @@ PostGreSQL no es troba completament implementat (especialment per la
 part que toca a les funcionalitats Objecte-Relacionals). Per aquesta
 raó, ens haurem de mantenir en un nivell encara més &lt;em&gt;manual&lt;/em&gt; del que
 ens ofereix la definició del JDBC.&lt;/p&gt;
-&lt;div class="section" id="exercici-1-preparacio"&gt;
-&lt;h3&gt;Exercici 1. Preparació&lt;/h3&gt;
-&lt;p&gt;Començarem aquest bloc d'exercicis preparant l'entorn de
-desenvolupament.&lt;/p&gt;
-&lt;p&gt;En concret voldrem crear un projecte Maven anomenat &lt;em&gt;vendes&lt;/em&gt; que
-gestionarem amb &lt;em&gt;git&lt;/em&gt;.&lt;/p&gt;
-&lt;/div&gt;
 &lt;div class="section" id="implementacio-d-un-enumerat"&gt;
 &lt;h3&gt;Implementació d'un enumerat&lt;/h3&gt;
 &lt;p&gt;Els enumerats de PostGreSQL es corresponen molt còmodament amb els
@@ -2918,6 +3124,17 @@ public enum Tractament {
 &lt;p&gt;Fixa't que aquest enumerat ofereix el mètode &lt;em&gt;fromString()&lt;/em&gt; que,
 donada una representació en forma de String, retorna el valor
 corresponent de l'enumerat.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-1-modificacio-del-model-de-dades"&gt;
+&lt;h3&gt;Exercici 1. Modificació del model de dades&lt;/h3&gt;
+&lt;p&gt;Realitza les següents modificacions al model de dades:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;en la definició de les claus primàries de les diferents taules
+passaran a ser &lt;em&gt;SERIAL&lt;/em&gt;. D'aquesta manera no caldrà que ens
+preocupem de gestionar els identificadors.&lt;/li&gt;
+&lt;li&gt;les entitats CLIENTS i COMERCIALS disposaran d'un nou camp (nif) que
+no podrà ser nul ni repetit.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-2-el-tipustelefon"&gt;
 &lt;h3&gt;Exercici 2. El TipusTelefon&lt;/h3&gt;
@@ -3645,69 +3862,305 @@ que vols guardar encara no hi sigui.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-17-entorn-operatiu-de-vendes"&gt;
 &lt;h3&gt;Exercici 17. Entorn operatiu de Vendes&lt;/h3&gt;
-&lt;p&gt;Desenvolupa una aplicació que ofereixi la possibilitat d'administrar
-clients (incloent VIPs), comercials, comandes i productes&lt;/p&gt;
-&lt;p&gt;Inclou:&lt;/p&gt;
-&lt;ol class="arabic simple"&gt;
-&lt;li&gt;altes i baixes de Clients (incloent VIPs), Comandes, Productes i
-Comercials.&lt;/li&gt;
-&lt;li&gt;consulta de la llista de clients (id, nom, cognoms, i marca &lt;em&gt;VIP&lt;/em&gt;
-per indicar els que siguin VIP).&lt;/li&gt;
-&lt;li&gt;consulta de la llista de comandes (id, data, nom+cognom client,
-import total)&lt;/li&gt;
-&lt;li&gt;consulta dels comercials (id, nom+cognom, telèfon)&lt;/li&gt;
-&lt;li&gt;llistat de clients no VIP ordenats per quantitat de despesa
-realitzada en els darrers 12 mesos. Permetrà escollir els clients a
-passar a VIP.&lt;/li&gt;
-&lt;li&gt;consultes del detall, a partir d'identificador, dels clients. En el
-cas de clients VIP es mostrarà també el detall del seu comercial.&lt;/li&gt;
-&lt;li&gt;consultes del detall, a partir d'identificador, de les comandes.
-Es mostrarà el detall de les línies de comandes i productes, així
-com l'identificador i nom + cognoms del client amb una marca &lt;em&gt;VIP&lt;/em&gt;
-quan aquest sigui un client VIP, més la data i l'import total.&lt;/li&gt;
-&lt;li&gt;modificació, a partir d'identificador, de les dades d'un client
-(VIP o no), una comanda (incloent afegir/eliminar línia de comanda
-sencera), un producte i un comercial.&lt;/li&gt;
-&lt;li&gt;conversió d'un client no VIP a VIP tot assignant-li un comercial&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Per simplicitat, es proposa:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;carregar tota la informació necessària per satisfer cada petició de
-l'usuari (com si l'aplicació no guardés estat a banda de la
-connexió)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;realitzar les modificacions completes. És a dir, encara que s'hagi
-modificat només un número de telèfon d'un client, es guarda &lt;strong&gt;tot&lt;/strong&gt;
-el client.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;mostrar en els llistats la informació generada pels mètodes
-&lt;em&gt;toString()&lt;/em&gt; corresponents (sense salts de línia i fins una
-llargària màxima de 80 caràcters).  &lt;strong&gt;Pista&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Crea un nou projecte amb Maven anomenat &lt;em&gt;vendes&lt;/em&gt; que ofereixi
+una senzilla consola que mostri el &lt;em&gt;prompt&lt;/em&gt;:&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
-System.out.println(str.replace('\n',' ').substring(0,80));
+[vendes]:
+&lt;/pre&gt;
+&lt;p&gt;L'aplicació oferirà les següents opcions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;help&lt;/p&gt;
+&lt;p&gt;mostra la llista de comandes vàlides&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;list «element»&lt;/p&gt;
+&lt;p&gt;On «element» pot ser un dels següents valors: clients, vips, comandes, comercials, productes.&lt;/p&gt;
+&lt;p&gt;Mostra la llista de clients, clients vip, comandes, comercials o
+productes.&lt;/p&gt;
+&lt;p&gt;En cas que no hi hagi cap element dels demanats, l'aplicació
+ho indicarà amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No s'ha trobat cap «element»
+&lt;/pre&gt;
+&lt;p&gt;En cas que es demani un tipus d'element que no correspongui amb un
+dels cinc indicats, l'aplicació mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Element «element»
+&lt;/pre&gt;
+&lt;p&gt;A l'hora de mostrar els clients, es farà omplint la següent
+plantilla per cada client:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Client [ «nif» ]: «tractament» «nom» «cognom»
+    Tel.: «tipus» «prefix» «nr.»
+          «tipus» «prefix» «nr.»
+          «...»
+    Adr.: «primera línia carrer»
+          «segona línia carrer»
+          «...»
+          «codi postal» «ciutat»
+          «país»
+&lt;/pre&gt;
+&lt;p&gt;A l'hora de mostrar els clients VIP, la plantilla serà molt similar
+a la de clients:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Client VIP [ «nif» ]: «tractament» «nom» «cognom»
+    Tel.: «tipus» «prefix» «nr.»
+          «tipus» «prefix» «nr.»
+          «...»
+    Adr.: «primera línia carrer»
+          «segona línia carrer»
+          «...»
+          «codi postal» «ciutat»
+          «país»
+    Comercial: «tractament» «nom» «cognom»
+&lt;/pre&gt;
+&lt;p&gt;Quan el client demana mostrar la llista de clients, apareixeran
+barrejats tant
+els clients VIPs com els que no ho siguin. Amb tot, els clients VIPs
+es mostraran amb la seva pròpia plantilla.&lt;/p&gt;
+&lt;p&gt;Els comercials es mostraran segons la plantilla:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Comercial:
+&lt;/pre&gt;
+&lt;p&gt;Les comandes es mostraran segons la plantilla
+&lt;a class="footnote-reference" href="#simplicitatidcomanda" id="id8"&gt;[7]&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Comanda [«id»]
+    data: «dia/mes/any»
+    client: [«nif»]: «tractament» «nom» «cognom»
+    detall:
+         nr  producte       quantitat   preu unit      import
+        001: «nom producte» «quantitat» «preu unitari» «import»
+        002: «nom producte» «quantitat» «preu unitari» «import»
+        «...»
+    import total: «import total de la comanda»
+&lt;/pre&gt;
+&lt;p&gt;En el cas dels productes, es mostraran segons la plantilla
+&lt;a class="footnote-reference" href="#simplicitatidproducte" id="id9"&gt;[8]&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Producte [«id»]: «nom»
+    preu unitari: «preu»
+    estoc: «estoc»
 &lt;/pre&gt;
 &lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;add client&lt;/p&gt;
+&lt;p&gt;Permet donar d'alta un client. L'aplicació demanarà interactivament
+les següents dades tot indicant el nom de la dada seguit de dos
+punts.&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;nif:&lt;/li&gt;
+&lt;li&gt;nom:&lt;/li&gt;
+&lt;li&gt;cognoms:&lt;/li&gt;
+&lt;li&gt;telèfon 1&lt;ul&gt;
+&lt;li&gt;tipus de telèfon (m: mòbil, i: fix, a: fax, x: finalitzar telèfon)&lt;/li&gt;
+&lt;li&gt;prefix:&lt;/li&gt;
+&lt;li&gt;número:&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;telèfon 2&lt;ul&gt;
+&lt;li&gt;«...»&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;adreça&lt;ul&gt;
+&lt;li&gt;carrer (introduir línies amb la darrera en blanc per finalitzar):&lt;/li&gt;
+&lt;li&gt;codi postal:&lt;/li&gt;
+&lt;li&gt;ciutat:&lt;/li&gt;
+&lt;li&gt;país:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;En cas que el nif proporcionat pertanyi a un client existent,
+s'indicarà l'error i se li permetrà corregir o cancel·lar l'alta:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Ja existeix un client amb aquest nif. e: editar, c: cancelar
+&lt;/pre&gt;
+&lt;p&gt;En el moment en que l'usuari indiqui 'x' al tipus de telèfon, ja no
+se li demanarà més dades de telèfon.&lt;/p&gt;
+&lt;p&gt;Es requerirà especificar al menys un telèfon.&lt;/p&gt;
+&lt;p&gt;En el moment en que l'usuari introdueixi una línia en blanc, es
+considerarà finalitzada la introducció de línies de carrer.&lt;/p&gt;
+&lt;p&gt;Es requerirà especificar al menys una línia de carrer.&lt;/p&gt;
+&lt;p&gt;Un cop obtingudes totes les dades, es mostraran (segons plantilla de
+client) i es demanarà confirmació amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Procedir als canvis (s: sí, e: editar, c: cancelar)
+&lt;/pre&gt;
+&lt;p&gt;En cas que l'usuari respongui 's', es donarà d'alta el client i, si
+tot ha anat correcte, mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+D'acord
+&lt;/pre&gt;
+&lt;p&gt;En cas que la resposta sigui 'c', es mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Cap canvi
+&lt;/pre&gt;
+&lt;p&gt;Finalment, per qualsevol altra resposta es procedirà a editar les
+dades del client (veure opció &lt;em&gt;edit&lt;/em&gt;)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;set client «nif client» as vip «nif comercial»&lt;/p&gt;
+&lt;p&gt;Converteix un client estàndard a VIP, o si ja ho era, li assigna un
+nou comercial.&lt;/p&gt;
+&lt;p&gt;En cas que el nif del client no correspongui a cap client de la base
+de dades, es mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No es troba cap client amb el nif «nif client»
+&lt;/pre&gt;
+&lt;p&gt;De la mateixa manera, si no es troba cap comercial amb el nif
+indicat, es mostrarà el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No es troba cap comercial amb el nif «nif client»
+&lt;/pre&gt;
+&lt;p&gt;En cas d'error, se li mostrarà l'opció de tornar a intentar-ho o bé
+cancel·lar la comanda:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Premi r per reintentar o c per cancel·lar.
+&lt;/pre&gt;
+&lt;p&gt;Un cop es disposi de totes les dades correctes, es mostrarà els
+canvis a realitzar (plantilla client VIP) i es demanarà confirmació:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Aplicar els canvis (s: sí, c: cancel·lar)
+&lt;/pre&gt;
+&lt;p&gt;Es respondrà de la manera especificada a la confirmació de l'alta de
+client.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;unset vip «nif»&lt;/p&gt;
+&lt;p&gt;Converteix un client vip a un client normal. És a dir, s'elimina
+l'associació del client amb un comercial.&lt;/p&gt;
+&lt;p&gt;En cas que el client no sigui vip, s'indicarà amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+El client no era vip
+&lt;/pre&gt;
+&lt;p&gt;Altrament, es demanarà confirmació:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Fer que el client deixi de ser vip (s: sí, c: cancelar)
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;add comanda&lt;/p&gt;
+&lt;p&gt;Permet afegir una nova comanda.&lt;/p&gt;
+&lt;p&gt;Demanarà interactivament les dades de la comanda:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;nif del client:&lt;/li&gt;
+&lt;li&gt;data («data actual»):&lt;/li&gt;
+&lt;li&gt;línies de comanda:&lt;ul&gt;
+&lt;li&gt;producte línia 001 (blanc per finalitzar):&lt;/li&gt;
+&lt;li&gt;quantitat&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;En cas que el nif proporcionat no correspongui a un client conegut
+es mostrarà el missatge d'error corresponent com a l'opció
+de convertir client a client vip.&lt;/p&gt;
+&lt;p&gt;En quan a la data, es proposarà la data d'avui (en format
+dia/mes/any). Si l'usuari prem enter (cadena en blanc), es
+considerarà que accepta la data proposada.&lt;/p&gt;
+&lt;p&gt;El producte de les línies de comanda s'especificarà mitjançant
+l'identificador de producte. Si no es troba cap producte amb aquest
+id, s'indicarà l'error amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No es troba cap producte amb l'identificador «id»
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;add «element»&lt;/p&gt;
+&lt;p&gt;On element pot ser comercial o producte.&lt;/p&gt;
+&lt;p&gt;La interacció és molt similar a afegir client&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;edit client «nif»&lt;/p&gt;
+&lt;p&gt;Permet modificar qualsevol de les dades de client (excepte l'id
+intern)&lt;/p&gt;
+&lt;p&gt;En cas que el nif no correspongui a cap client, es mostrarà el
+missatge d'error corresponent. Si l'usuari vol tornar-ho a intentar,
+haurà de tornar a llençar la comanda un altre cop.&lt;/p&gt;
+&lt;p&gt;Demanarà cada dada pel seu nom, seguit del valor actual entre
+parèntesis. D'aquesta manera, si l'usuari vol, pot respondre en
+blanc per conservar el valor previ. Per exemple, amb el nif:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+nif («nif actual»):
+&lt;/pre&gt;
+&lt;p&gt;Finalment es procedirà a mostrar les dades recollides i a demanar
+confirmació a l'estil de l'alta de client.&lt;/p&gt;
+&lt;p&gt;Per simplicitat, encara que el client correspongui a un client VIP,
+no es permetrà editar el nif del comercial associat.&lt;/p&gt;
+&lt;p&gt;En cas que aparegui algun error (ex. el nou nif correspongui a un
+altre client) es mostrarà el missatge d'error corresponent.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;edit «element» «id»&lt;/p&gt;
+&lt;p&gt;Permet editar les dades d'una comanda, comercial o producte.&lt;/p&gt;
+&lt;p&gt;En cas de ser un comercial, «id» es refereix al seu nif.&lt;/p&gt;
+&lt;p&gt;El comportament és molt similar al de la modificació de client.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;del «element» «id»&lt;/p&gt;
+&lt;p&gt;Permet eliminar un client, comercial, producte o comanda.&lt;/p&gt;
+&lt;p&gt;En cas que l'element sigui un client o un comercial, «id» es
+refereix al seu nif.&lt;/p&gt;
+&lt;p&gt;En cas que no es pugui trobar cap element amb aquest identificador,
+es mostrarà el missatge d'error corresponent seguit del prompt.&lt;/p&gt;
+&lt;p&gt;En cas que s'hagi trobat l'element a eliminar, es mostrarà les seves
+dades amb la plantilla corresponent, i es demanarà confirmació.&lt;/p&gt;
+&lt;p&gt;En el cas d'eliminar un client, cal tenir present que pot tenir
+comandes associades. Per això, al final de les dades del client,
+caldrà indicar que s'eliminaran també les comandes del client:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+S'eliminaran «n» comandes
+&lt;/pre&gt;
+&lt;p&gt;En el cas de productes o comercials, no es permetrà eliminar-los si
+tenen comandes o clients associats (respectivament) amb el missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No es pot eliminar el producte perquè té les següents comandes
+associades:
+    «capçalera de cada comanda»
+&lt;/pre&gt;
+&lt;p&gt;o:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+No es pot eliminar el comercial perquè té els següents clients
+associats: ::
+    «nif» «tractament» «nom» «cognoms»
+    «...»
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;show «element»&lt;/p&gt;
+&lt;p&gt;Permet mostrar els detalls d'un element (client o comercial)&lt;/p&gt;
+&lt;p&gt;En cas de client, es mostrarà, a banda de les dades del client
+(segons plantilla), les dades resumides de les comandes realitzades
+(la plantilla de comandes sense el detall de línies) i l'import
+total de totes les comandes realitzades.&lt;/p&gt;
+&lt;p&gt;En el cas de comercial, es mostrarà, a banda de les dades del
+comercial, la llista de clients associats. Es tracta de la plantilla
+completa de client vip (per simplicitat s'accepta la redundància de
+mostrar el nif del comercial) més l'import total de les comandes del
+client (sense detall de comandes). Finalment, es mostrarà l'import
+total de les despeses de tots els clients del comercial.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;quit&lt;/p&gt;
+&lt;p&gt;Finalitzarà l'aplicació&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="section" id="requeriments-addicionals"&gt;
+&lt;h4&gt;Requeriments addicionals&lt;/h4&gt;
+&lt;p&gt;Estructura el projecte de manera similar a la descrita a
+l'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/jdbc-ii-model-relacional.html"&gt;exercici 2 del model relacional&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="pistes"&gt;
+&lt;h4&gt;Pistes&lt;/h4&gt;
+&lt;p&gt;A banda de les pistes de l'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/jdbc-ii-model-relacional.html"&gt;exercici 2 del model relacional&lt;/a&gt;,
+considera:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;realitzar les modificacions completes. És a dir, encara que s'hagi
+modificat només un número de telèfon d'un client, es guarda &lt;strong&gt;tot&lt;/strong&gt;
+el client.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-18-prova-de-vendes"&gt;
 &lt;h3&gt;Exercici 18. ★ Prova de Vendes&lt;/h3&gt;
-&lt;p&gt;La majoria de les proves a preparar són similars a les que ja has fet
-en els exercicis d'ampliació previs.&lt;/p&gt;
-&lt;p&gt;Hi ha, però, una novetat: la prova de l'entorn.&lt;/p&gt;
-&lt;p&gt;Per facilitar la
-prova, es recomanable que aconsegueixis deixar molt aïllada la part
-d'intercanvi de dades amb l'usuari. D'aquesta manera, totes les
-operacions que realitzis per analitzar l'entrada de l'usuari i per
-preparar la resposta a aquest, acabaran sent mètodes que reben o
-retornen valors. Fixa't que això fa que siguin molt més fàcils de
-provar en una prova unitària que mètodes que llegeixen/escriuen de/en
-entrada/sortida estàndard.&lt;/p&gt;
-&lt;p&gt;Una altra opció, no necessàriament excloent, és que els mètodes que
-llegeixen i escriuen d'entrada/sortida estàndard, ho facin d'un
-&lt;em&gt;stream&lt;/em&gt; que pugui ser modificat per la prova. Per exemple, es podria
-afegir propietats de la classe EntornVendes que, per defecte estan
-assignades als canals d'entrada/sortida estàndards però que fent
-servir un constructor concret, passin a fer servir altres &lt;em&gt;streams&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;En aquest exercici d'ampliació, et proposo que agrupis totes les
+proves que hagis preparat en els exercicis d'ampliació previs.&lt;/p&gt;
+&lt;p&gt;A més, potser voldràs provar que funcionen les diferents restriccions
+(ex. que no es puguin eliminar comercials amb clients associats, o que
+la informació d'import total de client sigui l'esperada...)&lt;/p&gt;
+&lt;p&gt;Com a l'ampliació de  l'&lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/jdbc-ii-model-relacional.html"&gt;exercici 2 del model relacional&lt;/a&gt;, no cal que
+implementis proves amb un 100% de cobertura.  Únicament recorda que
+per poc que facis en aquest exercici, segur que el codi de la teva
+aplicació i, el més important, la teva manera de codificar, hauran
+millorat ostensiblement. Fes la prova!&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="section" id="notes"&gt;
@@ -3764,6 +4217,22 @@ estigui assignat.&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id5"&gt;[6]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;En aquests materials no estem considerant els
 problemes que poden esdevenir d'una execució multifil
 (&lt;em&gt;multithread&lt;/em&gt;).&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="simplicitatidcomanda" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id8"&gt;[7]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Per simplicitat, farem servir directament
+l'identificador intern de la taula COMANDES.&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table class="docutils footnote" frame="void" id="simplicitatidproducte" rules="none"&gt;
+&lt;colgroup&gt;&lt;col class="label" /&gt;&lt;col /&gt;&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="label"&gt;&lt;a class="fn-backref" href="#id9"&gt;[8]&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Per simplicitat, farem servir directament
+l'identificador intern de la taula PRODUCTES, tot i que en un
+context més real, probablement disposaríem d'un SKU (Stock Keep
+Unit) o nr. de referència.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;

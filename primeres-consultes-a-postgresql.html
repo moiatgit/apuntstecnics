@@ -187,9 +187,15 @@ commanda.</p>
 del servidor de PostGreSQL a la que s'està connectant.</p>
 <div class="section" id="exercici-1-obtencio-de-dades-de-la-connexio">
 <h3>Exercici 1. Obtenció de dades de la connexió</h3>
-<p>Desenvolupa un programa que es connecti a la base de dades <em>testbd</em> i
-obtingui l'adreça (<em>inet address</em>) i el port amb el que es comunica
-el nostre client, i l'adreça i el port del servidor.</p>
+<p>Crea un nou projecte amb Maven i modifica App.java de manera que:</p>
+<ul class="simple">
+<li>pertanyi al <em>package</em> <em>org.iesjoandaustria.test</em></li>
+<li>es connecti a la base de dades <em>testbd</em></li>
+<li>obtingui l'adreça (<em>inet address</em>) i el port amb el que es comunica
+el nostre client</li>
+<li>obtingui l'adreça i el port del servidor.</li>
+</ul>
+<p>Finalment, l'aplicació mostrarà els resultats obtinguts i finalitzarà.</p>
 <p><strong>Pista</strong>: Potser voldràs intentar-ho fer amb una única consulta. A la
 línia 22 del codi anterior apareix <tt class="docutils literal">rs.getString(1)</tt>. Aquest <tt class="docutils literal">1</tt>
 indica que el que es vol és la <strong>primera</strong> columna obtinguda.</p>

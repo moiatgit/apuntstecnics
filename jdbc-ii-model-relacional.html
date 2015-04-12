@@ -103,7 +103,7 @@ relacionals.</p>
 <p>A aquesta segona part es treballa amb el JDBC per a comunicar-nos amb
 una base de dades que disposi d'un model relacional <em>bàsic</em>. La
 comunicació amb una base de dades amb característiques
-Objecte-Relacional es deixa per la tercera part.</p>
+Objecte-Relacional es deixa per la <a class="reference external" href="./jdbc-iii-model-objecte-relacional.html">tercera part</a>.</p>
 </div>
 <div class="section" id="jdbc-sobre-sgbd">
 <h2>JDBC sobre SGBD</h2>
@@ -623,6 +623,218 @@ Podríem fer-ho a l'inrevés? És a dir, podria ser la part que no
 assigna ara l'identificador qui l'assignés? Quines implicacions
 tindria? Què consideres més adequat? Perquè?</li>
 </ol>
+</div>
+<div class="section" id="exercici-2-l-entorn-operatiu-de-gestio-d-animals">
+<h3>Exercici 2. L'entorn operatiu de gestió d'animals</h3>
+<p>Crea un nou projecte amb Maven anomenat <em>gestoranimals</em> que ofereixi
+una senzilla consola que mostri el <em>prompt</em>:</p>
+<pre class="literal-block">
+[animals]:
+</pre>
+<p>L'aplicació oferirà les següents opcions:</p>
+<ul>
+<li><p class="first">help</p>
+<p>mostra la llista de comandes vàlides</p>
+</li>
+<li><p class="first">list</p>
+<p>Mostra la llista d'animals a la base de dades en el següent format:</p>
+<pre class="literal-block">
+* primera categoria (per ordre alfabètic)
+
+    - nom primer animal de la primera categoria (per ordre
+      alfabètic)
+
+    - nom segon animal de la primera categoria
+
+* segona categoria
+
+    - nom primer animal de la segona categoria
+
+    - ..
+</pre>
+<p>Si no es troba cap animal a la bd, s'indicarà amb el missatge:</p>
+<pre class="literal-block">
+Cap animal
+</pre>
+</li>
+<li><p class="first">list «categoria»</p>
+<p>Mostra la llista d'animals ordenats alfabèticament de la categoria
+indicada.</p>
+<p>El format serà idèntic que per l'opció <em>list</em>, excepte que només
+mostrarà una categoria.</p>
+<p>Si no es troba cap animal de la categoria indicada, s'indicarà amb
+el missatge:</p>
+<pre class="literal-block">
+Cap animal
+</pre>
+</li>
+<li><p class="first">add «nom animal» «categoria»</p>
+<p>Afegeix un nou animal a la categoria indicada.</p>
+<p>Si ja existeix un animal amb aquest nom, per a aquesta categoria,
+mostrarà el missatge d'error:</p>
+<pre class="literal-block">
+Ja existeix un animal amb aquest nom per a aquesta categoria
+</pre>
+<p>Si tot ha anat correctament, es mostrarà el missatge:</p>
+<pre class="literal-block">
+D'acord
+</pre>
+</li>
+<li><p class="first">del «nom animal» [ «categoria» ]</p>
+<p>Aquesta comanda permet eliminar un animal pel seu nom. Opcionalment
+es pot indicar la categoria a la que pertany.</p>
+<p>En cas que no existeixi cap animal amb aquest nom, o no existeixi
+amb el nom per la categoria indicada, es mostrarà el missatge:</p>
+<pre class="literal-block">
+No es troba l'animal
+</pre>
+<p>En cas que no s'especifiqui la categoria i hi hagi més d'un animal
+amb el mateix nom en diferents categories, es mostrarà el missatge i
+es tornarà mostrar el <em>prompt</em> :</p>
+<pre class="literal-block">
+S'ha trobat aquest nom d'animal en les següents categories:
+
+* primera categoria (per ordre alfabètic)
+
+* segona categoria
+
+* ...
+
+Per favor, expliciteu la categoria
+</pre>
+<p>Finalment, en cas que s'hagi identificat un únic animal, es demanarà
+confirmació segons:</p>
+<pre class="literal-block">
+Es procedirà a eliminar l'animal «nom animal» de la categoria «categoria»
+Segur? (S|n):
+</pre>
+<p>En cas que l'usuari respongui amb 'S' o 's', s'eliminarà l'animal de
+la base de dades i s'informarà amb el missatge:</p>
+<pre class="literal-block">
+D'acord
+</pre>
+<p>Si es respon amb qualsevol altre caràcter, es mostrarà el missatge:</p>
+<pre class="literal-block">
+Cap modificació
+</pre>
+</li>
+<li><p class="first">assign «nom animal» [ «categoria1» ] to «categoria2»</p>
+<p>Permet canviar la categoria d'un animal.</p>
+<p>En cas que no quedi clarament especificat un sol animal (com a
+l'opció <em>del</em>), es mostrarà els mateixos missatges.</p>
+<p>En cas de que l'animal estigui identificat, es procedirà a demanar
+confirmació amb el missatge:</p>
+<pre class="literal-block">
+Es procedirà a assignar l'animal «nom animal» de la categoria «categoria1» a la categoria «categoria2»
+Segur? (S|n):
+</pre>
+<p>L'usuari rebrà el missatge corresponent com en el cas de <em>del</em>.</p>
+</li>
+<li><p class="first">quit</p>
+<p>Finalitzarà l'aplicació</p>
+</li>
+</ul>
+<div class="section" id="requeriments-addicionals">
+<h4>Requeriments addicionals</h4>
+<p>Cal que el codi estigui estructurat seguint el patró
+Model-Vista-Controlador.</p>
+<p>En aquest context això implica que hi haurà, almenys, els següents
+<em>packages</em>:</p>
+<ul>
+<li><p class="first">org.iesjoandaustria.animals.model</p>
+<p>inclou classes que encapsulen la lògica i les dades de
+l'aplicació.</p>
+<p>En aquest package no hauria d'aparèixer ni sql, ni text concret a
+mostrar a l'usuari, ni cap interpretació de l'entrada de l'usuari.</p>
+</li>
+<li><p class="first">org.iesjoandaustria.animals.vista</p>
+<p>inclou classes que encapsulen els elements a mostrar a l'usuari
+de l'aplicació.</p>
+<p>En el cas d'aquesta aplicació de consola, únicament caldrà que
+les classes de vista retornin els missatges de text a mostrar.</p>
+</li>
+<li><p class="first">org.iesjoandaustria.animals.control</p>
+<p>inclou les classes que interpreten les comandes de l'usuari, les
+tradueixen a missatges cap a les classes del model i mostren el
+resultat a partir de la informació del model i amb el format/text
+de la vista.</p>
+<p>En aquest package no hauria d'aparèixer ni sql, ni text concret a
+mostrar a l'usuari. Tampoc no hi hauria d'aparèixer la lògica de
+l'aplicació, com ara que no es pugui eliminar un animal si hi ha
+més d'un amb el mateix nom i l'usuari no ha especificat la
+categoria.</p>
+</li>
+<li><p class="first">org.iesjoandaustria.animals.bd</p>
+<p>inclou les classes que encapsulen la comunicació amb el SGBD. És
+a dir, contindrà les sentències SQL, mètodes de
+connexió/desconnexió, etc.</p>
+<p>En aquest package no hauria d'aparèixer ni text concret a mostrar
+a l'usuari, ni lògica de l'aplicació, ni interpretació de
+l'entrada.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="pistes">
+<h4>Pistes:</h4>
+<ol class="arabic">
+<li><p class="first">Per simplicitat, totes les operacions que modifiquin els continguts
+de la base de dades, es realitzaran directament, sense esperar a
+que es tanqui l'aplicació.</p>
+</li>
+<li><p class="first">No et capfiquis gaire amb les classes d'alguns <em>packages</em>. Per
+exemple, la de vista és possible que només contingui una classe amb
+un mètode que composi i retorni un String per cada missatge que
+s'hagi d'escriure a la consola.</p>
+<p>Per independitzar al màxim la vista (i potser altres <em>packages</em>) et
+proposo que plantegis la comunicació fent servir alguna
+implementació de <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html">Map</a>.</p>
+</li>
+<li><p class="first">Per a aconseguir que es pugui llegir el password de manera segura
+(sense fer eco del que teclegi l'usuari), i aprofitant que es
+tracta d'una aplicació de consola, podem fer servir la classe
+<a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/io/Console.html">java.io.Console</a></p>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DemoPassword</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span> <span class="o">)</span> <span class="o">{</span>
+        <span class="n">java</span><span class="o">.</span><span class="na">io</span><span class="o">.</span><span class="na">Console</span> <span class="n">cons</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">console</span><span class="o">();</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">passwd</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">usuari</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">cons</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">usuari</span> <span class="o">=</span> <span class="n">cons</span><span class="o">.</span><span class="na">readLine</span><span class="o">(</span><span class="s">&quot;Usuari: &quot;</span><span class="o">);</span>
+            <span class="n">passwd</span> <span class="o">=</span> <span class="n">cons</span><span class="o">.</span><span class="na">readPassword</span><span class="o">(</span><span class="s">&quot;Password de %s: &quot;</span><span class="o">,</span> <span class="n">usuari</span><span class="o">);</span>
+            <span class="n">cons</span><span class="o">.</span><span class="na">printf</span><span class="o">(</span><span class="s">&quot;Usuari: %s. Password: %s%n&quot;</span><span class="o">,</span> <span class="n">usuari</span><span class="o">,</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">passwd</span><span class="o">));</span>
+            <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">passwd</span><span class="o">,</span> <span class="sc">&#39; &#39;</span><span class="o">);</span> <span class="c1">// un cop usat, eliminem el contingut de</span>
+                                                <span class="c1">// passwd per minimitzar el temps que</span>
+                                                <span class="c1">// mantenim dades sensibles en memòria</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+<p>Revisa la resta de l'API de la classe Console per veure si hi ha
+altres mètodes que et puguin ser d'utilitat.</p>
+</li>
+</ol>
+<ul>
+<li><p class="first">Per a aquesta versió de l'aplicació no cal que et preocupis pels
+jocs de prova unitària. Simplement fes el que puguis per mantenir
+l'aplicació sense errors.</p>
+<p>Si t'agradaria, però, intentar-ho. Llegeix primer l'exercici
+següent.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="exercici-3-jocs-de-prova">
+<h3>Exercici 3. ★ Jocs de prova</h3>
+<p>Aquest exercici d'ampliació et convida a desenvolupar un joc de proves
+per la teva aplicació de gestió.</p>
+<p>Et proposo que defineixis <em>interfaces</em> per les classes del <em>package</em>
+de base de dades. D'aquesta manera podràs fer que classes controlades
+pel teu test implementin aquestes <em>interfaces</em> i així no et calgui
+modificar la base de dades per fer les proves.</p>
+<p>Nota: no cal que implementis proves amb un 100% de cobertura.
+Únicament recorda que per poc que facis en aquest exercici, segur que
+el codi de la teva aplicació i, el més important, la teva manera
+de codificar, hauran millorat ostensiblement. Fes la prova!</p>
 </div>
 </div>
 </div>
