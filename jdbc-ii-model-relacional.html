@@ -736,6 +736,15 @@ Segur? (S|n):
 </ul>
 <div class="section" id="requeriments-addicionals">
 <h4>Requeriments addicionals</h4>
+<p>En arrencar, l'aplicació demanarà un password que farà servir per
+intentar la connexió a la base de dades (la resta de dades de connexió
+les posarà l'aplicació) En cas que el password proporcionat no permeti
+realitzar la connexió, l'aplicació mostrarà l'error i permetrà tornar
+a intentar o bé cancelar:</p>
+<pre class="literal-block">
+Contrasenya incorrecta (i: tornar a intentar, c: cancelar):
+</pre>
+<p>En cas de cancelació, l'aplicació finalitzarà l'execució.</p>
 <p>Cal que el codi estigui estructurat seguint el patró
 Model-Vista-Controlador.</p>
 <p>En aquest context això implica que hi haurà, almenys, els següents

@@ -141,35 +141,34 @@ ens ofereix la definició del JDBC.</p>
 <p>Els enumerats de PostGreSQL es corresponen molt còmodament amb els
 enumerats de Java.</p>
 <p>Per exemple, <em>Tractament</em> es podria implementar com:</p>
-<pre class="literal-block">
-public enum Tractament {
-    SR   ( &quot;Sr.&quot;   ),
-    SRA  ( &quot;Sra.&quot;  ),
-    SRTA ( &quot;Srta.&quot; ),
-    DR   ( &quot;Dr.&quot;   ),
-    DRA  ( &quot;Dra.&quot;  );
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">enum</span> <span class="n">Tractament</span> <span class="o">{</span>
+    <span class="n">SR</span>   <span class="o">(</span> <span class="s">&quot;Sr.&quot;</span>   <span class="o">),</span>
+    <span class="n">SRA</span>  <span class="o">(</span> <span class="s">&quot;Sra.&quot;</span>  <span class="o">),</span>
+    <span class="n">SRTA</span> <span class="o">(</span> <span class="s">&quot;Srta.&quot;</span> <span class="o">),</span>
+    <span class="n">DR</span>   <span class="o">(</span> <span class="s">&quot;Dr.&quot;</span>   <span class="o">),</span>
+    <span class="n">DRA</span>  <span class="o">(</span> <span class="s">&quot;Dra.&quot;</span>  <span class="o">);</span>
 
-    private String representacio;
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">representacio</span><span class="o">;</span>
 
-    Tractament(String rep) { representacio = rep; }
+    <span class="n">Tractament</span><span class="o">(</span><span class="n">String</span> <span class="n">rep</span><span class="o">)</span> <span class="o">{</span> <span class="n">representacio</span> <span class="o">=</span> <span class="n">rep</span><span class="o">;</span> <span class="o">}</span>
 
-    public String toString() { return representacio; }
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">representacio</span><span class="o">;</span> <span class="o">}</span>
 
-    public static Tractament fromString(String rep) {
-        Tractament trobat = null;
-        for (Tractament e: values()) {
-            if (e.toString().equals(rep)) {
-                trobat = e;
-                break;
-            }
-        }
-        if (trobat == null) {
-            throw new IllegalArgumentException(&quot;No enum constant Tractament.&quot;+rep);
-        }
-        return trobat;
-    }
-}
-</pre>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Tractament</span> <span class="nf">fromString</span><span class="o">(</span><span class="n">String</span> <span class="n">rep</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Tractament</span> <span class="n">trobat</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Tractament</span> <span class="n">e</span><span class="o">:</span> <span class="n">values</span><span class="o">())</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="n">rep</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">trobat</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">trobat</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalArgumentException</span><span class="o">(</span><span class="s">&quot;No enum constant Tractament.&quot;</span><span class="o">+</span><span class="n">rep</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">trobat</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 <p>Fixa't que aquest enumerat ofereix el mètode <em>fromString()</em> que,
 donada una representació en forma de String, retorna el valor
 corresponent de l'enumerat.</p>
@@ -196,25 +195,24 @@ enumerat que correspongui al <em>TipusTelefon</em>.</p>
 en com permet crear una denominació a partir d'un tractament en format
 <em>String</em> com requeria el codi de <tt class="docutils literal">parseDenominacio()</tt> que hem vist
 abans.</p>
-<pre class="literal-block">
-class Denominacio {
-    private Tractament tr;
-    private String nom;
-    private String cognoms;
-    public Denominacio(String tr, String nom, String cognoms) {
-        this(Tractament.fromString(tr), nom, cognoms);
-    }
-    public Denominacio(Tractament tr, String nom, String cognoms) {
-        this.tr=tr;
-        this.nom=nom;
-        this.cognoms=cognoms;
-    }
-    public Tractament getTr()  { return tr;      }
-    public String getNom()     { return nom;     }
-    public String getCognoms() { return cognoms; }
-    public String toString()   { return tr + &quot; &quot; + nom + &quot; &quot; + cognoms; }
-}
-</pre>
+<div class="highlight"><pre><span class="kd">class</span> <span class="nc">Denominacio</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Tractament</span> <span class="n">tr</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">nom</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">cognoms</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Denominacio</span><span class="o">(</span><span class="n">String</span> <span class="n">tr</span><span class="o">,</span> <span class="n">String</span> <span class="n">nom</span><span class="o">,</span> <span class="n">String</span> <span class="n">cognoms</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">(</span><span class="n">Tractament</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="n">tr</span><span class="o">),</span> <span class="n">nom</span><span class="o">,</span> <span class="n">cognoms</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">Denominacio</span><span class="o">(</span><span class="n">Tractament</span> <span class="n">tr</span><span class="o">,</span> <span class="n">String</span> <span class="n">nom</span><span class="o">,</span> <span class="n">String</span> <span class="n">cognoms</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tr</span><span class="o">=</span><span class="n">tr</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">nom</span><span class="o">=</span><span class="n">nom</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">cognoms</span><span class="o">=</span><span class="n">cognoms</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Tractament</span> <span class="nf">getTr</span><span class="o">()</span>  <span class="o">{</span> <span class="k">return</span> <span class="n">tr</span><span class="o">;</span>      <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getNom</span><span class="o">()</span>     <span class="o">{</span> <span class="k">return</span> <span class="n">nom</span><span class="o">;</span>     <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getCognoms</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">cognoms</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span>   <span class="o">{</span> <span class="k">return</span> <span class="n">tr</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">nom</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">cognoms</span><span class="o">;</span> <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 <p>Com podem observar, un tipus complex es tradueix directament a una
 classe estàndard de Java. Es tracta, això sí, d'una classe sovint
 immutable (com en aquest cas), i que pràcticament no ofereix res més
@@ -232,23 +230,21 @@ resultarà molt còmode.</p>
 <h3>Accés directe a un camp complex</h3>
 <p>Veiem com podem accedir a un camp complex.</p>
 <p>Suposa que a la base de dades disposem de</p>
-<pre class="literal-block">
-testbd=&gt; select * from clients where id = 20001;
-  id   |          nom          |                                        adr                                        |                    telefons
--------+-----------------------+-----------------------------------------------------------------------------------+-------------------------------------------------
- 20001 | (Sra.,Barbara,Liskov) | (&quot;{&quot;&quot;77 Massachusetts Avenue&quot;&quot;,&quot;&quot;Blue Bilding&quot;&quot;}&quot;,&quot;MA 02139-4307&quot;,Cambridge,EEUU) | {&quot;(fax,0084,933333333)&quot;,&quot;(fix,0084,933333334)&quot;}
-(1 row)
-</pre>
+<div class="highlight"><pre><span class="n">testbd</span><span class="o">=&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">clients</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">20001</span><span class="p">;</span>
+  <span class="n">id</span>   <span class="o">|</span>          <span class="n">nom</span>          <span class="o">|</span>                                        <span class="n">adr</span>                                        <span class="o">|</span>                    <span class="n">telefons</span>
+<span class="c1">-------+-----------------------+-----------------------------------------------------------------------------------+-------------------------------------------------</span>
+ <span class="mi">20001</span> <span class="o">|</span> <span class="p">(</span><span class="n">Sra</span><span class="p">.,</span><span class="n">Barbara</span><span class="p">,</span><span class="n">Liskov</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="ss">&quot;{&quot;&quot;77 Massachusetts Avenue&quot;&quot;,&quot;&quot;Blue Bilding&quot;&quot;}&quot;</span><span class="p">,</span><span class="ss">&quot;MA 02139-4307&quot;</span><span class="p">,</span><span class="n">Cambridge</span><span class="p">,</span><span class="n">EEUU</span><span class="p">)</span> <span class="o">|</span> <span class="err">{</span><span class="ss">&quot;(fax,0084,933333333)&quot;</span><span class="p">,</span><span class="ss">&quot;(fix,0084,933333334)&quot;</span><span class="err">}</span>
+<span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</pre></div>
 <p>Considera el següent fragment de codi que llegeix la denominació d'un
 client a partir del seu identificador</p>
-<pre class="literal-block">
-String sql = &quot;SELECT nom FROM CLIENTS WHERE id =&quot; + id;
-st = conn.createStatement();
-rs = st.executeQuery(sql);
-rs.next();
-String nom = rs.getString(&quot;nom&quot;);
-System.out.println(&quot;nom: &quot; + nom);
-</pre>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&quot;SELECT nom FROM CLIENTS WHERE id =&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+<span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">nom</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;nom&quot;</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;nom: &quot;</span> <span class="o">+</span> <span class="n">nom</span><span class="o">);</span>
+</pre></div>
 <p>Si executem aquest codi ens generarà el següent resultat</p>
 <pre class="literal-block">
 nom: (Sra.,Barbara,Liskov)
@@ -262,17 +258,16 @@ string!</p>
 <em>driver</em> de PostGreSQL a mig fer <a class="footnote-reference" href="#suportstruct" id="id1">[1]</a>, ens veiem obligats
 a idear algun <em>truc</em> per extreure la informació.</p>
 <p>Una possibilitat és demanar les dades ja <em>desmuntades</em> al SGBD</p>
-<pre class="literal-block">
-String sql = &quot;SELECT (nom).* FROM CLIENTS WHERE id =&quot; + id;
-st = conn.createStatement();
-rs = st.executeQuery(sql);
-rs.next();
-String tr = rs.getString(&quot;tr&quot;);
-String nom = rs.getString(&quot;nom&quot;);
-String cognoms = rs.getString(&quot;cognoms&quot;);
-Denominacio denom = new Denominacio(tr, nom, cognoms);
-System.out.println(&quot;nom: &quot; + denom);
-</pre>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&quot;SELECT (nom).* FROM CLIENTS WHERE id =&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+<span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">tr</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;tr&quot;</span><span class="o">);</span>
+<span class="n">String</span> <span class="n">nom</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;nom&quot;</span><span class="o">);</span>
+<span class="n">String</span> <span class="n">cognoms</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;cognoms&quot;</span><span class="o">);</span>
+<span class="n">Denominacio</span> <span class="n">denom</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Denominacio</span><span class="o">(</span><span class="n">tr</span><span class="o">,</span> <span class="n">nom</span><span class="o">,</span> <span class="n">cognoms</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;nom: &quot;</span> <span class="o">+</span> <span class="n">denom</span><span class="o">);</span>
+</pre></div>
 <p>Ara la sortida (suposant codificada adequadament la classe
 <em>Denominacio</em>) serà:</p>
 <pre class="literal-block">
@@ -285,32 +280,30 @@ nom: Sra. Barbara Liskov
 que ens retorni les dades compostes <em>desmuntades</em>.</p>
 <p>Una altra alternativa és que ens fem nosaltres el nostre <em>parser</em>.</p>
 <p>Per exemple, considera el següent mètode per la classe <em>Denominacio</em></p>
-<pre class="literal-block">
-/* retorna una denominació a partir d'una tupla &quot;(tr,nom,cognoms)&quot;
- * codificada a un String.
- * En cas que no sigui una tupla vàlida retorna null. */
-public static Denominacio parseDenominacio(String tupla) {
-    Denominacio denom = null;
-    if (tupla.startsWith(&quot;(&quot;) &amp;&amp; tupla.endsWith(&quot;)&quot;)) {
-        String[] elements = tupla.substring(1, tupla.length()-1).split(&quot;,&quot;);
-        if (elements.length==3) {
-            denom = new Denominacio(elements[0], elements[1], elements[2]);
-        }
-    }
-    return denom;
-}
-</pre>
+<div class="highlight"><pre><span class="cm">/* retorna una denominació a partir d&#39;una tupla &quot;(tr,nom,cognoms)&quot;</span>
+<span class="cm"> * codificada a un String.</span>
+<span class="cm"> * En cas que no sigui una tupla vàlida retorna null. */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Denominacio</span> <span class="nf">parseDenominacio</span><span class="o">(</span><span class="n">String</span> <span class="n">tupla</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Denominacio</span> <span class="n">denom</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">tupla</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;(&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">tupla</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;)&quot;</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">String</span><span class="o">[]</span> <span class="n">elements</span> <span class="o">=</span> <span class="n">tupla</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">tupla</span><span class="o">.</span><span class="na">length</span><span class="o">()-</span><span class="mi">1</span><span class="o">).</span><span class="na">split</span><span class="o">(</span><span class="s">&quot;,&quot;</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">elements</span><span class="o">.</span><span class="na">length</span><span class="o">==</span><span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">denom</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Denominacio</span><span class="o">(</span><span class="n">elements</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">elements</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">elements</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">denom</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
 <p>Disposant d'aquest senzill <em>parser</em> podrem aconseguir la denominació
 simplement amb:</p>
-<pre class="literal-block">
-String sql = &quot;SELECT nom FROM CLIENTS WHERE id =&quot; + id;
-st = conn.createStatement();
-rs = st.executeQuery(sql);
-rs.next();
-String tupla = rs.getString(&quot;nom&quot;);
-Denominacio denom = parseDenominacio(tupla);
-System.out.println(&quot;nom: &quot; + denom);
-</pre>
+<div class="highlight"><pre><span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&quot;SELECT nom FROM CLIENTS WHERE id =&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+<span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+<span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">tupla</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;nom&quot;</span><span class="o">);</span>
+<span class="n">Denominacio</span> <span class="n">denom</span> <span class="o">=</span> <span class="n">parseDenominacio</span><span class="o">(</span><span class="n">tupla</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;nom: &quot;</span> <span class="o">+</span> <span class="n">denom</span><span class="o">);</span>
+</pre></div>
 <p>Cal tenir en compte que aquest <em>parser</em> no ens servirà en tots els
 casos. Per exemple, si la senyora Liskov tingués dos cognoms (com ara
 'Liskov d'Argent', el resultat seria que PostGreSQL ens retornaria els
@@ -322,56 +315,54 @@ més dels tres camps que espera i retornaria <em>null</em>!</p>
 tindrem més que suficient pels exercicis que treballarem en aquest
 document. Fa servir una <a class="reference external" href="http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html">expressió regular</a>,
 per extreure cada element <a class="footnote-reference" href="#regexsimple" id="id2">[2]</a>.</p>
-<pre class="literal-block">
-/* donada una seqüència de valors tancats entre parèntesis o claus
- * separats per comes i amb possibilitat d'estar envoltats per cometes
- * dobles que a l'hora puguin incloure dobles cometes dobles &quot;&quot; i comes,
- * retorna la llista de strings.*/
-private static ArrayList&lt;String&gt; splitSeq(String seq) {
-    // patró per extreure els elements
-    Pattern pattern = Pattern.compile(&quot;((\&quot;((\&quot;\&quot;)|([^\&quot;]))*\&quot;)|([^\&quot;,]*)),&quot;);
-    /* elimina els parèntesis que envolten la seqüència */
-    StringBuilder sb = new StringBuilder();
-    if ((seq.startsWith(&quot;(&quot;) &amp;&amp; seq.endsWith(&quot;)&quot;)) ||
-            (seq.startsWith(&quot;{&quot;) &amp;&amp; seq.endsWith(&quot;}&quot;))) {
-        sb.append(seq.substring(1, seq.length()-1));
-            }
-    /* afegeix una coma al final per permetre una regex simple */
-    sb.append(',');
-    /* realitza el parseig */
-    ArrayList&lt;String&gt; trobats = new ArrayList&lt;String&gt;();
-    Matcher matcher = pattern.matcher(sb.toString());
-    while (matcher.find()) {
-        String element = matcher.group(1);
-        if (element != null &amp;&amp; !element.equals(&quot;&quot;)) {
-            if (element.startsWith(&quot;\&quot;&quot;) &amp;&amp; ! element.startsWith(&quot;\&quot;\&quot;&quot;)) {
-                // elimina cometes a l'inici i final
-                element = element.substring(1, element.length()-1);
-            }
-            // simplifica cometes dobles
-            element = element.replaceAll(&quot;\&quot;\&quot;&quot;,&quot;\&quot;&quot;);
-            // afegeix l'element un cop &quot;netejat&quot;
-            trobats.add(element);
-        }
-    }
-    return trobats;
-}
-</pre>
+<div class="highlight"><pre><span class="cm">/* donada una seqüència de valors tancats entre parèntesis o claus</span>
+<span class="cm"> * separats per comes i amb possibilitat d&#39;estar envoltats per cometes</span>
+<span class="cm"> * dobles que a l&#39;hora puguin incloure dobles cometes dobles &quot;&quot; i comes,</span>
+<span class="cm"> * retorna la llista de strings.*/</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">splitSeq</span><span class="o">(</span><span class="n">String</span> <span class="n">seq</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// patró per extreure els elements</span>
+    <span class="n">Pattern</span> <span class="n">pattern</span> <span class="o">=</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">&quot;((\&quot;((\&quot;\&quot;)|([^\&quot;]))*\&quot;)|([^\&quot;,]*)),&quot;</span><span class="o">);</span>
+    <span class="cm">/* elimina els parèntesis que envolten la seqüència */</span>
+    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">((</span><span class="n">seq</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;(&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">seq</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;)&quot;</span><span class="o">))</span> <span class="o">||</span>
+            <span class="o">(</span><span class="n">seq</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;{&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">seq</span><span class="o">.</span><span class="na">endsWith</span><span class="o">(</span><span class="s">&quot;}&quot;</span><span class="o">)))</span> <span class="o">{</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">seq</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">seq</span><span class="o">.</span><span class="na">length</span><span class="o">()-</span><span class="mi">1</span><span class="o">));</span>
+            <span class="o">}</span>
+    <span class="cm">/* afegeix una coma al final per permetre una regex simple */</span>
+    <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="sc">&#39;,&#39;</span><span class="o">);</span>
+    <span class="cm">/* realitza el parseig */</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">trobats</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+    <span class="n">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">matcher</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">element</span> <span class="o">=</span> <span class="n">matcher</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">element</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">element</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">element</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;\&quot;&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span> <span class="n">element</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;\&quot;\&quot;&quot;</span><span class="o">))</span> <span class="o">{</span>
+                <span class="c1">// elimina cometes a l&#39;inici i final</span>
+                <span class="n">element</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">element</span><span class="o">.</span><span class="na">length</span><span class="o">()-</span><span class="mi">1</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="c1">// simplifica cometes dobles</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\&quot;\&quot;&quot;</span><span class="o">,</span><span class="s">&quot;\&quot;&quot;</span><span class="o">);</span>
+            <span class="c1">// afegeix l&#39;element un cop &quot;netejat&quot;</span>
+            <span class="n">trobats</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">element</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">trobats</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
 <p>Fixa't que ara, implementar el mètode <em>parseDenominacio()</em> és molt
 senzill:</p>
-<pre class="literal-block">
-/* retorna una denominació a partir d'una tupla &quot;(tr,nom,cognoms)&quot;
- * codificada a un String.
- * En cas que no sigui una tupla vàlida retorna null. */
-public static Denominacio parseDenominacio(String tupla) {
-    Denominacio denom = null;
-    ArrayList&lt;String&gt; trobats = splitSeq(tupla);
-    if (trobats.size()==3) {
-        denom = new Denominacio(trobats.get(0), trobats.get(1), trobats.get(2));
-    }
-    return denom;
-}
-</pre>
+<div class="highlight"><pre><span class="cm">/* retorna una denominació a partir d&#39;una tupla &quot;(tr,nom,cognoms)&quot;</span>
+<span class="cm"> * codificada a un String.</span>
+<span class="cm"> * En cas que no sigui una tupla vàlida retorna null. */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Denominacio</span> <span class="nf">parseDenominacio</span><span class="o">(</span><span class="n">String</span> <span class="n">tupla</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Denominacio</span> <span class="n">denom</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">trobats</span> <span class="o">=</span> <span class="n">splitSeq</span><span class="o">(</span><span class="n">tupla</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">trobats</span><span class="o">.</span><span class="na">size</span><span class="o">()==</span><span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Denominacio</span><span class="o">(</span><span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span> <span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">denom</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
 </div>
 <div class="section" id="exercici-4-parsetelefon">
 <h3>Exercici 4. parseTelefon()</h3>
@@ -395,93 +386,86 @@ telèfon correctes a partir de tuples controlades pel test.</p>
 <h3>Arrays</h3>
 <p>Veiem com podem tractar elements de tipus <em>array</em>.</p>
 <p>Recordem la definició del tipus <em>Adressa</em></p>
-<pre class="literal-block">
-testbd=&gt; \d adressa
-         Composite type &quot;public.adressa&quot;
-   Column    |         Type          | Modifiers
--------------+-----------------------+-----------
- carrer      | text[]                |
- codi_postal | character varying(20) |
- ciutat      | text                  |
- pais        | text                  |
-</pre>
+<div class="highlight"><pre><span class="n">testbd</span><span class="o">=&gt;</span> <span class="err">\</span><span class="n">d</span> <span class="n">adressa</span>
+         <span class="n">Composite</span> <span class="k">type</span> <span class="ss">&quot;public.adressa&quot;</span>
+   <span class="k">Column</span>    <span class="o">|</span>         <span class="k">Type</span>          <span class="o">|</span> <span class="n">Modifiers</span>
+<span class="c1">-------------+-----------------------+-----------</span>
+ <span class="n">carrer</span>      <span class="o">|</span> <span class="nb">text</span><span class="p">[]</span>                <span class="o">|</span>
+ <span class="n">codi_postal</span> <span class="o">|</span> <span class="nb">character</span> <span class="nb">varying</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">|</span>
+ <span class="n">ciutat</span>      <span class="o">|</span> <span class="nb">text</span>                  <span class="o">|</span>
+ <span class="n">pais</span>        <span class="o">|</span> <span class="nb">text</span>                  <span class="o">|</span>
+</pre></div>
 <p>Com podem veure, <em>carrer</em> apareix definit com a <em>array</em> de <em>strings</em>.</p>
 <p>La representació del tipus <em>Adressa</em> en Java pot tenir un aspecte similar
 al següent</p>
-<pre class="literal-block">
-public class Adressa {
-    private String[] carrer;
-    private String   codiPostal;
-    private String   ciutat;
-    private String   pais;
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Adressa</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span><span class="o">[]</span> <span class="n">carrer</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span>   <span class="n">codiPostal</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span>   <span class="n">ciutat</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span>   <span class="n">pais</span><span class="o">;</span>
 
-    public Adressa(String[] carrer, String codiPostal, String ciutat, String pais) {
-        this.carrer      = carrer;
-        this.codiPostal  = codiPostal;
-        this.ciutat      = ciutat;
-        this.pais        = pais;
-    }
+    <span class="kd">public</span> <span class="nf">Adressa</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">carrer</span><span class="o">,</span> <span class="n">String</span> <span class="n">codiPostal</span><span class="o">,</span> <span class="n">String</span> <span class="n">ciutat</span><span class="o">,</span> <span class="n">String</span> <span class="n">pais</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">carrer</span>      <span class="o">=</span> <span class="n">carrer</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">codiPostal</span>  <span class="o">=</span> <span class="n">codiPostal</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">ciutat</span>      <span class="o">=</span> <span class="n">ciutat</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">pais</span>        <span class="o">=</span> <span class="n">pais</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    public String[] getCarrer()    { return carrer; }
-    «...»
-}
-</pre>
+    <span class="kd">public</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">getCarrer</span><span class="o">()</span>    <span class="o">{</span> <span class="k">return</span> <span class="n">carrer</span><span class="o">;</span> <span class="o">}</span>
+    <span class="err">«</span><span class="o">...</span><span class="err">»</span>
+<span class="o">}</span>
+</pre></div>
 <p>Així, construirem una adreça amb</p>
-<pre class="literal-block">
-String[] liniesCarrer = {&quot;C/Antracita, 21&quot;, &quot;Pol. Ind. Gualda&quot;};
-Adressa adr = new Adressa(liniesCarrer, &quot;08020&quot;, &quot;Barcelona&quot;, &quot;Catalunya&quot;);
-</pre>
+<div class="highlight"><pre><span class="n">String</span><span class="o">[]</span> <span class="n">liniesCarrer</span> <span class="o">=</span> <span class="o">{</span><span class="s">&quot;C/Antracita, 21&quot;</span><span class="o">,</span> <span class="s">&quot;Pol. Ind. Gualda&quot;</span><span class="o">};</span>
+<span class="n">Adressa</span> <span class="n">adr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Adressa</span><span class="o">(</span><span class="n">liniesCarrer</span><span class="o">,</span> <span class="s">&quot;08020&quot;</span><span class="o">,</span> <span class="s">&quot;Barcelona&quot;</span><span class="o">,</span> <span class="s">&quot;Catalunya&quot;</span><span class="o">);</span>
+</pre></div>
 <p>Recordem que en SQL, l'aspecte que ha de tenir aquesta adreça segons
 la definició a la base de dades és:</p>
-<pre class="literal-block">
-ROW(ARRAY['C/Antracita, 21','Pol. Ind. Gualda'],'08020','Barcelona','Catalunya')
-</pre>
+<div class="highlight"><pre><span class="k">ROW</span><span class="p">(</span><span class="nb">ARRAY</span><span class="p">[</span><span class="s1">&#39;C/Antracita, 21&#39;</span><span class="p">,</span><span class="s1">&#39;Pol. Ind. Gualda&#39;</span><span class="p">],</span><span class="s1">&#39;08020&#39;</span><span class="p">,</span><span class="s1">&#39;Barcelona&#39;</span><span class="p">,</span><span class="s1">&#39;Catalunya&#39;</span><span class="p">)</span>
+</pre></div>
 <p>Podem composar aquests valors amb els següents mètodes</p>
-<pre class="literal-block">
-private static String composaCarrer(String[] linies) {
-    String carrer = null;
-    if (linies.length==0) {
-        carrer = &quot;ARRAY[]&quot;;
-    } else {
-        StringBuilder sb = new StringBuilder(&quot;ARRAY['&quot;);
-        sb.append(linies[0]);
-        for (int i = 1; i &lt; linies.length; i++) {
-            sb.append(&quot;','&quot;);
-            sb.append(linies[i]);
-        }
-        sb.append(&quot;']&quot;);
-        carrer = sb.toString();
-    }
-    return carrer;
-}
+<div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">composaCarrer</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">linies</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">carrer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">linies</span><span class="o">.</span><span class="na">length</span><span class="o">==</span><span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">carrer</span> <span class="o">=</span> <span class="s">&quot;ARRAY[]&quot;</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">&quot;ARRAY[&#39;&quot;</span><span class="o">);</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">linies</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">linies</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;&#39;,&#39;&quot;</span><span class="o">);</span>
+            <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">linies</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+        <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;&#39;]&quot;</span><span class="o">);</span>
+        <span class="n">carrer</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">carrer</span><span class="o">;</span>
+<span class="o">}</span>
 
-private static String composaAdressa(Adressa a) {
-    final String sql = &quot;ROW(%s,'%s','%s','%s')&quot;;
-    String carrer = composaCarrer(a.getCarrer());
-    return String.format(sql,carrer, a.getCodiPostal(), a.getCiutat(), a.getPais());
-}
-</pre>
+<span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">composaAdressa</span><span class="o">(</span><span class="n">Adressa</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&quot;ROW(%s,&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;)&quot;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">carrer</span> <span class="o">=</span> <span class="n">composaCarrer</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">getCarrer</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span><span class="n">carrer</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">getCodiPostal</span><span class="o">(),</span> <span class="n">a</span><span class="o">.</span><span class="na">getCiutat</span><span class="o">(),</span> <span class="n">a</span><span class="o">.</span><span class="na">getPais</span><span class="o">());</span>
+<span class="o">}</span>
+</pre></div>
 <p>A l'hora de llegir l'adreça, ens trobem que ens retorna la següent
 tupla:</p>
-<pre class="literal-block">
-(&quot;{&quot;&quot;C/Antracita, 21&quot;&quot;,&quot;&quot;Pol. Ind. Gualda&quot;&quot;}&quot;,08020,Barcelona,Catalunya)
-</pre>
+<div class="highlight"><pre><span class="p">(</span><span class="ss">&quot;{&quot;&quot;C/Antracita, 21&quot;&quot;,&quot;&quot;Pol. Ind. Gualda&quot;&quot;}&quot;</span><span class="p">,</span><span class="mi">08020</span><span class="p">,</span><span class="n">Barcelona</span><span class="p">,</span><span class="n">Catalunya</span><span class="p">)</span>
+</pre></div>
 <p>Per interpretar-la, ho tenim molt fàcil gràcies al mètode <em>splitSeq()</em>
 que hem presentat abans. Així el següent mètode ens pot construir una
 adreça a partir de la tupla anterior</p>
-<pre class="literal-block">
-public static Adressa parseAdressa(String tupla) {
-    Adressa adr = null;
-    ArrayList&lt;String&gt; trobats = splitSeq(tupla);
-    if (trobats.size()==4) {
-        ArrayList&lt;String&gt; carrer = splitSeq(trobats.get(0));
-        String[] elements = new String[carrer.size()];
-        adr = new Adressa(carrer.toArray(elements),
-                trobats.get(1), trobats.get(2), trobats.get(3));
-    }
-    return adr;
-}
-</pre>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">static</span> <span class="n">Adressa</span> <span class="nf">parseAdressa</span><span class="o">(</span><span class="n">String</span> <span class="n">tupla</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Adressa</span> <span class="n">adr</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">trobats</span> <span class="o">=</span> <span class="n">splitSeq</span><span class="o">(</span><span class="n">tupla</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">trobats</span><span class="o">.</span><span class="na">size</span><span class="o">()==</span><span class="mi">4</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">carrer</span> <span class="o">=</span> <span class="n">splitSeq</span><span class="o">(</span><span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
+        <span class="n">String</span><span class="o">[]</span> <span class="n">elements</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="n">carrer</span><span class="o">.</span><span class="na">size</span><span class="o">()];</span>
+        <span class="n">adr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Adressa</span><span class="o">(</span><span class="n">carrer</span><span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="n">elements</span><span class="o">),</span>
+                <span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span> <span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span> <span class="n">trobats</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">3</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">adr</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
 <p>Fixa't com <em>parseAdressa()</em> crida dos cops a <em>splitSeq()</em>. El primer
 per destriar els camps de l'adreça, i el segon per les diferents
 línies del carrer.</p>
@@ -504,32 +488,31 @@ l'identificador dels registres associat a les instàncies. La proposta
 aquí és molt bàsica: afegim una propietat <em>îd</em> a la instància.</p>
 <p>Per exemple, considera el següent codi que implementa la classe
 <em>Comercial</em></p>
-<pre class="literal-block">
-public class Comercial {
-    private int id;
-    private Denominacio nom;
-    private Telefon telefon;
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Comercial</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Denominacio</span> <span class="n">nom</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Telefon</span> <span class="n">telefon</span><span class="o">;</span>
 
-    public Comercial(Denominacio nom, Telefon telefon) {
-        this(-1, nom, telefon);
-    }
-    public Comercial(int id, Denominacio nom, Telefon telefon) {
-        this.id=id;
-        this.nom=nom;
-        this.telefon=telefon;
-    }
+    <span class="kd">public</span> <span class="nf">Comercial</span><span class="o">(</span><span class="n">Denominacio</span> <span class="n">nom</span><span class="o">,</span> <span class="n">Telefon</span> <span class="n">telefon</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">(-</span><span class="mi">1</span><span class="o">,</span> <span class="n">nom</span><span class="o">,</span> <span class="n">telefon</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="nf">Comercial</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">,</span> <span class="n">Denominacio</span> <span class="n">nom</span><span class="o">,</span> <span class="n">Telefon</span> <span class="n">telefon</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span><span class="o">=</span><span class="n">id</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">nom</span><span class="o">=</span><span class="n">nom</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">telefon</span><span class="o">=</span><span class="n">telefon</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    public void setId(int id)       { this.id = id;   }
-    public int         getId()      { return id;      }
-    public Denominacio getNom()     { return nom;     }
-    public Telefon     getTelefon() { return telefon; }
-    public String toString() {
-        return &quot;Comercial: &quot; + id +
-            &quot;\n\tnom: &quot;+ nom +
-            &quot;\n\ttelefon: &quot; + telefon;
-    }
-}
-</pre>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span>       <span class="o">{</span> <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>   <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">int</span>         <span class="nf">getId</span><span class="o">()</span>      <span class="o">{</span> <span class="k">return</span> <span class="n">id</span><span class="o">;</span>      <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Denominacio</span> <span class="nf">getNom</span><span class="o">()</span>     <span class="o">{</span> <span class="k">return</span> <span class="n">nom</span><span class="o">;</span>     <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Telefon</span>     <span class="nf">getTelefon</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">telefon</span><span class="o">;</span> <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&quot;Comercial: &quot;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+            <span class="s">&quot;\n\tnom: &quot;</span><span class="o">+</span> <span class="n">nom</span> <span class="o">+</span>
+            <span class="s">&quot;\n\ttelefon: &quot;</span> <span class="o">+</span> <span class="n">telefon</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 <p>Fixat:</p>
 <ol class="arabic simple">
 <li>La classe ofereix dos constructors. Quan creem una instància a
@@ -554,31 +537,30 @@ classe no és immutable com ho era per exemple <em>Denominacio</em>.</li>
 Com podem obtenir les dades associades i a partir d'elles construir la
 instància del comercial?</p>
 <p>Considera el següent codi:</p>
-<pre class="literal-block">
-public Comercial carregaComercial(int id) {
-    Statement st  = null;
-    String sql = &quot;SELECT * FROM COMERCIALS WHERE id =&quot; + id;
-    Comercial comercial = null;
-    try {
-        st = conn.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-        if (rs.next()) {
-            String nomStr = rs.getString(&quot;nom&quot;);
-            String telStr = rs.getString(&quot;tel&quot;);
-            Denominacio denom = VendesParser.parseDenominacio(nomStr);
-            Telefon telefon = VendesParser.parseTelefon(telStr);
-            comercial = new Comercial(id, denom, telefon);
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        try {
-            if (st != null) st.close();
-        } catch (SQLException e) {}
-    }
-    return comercial;
-}
-</pre>
+<div class="highlight"><pre><span class="kd">public</span> <span class="n">Comercial</span> <span class="nf">carregaComercial</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Statement</span> <span class="n">st</span>  <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="s">&quot;SELECT * FROM COMERCIALS WHERE id =&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="o">;</span>
+    <span class="n">Comercial</span> <span class="n">comercial</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+        <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">executeQuery</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">nomStr</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;nom&quot;</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">telStr</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="s">&quot;tel&quot;</span><span class="o">);</span>
+            <span class="n">Denominacio</span> <span class="n">denom</span> <span class="o">=</span> <span class="n">VendesParser</span><span class="o">.</span><span class="na">parseDenominacio</span><span class="o">(</span><span class="n">nomStr</span><span class="o">);</span>
+            <span class="n">Telefon</span> <span class="n">telefon</span> <span class="o">=</span> <span class="n">VendesParser</span><span class="o">.</span><span class="na">parseTelefon</span><span class="o">(</span><span class="n">telStr</span><span class="o">);</span>
+            <span class="n">comercial</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comercial</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">denom</span><span class="o">,</span> <span class="n">telefon</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">st</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">comercial</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
 <p>Fixat:</p>
 <ol class="arabic simple">
 <li>Aquest mètode intenta trobar el comercial amb l'identificador
@@ -653,63 +635,61 @@ desenvolupament anomenat <a class="reference external" href="http://www.javaworl
 Donat que a la nostra aplicació sempre ens interessarà disposar de la
 connexió, podrem implementar el patró d'una manera molt senzilla.
 El codi següent podria servir de plantilla <a class="footnote-reference" href="#threadsafe" id="id5">[6]</a></p>
-<pre class="literal-block">
-public class VendesBD {
-    // única instància de VendesBD per tot el procés
-    private static final VendesBD instancia = new VendesBD();
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">VendesBD</span> <span class="o">{</span>
+    <span class="c1">// única instància de VendesBD per tot el procés</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">VendesBD</span> <span class="n">instancia</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VendesBD</span><span class="o">();</span>
 
-    // connexió amb la base de dades
-    private Connection conn = null;
+    <span class="c1">// connexió amb la base de dades</span>
+    <span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-    private VendesBD() {}
+    <span class="kd">private</span> <span class="nf">VendesBD</span><span class="o">()</span> <span class="o">{}</span>
 
-    /* retorna la única instància de VendesBD
-     * Si hi ha problemes de connexió genera una excepció RuntimeException */
-    public static VendesBD getInstance() throws RuntimeException {
-        if (instancia.conn == null) {       // primer cop o tancada?
-            instancia.conn = connecta();
-            if (instancia.conn == null) {   // no es pot establir la connexió
-                throw new RuntimeException(&quot;Sense connexió&quot;);
-            }
-        }
-        return instancia;
-    }
+    <span class="cm">/* retorna la única instància de VendesBD</span>
+<span class="cm">     * Si hi ha problemes de connexió genera una excepció RuntimeException */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">VendesBD</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">RuntimeException</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">instancia</span><span class="o">.</span><span class="na">conn</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>       <span class="c1">// primer cop o tancada?</span>
+            <span class="n">instancia</span><span class="o">.</span><span class="na">conn</span> <span class="o">=</span> <span class="n">connecta</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">instancia</span><span class="o">.</span><span class="na">conn</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>   <span class="c1">// no es pot establir la connexió</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&quot;Sense connexió&quot;</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">instancia</span><span class="o">;</span>
+    <span class="o">}</span>
 
-    /* tanca la instància.*/
-    public void tanca() {
-        if (instancia.conn != null) {
-            try {
-                instancia.conn.close();
-            } catch (SQLException e) { }
-            instancia.conn = null;
-        }
-    }
+    <span class="cm">/* tanca la instància.*/</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">tanca</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">instancia</span><span class="o">.</span><span class="na">conn</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">instancia</span><span class="o">.</span><span class="na">conn</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span> <span class="o">}</span>
+            <span class="n">instancia</span><span class="o">.</span><span class="na">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    /* Crea la connexió amb la base de dades.
-     * Si ja hi havia una connexió, no fa res.
-     * No genera error si no pot establir la connexió
-     */
-    private static Connection connecta() {
-        Connection conn = null;
-        String usuari   = &quot;usuaribd&quot;;
-        String password = &quot;pass&quot;;
-        String host     = &quot;192.168.56.101&quot;;
-        String bd       = &quot;testbd&quot;;
-        String url      = &quot;jdbc:postgresql://&quot; + host + &quot;/&quot; + bd;
-        try {
-            conn = DriverManager.getConnection(url, usuari, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
-    «...»
-}
-</pre>
+    <span class="cm">/* Crea la connexió amb la base de dades.</span>
+<span class="cm">     * Si ja hi havia una connexió, no fa res.</span>
+<span class="cm">     * No genera error si no pot establir la connexió</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">connecta</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">usuari</span>   <span class="o">=</span> <span class="s">&quot;usuaribd&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">password</span> <span class="o">=</span> <span class="s">&quot;pass&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">host</span>     <span class="o">=</span> <span class="s">&quot;192.168.56.101&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">bd</span>       <span class="o">=</span> <span class="s">&quot;testbd&quot;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">url</span>      <span class="o">=</span> <span class="s">&quot;jdbc:postgresql://&quot;</span> <span class="o">+</span> <span class="n">host</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">bd</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">conn</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">usuari</span><span class="o">,</span> <span class="n">password</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">conn</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="err">«</span><span class="o">...</span><span class="err">»</span>
+<span class="o">}</span>
+</pre></div>
 <p>Per cridar a un mètode de <em>VendesBD</em> podem, per exemple</p>
-<pre class="literal-block">
-Client client = VendesBD.getInstance().carregaClient(id);
-</pre>
+<div class="highlight"><pre><span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="n">VendesBD</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">carregaClient</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+</pre></div>
 <p>En acabar l'execució, és recomanable tancar la connexió amb la base de
 dades. Per aquest fi disposem del mètode <em>tanca()</em> que hauria de ser
 cridat quan ja no tinguem més necessitat de disposar de connexió a la
@@ -746,24 +726,21 @@ fantàstic) SGBD, poden finalitzar la implementació d'aquest concepte.</p>
 <p>L'aproximació que prendrem aquí és molt habitual en el model
 relacional (sense Objecte-Relacional): l'entitat que estén disposa
 d'una clau primària que és a l'hora forana de l'entidad estesa</p>
-<pre class="literal-block">
-CREATE TABLE CLIENTS_VIP (
-    id_client INTEGER PRIMARY KEY REFERENCES CLIENTS(id),
-    id_comercial INTEGER REFERENCES COMERCIALS
-);
-</pre>
+<div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">CLIENTS_VIP</span> <span class="p">(</span>
+    <span class="n">id_client</span> <span class="nb">INTEGER</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="k">REFERENCES</span> <span class="n">CLIENTS</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+    <span class="n">id_comercial</span> <span class="nb">INTEGER</span> <span class="k">REFERENCES</span> <span class="n">COMERCIALS</span>
+<span class="p">);</span>
+</pre></div>
 <p>D'aquesta manera, la taula de <em>CLIENTS_VIP</em> conté únicament les dades
 que estén, mentre que <em>CLIENTS</em> conté la resta.</p>
 <p>Farem que un client sigui VIP simplement afegint a <em>CLIENTS_VIP</em> una
-entrada. Per exemple, la nostra clienta 20001 la farem VIP amb:</p>
-<pre class="literal-block">
-INSERT INTO CLIENTS_VIP VALUES (20001, 40001);
-</pre>
+entrada. Per exemple, la nostra clienta 20001 la farem VIP amb</p>
+<div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">CLIENTS_VIP</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">20001</span><span class="p">,</span> <span class="mi">40001</span><span class="p">);</span>
+</pre></div>
 <p>Per a accedir a les dades de tots els clients, siguin o no, VIP podem
 fer</p>
-<pre class="literal-block">
-SELECT * FROM CLIENTS LEFT OUTER JOIN CLIENTS_VIP ON (id = id_client);
-</pre>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">CLIENTS</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">CLIENTS_VIP</span> <span class="k">ON</span> <span class="p">(</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_client</span><span class="p">);</span>
+</pre></div>
 <p>Aquesta consulta ens retornarà una columna <em>id_comercial</em> que
 contindrà un valor nul en el cas que el client no correspongui a un
 VIP.</p>
@@ -772,23 +749,21 @@ de Java, ens trobarem que els clients no VIP presenten un 0 al valor
 del camp <em>id_comercial</em>. Potser ens interessaria que aquest valor fos
 el -1 que estem fent servir en aquests materials. Això ho aconseguirem
 amb <a class="footnote-reference" href="#coalesce" id="id6">[3]</a></p>
-<pre class="literal-block">
-SELECT CLIENTS.*, coalesce(id_comercial, -1) AS id_comercial
-FROM CLIENTS LEFT OUTER JOIN CLIENTS_VIP ON (id = id_client);
-</pre>
+<div class="highlight"><pre><span class="k">SELECT</span> <span class="n">CLIENTS</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> <span class="n">coalesce</span><span class="p">(</span><span class="n">id_comercial</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="n">id_comercial</span>
+<span class="k">FROM</span> <span class="n">CLIENTS</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">CLIENTS_VIP</span> <span class="k">ON</span> <span class="p">(</span><span class="n">id</span> <span class="o">=</span> <span class="n">id_client</span><span class="p">);</span>
+</pre></div>
 <p>D'aquesta manera, quan estem llegint un client podem fer</p>
-<pre class="literal-block">
-«...»
-int id_comercial = rs.getInt(&quot;id_comercial&quot;);
-Client client = null;
-if (id_comercial == -1) {
-    client = new Client(id, denom, adr, telefons);
-} else {
-    Comercial comercial = carregaComercial(id_comercial);
-    client = new ClientVip(id, denom, adr, telefons, comercial);
-}
-«...»
-</pre>
+<div class="highlight"><pre><span class="err">«</span><span class="o">...</span><span class="err">»</span>
+<span class="kt">int</span> <span class="n">id_comercial</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="s">&quot;id_comercial&quot;</span><span class="o">);</span>
+<span class="n">Client</span> <span class="n">client</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">id_comercial</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Client</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">denom</span><span class="o">,</span> <span class="n">adr</span><span class="o">,</span> <span class="n">telefons</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="n">Comercial</span> <span class="n">comercial</span> <span class="o">=</span> <span class="n">carregaComercial</span><span class="o">(</span><span class="n">id_comercial</span><span class="o">);</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClientVip</span><span class="o">(</span><span class="n">id</span><span class="o">,</span> <span class="n">denom</span><span class="o">,</span> <span class="n">adr</span><span class="o">,</span> <span class="n">telefons</span><span class="o">,</span> <span class="n">comercial</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="err">«</span><span class="o">...</span><span class="err">»</span>
+</pre></div>
 <p>Fixa't que en cas que el comercial ja hagi estat carregat al sistema
 per un altre client, hi haurà instàncies duplicades del mateix
 comercial.  És molt probable que a la teva aplicació no vulguis que
@@ -815,86 +790,79 @@ distingir quina mena de client t'arriba a <em>UsaClient</em>.</p>
 si es tracta d'un client VIP, i en aquest cas caldrà guardar també la
 informació d'aquest.</p>
 <p>Una manera seria crear dos mètodes:</p>
-<pre class="literal-block">
-VendesBD.guardaClient(Client client) { «...» }
-</pre>
+<div class="highlight"><pre><span class="n">VendesBD</span><span class="o">.</span><span class="na">guardaClient</span><span class="o">(</span><span class="n">Client</span> <span class="n">client</span><span class="o">)</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+</pre></div>
 <p>i</p>
-<pre class="literal-block">
-VendesBD.guardaClient(ClientVip client) { «...» }
-</pre>
+<div class="highlight"><pre><span class="n">VendesBD</span><span class="o">.</span><span class="na">guardaClient</span><span class="o">(</span><span class="n">ClientVip</span> <span class="n">client</span><span class="o">)</span> <span class="o">{</span> <span class="err">«</span><span class="o">...</span><span class="err">»</span> <span class="o">}</span>
+</pre></div>
 <p>D'aquesta manera deixaríem la distinció del tipus de client al
 compilador. Com que sovint, però, les nostres referències seran a
 client tant si són VIP com si no, segurament ens serà més pràctic fer
 una distinció amb l'operador <em>instanceof</em> <a class="footnote-reference" href="#principispooalterra" id="id7">[4]</a>.</p>
 <p>Considera la implementació del següent mètode de <em>VendesBD</em></p>
-<pre class="literal-block">
-public void guardaClient(Client client) throws SQLException {
-    boolean esVip = (client instanceof ClientVip);
-    String nom = composaDenominacio(client.getNom());
-    String adr = composaAdressa(client.getAdr());
-    String tel = composaTelefons(client.getTelefons());
-    int idClient = client.getId();
-    if (idClient == -1) {
-        idClient = insertClientBD(nom, adr, tel);
-        client.setId(idClient); // assigna l'id del client
-    } else {
-        updateClientBD(idClient, nom, adr, tel);
-    }
-    if (esVip) {
-        Comercial comercial = ((ClientVip) client).getComercial();
-        if (comercial.getComercial() == -1) {
-            guardaComercial(comercial);
-        }
-        insertOUpdateClientVipBD(idClient, comercial.getId());
-    }
-}
-</pre>
+<div class="highlight"><pre><span class="kd">public</span> <span class="kt">void</span> <span class="nf">guardaClient</span><span class="o">(</span><span class="n">Client</span> <span class="n">client</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="n">esVip</span> <span class="o">=</span> <span class="o">(</span><span class="n">client</span> <span class="k">instanceof</span> <span class="n">ClientVip</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">nom</span> <span class="o">=</span> <span class="n">composaDenominacio</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getNom</span><span class="o">());</span>
+    <span class="n">String</span> <span class="n">adr</span> <span class="o">=</span> <span class="n">composaAdressa</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getAdr</span><span class="o">());</span>
+    <span class="n">String</span> <span class="n">tel</span> <span class="o">=</span> <span class="n">composaTelefons</span><span class="o">(</span><span class="n">client</span><span class="o">.</span><span class="na">getTelefons</span><span class="o">());</span>
+    <span class="kt">int</span> <span class="n">idClient</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">getId</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">idClient</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">idClient</span> <span class="o">=</span> <span class="n">insertClientBD</span><span class="o">(</span><span class="n">nom</span><span class="o">,</span> <span class="n">adr</span><span class="o">,</span> <span class="n">tel</span><span class="o">);</span>
+        <span class="n">client</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">idClient</span><span class="o">);</span> <span class="c1">// assigna l&#39;id del client</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="n">updateClientBD</span><span class="o">(</span><span class="n">idClient</span><span class="o">,</span> <span class="n">nom</span><span class="o">,</span> <span class="n">adr</span><span class="o">,</span> <span class="n">tel</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">esVip</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Comercial</span> <span class="n">comercial</span> <span class="o">=</span> <span class="o">((</span><span class="n">ClientVip</span><span class="o">)</span> <span class="n">client</span><span class="o">).</span><span class="na">getComercial</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">comercial</span><span class="o">.</span><span class="na">getComercial</span><span class="o">()</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">guardaComercial</span><span class="o">(</span><span class="n">comercial</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">insertOUpdateClientVipBD</span><span class="o">(</span><span class="n">idClient</span><span class="o">,</span> <span class="n">comercial</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 <p>Fixa't:</p>
-<ol class="arabic">
-<li><p class="first">El mètode distingeix si ha de realitzar un <em>insert</em> o un <em>update</em> a
-partir de l'identificador del client.</p>
-</li>
-<li><p class="first">El codi inicialitza <em>esVip</em> segons sigui o no VIP. Més endavant, si
+<ol class="arabic simple">
+<li>El mètode distingeix si ha de realitzar un <em>insert</em> o un <em>update</em> a
+partir de l'identificador del client.</li>
+<li>El codi inicialitza <em>esVip</em> segons sigui o no VIP. Més endavant, si
 és VIP, se n'encarrega de guardar (també <em>insert</em> o <em>update</em>) el
-comercial i la informació a la taula <em>CLIENTS_VIP</em>.</p>
-</li>
-<li><p class="first">El codi de <em>composaDenominacio()</em> podria ser:</p>
-<pre class="literal-block">
-private static String composaDenominacio(Denominacio d) {
-    return String.format( &quot;ROW('%s','%s','%s')&quot;,d.getTr(), d.getNom(), d.getCognoms());
-}
-</pre>
-</li>
-<li><p class="first">El codi de <em>insertClientBD()</em> podria ser:</p>
-<pre class="literal-block">
-private int insertClientBD(String nom, String adr, String tel) throws SQLException {
-    String sql = String.format(
-            &quot;INSERT INTO CLIENTS (nom, adr, telefons) VALUES (%s,%s,CAST(%s AS Telefon[]))&quot;,
-            nom, adr, tel);
-    return insertElementBd(sql);
-}
-</pre>
-<p>amb</p>
-<pre class="literal-block">
-/* Executa una query que generarà una única clau i la retorna */
-private int insertElementBd(String sql) throws SQLException {
-    Statement st = null;
-    int id = -1;
-    try {
-        st = conn.createStatement();
-        st.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-        ResultSet rs = st.getGeneratedKeys();
-        rs.next();
-        id = rs.getInt(1);
-        rs.close();
-    } finally {
-        if (st != null) { st.close(); }
-    }
-    return id;
-}
-</pre>
-</li>
+comercial i la informació a la taula <em>CLIENTS_VIP</em>.</li>
+<li>El codi de <em>composaDenominacio()</em> podria ser:</li>
 </ol>
+<div class="highlight"><pre><span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">composaDenominacio</span><span class="o">(</span><span class="n">Denominacio</span> <span class="n">d</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span> <span class="s">&quot;ROW(&#39;%s&#39;,&#39;%s&#39;,&#39;%s&#39;)&quot;</span><span class="o">,</span><span class="n">d</span><span class="o">.</span><span class="na">getTr</span><span class="o">(),</span> <span class="n">d</span><span class="o">.</span><span class="na">getNom</span><span class="o">(),</span> <span class="n">d</span><span class="o">.</span><span class="na">getCognoms</span><span class="o">());</span>
+<span class="o">}</span>
+</pre></div>
+<ol class="arabic simple">
+<li>El codi de <em>insertClientBD()</em> podria ser:</li>
+</ol>
+<div class="highlight"><pre>     <span class="kd">private</span> <span class="kt">int</span> <span class="nf">insertClientBD</span><span class="o">(</span><span class="n">String</span> <span class="n">nom</span><span class="o">,</span> <span class="n">String</span> <span class="n">adr</span><span class="o">,</span> <span class="n">String</span> <span class="n">tel</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+         <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+                 <span class="s">&quot;INSERT INTO CLIENTS (nom, adr, telefons) VALUES (%s,%s,CAST(%s AS Telefon[]))&quot;</span><span class="o">,</span>
+                 <span class="n">nom</span><span class="o">,</span> <span class="n">adr</span><span class="o">,</span> <span class="n">tel</span><span class="o">);</span>
+         <span class="k">return</span> <span class="n">insertElementBd</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+     <span class="o">}</span>
+
+<span class="n">amb</span>
+</pre></div>
+<div class="highlight"><pre><span class="cm">/* Executa una query que generarà una única clau i la retorna */</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="nf">insertElementBd</span><span class="o">(</span><span class="n">String</span> <span class="n">sql</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+    <span class="n">Statement</span> <span class="n">st</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+        <span class="n">st</span><span class="o">.</span><span class="na">executeUpdate</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span> <span class="n">Statement</span><span class="o">.</span><span class="na">RETURN_GENERATED_KEYS</span><span class="o">);</span>
+        <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="na">getGeneratedKeys</span><span class="o">();</span>
+        <span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+        <span class="n">id</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">rs</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">st</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span> <span class="n">st</span><span class="o">.</span><span class="na">close</span><span class="o">();</span> <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
 </div>
 <div class="section" id="exercici-15-guardant-client">
 <h3>Exercici 15. Guardant client</h3>
@@ -1184,8 +1152,11 @@ total de les despeses de tots els clients del comercial.</p>
 </ul>
 <div class="section" id="requeriments-addicionals">
 <h4>Requeriments addicionals</h4>
-<p>Estructura el projecte de manera similar a la descrita a
-l'<a class="reference external" href="./jdbc-ii-model-relacional.html">exercici 2 del model relacional</a></p>
+<p>Estructura el projecte de manera similar a la descrita a l'<a class="reference external" href="./jdbc-ii-model-relacional.html">exercici 2
+del model relacional</a></p>
+<p>De la mateixa manera, l'aplicació vendes requerirà la contrasenya per
+a poder connectar a la base de dades i es comportarà de com al
+gestoranimals.</p>
 </div>
 <div class="section" id="pistes">
 <h4>Pistes</h4>
