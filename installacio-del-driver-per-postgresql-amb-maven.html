@@ -119,8 +119,8 @@ HolaPG.java vist a la <a class="reference external" href="./installacio-directa-
 <p>Aquest cop, assegurat però que HolaPG.java especifica el package
 adequat.</p>
 </li>
-<li><p class="first">Executa la classe:</p>
-<div class="highlight"><pre><span class="nv">$ </span>mvn <span class="nb">exec</span>:java -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;org.iesjoandaustria.test.HolaPG&quot;</span>
+<li><p class="first">Compila i executa la classe:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mvn compile <span class="nb">exec</span>:java -Dexec.mainClass<span class="o">=</span><span class="s2">&quot;org.iesjoandaustria.test.HolaPG&quot;</span>
 </pre></div>
 <p>Tot i que s'executarà sense problemes pel que respecta a Maven (no
 finalitza amb excepció), el missatge que genera és molt clar:</p>
@@ -145,7 +145,7 @@ secció de dependències de pom.xml.</p>
 </li>
 <li><p class="first">Demana a Maven que instal·li el driver des del jar que vas
 descarregar a la <a class="reference external" href="./installacio-directa-del-driver-per-postgresql.html">secció anterior</a>.</p>
-<div class="highlight"><pre><span class="nv">$ </span>mvn install:install-file -DgroupId<span class="o">=</span>org.postgresql -DartifactId<span class="o">=</span>postgresql -Dpackaging<span class="o">=</span>jar -Dversion<span class="o">=</span>9.4-1201.jdbc41 -Dfile<span class="o">=</span><span class="nv">$HOME</span>/lib/postgresql.jdbc.jar -DgeneratePom<span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre><span class="nv">$ </span>mvn install:install-file -DgroupId<span class="o">=</span>org.postgresql -DartifactId<span class="o">=</span>postgresql -Dpackaging<span class="o">=</span>jar -Dversion<span class="o">=</span>9.4-1201.jdbc41 -Dfile<span class="o">=</span><span class="nv">$HOME</span>/lib/postgresql-9.4-1201.jdbc41.jar -DgeneratePom<span class="o">=</span><span class="nb">true</span>
 </pre></div>
 </li>
 <li><p class="first">Torna a executar HolaPG i aquest cop hauria de sortir-te l'esperat

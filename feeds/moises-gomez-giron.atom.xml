@@ -373,18 +373,26 @@ amfitrió&lt;/em&gt; de manera que l'accés a la màquina virtual quedi
 restringit a la nostra màquina i altres possibles màquines virtuals
 que s'executin sobre aquesta.&lt;/p&gt;
 &lt;p&gt;Per fer-ho, segueix les següents passes:&lt;/p&gt;
-&lt;ol class="arabic simple"&gt;
-&lt;li&gt;finalitza l'execució de la màquina virtual&lt;/li&gt;
-&lt;li&gt;des de la finestra principal de &lt;em&gt;VirtualBox&lt;/em&gt;, selecciona
+&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;finalitza l'execució de la màquina virtual&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;des de la finestra principal de &lt;em&gt;VirtualBox&lt;/em&gt;, selecciona
 &lt;em&gt;Fitxer-&amp;gt;Preferències-&amp;gt;Xarxa-&amp;gt;Xarxes de només amfitrió&lt;/em&gt; i fes
 clic al botó lateral (dreta) que apareix amb un '+' (amb
 llegenda &lt;em&gt;Âfegeix xarxa de només anfitrió&lt;/em&gt;). Això t'incorporarà
-&lt;em&gt;vboxnet0&lt;/em&gt;, un servidor DHCP que ofereix per defecte
-&lt;em&gt;VirtualBox&lt;/em&gt;.&lt;/li&gt;
-&lt;li&gt;des de la finestra principal de &lt;em&gt;VirtualBox&lt;/em&gt;, selecciona
+&lt;em&gt;vboxnet0&lt;/em&gt;, una xarxa que crea &lt;em&gt;VirtualBox&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;És possible que no disposis de &lt;em&gt;vboxnet0&lt;/em&gt; inicialment. Per
+crear-la, hauràs d'anar a la finestra principal de VirtualBox i
+seguir el camí &lt;em&gt;Fitxer-&amp;gt;Preferències-&amp;gt;Xarxa&lt;/em&gt;. Ara, a la dreta de
+la finestra trobaràs una icona per afegir una altra interfície
+de xarxa. Prem-la i et crearà &lt;em&gt;vboxnet0&lt;/em&gt;. En pots crear-ne més
+però probablement no et caldrà per a aquesta pràctica.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;des de la finestra principal de &lt;em&gt;VirtualBox&lt;/em&gt;, selecciona
 &lt;em&gt;Màquina-&amp;gt;Paràmetres-&amp;gt;Xarxa&lt;/em&gt; i a
 &lt;em&gt;Connectat a:&lt;/em&gt; canvia el valor de NAT per &lt;em&gt;Adaptador de només
-amfitrió&lt;/em&gt; &lt;a class="footnote-reference" href="#adaptadorpont" id="id2"&gt;[2]&lt;/a&gt;.&lt;/li&gt;
+amfitrió&lt;/em&gt; &lt;a class="footnote-reference" href="#adaptadorpont" id="id2"&gt;[2]&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Cal tenir en compte que en arrencar de nou la màquina virtual
 haurem perdut l'accés cap a l'exterior. Si et cal per algun motiu,
@@ -2119,8 +2127,8 @@ HolaPG.java vist a la &lt;a class="reference external" href="http://apuntstecnic
 &lt;p&gt;Aquest cop, assegurat però que HolaPG.java especifica el package
 adequat.&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p class="first"&gt;Executa la classe:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mvn &lt;span class="nb"&gt;exec&lt;/span&gt;:java -Dexec.mainClass&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;org.iesjoandaustria.test.HolaPG&amp;quot;&lt;/span&gt;
+&lt;li&gt;&lt;p class="first"&gt;Compila i executa la classe:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mvn compile &lt;span class="nb"&gt;exec&lt;/span&gt;:java -Dexec.mainClass&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;org.iesjoandaustria.test.HolaPG&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Tot i que s'executarà sense problemes pel que respecta a Maven (no
 finalitza amb excepció), el missatge que genera és molt clar:&lt;/p&gt;
@@ -2145,7 +2153,7 @@ secció de dependències de pom.xml.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Demana a Maven que instal·li el driver des del jar que vas
 descarregar a la &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/installacio-directa-del-driver-per-postgresql.html"&gt;secció anterior&lt;/a&gt;.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mvn install:install-file -DgroupId&lt;span class="o"&gt;=&lt;/span&gt;org.postgresql -DartifactId&lt;span class="o"&gt;=&lt;/span&gt;postgresql -Dpackaging&lt;span class="o"&gt;=&lt;/span&gt;jar -Dversion&lt;span class="o"&gt;=&lt;/span&gt;9.4-1201.jdbc41 -Dfile&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/lib/postgresql.jdbc.jar -DgeneratePom&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mvn install:install-file -DgroupId&lt;span class="o"&gt;=&lt;/span&gt;org.postgresql -DartifactId&lt;span class="o"&gt;=&lt;/span&gt;postgresql -Dpackaging&lt;span class="o"&gt;=&lt;/span&gt;jar -Dversion&lt;span class="o"&gt;=&lt;/span&gt;9.4-1201.jdbc41 -Dfile&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/lib/postgresql-9.4-1201.jdbc41.jar -DgeneratePom&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;Torna a executar HolaPG i aquest cop hauria de sortir-te l'esperat
@@ -2569,7 +2577,9 @@ la base de dades.&lt;/p&gt;
 214
 215
 216
-217&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.sql.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+217
+218
+219&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.sql.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UsaAnimal&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Connection&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;    &lt;span class="c1"&gt;// connexió&lt;/span&gt;
 
@@ -2706,16 +2716,18 @@ la base de dades.&lt;/p&gt;
             &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Animal&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;dofí&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;peix&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="o"&gt;};&lt;/span&gt;
 
-        &lt;span class="c1"&gt;// obté l&amp;#39;estat anterior de l&amp;#39;autocommit.&lt;/span&gt;
-        &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;anteriorAutoCommit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAutoCommit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
-        &lt;span class="c1"&gt;// fem que no faci autocommit a cada execució&lt;/span&gt;
-        &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAutoCommit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
-
         &lt;span class="n"&gt;PreparedStatement&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
         &lt;span class="c1"&gt;// crea la sentència a executar (només un cop!)&lt;/span&gt;
         &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
             &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prepareStatement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
             &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// obté l&amp;#39;estat anterior de l&amp;#39;autocommit.&lt;/span&gt;
+                &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;anteriorAutoCommit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAutoCommit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+                &lt;span class="c1"&gt;// fem que no faci autocommit a cada execució&lt;/span&gt;
+                &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAutoCommit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+
+                &lt;span class="c1"&gt;// afegeix cada animal de la llista&lt;/span&gt;
                 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Animal&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;llista&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
                     &lt;span class="c1"&gt;// afegim els valors a insertar&lt;/span&gt;
                     &lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getNom&lt;/span&gt;&lt;span class="o"&gt;());&lt;/span&gt;       &lt;span class="c1"&gt;// primer camp&lt;/span&gt;
@@ -12364,7 +12376,7 @@ estira’t
 miola
 calla
 parla
-adèu
+adéu
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;L'entorn no distingirà entre majúscules i minúscules.&lt;/p&gt;
 &lt;p&gt;En cas que la comanda introduïda per l'usuari no coincideixi amb
@@ -12373,7 +12385,7 @@ continuarà demanant noves comandes.&lt;/p&gt;
 &lt;p&gt;Inicialment el gat Renat parlarà i estarà estirat.&lt;/p&gt;
 &lt;p&gt;Quan se li demani com està, si pot parlar, dirà &lt;tt class="docutils literal"&gt;estic «estat»&lt;/tt&gt; (per
 exemple, &lt;tt class="docutils literal"&gt;estic estirat&lt;/tt&gt;), altrament respondrà amb &lt;tt class="docutils literal"&gt;...&lt;/tt&gt;.&lt;/p&gt;
-&lt;p&gt;Quan se li digui &lt;tt class="docutils literal"&gt;adèu&lt;/tt&gt;, si pot parlar respondrà amb &lt;tt class="docutils literal"&gt;adèu&lt;/tt&gt;,
+&lt;p&gt;Quan se li digui &lt;tt class="docutils literal"&gt;adéu&lt;/tt&gt;, si pot parlar respondrà amb &lt;tt class="docutils literal"&gt;adéu&lt;/tt&gt;,
 altrament també s'acomiadarà silenciosament amb un &lt;tt class="docutils literal"&gt;...&lt;/tt&gt;. En tots
 dos casos finalitzarà.&lt;/p&gt;
 &lt;p&gt;Per la resta de comandes, el programa respondrà amb el que respongui
@@ -12393,7 +12405,7 @@ aixeca&amp;#39;t
 [Renat] «...»
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Nota: en cas que ens descuidem de finalitzar al fitxer d'entrada amb
-&amp;quot;adèu&amp;quot;, és molt probable que ens surti un error d'execució del tipus
+&amp;quot;adéu&amp;quot;, és molt probable que ens surti un error d'execució del tipus
 &lt;tt class="docutils literal"&gt;java.lang.NullPointerException&lt;/tt&gt;. El problema és que la lectura de
 l'entrada estàndard ens returna &lt;tt class="docutils literal"&gt;null&lt;/tt&gt; en comptes d'un string buit.
 Caldrà només continuar quan llegim res que no sigui null. És clar, si

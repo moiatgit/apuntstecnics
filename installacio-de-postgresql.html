@@ -229,18 +229,26 @@ amfitrió</em> de manera que l'accés a la màquina virtual quedi
 restringit a la nostra màquina i altres possibles màquines virtuals
 que s'executin sobre aquesta.</p>
 <p>Per fer-ho, segueix les següents passes:</p>
-<ol class="arabic simple">
-<li>finalitza l'execució de la màquina virtual</li>
-<li>des de la finestra principal de <em>VirtualBox</em>, selecciona
+<ol class="arabic">
+<li><p class="first">finalitza l'execució de la màquina virtual</p>
+</li>
+<li><p class="first">des de la finestra principal de <em>VirtualBox</em>, selecciona
 <em>Fitxer-&gt;Preferències-&gt;Xarxa-&gt;Xarxes de només amfitrió</em> i fes
 clic al botó lateral (dreta) que apareix amb un '+' (amb
 llegenda <em>Âfegeix xarxa de només anfitrió</em>). Això t'incorporarà
-<em>vboxnet0</em>, un servidor DHCP que ofereix per defecte
-<em>VirtualBox</em>.</li>
-<li>des de la finestra principal de <em>VirtualBox</em>, selecciona
+<em>vboxnet0</em>, una xarxa que crea <em>VirtualBox</em>.</p>
+<p>És possible que no disposis de <em>vboxnet0</em> inicialment. Per
+crear-la, hauràs d'anar a la finestra principal de VirtualBox i
+seguir el camí <em>Fitxer-&gt;Preferències-&gt;Xarxa</em>. Ara, a la dreta de
+la finestra trobaràs una icona per afegir una altra interfície
+de xarxa. Prem-la i et crearà <em>vboxnet0</em>. En pots crear-ne més
+però probablement no et caldrà per a aquesta pràctica.</p>
+</li>
+<li><p class="first">des de la finestra principal de <em>VirtualBox</em>, selecciona
 <em>Màquina-&gt;Paràmetres-&gt;Xarxa</em> i a
 <em>Connectat a:</em> canvia el valor de NAT per <em>Adaptador de només
-amfitrió</em> <a class="footnote-reference" href="#adaptadorpont" id="id2">[2]</a>.</li>
+amfitrió</em> <a class="footnote-reference" href="#adaptadorpont" id="id2">[2]</a>.</p>
+</li>
 </ol>
 <p>Cal tenir en compte que en arrencar de nou la màquina virtual
 haurem perdut l'accés cap a l'exterior. Si et cal per algun motiu,

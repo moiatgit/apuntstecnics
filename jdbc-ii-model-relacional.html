@@ -365,7 +365,9 @@ la base de dades.</p>
 214
 215
 216
-217</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+217
+218
+219</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaAnimal</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>    <span class="c1">// connexió</span>
 
@@ -502,16 +504,18 @@ la base de dades.</p>
             <span class="k">new</span> <span class="n">Animal</span><span class="o">(</span><span class="s">&quot;dofí&quot;</span><span class="o">,</span> <span class="s">&quot;peix&quot;</span><span class="o">)</span>
         <span class="o">};</span>
 
-        <span class="c1">// obté l&#39;estat anterior de l&#39;autocommit.</span>
-        <span class="kt">boolean</span> <span class="n">anteriorAutoCommit</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getAutoCommit</span><span class="o">();</span>
-        <span class="c1">// fem que no faci autocommit a cada execució</span>
-        <span class="n">conn</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
-
         <span class="n">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         <span class="c1">// crea la sentència a executar (només un cop!)</span>
         <span class="k">try</span> <span class="o">{</span>
             <span class="n">ps</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
             <span class="k">try</span> <span class="o">{</span>
+
+                <span class="c1">// obté l&#39;estat anterior de l&#39;autocommit.</span>
+                <span class="kt">boolean</span> <span class="n">anteriorAutoCommit</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getAutoCommit</span><span class="o">();</span>
+                <span class="c1">// fem que no faci autocommit a cada execució</span>
+                <span class="n">conn</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+
+                <span class="c1">// afegeix cada animal de la llista</span>
                 <span class="k">for</span> <span class="o">(</span><span class="n">Animal</span> <span class="n">a</span><span class="o">:</span> <span class="n">llista</span><span class="o">)</span> <span class="o">{</span>
                     <span class="c1">// afegim els valors a insertar</span>
                     <span class="n">ps</span><span class="o">.</span><span class="na">setString</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">a</span><span class="o">.</span><span class="na">getNom</span><span class="o">());</span>       <span class="c1">// primer camp</span>
