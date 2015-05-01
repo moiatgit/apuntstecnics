@@ -367,7 +367,10 @@ la base de dades.</p>
 216
 217
 218
-219</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
+219
+220
+221
+222</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">java.sql.*</span><span class="o">;</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">UsaAnimal</span> <span class="o">{</span>
     <span class="kd">private</span> <span class="n">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>    <span class="c1">// connexió</span>
 
@@ -504,14 +507,17 @@ la base de dades.</p>
             <span class="k">new</span> <span class="n">Animal</span><span class="o">(</span><span class="s">&quot;dofí&quot;</span><span class="o">,</span> <span class="s">&quot;peix&quot;</span><span class="o">)</span>
         <span class="o">};</span>
 
-        <span class="n">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         <span class="c1">// crea la sentència a executar (només un cop!)</span>
+        <span class="n">PreparedStatement</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
         <span class="k">try</span> <span class="o">{</span>
+
+            <span class="c1">// obté l&#39;estat anterior de l&#39;autocommit.</span>
+            <span class="kt">boolean</span> <span class="n">anteriorAutoCommit</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getAutoCommit</span><span class="o">();</span>
+
             <span class="n">ps</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
             <span class="k">try</span> <span class="o">{</span>
 
-                <span class="c1">// obté l&#39;estat anterior de l&#39;autocommit.</span>
-                <span class="kt">boolean</span> <span class="n">anteriorAutoCommit</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="na">getAutoCommit</span><span class="o">();</span>
                 <span class="c1">// fem que no faci autocommit a cada execució</span>
                 <span class="n">conn</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
 
@@ -793,6 +799,12 @@ l'entrada.</p>
 <li><p class="first">Per simplicitat, totes les operacions que modifiquin els continguts
 de la base de dades, es realitzaran directament, sense esperar a
 que es tanqui l'aplicació.</p>
+</li>
+<li><p class="first">Una altra simplificació acceptada consisteix en que els noms dels
+animals i categories consistiran sempre en una paraula sense
+espais. Si t'agradaria permetre multiparaules (ex. <em>lleó marí</em>), et
+proposo que, o bé substitueixis els espais per guions baixos (_), o
+bé consideris que les paraules múltiples apareixeran entre cometes.</p>
 </li>
 <li><p class="first">No et capfiquis gaire amb les classes d'alguns <em>packages</em>. Per
 exemple, la de vista és possible que només contingui una classe amb

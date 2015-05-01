@@ -2277,9 +2277,14 @@ el nostre client&lt;/li&gt;
 &lt;li&gt;obtingui l'adreça i el port del servidor.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Finalment, l'aplicació mostrarà els resultats obtinguts i finalitzarà.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pista&lt;/strong&gt;: Potser voldràs intentar-ho fer amb una única consulta. A la
-línia 22 del codi anterior apareix &lt;tt class="docutils literal"&gt;rs.getString(1)&lt;/tt&gt;. Aquest &lt;tt class="docutils literal"&gt;1&lt;/tt&gt;
-indica que el que es vol és la &lt;strong&gt;primera&lt;/strong&gt; columna obtinguda.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pistes&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Pots trobar la llista de funcions de sistema que ofereix PostGreSQL
+a la &lt;a class="reference external" href="http://www.postgresql.org/docs/9.4/static/functions-info.html"&gt;seva documentació oficial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Potser voldràs intentar-ho fer amb una única consulta. A la línia 22
+del codi anterior apareix &lt;tt class="docutils literal"&gt;rs.getString(1)&lt;/tt&gt;. Aquest &lt;tt class="docutils literal"&gt;1&lt;/tt&gt; indica
+que el que es vol és la &lt;strong&gt;primera&lt;/strong&gt; columna obtinguda.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class="section" id="exercici-2-cadena-de-connexio-des-d-un-fitxer"&gt;
 &lt;h3&gt;Exercici 2. ★ Cadena de connexió des d'un fitxer&lt;/h3&gt;
@@ -2579,7 +2584,10 @@ la base de dades.&lt;/p&gt;
 216
 217
 218
-219&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.sql.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+219
+220
+221
+222&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.sql.*&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;UsaAnimal&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="kd"&gt;private&lt;/span&gt; &lt;span class="n"&gt;Connection&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;    &lt;span class="c1"&gt;// connexió&lt;/span&gt;
 
@@ -2716,14 +2724,17 @@ la base de dades.&lt;/p&gt;
             &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Animal&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;dofí&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;peix&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="o"&gt;};&lt;/span&gt;
 
-        &lt;span class="n"&gt;PreparedStatement&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
         &lt;span class="c1"&gt;// crea la sentència a executar (només un cop!)&lt;/span&gt;
+        &lt;span class="n"&gt;PreparedStatement&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
         &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+
+            &lt;span class="c1"&gt;// obté l&amp;#39;estat anterior de l&amp;#39;autocommit.&lt;/span&gt;
+            &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;anteriorAutoCommit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAutoCommit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
+
             &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;prepareStatement&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
             &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
 
-                &lt;span class="c1"&gt;// obté l&amp;#39;estat anterior de l&amp;#39;autocommit.&lt;/span&gt;
-                &lt;span class="kt"&gt;boolean&lt;/span&gt; &lt;span class="n"&gt;anteriorAutoCommit&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;getAutoCommit&lt;/span&gt;&lt;span class="o"&gt;();&lt;/span&gt;
                 &lt;span class="c1"&gt;// fem que no faci autocommit a cada execució&lt;/span&gt;
                 &lt;span class="n"&gt;conn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;setAutoCommit&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
 
@@ -3005,6 +3016,12 @@ l'entrada.&lt;/p&gt;
 &lt;li&gt;&lt;p class="first"&gt;Per simplicitat, totes les operacions que modifiquin els continguts
 de la base de dades, es realitzaran directament, sense esperar a
 que es tanqui l'aplicació.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Una altra simplificació acceptada consisteix en que els noms dels
+animals i categories consistiran sempre en una paraula sense
+espais. Si t'agradaria permetre multiparaules (ex. &lt;em&gt;lleó marí&lt;/em&gt;), et
+proposo que, o bé substitueixis els espais per guions baixos (_), o
+bé consideris que les paraules múltiples apareixeran entre cometes.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;No et capfiquis gaire amb les classes d'alguns &lt;em&gt;packages&lt;/em&gt;. Per
 exemple, la de vista és possible que només contingui una classe amb
@@ -4228,7 +4245,148 @@ Unit) o nr. de referència.&lt;/td&gt;&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
-</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Sat, 11 Apr 2015 22:08:38 +0200</pubDate><guid>tag:apuntstecnics.herokuapp.com,2015-04-11:jdbc-iii-model-objecte-relacional.html</guid><category>PostGreSQL</category><category>java</category></item><item><title>Introducció al control de versions</title><link>http://apuntstecnics.herokuapp.com/introduccio-al-control-de-versions.html</link><description>&lt;div class="section" id="introduccio"&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Sat, 11 Apr 2015 22:08:38 +0200</pubDate><guid>tag:apuntstecnics.herokuapp.com,2015-04-11:jdbc-iii-model-objecte-relacional.html</guid><category>PostGreSQL</category><category>java</category></item><item><title>JDBC III. Model Objecte-Relacional: pràctica simplificada</title><link>http://apuntstecnics.herokuapp.com/jdbc-iii-model-objecte-relacional-practica-simplificada.html</link><description>&lt;div class="section" id="introducio"&gt;
+&lt;h2&gt;Introdució&lt;/h2&gt;
+&lt;p&gt;Aquests continguts inclouen una pràctica simplificada de JDBC amb
+característiques Objecte-Relacionals.&lt;/p&gt;
+&lt;p&gt;La teoria darrera aquests continguts es presenta a &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/jdbc-iii-model-objecte-relacional.html"&gt;l'entrada&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="exercici-1-el-gestor-d-animals-ampliat"&gt;
+&lt;h2&gt;Exercici 1. El gestor d'animals ampliat&lt;/h2&gt;
+&lt;p&gt;En aquesta pràctica, es demana unes ampliacions de l'aplicació
+&lt;em&gt;gestoranimals&lt;/em&gt; desenvolupada a la part en que es presenta el &lt;a class="reference external" href="http://apuntstecnics.herokuapp.com/jdbc-ii-model-relacional.html"&gt;model
+relacional&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Les ampliacions permetran aprofitar les funcionalitats
+objecte-relacionals de PostGreSQL.&lt;/p&gt;
+&lt;p&gt;Les modificacions són les següents:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;Els animals disposaran d'una nova propietat anomenada &lt;em&gt;reproducció&lt;/em&gt;.
+La reproducció podrà ser &lt;em&gt;ovípar&lt;/em&gt; o &lt;em&gt;vivípar&lt;/em&gt;, i serà implementada
+amb un enumerat tant en la part Java com en la part PostGreSQL.&lt;/p&gt;
+&lt;p&gt;A l'hora d'afegir un animal, caldrà indicar el tipus de reproducció:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+add «nom animal» «categoria» «tipus reproducció»
+&lt;/pre&gt;
+&lt;p&gt;Controlarà el cas d'introducció incorrecta amb el
+missatge:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Tipus de reproducció incorrecte
+&lt;/pre&gt;
+&lt;p&gt;A l'hora de mostrar els animals, s'indicarà el tipus de reproducció
+entre parèntesis:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+* «categoria»
+  - «nom animal» («tipus de reproducció»)
+&lt;/pre&gt;
+&lt;p&gt;Reviseu si hi ha alguna altra opció que requereixi modificacions.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Els animals disposaran d'una nova propietat anomenada &lt;em&gt;hàbitats&lt;/em&gt;.
+Un animal pot tenir zero o més hàbitats. Els hàbitats es representen
+amb Strings.&lt;/p&gt;
+&lt;p&gt;Per poder indicar l'hàbitat, s'ofereix les noves comandes:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+hab «nom animal»[ «categoria»] add «habitat»
+hab «nom animal»[ «categoria»] del «habitat»
+hab «nom animal»[ «categoria»] show
+&lt;/pre&gt;
+&lt;p&gt;La categoria és opcional si només hi ha un animal amb aquest nom.&lt;/p&gt;
+&lt;p&gt;Cal mostrar els missatges d'error corresponents. Incloent el següent
+en cas que l'hàbitat estigui ja repetit per l'animal:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Hàbitat ja existent
+Hàbitat no existent
+&lt;/pre&gt;
+&lt;p&gt;Quan es mostra l'animal (opció &lt;em&gt;show&lt;/em&gt;), caldrà indicar la llista
+d'hàbitats amb el format dels següents exemples:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+hàbitat no especificat
+
+hàbitat Àfrica
+
+hàbitats Àfrica, Àsia i Centre_Amèrica
+&lt;/pre&gt;
+&lt;p&gt;El primer exemple apareixerà quan no s'hagi especificat cap hàbitat.
+El segon quan només disposi d'un hàbitat i el tercer quan hi hagi
+més d'un.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;Per la següent ampliació, cal entendre que la nova versió del nostre
+gestor d'animals serà utilitzada per un museu de biologia. El museu
+disposa de molts animals (normalment dissecats) col·locats en
+prestatgeries arreu del museu.&lt;/p&gt;
+&lt;p&gt;El que ens cal afegir és la &lt;em&gt;localització&lt;/em&gt; de l'animal dins del
+museu.&lt;/p&gt;
+&lt;p&gt;Una localització inclou la informació de la sala, el nr. de
+passadís, el nr. de l'armari i el nr. de prestatge.&lt;/p&gt;
+&lt;p&gt;La sala és un nom (un String no null ni buit). La resta de valors
+són enters positius més grans que 0.&lt;/p&gt;
+&lt;p&gt;El gestor d'animals oferirà les següents noves utilitats:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+loc «nom animal»[ «categoria»] set «sala» «nr. passadís» «nr. armari» «nr.  prestatge»
+loc «nom animal»[ «categoria»] unset
+loc «nom animal»[ «categoria»] show
+loc «nom animal»[ «categoria»] clone «nom animal»[ «categoria»]
+loc search «sala»[ «nr. passadís»[ «nr. armari»[ «nr.  prestatge»]]]
+loc undefined
+&lt;/pre&gt;
+&lt;p&gt;Com sempre, si no s'especifica la categoria, caldrà que hi hagi un
+únic animal amb aquell nom per poder fer l'operació.&lt;/p&gt;
+&lt;p&gt;Les operacions es comporten de la següent manera:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;set&lt;/em&gt; permet definir la localització d'un animal. Si ja tenia una
+localització, simplement la canviarà.&lt;/p&gt;
+&lt;p&gt;En cas que algun dels valors no siguin vàlids, es mostrarà el
+corresponent error. Per exemple:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+La sala no pot ser una cadena buida
+El nr. d'armari ha de ser un enter positiu més gran que 0
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;unset&lt;/em&gt; permet desassignar la localització d'un animal. Si encara
+no tenia assignada cap categoria, l'animal quedarà sense canvis
+però el gestor no en farà menció.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;show&lt;/em&gt; mostrarà la localització d'un animal.&lt;/p&gt;
+&lt;p&gt;Si no està definida s'indicarà amb:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Localització no definida
+&lt;/pre&gt;
+&lt;p&gt;Si està definida s'indicarà amb:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Localització:
+    Sala: «sala»
+    Passadís: «nr. passadís»
+    Armari: «nr. armari»
+    Prestatge: «nr. prestatge»
+&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;clone&lt;/em&gt; permet copiar la localització d'un animal (el primer) a un
+altre (el segon)&lt;/p&gt;
+&lt;p&gt;En cas que el primer animal no tingui especificada una
+localització, es mostrarà l'error:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Localització no especificada
+&lt;/pre&gt;
+&lt;p&gt;Un cop executat, el segon animal tindrà exactament la mateixa
+localització (camp a camp) que el segon, amb independència de si
+la localització estava assignada o no en el segon.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;search&lt;/em&gt; permet trobar la llista d'animals que hi ha a una
+localització (parcialment o totalment especificada). Com a mínim
+caldrà especificar la sala.&lt;/p&gt;
+&lt;p&gt;El resultat que es mostrarà seran tots els animals que estiguin en
+la part especificada de la localització, en el mateix format que
+amb la comanda &lt;em&gt;list&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;&lt;em&gt;undefined&lt;/em&gt; permet trobar la llista d'animals que encara no tenen
+definida la localització.&lt;/p&gt;
+&lt;p&gt;El resultat es mostrarà en el mateix format que amb la comanda
+&lt;em&gt;list&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Moisès Gómez Girón</dc:creator><pubDate>Sat, 11 Apr 2015 22:08:38 +0200</pubDate><guid>tag:apuntstecnics.herokuapp.com,2015-04-11:jdbc-iii-model-objecte-relacional-practica-simplificada.html</guid><category>PostGreSQL</category><category>java</category></item><item><title>Introducció al control de versions</title><link>http://apuntstecnics.herokuapp.com/introduccio-al-control-de-versions.html</link><description>&lt;div class="section" id="introduccio"&gt;
 &lt;h2&gt;Introducció&lt;/h2&gt;
 &lt;p&gt;Aquest document és una introducció al control de versions. Està
 orientat especialment a la gestió de versions de programari i escull

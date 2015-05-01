@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Apunts tècnics: JDBC III. Model Objecte-Relacional: pràctica simplificada</title>
+<meta name="description" content="">
+<meta name="author" content="Moisès Gómez Girón">
+
+<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+<!--[if lt IE 9]>
+        <script src="./theme/html5.js"></script>
+    <![endif]-->
+
+<!-- Styles -->
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
+
+<!-- Feeds -->
+<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+
+</head>
+<body>
+
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="./">[Apunts tècnics]
+ JDBC III. Model Objecte-Relacional: pràctica simplificada             </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="sidebar">
+        <div class="well">
+            <!--
+            <h3>Temes</h3>
+                <ul>
+                </ul>
+            -->
+            <h3>Categories</h3>
+            <ul>
+                <li class="active"><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
+            </ul>
+            <h3>Tags</h3>
+            <ul>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
+                <li><a href="./tag/java.html">java</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content">
+<div class='article'>
+    <div class="page-header"><h1>JDBC III. Model Objecte-Relacional: pràctica simplificada</h1></div>
+<div class="well small">
+    Entrada ubicada a la categoria
+    <a href="./category/bd.html">
+        bd
+    </a>
+            amb els tags: 
+            <a href="./tag/postgresql.html">PostGreSQL</a> 
+            <a href="./tag/java.html">java</a> 
+</div>
+    <div><div class="section" id="introducio">
+<h2>Introdució</h2>
+<p>Aquests continguts inclouen una pràctica simplificada de JDBC amb
+característiques Objecte-Relacionals.</p>
+<p>La teoria darrera aquests continguts es presenta a <a class="reference external" href="./jdbc-iii-model-objecte-relacional.html">l'entrada</a>.</p>
+</div>
+<div class="section" id="exercici-1-el-gestor-d-animals-ampliat">
+<h2>Exercici 1. El gestor d'animals ampliat</h2>
+<p>En aquesta pràctica, es demana unes ampliacions de l'aplicació
+<em>gestoranimals</em> desenvolupada a la part en que es presenta el <a class="reference external" href="./jdbc-ii-model-relacional.html">model
+relacional</a>.</p>
+<p>Les ampliacions permetran aprofitar les funcionalitats
+objecte-relacionals de PostGreSQL.</p>
+<p>Les modificacions són les següents:</p>
+<ul>
+<li><p class="first">Els animals disposaran d'una nova propietat anomenada <em>reproducció</em>.
+La reproducció podrà ser <em>ovípar</em> o <em>vivípar</em>, i serà implementada
+amb un enumerat tant en la part Java com en la part PostGreSQL.</p>
+<p>A l'hora d'afegir un animal, caldrà indicar el tipus de reproducció:</p>
+<pre class="literal-block">
+add «nom animal» «categoria» «tipus reproducció»
+</pre>
+<p>Controlarà el cas d'introducció incorrecta amb el
+missatge:</p>
+<pre class="literal-block">
+Tipus de reproducció incorrecte
+</pre>
+<p>A l'hora de mostrar els animals, s'indicarà el tipus de reproducció
+entre parèntesis:</p>
+<pre class="literal-block">
+* «categoria»
+  - «nom animal» («tipus de reproducció»)
+</pre>
+<p>Reviseu si hi ha alguna altra opció que requereixi modificacions.</p>
+</li>
+<li><p class="first">Els animals disposaran d'una nova propietat anomenada <em>hàbitats</em>.
+Un animal pot tenir zero o més hàbitats. Els hàbitats es representen
+amb Strings.</p>
+<p>Per poder indicar l'hàbitat, s'ofereix les noves comandes:</p>
+<pre class="literal-block">
+hab «nom animal»[ «categoria»] add «habitat»
+hab «nom animal»[ «categoria»] del «habitat»
+hab «nom animal»[ «categoria»] show
+</pre>
+<p>La categoria és opcional si només hi ha un animal amb aquest nom.</p>
+<p>Cal mostrar els missatges d'error corresponents. Incloent el següent
+en cas que l'hàbitat estigui ja repetit per l'animal:</p>
+<pre class="literal-block">
+Hàbitat ja existent
+Hàbitat no existent
+</pre>
+<p>Quan es mostra l'animal (opció <em>show</em>), caldrà indicar la llista
+d'hàbitats amb el format dels següents exemples:</p>
+<pre class="literal-block">
+hàbitat no especificat
+
+hàbitat Àfrica
+
+hàbitats Àfrica, Àsia i Centre_Amèrica
+</pre>
+<p>El primer exemple apareixerà quan no s'hagi especificat cap hàbitat.
+El segon quan només disposi d'un hàbitat i el tercer quan hi hagi
+més d'un.</p>
+</li>
+<li><p class="first">Per la següent ampliació, cal entendre que la nova versió del nostre
+gestor d'animals serà utilitzada per un museu de biologia. El museu
+disposa de molts animals (normalment dissecats) col·locats en
+prestatgeries arreu del museu.</p>
+<p>El que ens cal afegir és la <em>localització</em> de l'animal dins del
+museu.</p>
+<p>Una localització inclou la informació de la sala, el nr. de
+passadís, el nr. de l'armari i el nr. de prestatge.</p>
+<p>La sala és un nom (un String no null ni buit). La resta de valors
+són enters positius més grans que 0.</p>
+<p>El gestor d'animals oferirà les següents noves utilitats:</p>
+<pre class="literal-block">
+loc «nom animal»[ «categoria»] set «sala» «nr. passadís» «nr. armari» «nr.  prestatge»
+loc «nom animal»[ «categoria»] unset
+loc «nom animal»[ «categoria»] show
+loc «nom animal»[ «categoria»] clone «nom animal»[ «categoria»]
+loc search «sala»[ «nr. passadís»[ «nr. armari»[ «nr.  prestatge»]]]
+loc undefined
+</pre>
+<p>Com sempre, si no s'especifica la categoria, caldrà que hi hagi un
+únic animal amb aquell nom per poder fer l'operació.</p>
+<p>Les operacions es comporten de la següent manera:</p>
+<ul>
+<li><p class="first"><em>set</em> permet definir la localització d'un animal. Si ja tenia una
+localització, simplement la canviarà.</p>
+<p>En cas que algun dels valors no siguin vàlids, es mostrarà el
+corresponent error. Per exemple:</p>
+<pre class="literal-block">
+La sala no pot ser una cadena buida
+El nr. d'armari ha de ser un enter positiu més gran que 0
+</pre>
+</li>
+<li><p class="first"><em>unset</em> permet desassignar la localització d'un animal. Si encara
+no tenia assignada cap categoria, l'animal quedarà sense canvis
+però el gestor no en farà menció.</p>
+</li>
+<li><p class="first"><em>show</em> mostrarà la localització d'un animal.</p>
+<p>Si no està definida s'indicarà amb:</p>
+<pre class="literal-block">
+Localització no definida
+</pre>
+<p>Si està definida s'indicarà amb:</p>
+<pre class="literal-block">
+Localització:
+    Sala: «sala»
+    Passadís: «nr. passadís»
+    Armari: «nr. armari»
+    Prestatge: «nr. prestatge»
+</pre>
+</li>
+<li><p class="first"><em>clone</em> permet copiar la localització d'un animal (el primer) a un
+altre (el segon)</p>
+<p>En cas que el primer animal no tingui especificada una
+localització, es mostrarà l'error:</p>
+<pre class="literal-block">
+Localització no especificada
+</pre>
+<p>Un cop executat, el segon animal tindrà exactament la mateixa
+localització (camp a camp) que el segon, amb independència de si
+la localització estava assignada o no en el segon.</p>
+</li>
+<li><p class="first"><em>search</em> permet trobar la llista d'animals que hi ha a una
+localització (parcialment o totalment especificada). Com a mínim
+caldrà especificar la sala.</p>
+<p>El resultat que es mostrarà seran tots els animals que estiguin en
+la part especificada de la localització, en el mateix format que
+amb la comanda <em>list</em>.</p>
+</li>
+<li><p class="first"><em>undefined</em> permet trobar la llista d'animals que encara no tenen
+definida la localització.</p>
+<p>El resultat es mostrarà en el mateix format que amb la comanda
+<em>list</em>.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<footer>
+  <p>
+  <a href=".">Apunts tècnics</a> 
+  &copy; 
+  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+  </p>
+</footer>    </div>
+</div>
+
+</body>
+</html>
