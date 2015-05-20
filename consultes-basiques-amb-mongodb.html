@@ -8,13 +8,13 @@
 
 <!-- HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-        <script src="../theme/html5.js"></script>
+        <script src="./theme/html5.js"></script>
     <![endif]-->
 
 <!-- Styles -->
-<link href="../theme/bootstrap.moi.css" rel="stylesheet">
-<link href="../theme/local.css" rel="stylesheet">
-<link href="../theme/pygments.css" rel="stylesheet">
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
 
 <!-- Feeds -->
 <link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
@@ -25,7 +25,7 @@
 <div class="topbar">
     <div class="topbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="../">[Apunts tècnics]
+            <a class="brand" href="./">[Apunts tècnics]
  Consultes bàsiques amb MongoDB             </a>
         </div>
     </div>
@@ -41,37 +41,60 @@
             -->
             <h3>Categories</h3>
             <ul>
-                <li class="active"><a href="../category/bd.html">bd</a></li>
-                <li ><a href="../category/dev.html">dev</a></li>
-                <li ><a href="../category/eines.html">eines</a></li>
-                <li ><a href="../category/misc.html">misc</a></li>
-                <li ><a href="../category/poo.html">poo</a></li>
-                <li ><a href="../category/programacio.html">programacio</a></li>
-                <li ><a href="../category/uml.html">uml</a></li>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/mongodb.html">mongodb</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="../tag/c.html">C</a></li>
-                <li><a href="../tag/jdbc.html">JDBC</a></li>
-                <li><a href="../tag/java.html">java</a></li>
-                <li><a href="../tag/programari.html">programari</a></li>
-                <li><a href="../tag/util.html">util</a></li>
-                <li><a href="../tag/test.html">test</a></li>
-                <li><a href="../tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
 
     <div class="content">
 <div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-a-la-shell-de-mongodb.html">
+        Introducció a la shell de MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./consultes-amb-criteri.html">
+        Consultes amb criteri
+    </a>
+    </li>
+</ul> 
+</div>
     <div class="page-header"><h1>Consultes bàsiques amb MongoDB</h1></div>
 <div class="well small">
     Entrada ubicada a la categoria
-    <a href="../category/bd.html">
-        bd
+    <a href="./category/mongodb.html">
+        mongodb
     </a>
             amb el tag:
-            <a href="../tag/mongodb.html">mongoDB</a> 
+            <a href="./tag/mongodb.html">mongoDB</a> 
 </div>
     <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
@@ -104,7 +127,7 @@ seria:</p>
 cap resultat.</p>
 <p>En primer lloc, ens caldrà disposar d'alguna dada per a poder fer
 consultes. Farem servir una tècnica similar a la que ja vam utilitzar a
-l'article on introduíem la <a class="reference external" href="../introduccio-a-la-shell-de-mongodb.html">shell de MongoDB</a> :</p>
+l'article on introduíem la <a class="reference external" href="./introduccio-a-la-shell-de-mongodb.html">shell de MongoDB</a> :</p>
 <div class="highlight"><pre><span class="o">&gt;</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadats</span><span class="p">.</span><span class="nx">drop</span><span class="p">()</span>
 <span class="o">&gt;</span> <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="nx">db</span><span class="p">.</span><span class="nx">quadrats</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="s2">&quot;nom&quot;</span><span class="o">:</span><span class="s2">&quot;valor_&quot;</span><span class="o">+</span><span class="nx">i</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="o">:</span> <span class="nx">i</span><span class="p">,</span> <span class="s2">&quot;quadrat&quot;</span><span class="o">:</span> <span class="p">(</span><span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">)});</span> <span class="p">}</span>
 </pre></div>
@@ -357,13 +380,34 @@ en &quot;guanya&quot; un i de vegades l'altre.</td></tr>
 </table>
 </div>
 </div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./introduccio-a-la-shell-de-mongodb.html">
+        Introducció a la shell de MongoDB
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+    <li class="navigation-next">
+    <a href="./consultes-amb-criteri.html">
+        Consultes amb criteri
+    </a>
+    </li>
+</ul> 
+</div>
 </div>
 <footer>
   <p>
-  <a href="..">Apunts tècnics</a> 
+  <a href=".">Apunts tècnics</a> 
   &copy; 
   <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
-  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="../images/adressamoi.png">)
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
   amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
   </p>
 </footer>    </div>

@@ -8,13 +8,13 @@
 
 <!-- HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-        <script src="../theme/html5.js"></script>
+        <script src="./theme/html5.js"></script>
     <![endif]-->
 
 <!-- Styles -->
-<link href="../theme/bootstrap.moi.css" rel="stylesheet">
-<link href="../theme/local.css" rel="stylesheet">
-<link href="../theme/pygments.css" rel="stylesheet">
+<link href="./theme/bootstrap.moi.css" rel="stylesheet">
+<link href="./theme/local.css" rel="stylesheet">
+<link href="./theme/pygments.css" rel="stylesheet">
 
 <!-- Feeds -->
 <link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
@@ -25,7 +25,7 @@
 <div class="topbar">
     <div class="topbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="../">[Apunts tècnics]
+            <a class="brand" href="./">[Apunts tècnics]
  Disseny de col·leccions             </a>
         </div>
     </div>
@@ -41,41 +41,59 @@
             -->
             <h3>Categories</h3>
             <ul>
-                <li class="active"><a href="../category/bd.html">bd</a></li>
-                <li ><a href="../category/dev.html">dev</a></li>
-                <li ><a href="../category/eines.html">eines</a></li>
-                <li ><a href="../category/misc.html">misc</a></li>
-                <li ><a href="../category/poo.html">poo</a></li>
-                <li ><a href="../category/programacio.html">programacio</a></li>
-                <li ><a href="../category/uml.html">uml</a></li>
+                <li ><a href="./category/bd.html">bd</a></li>
+                <li ><a href="./category/dev.html">dev</a></li>
+                <li ><a href="./category/eines.html">eines</a></li>
+                <li ><a href="./category/misc.html">misc</a></li>
+                <li class="active"><a href="./category/mongodb.html">mongodb</a></li>
+                <li ><a href="./category/poo.html">poo</a></li>
+                <li ><a href="./category/programacio.html">programacio</a></li>
+                <li ><a href="./category/uml.html">uml</a></li>
             </ul>
             <h3>Tags</h3>
             <ul>
-                <li><a href="../tag/c.html">C</a></li>
-                <li><a href="../tag/jdbc.html">JDBC</a></li>
-                <li><a href="../tag/java.html">java</a></li>
-                <li><a href="../tag/programari.html">programari</a></li>
-                <li><a href="../tag/util.html">util</a></li>
-                <li><a href="../tag/test.html">test</a></li>
-                <li><a href="../tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/c.html">C</a></li>
+                <li><a href="./tag/jdbc.html">JDBC</a></li>
+                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                <li><a href="./tag/programari.html">programari</a></li>
+                <li><a href="./tag/util.html">util</a></li>
+                <li><a href="./tag/test.html">test</a></li>
+                <li><a href="./tag/java.html">java</a></li>
             </ul>
         </div>
     </div>
 
     <div class="content">
 <div class='article'>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./arrays.html">
+        Arrays
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
     <div class="page-header"><h1>Disseny de col·leccions</h1></div>
 <div class="well small">
     Entrada ubicada a la categoria
-    <a href="../category/bd.html">
-        bd
+    <a href="./category/mongodb.html">
+        mongodb
     </a>
             amb el tag:
-            <a href="../tag/mongodb.html">mongoDB</a> 
+            <a href="./tag/mongodb.html">mongoDB</a> 
 </div>
     <div><div class="section" id="introduccio">
 <h2>Introducció</h2>
-<p>Als articles de <a class="reference external" href="../subdocuments.html">subdocuments</a> i d'<a class="reference external" href="../arrays.html">arrays</a> hem vist com, a MongoDB
+<p>Als articles de <a class="reference external" href="./subdocuments.html">subdocuments</a> i d'<a class="reference external" href="./arrays.html">arrays</a> hem vist com, a MongoDB
 disposem de valors complexos que en el model relacional sovint
 s'acaben resolent amb múltiples taules.</p>
 <p>Els exemples que hem treballat fins ara sempre han tingut present una
@@ -94,7 +112,7 @@ arrays i, finalment, les cardinalitats de les relacions</p>
 <div class="section" id="id2">
 <h2>Subdocuments</h2>
 <p>Recordem l'exemple de persona amb adreça que vam veure a l'article de
-<a class="reference external" href="../subdocuments.html">subdocuments</a></p>
+<a class="reference external" href="./subdocuments.html">subdocuments</a></p>
 <div class="highlight"><pre><span class="p">{</span>
     <span class="s2">&quot;nom&quot;</span><span class="o">:</span>         <span class="s2">&quot;Jordi Navarro Cucurella&quot;</span><span class="p">,</span>
     <span class="s2">&quot;edat&quot;</span><span class="o">:</span>        <span class="mi">32</span><span class="p">,</span>
@@ -154,7 +172,7 @@ correspon a un producte i la quantitat de producte demanada.</p>
 <p>En el model relacional típicament representaríem aquesta relació de la
 següent manera <a class="footnote-reference" href="#dersimplificat" id="id4">[2]</a>:</p>
 <div class="figure align-center">
-<img alt="Diagrama Entitat-Relació de COMANDES i LINIES_COMANDA" src="../images/mongodb.016.img001.DER.comandes.png" />
+<img alt="Diagrama Entitat-Relació de COMANDES i LINIES_COMANDA" src="./images/mongodb.016.img001.DER.comandes.png" />
 </div>
 <p>Aquesta relació 1:N la resoldríem posant la clau primària de COMANDES
 a LINIES_COMANDA <a class="footnote-reference" href="#references" id="id5">[4]</a>.</p>
@@ -352,13 +370,29 @@ equival a <em>FOREIGN KEY</em>.</td></tr>
 </table>
 </div>
 </div>
+<div class="well small">
+<ul id="navigation"> 
+    <li class="navigation-prev">
+    <a href="./arrays.html">
+        Arrays
+    </a>
+    </li>
+
+    <li class="navigation-top">
+    <a href="./introduccio-al-mongodb.html">
+        inici
+    </a>
+    </li>
+
+</ul> 
+</div>
 </div>
 <footer>
   <p>
-  <a href="..">Apunts tècnics</a> 
+  <a href=".">Apunts tècnics</a> 
   &copy; 
   <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
-  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="../images/adressamoi.png">)
+  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
   amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
   </p>
 </footer>    </div>
