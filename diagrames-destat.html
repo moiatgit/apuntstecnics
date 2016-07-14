@@ -1,107 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Apunts tècnics: Diagrames d'estat</title>
-<meta name="description" content="">
-<meta name="author" content="Moisès Gómez Girón">
+    <head>
+        <meta charset="utf-8">
+        <title>Apunts tècnics: Diagrames d'estat</title>
+        <meta name="description" content="">
+        <meta name="author" content="Moisès Gómez Girón">
 
-<!-- HTML5 shim, for IE6-8 support of HTML elements -->
-<!--[if lt IE 9]>
-        <script src="./theme/html5.js"></script>
-    <![endif]-->
+        <!-- HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+            <script src="./theme/html5.js"></script>
+            <![endif]-->
 
-<!-- Styles -->
-<link href="./theme/bootstrap.moi.css" rel="stylesheet">
-<link href="./theme/local.css" rel="stylesheet">
-<link href="./theme/pygments.css" rel="stylesheet">
+            <!-- Styles -->
+            <link href="./theme/bootstrap.moi.css" rel="stylesheet">
+            <link href="./theme/local.css" rel="stylesheet">
+            <link href="./theme/pygments.css" rel="stylesheet">
 
-<!-- Feeds -->
-<link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
+            <!-- Feeds -->
+            <link href="http://apuntstecnics.herokuapp.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Apunts tècnics Atom Feed" />
 
-</head>
-<body>
+    </head>
+    <body>
 
-<div class="topbar">
-    <div class="topbar-inner">
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="./">[Apunts tècnics]
+                        Diagrames d'estat             </a>
+                </div>
+            </div>
+        </div>
+
         <div class="container-fluid">
-            <a class="brand" href="./">[Apunts tècnics]
- Diagrames d'estat             </a>
-        </div>
-    </div>
-</div>
+            <div class="sidebar">
+                <div class="well">
+                    <!--
+                        <h3>Temes</h3>
+                        <ul>
+                        </ul>
+                    -->
+                    <h3>Categories</h3>
+                    <ul>
+                        <li ><a href="./category/bd.html">bd</a></li>
+                        <li ><a href="./category/dev.html">dev</a></li>
+                        <li ><a href="./category/eines.html">eines</a></li>
+                        <li ><a href="./category/misc.html">misc</a></li>
+                        <li ><a href="./category/mongodb.html">mongodb</a></li>
+                        <li ><a href="./category/poo.html">poo</a></li>
+                        <li ><a href="./category/programacio.html">programacio</a></li>
+                        <li class="active"><a href="./category/uml.html">uml</a></li>
+                    </ul>
+                    <h3>Tags</h3>
+                    <ul>
+                        <li><a href="./tag/c.html">C</a></li>
+                        <li><a href="./tag/jdbc.html">JDBC</a></li>
+                        <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
+                        <li><a href="./tag/mongodb.html">mongoDB</a></li>
+                        <li><a href="./tag/programari.html">programari</a></li>
+                        <li><a href="./tag/util.html">util</a></li>
+                        <li><a href="./tag/test.html">test</a></li>
+                        <li><a href="./tag/java.html">java</a></li>
+                    </ul>
+                </div>
+            </div>
 
-<div class="container-fluid">
-    <div class="sidebar">
-        <div class="well">
-            <!--
-            <h3>Temes</h3>
-                <ul>
-                </ul>
-            -->
-            <h3>Categories</h3>
-            <ul>
-                <li ><a href="./category/bd.html">bd</a></li>
-                <li ><a href="./category/dev.html">dev</a></li>
-                <li ><a href="./category/eines.html">eines</a></li>
-                <li ><a href="./category/misc.html">misc</a></li>
-                <li ><a href="./category/mongodb.html">mongodb</a></li>
-                <li ><a href="./category/poo.html">poo</a></li>
-                <li ><a href="./category/programacio.html">programacio</a></li>
-                <li class="active"><a href="./category/uml.html">uml</a></li>
-            </ul>
-            <h3>Tags</h3>
-            <ul>
-                <li><a href="./tag/c.html">C</a></li>
-                <li><a href="./tag/jdbc.html">JDBC</a></li>
-                <li><a href="./tag/postgresql.html">PostGreSQL</a></li>
-                <li><a href="./tag/mongodb.html">mongoDB</a></li>
-                <li><a href="./tag/programari.html">programari</a></li>
-                <li><a href="./tag/util.html">util</a></li>
-                <li><a href="./tag/test.html">test</a></li>
-                <li><a href="./tag/java.html">java</a></li>
-            </ul>
-        </div>
-    </div>
+            <div class="content">
+                <div class='article'>
+                    <div class="page-header"><h1>Diagrames d'estat</h1></div>
 
-    <div class="content">
-<div class='article'>
-    <div class="page-header"><h1>Diagrames d'estat</h1></div>
-<div class="well small">
-    Entrada ubicada a la categoria
-    <a href="./category/uml.html">
-        uml
-    </a>
-</div>
-    <div><div class="section" id="introduccio">
-<h2>Introducció</h2>
-<p>Aquest document és un guió per la presentació a classe dels diagrames
-de màquines d'estat. En el document s'abreujarà per <em>diagrames
-d'estat</em></p>
-</div>
-<div class="section" id="id1">
-<h2>Diagrames d'estat</h2>
-<p>Un diagrama d'estats mostra una <em>màquina d'estats</em>.</p>
-<p>Els diagrames d'estat estan formats per un conjunt d'estats i les
-transicions entre aquests.</p>
-<p>Les transicions normalment apareixen etiquetades amb l'esdeveniment
-que les provoca o dispara (<em>trigger</em>). També poden incloure informació
-respecte a condicions en que es dispararan i accions a realitzar. La
-notació completa és: <em>esdeveniment[condició]/acció</em></p>
-<p>Farem servir els diagrames d'estat per modelitzar el comportament
-dinàmic d'un sistema, normalment el d'objectes que responen a
-esdeveniments externs.</p>
-<p>Exemple una mica forçat del funcionament d'un ascensor poc
-convencional.</p>
-<div class="figure align-center">
-<img alt="Estat de l'ascensor" src="./images/uml001.img001.estatascensor.png" />
-</div>
-<p>L'estat final no és obligatori i n'hi poden aparèixer més d'un.</p>
-</div>
-<div class="section" id="implementacio">
-<h2>Implementació</h2>
-<p>Una possible codificació per l'estat <em>Funcionant</em> seria:</p>
-<pre class="literal-block">
+        <p>Aquests continguts ja no estàn disponibles. Per favor, posa't en contacte amb l'autor en
+        cas que ho trobis necessari. I, en tot cas, disculpa les molèsties.</p>
+        <!--
+                    <div class="well small">
+                        Entrada ubicada a la categoria
+                        <a href="./category/uml.html">
+                            uml
+                        </a>
+                    </div>
+                    <div><div class="section" id="introduccio">
+                            <h2>Introducció</h2>
+                            <p>Aquest document és un guió per la presentació a classe dels diagrames
+                            de màquines d'estat. En el document s'abreujarà per <em>diagrames
+                                d'estat</em></p>
+                        </div>
+                        <div class="section" id="id1">
+                            <h2>Diagrames d'estat</h2>
+                            <p>Un diagrama d'estats mostra una <em>màquina d'estats</em>.</p>
+                            <p>Els diagrames d'estat estan formats per un conjunt d'estats i les
+                            transicions entre aquests.</p>
+                            <p>Les transicions normalment apareixen etiquetades amb l'esdeveniment
+                            que les provoca o dispara (<em>trigger</em>). També poden incloure informació
+                            respecte a condicions en que es dispararan i accions a realitzar. La
+                            notació completa és: <em>esdeveniment[condició]/acció</em></p>
+                            <p>Farem servir els diagrames d'estat per modelitzar el comportament
+                            dinàmic d'un sistema, normalment el d'objectes que responen a
+                            esdeveniments externs.</p>
+                            <p>Exemple una mica forçat del funcionament d'un ascensor poc
+                            convencional.</p>
+                            <div class="figure align-center">
+                                <img alt="Estat de l'ascensor" src="./images/uml001.img001.estatascensor.png" />
+                            </div>
+                            <p>L'estat final no és obligatori i n'hi poden aparèixer més d'un.</p>
+                        </div>
+                        <div class="section" id="implementacio">
+                            <h2>Implementació</h2>
+                            <p>Una possible codificació per l'estat <em>Funcionant</em> seria:</p>
+                            <pre class="literal-block">
 switch (estat) {
     case PlantaBaixa:
         switch (esdeveniment) {
@@ -125,47 +129,47 @@ switch (estat) {
         «...»
         break;
 }
-</pre>
-</div>
-<div class="section" id="exercicis">
-<h2>Exercicis</h2>
-<div class="section" id="exercici-1-implementacio-de-l-ascensor">
-<h3>Exercici 1. Implementació de l'ascensor</h3>
-<p>Completa la implementació de l'estat compost <em>Funcionant</em> de l'exemple
-de l'ascensor.</p>
-</div>
-<div class="section" id="exercici-2-l-estat-del-gat-renat">
-<h3>Exercici 2. L'estat del Gat Renat</h3>
-<p>Considera una versió del Gat Renat que pot estar en alguna de les
-següents posicions:</p>
-<ul class="simple">
-<li>corrent</li>
-<li>caminant</li>
-<li>dret</li>
-<li>assegut</li>
-<li>estirat</li>
-</ul>
-<p>El gat no pot posar-se a caminar o a córrer si estava assegut o
-estirat. Per altra banda, si estava corrent o caminant, no pot
-seure's o estirar-se de cop, primer ha de quedar-se dret. Malgrat
-estant dret pot estirar-se directament, no pot posar-se dret si estava
-estirat.</p>
-<p>Realitza el diagrama d'estats i proposa un esquema d'implementació.</p>
-</div>
-</div>
-</div>
-</div>
-<footer>
-  <p>
-  <a href=".">Apunts tècnics</a> 
-  &copy; 
-  <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
-  per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
-  amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
-    </p><p style="background:red; text-align:center;font-weight:bold;font-size:large;margin-left:30px;">Atenció: aquests continguts seran eliminats en breu. Si et cal fer còpia d'alguna pàgina, ara és un bon moment.
-  </p>
-</footer>    </div>
-</div>
+                            </pre>
+                        </div>
+                        <div class="section" id="exercicis">
+                            <h2>Exercicis</h2>
+                            <div class="section" id="exercici-1-implementacio-de-l-ascensor">
+                                <h3>Exercici 1. Implementació de l'ascensor</h3>
+                                <p>Completa la implementació de l'estat compost <em>Funcionant</em> de l'exemple
+                                de l'ascensor.</p>
+                            </div>
+                            <div class="section" id="exercici-2-l-estat-del-gat-renat">
+                                <h3>Exercici 2. L'estat del Gat Renat</h3>
+                                <p>Considera una versió del Gat Renat que pot estar en alguna de les
+                                següents posicions:</p>
+                                <ul class="simple">
+                                    <li>corrent</li>
+                                    <li>caminant</li>
+                                    <li>dret</li>
+                                    <li>assegut</li>
+                                    <li>estirat</li>
+                                </ul>
+                                <p>El gat no pot posar-se a caminar o a córrer si estava assegut o
+                                estirat. Per altra banda, si estava corrent o caminant, no pot
+                                seure's o estirar-se de cop, primer ha de quedar-se dret. Malgrat
+                                estant dret pot estirar-se directament, no pot posar-se dret si estava
+                                estirat.</p>
+                                <p>Realitza el diagrama d'estats i proposa un esquema d'implementació.</p>
+                            </div>
+                        </div>
+                        -->
+                    </div>
+                </div>
+                <footer>
+                    <p>
+                    <a href=".">Apunts tècnics</a> 
+                    &copy; 
+                    <a href="http://www.gnu.org/copyleft/fdl.html">GNU FDL</a>
+                    per <i>Moisès Gómez Girón </i> (<img style="position:relative;top:+5px;border:0; display:inline;" src="./images/adressamoi.png">)
+                    amb el generador de blocs <a href="http://getpelican.com/">Pelican</a> 
+                    </p>
+                </footer>    </div>
+        </div>
 
-</body>
+    </body>
 </html>
