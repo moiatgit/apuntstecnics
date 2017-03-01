@@ -1,0 +1,24 @@
+.float-right  {float:middle}
+.float-center {float:center}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Open Sans","Fjalla One",sans-serif;
+}
+body, p {
+    font-family: "Merriweather","Georgia","New Century Schoolbook","Nimbus Roman No9 L",serif;
+    color: #3A4145;
+}
+
+#cookiesbox {
+    width:100%;
+    z-index:99999;
+    display:none;
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    text-align:center;
+    background-color: #eae672;
+    padding: 10px 0px;
+    color: black;
+    border: 1px solid black;
+}
